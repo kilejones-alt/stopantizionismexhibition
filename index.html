@@ -275,18 +275,25 @@
             color: #ffffff;
         }
 
+        /* SLOW ELEVATING & ENLARGING INFO BOXES */
         .info-block {
             margin-top: 0.5rem;
             background: rgba(255, 255, 255, 0.02);
             padding: 1.2rem;
             border-left: 2px solid #33333d;
             border-radius: 0 4px 4px 0;
-            transition: border-color 1.5s ease, background 1.5s ease;
+            cursor: pointer;
+            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 1.5s ease,
+                        background 1.5s ease,
+                        box-shadow 1.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .info-block:hover {
-            border-left-color: #666675;
-            background: rgba(255, 255, 255, 0.04);
+        .info-block:hover, .info-block:active {
+            transform: translateY(-8px) scale(1.025);
+            border-left-color: #888899;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 255, 255, 0.04);
         }
 
         .info-block h4 {
@@ -384,8 +391,8 @@
             border-radius: 4px 0 0 4px;
         }
 
-        [dir="rtl"] .info-block:hover {
-            border-right-color: #666675;
+        [dir="rtl"] .info-block:hover, [dir="rtl"] .info-block:active {
+            border-right-color: #888899;
         }
 
         [dir="rtl"] .click-hint {
@@ -440,12 +447,12 @@
             </div>
         </header>
 
-        <!-- CHAPTER I: SOVIET ERA -->
+        <!-- CHAPTER I: SOVIET ERA (WITH SMART FALLBACK FOR SOVIET IMAGE) -->
         <section class="exhibition-section">
             <div class="exhibition-container">
                 <div class="art-box interactive-target" onclick="openLightbox(this)">
                     <div class="museum-frame">
-                        <img src="jjpg" alt="Ball for 24 Years of the Soviet Union" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\' viewBox=\'0 0 600 400\'><rect width=\'600\' height=\'400\' fill=\'%231a1a20\'/><text x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23888895\' font-family=\'sans-serif\' font-size=\'18\'>CHAPTER I: SOVIET ERA</text></svg>';">
+                        <img src="jjpg" alt="Ball for 24 Years of the Soviet Union" onerror="handleFallbackImage(this, ['j.jpg', 'j.png', 'j.jpeg', 'J.jpg', 'J.JPG'])">
                     </div>
                     <div class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה">Click to enlarge</div>
                 </div>
@@ -541,6 +548,21 @@
     <!-- INTERACTIVE JAVASCRIPT -->
     <script>
         let currentLang = 'en';
+
+        // 0. SMART DYNAMIC IMAGE FALLBACK HANDLER
+        function handleFallbackImage(img, fallbackList) {
+            if (!img.dataset.tryIndex) {
+                img.dataset.tryIndex = "0";
+            }
+            let index = parseInt(img.dataset.tryIndex);
+            if (index < fallbackList.length) {
+                img.dataset.tryIndex = (index + 1).toString();
+                img.src = fallbackList[index];
+            } else {
+                img.onerror = null;
+                img.src = 'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\' viewBox=\'0 0 600 400\'><rect width=\'600\' height=\'400\' fill=\'%231a1a20\'/><text x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23888895\' font-family=\'sans-serif\' font-size=\'18\'>CHAPTER I: SOVIET ERA</text></svg>';
+            }
+        }
 
         // 1. LAZY GLIDING AMBIENT LIGHT (LERP SMOOTHING)
         const ambientLight = document.getElementById('ambient-light');
