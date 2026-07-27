@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exhibition Gallery</title>
+    <title>Stop Anti-Zionism | Exhibition Gallery NYC</title>
     <style>
         /* BASE & GALLERY THEME */
         * {
@@ -56,6 +56,85 @@
             opacity: 0;
         }
 
+        /* MINIMALIST GALLERY LANGUAGE TOGGLE */
+        .lang-switch {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 2px 4px;
+            transition: color 0.3s ease;
+            font-family: inherit;
+        }
+
+        .lang-btn.active, .lang-btn:hover {
+            color: #ffffff;
+        }
+
+        /* HERO / HEADER SECTION */
+        .hero-section {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 4rem 2rem;
+            border-bottom: 1px solid #1f1f1f;
+        }
+
+        .hero-container {
+            max-width: 1100px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-header-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+            color: #ffffff;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #888888;
+            font-weight: 400;
+        }
+
+        .hero-location {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #555555;
+            border-top: 1px solid #222;
+            padding-top: 1rem;
+        }
+
         /* GALLERY LAYOUT */
         .exhibition-section {
             min-height: 100vh;
@@ -76,9 +155,13 @@
         }
 
         @media (max-width: 850px) {
+            .hero-container,
             .exhibition-container {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+            }
+            .hero-title {
+                font-size: 2rem;
             }
         }
 
@@ -104,7 +187,6 @@
             height: auto;
             display: block;
             object-fit: contain;
-            /* Smooth scale transition */
             transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), filter 0.5s ease;
             filter: brightness(0.95) contrast(1.05);
         }
@@ -172,6 +254,11 @@
         [dir="rtl"] {
             text-align: right;
         }
+
+        [dir="rtl"] .lang-switch {
+            right: auto;
+            left: 1.5rem;
+        }
     </style>
 </head>
 <body>
@@ -180,11 +267,34 @@
     <div id="loading-curtain"></div>
     <div id="flashlight-overlay"></div>
 
+    <!-- MINIMALIST LANGUAGE SWITCHER -->
+    <nav class="lang-switch">
+        <button class="lang-btn active" id="btn-en" onclick="setLanguage('en')">EN</button>
+        <span style="color:#333;">|</span>
+        <button class="lang-btn" id="btn-he" onclick="setLanguage('he')">HE</button>
+    </nav>
+
     <main id="gallery">
 
-        <!-- CHAPTER I: SOVIET -->
+        <!-- HEADER / HERO SECTION WITH BUND IMAGE -->
+        <header class="hero-section">
+            <div class="hero-container">
+                <div class="art-box interactive-target">
+                    <div class="museum-frame">
+                        <img src="bund.jpg" alt="Bund Archival Image">
+                    </div>
+                </div>
+                <div class="hero-header-text">
+                    <div class="hero-subtitle" data-en="First-of-its-Kind Art Exhibition" data-he="תערוכת אמנות ראשונה מסוגה">First-of-its-Kind Art Exhibition</div>
+                    <h1 class="hero-title" data-en="Stop Anti-Zionism" data-he="עוצרים את האנטי-ציונות">Stop Anti-Zionism</h1>
+                    <div class="hero-location" data-en="New York City" data-he="ניו יורק">New York City</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- CHAPTER I: SOVIET ERA -->
         <section class="exhibition-section">
-            <div class="exhibition-container" onmouseenter="startTypewriter(this)" onmouseleave="resetTypewriter(this)">
+            <div class="exhibition-container">
                 <div class="art-box interactive-target" onclick="handleCardClick(this)">
                     <div class="museum-frame">
                         <img src="j.jpg" alt="Ball for 24 Years of the Soviet Union">
@@ -213,9 +323,9 @@
             </div>
         </section>
 
-        <!-- CHAPTER II: ARAB REGIONAL -->
+        <!-- CHAPTER II: ARAB REGIONAL DISCOURSE -->
         <section class="exhibition-section">
-            <div class="exhibition-container" onmouseenter="startTypewriter(this)" onmouseleave="resetTypewriter(this)">
+            <div class="exhibition-container">
                 <div class="art-box interactive-target" onclick="handleCardClick(this)">
                     <div class="museum-frame">
                         <img src="mencarryweapons_pppa.jpg" alt="Democratic Popular Front Poster">
@@ -244,9 +354,9 @@
             </div>
         </section>
 
-        <!-- CHAPTER III: WESTERN -->
+        <!-- CHAPTER III: WESTERN MANIFESTATIONS -->
         <section class="exhibition-section">
-            <div class="exhibition-container" onmouseenter="startTypewriter(this)" onmouseleave="resetTypewriter(this)">
+            <div class="exhibition-container">
                 <div class="art-box interactive-target" onclick="handleCardClick(this)">
                     <div class="museum-frame">
                         <img src="HappyThanksgiving_pppa.jpg" alt="Happy Thanksgiving America">
@@ -299,13 +409,23 @@
             element.classList.toggle('active');
         }
 
-        // 4. OPTIONAL HOVER TYPEWRITER / FOCUS EFFECT
-        function startTypewriter(container) {
-            // Optional subtle focus state on hover
-        }
+        // 4. LANGUAGE SWITCHER LOGIC
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === 'he') ? 'rtl' : 'ltr';
 
-        function resetTypewriter(container) {
-            // Reset focus state on mouse leave
+            // Update button styles
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-he').classList.toggle('active', lang === 'he');
+
+            // Swap text contents from data attributes
+            const elements = document.querySelectorAll('[data-en][data-he]');
+            elements.forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (text) {
+                    el.textContent = text;
+                }
+            });
         }
     </script>
 </body>
