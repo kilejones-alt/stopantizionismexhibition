@@ -5,27 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>STOP ANTIZIONISM EXHIBITION — NYC</title>
 
-  <!-- Google Fonts: Editorial Serif & Monospace -->
+  <!-- High-End Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
   
-  <!-- GSAP & Howler CDNs -->
+  <!-- GSAP, ScrollTrigger, & Howler Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
 
   <style>
     :root {
-      --bg: #070707;
-      --panel: #0d0d0d;
-      --text: #f4f4f4;
-      --text-dim: #666666;
-      --border: rgba(255, 255, 255, 0.12);
-      --border-thin: rgba(255, 255, 255, 0.05);
+      --bg: #050505;
+      --panel: #0a0a0a;
+      --text: #ffffff;
+      --text-dim: #7a7a7a;
+      --border-thin: rgba(255, 255, 255, 0.08);
       --font-serif: 'Cormorant Garamond', serif;
       --font-sans: 'Space Grotesk', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
     }
 
     * {
@@ -33,7 +31,6 @@
       padding: 0;
       box-sizing: border-box;
       border-radius: 0px !important;
-      box-shadow: none !important;
     }
 
     body {
@@ -42,326 +39,296 @@
       font-family: var(--font-sans);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      cursor: crosshair;
     }
 
-    /* Fixed Architectural Border Frame */
-    .grid-frame {
+    /* Interactive Cursor Spotlight */
+    .spotlight-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 50;
-      border-left: 1px solid var(--border-thin);
-      border-right: 1px solid var(--border-thin);
+      background: radial-gradient(circle 600px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), rgba(255, 255, 255, 0.07), transparent 70%);
+      z-index: 9999;
+      mix-blend-mode: screen;
     }
 
-    /* Minimal Header */
+    /* Clean Header */
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      padding: 22px 40px;
-      background: rgba(7, 7, 7, 0.94);
-      border-bottom: 1px solid var(--border);
+      padding: 30px 50px;
+      background: transparent;
       z-index: 100;
-      backdrop-filter: blur(8px);
+      mix-blend-mode: difference;
     }
 
     .header-brand {
       font-family: var(--font-sans);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 2.5px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      color: var(--text);
-    }
-
-    .header-meta {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 2px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      text-align: center;
-    }
-
-    .header-actions {
-      display: flex;
-      justify-content: flex-end;
     }
 
     .audio-btn {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 2px;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--text-dim);
+      color: var(--text);
       background: transparent;
-      border: 1px solid var(--border);
-      padding: 8px 16px;
+      border: 1px solid var(--border-thin);
+      padding: 10px 20px;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: background 0.4s ease;
     }
 
     .audio-btn:hover {
-      color: var(--text);
-      border-color: var(--text);
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.1);
     }
 
-    /* Hero Cover Section */
+    /* Hero Section with Bundists Background */
     .hero {
       width: 100vw;
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 140px 40px 50px 40px;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-    }
-
-    .hero-top-info {
-      display: flex;
-      justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      color: var(--text-dim);
-      text-transform: uppercase;
+      justify-content: center;
+      padding: 0 10vw;
       border-bottom: 1px solid var(--border-thin);
-      padding-bottom: 15px;
-    }
-
-    .hero-body {
-      max-width: 1300px;
-      margin: 40px 0;
+      position: relative;
+      background-image: linear-gradient(rgba(5,5,5,0.82), rgba(5,5,5,0.94)), url('./bundists.jpg');
+      background-size: cover;
+      background-position: center;
     }
 
     .hero-title {
       font-family: var(--font-serif);
-      font-size: clamp(3.2rem, 8vw, 8.5rem);
+      font-size: clamp(4rem, 10vw, 11rem);
       font-weight: 300;
-      line-height: 0.92;
-      letter-spacing: -1.5px;
+      line-height: 0.9;
+      letter-spacing: -2px;
       text-transform: uppercase;
-      margin-bottom: 35px;
+      margin-bottom: 30px;
     }
 
     .hero-subtitle {
-      font-family: var(--font-sans);
-      font-size: 1.05rem;
+      font-size: 1.2rem;
       font-weight: 300;
       color: var(--text-dim);
-      max-width: 600px;
-      line-height: 1.6;
-      letter-spacing: 0.3px;
+      max-width: 700px;
+      line-height: 1.5;
     }
 
-    .hero-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      color: var(--text-dim);
-      border-top: 1px solid var(--border-thin);
-      padding-top: 20px;
-    }
-
-    .scroll-hint {
-      color: var(--text);
-      text-transform: uppercase;
-    }
-
-    /* Split-Screen Gallery Viewport */
+    /* Split-Screen Gallery Sections (Snapping Panels) */
     .gallery-plate {
       width: 100vw;
       height: 100vh;
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      border-bottom: 1px solid var(--border);
-      position: relative;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border-thin);
+      background: var(--bg);
     }
 
     .plate-viewport {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 80px 60px;
+      padding: 10vh 5vw;
       background: var(--panel);
-      border-right: 1px solid var(--border);
+      border-right: 1px solid var(--border-thin);
       position: relative;
       overflow: hidden;
+      cursor: zoom-in;
     }
 
     .plate-viewport img {
       max-width: 100%;
-      max-height: 75vh;
+      max-height: 80vh;
       object-fit: contain;
-      filter: grayscale(100%) contrast(1.05);
-      transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: grayscale(100%) brightness(0.8);
+      transition: filter 0.8s ease, transform 0.5s ease;
+      will-change: transform;
     }
 
     .plate-viewport:hover img {
-      filter: grayscale(0%) contrast(1);
-      transform: scale(1.015);
-    }
-
-    .viewport-index {
-      position: absolute;
-      top: 25px;
-      left: 25px;
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 2px;
-      color: var(--text-dim);
-      text-transform: uppercase;
+      filter: grayscale(0%) brightness(1);
+      transform: scale(1.02);
     }
 
     .plate-info {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 80px 60px;
+      justify-content: center;
+      padding: 0 6vw;
       background: var(--bg);
-    }
-
-    .info-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      border-bottom: 1px solid var(--border-thin);
-      padding-bottom: 15px;
-    }
-
-    .info-body {
-      margin: auto 0;
-      padding: 40px 0;
     }
 
     .info-title {
       font-family: var(--font-serif);
-      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-size: clamp(2.5rem, 4vw, 4rem);
       font-weight: 300;
       line-height: 1.1;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       color: var(--text);
     }
 
     .info-description {
-      font-family: var(--font-sans);
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 300;
-      line-height: 1.7;
-      color: #999999;
+      line-height: 1.8;
+      color: var(--text-dim);
+      margin-bottom: 40px;
     }
 
     .info-metadata {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 25px;
+      gap: 30px;
       border-top: 1px solid var(--border-thin);
-      padding-top: 25px;
-    }
-
-    .meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      padding-top: 30px;
     }
 
     .meta-label {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      letter-spacing: 2px;
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
       color: var(--text-dim);
       text-transform: uppercase;
+      margin-bottom: 8px;
     }
 
     .meta-val {
-      font-family: var(--font-sans);
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       color: var(--text);
-      font-weight: 400;
+    }
+
+    /* Lightbox Modal (Click Image to Light Up Full Color) */
+    .lightbox-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(3, 3, 3, 0.96);
+      backdrop-filter: blur(12px);
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .lightbox-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      text-align: center;
+    }
+
+    .lightbox-content img {
+      max-width: 85vw;
+      max-height: 82vh;
+      object-fit: contain;
+      filter: grayscale(0%) brightness(1.05) contrast(1.05);
+      animation: zoomInLight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      color: var(--text);
+      background: transparent;
+      border: 1px solid var(--border-thin);
+      padding: 8px 16px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background 0.3s;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    @keyframes zoomInLight {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     @media (max-width: 960px) {
-      header { grid-template-columns: 1fr auto; }
-      .header-meta { display: none; }
       .gallery-plate { grid-template-columns: 1fr; height: auto; }
-      .plate-viewport { height: 65vh; border-right: none; border-bottom: 1px solid var(--border); padding: 40px 20px; }
-      .plate-info { padding: 40px 24px; }
+      .plate-viewport { height: 70vh; border-right: none; border-bottom: 1px solid var(--border-thin); }
+      .plate-info { padding: 10vh 6vw; }
+      header { padding: 20px; }
+      .hero { padding: 0 6vw; }
     }
   </style>
 </head>
 <body>
 
-  <div class="grid-frame"></div>
+  <!-- Dynamic Cursor Spotlight -->
+  <div class="spotlight-overlay" id="spotlight"></div>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox-modal" id="lightboxModal">
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="closeLightbox()">CLOSE [ &times; ]</button>
+      <img id="lightboxImg" src="" alt="Enlarged Exhibit View" />
+    </div>
+  </div>
 
   <!-- HEADER -->
   <header>
-    <div class="header-brand">STOP ANTIZIONISM EXHIBITION — NYC</div>
-    <div class="header-meta">NEW YORK CITY ARCHIVE // 2026</div>
-    <div class="header-actions">
-      <button class="audio-btn" id="audioBtn" onclick="toggleAudio()">[ AUDIO : INACTIVE ]</button>
-    </div>
+    <div class="header-brand">STOP ANTIZIONISM EXHIBITION</div>
+    <button class="audio-btn" id="audioBtn" onclick="toggleAudio()">SOUND: OFF</button>
   </header>
 
   <!-- HERO SECTION -->
   <section class="hero">
-    <div class="hero-top-info">
-      <span>INSTITUTIONAL ARCHIVE</span>
-      <span>LAT 40.7128° N, LONG 74.0060° W</span>
-    </div>
-    <div class="hero-body">
+    <div class="hero-content reveal-text">
       <h1 class="hero-title">Stop Anti-Zionism</h1>
       <p class="hero-subtitle">
-        An avant-garde digital catalog examining historical print media, political art, and regional graphics through an objective, museum-grade lens.
+        An avant-garde digital catalog examining historical print media, political art, and regional graphics.
       </p>
-    </div>
-    <div class="hero-bottom">
-      <span>CURATORIAL COLLECTION 01–03</span>
-      <span class="scroll-hint">SCROLL TO CATALOGUE [ &darr; ]</span>
     </div>
   </section>
 
   <!-- EXHIBIT PLATE 01 -->
   <section class="gallery-plate">
-    <div class="plate-viewport">
-      <span class="viewport-index">FIG. 01 / 03</span>
-      <img src="./assets/j.jpg" alt="Hashomer Hatzair Soviet Event Poster" />
+    <div class="plate-viewport" onclick="openLightbox('./j.jpg')">
+      <img src="./j.jpg" class="parallax-img" alt="Hashomer Hatzair Poster" />
     </div>
-    <div class="plate-info">
-      <div class="info-header">
-        <span>CATALOGUE ENTRY 01</span>
-        <span>HISTORICAL CONTEXT</span>
-      </div>
-      <div class="info-body">
-        <h2 class="info-title">Hashomer Hatzair & Soviet Alignment</h2>
-        <p class="info-description">
-          Created in 1941 in Mandatory Palestine, this event graphic employs Soviet constructivist style (specifically referencing Vera Mukhina’s landmark <em>Worker and Kolkhoz Woman</em> motif). It documents early Left-Zionist ideological alignment with Soviet socialist realism prior to the USSR's official anti-Zionist turn post-1967.
-        </p>
-      </div>
+    <div class="plate-info reveal-text">
+      <h2 class="info-title">Hashomer Hatzair & Soviet Alignment</h2>
+      <p class="info-description">
+        Created in 1941 in Mandatory Palestine, this event graphic employs Soviet constructivist style (specifically referencing Vera Mukhina’s landmark Worker and Kolkhoz Woman motif). It documents early Left-Zionist ideological alignment with Soviet socialist realism prior to the USSR's official anti-Zionist turn post-1967.
+      </p>
       <div class="info-metadata">
-        <div class="meta-item">
-          <span class="meta-label">ORIGIN / DATE</span>
+        <div>
+          <span class="meta-label">Origin / Date</span>
           <span class="meta-val">1941 / Mandatory Palestine</span>
         </div>
-        <div class="meta-item">
-          <span class="meta-label">PUBLISHER</span>
+        <div>
+          <span class="meta-label">Publisher</span>
           <span class="meta-val">Hashomer Hatzair Press</span>
         </div>
       </div>
@@ -370,28 +337,21 @@
 
   <!-- EXHIBIT PLATE 02 -->
   <section class="gallery-plate">
-    <div class="plate-viewport">
-      <span class="viewport-index">FIG. 02 / 03</span>
-      <img src="./assets/mencarryweapons_pppa.jpg" alt="DFLP Revolutionary Poster" />
+    <div class="plate-viewport" onclick="openLightbox('./mencarryweapons_pppa.jpg')">
+      <img src="./mencarryweapons_pppa.jpg" class="parallax-img" alt="DFLP Revolutionary Poster" />
     </div>
-    <div class="plate-info">
-      <div class="info-header">
-        <span>CATALOGUE ENTRY 02</span>
-        <span>REGIONAL GRAPHICS</span>
-      </div>
-      <div class="info-body">
-        <h2 class="info-title">DFLP Armed Struggle Messaging</h2>
-        <p class="info-description">
-          Published by the Democratic Front for the Liberation of Palestine (DFLP), this print incorporates high-contrast woodcut illustration with Arabic verse (<em>"Men carry weapons and continue the path"</em>). It demonstrates how 20th-century Arab political movements adapted Third-Worldist revolutionary aesthetics.
-        </p>
-      </div>
+    <div class="plate-info reveal-text">
+      <h2 class="info-title">DFLP Armed Struggle Messaging</h2>
+      <p class="info-description">
+        Published by the Democratic Front for the Liberation of Palestine (DFLP), this print incorporates high-contrast woodcut illustration with Arabic verse ("Men carry weapons and continue the path"). It demonstrates how 20th-century Arab political movements adapted Third-Worldist revolutionary aesthetics.
+      </p>
       <div class="info-metadata">
-        <div class="meta-item">
-          <span class="meta-label">ORIGIN / DATE</span>
+        <div>
+          <span class="meta-label">Origin / Date</span>
           <span class="meta-val">c. 1970s / Regional Arab Press</span>
         </div>
-        <div class="meta-item">
-          <span class="meta-label">ORGANIZATION</span>
+        <div>
+          <span class="meta-label">Organization</span>
           <span class="meta-val">DFLP Media Division</span>
         </div>
       </div>
@@ -400,39 +360,68 @@
 
   <!-- EXHIBIT PLATE 03 -->
   <section class="gallery-plate">
-    <div class="plate-viewport">
-      <span class="viewport-index">FIG. 03 / 03</span>
-      <img src="./assets/HappyThanksgiving_pppa.jpg" alt="Happy Thanksgiving America Love Gaza Poster" />
+    <div class="plate-viewport" onclick="openLightbox('./HappyThanksgiving_pppa.jpg')">
+      <img src="./HappyThanksgiving_pppa.jpg" class="parallax-img" alt="Happy Thanksgiving America Love Gaza Poster" />
     </div>
-    <div class="plate-info">
-      <div class="info-header">
-        <span>CATALOGUE ENTRY 03</span>
-        <span>CONTEMPORARY SATIRE</span>
-      </div>
-      <div class="info-body">
-        <h2 class="info-title">Western Anti-Imperialist Satire</h2>
-        <p class="info-description">
-          Illustrated by American political cartoonist Dwayne Booth (Mr. Fish), this graphic represents modern Western grassroots anti-Zionist commentary. The piece utilizes stark editorial caricature to link American cultural holidays directly to foreign policy critique.
-        </p>
-      </div>
+    <div class="plate-info reveal-text">
+      <h2 class="info-title">Western Anti-Imperialist Satire</h2>
+      <p class="info-description">
+        Illustrated by American political cartoonist Dwayne Booth (Mr. Fish), this graphic represents modern Western grassroots anti-Zionist commentary. The piece utilizes stark editorial caricature to link American cultural holidays directly to foreign policy critique.
+      </p>
       <div class="info-metadata">
-        <div class="meta-item">
-          <span class="meta-label">ARTIST</span>
+        <div>
+          <span class="meta-label">Artist</span>
           <span class="meta-val">Mr. Fish (Dwayne Booth)</span>
         </div>
-        <div class="meta-item">
-          <span class="meta-label">MEDIUM</span>
+        <div>
+          <span class="meta-label">Medium</span>
           <span class="meta-val">Editorial Satirical Print</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- AUDIO & SCROLL ENGINE -->
+  <!-- INTERACTION & AUDIO ENGINE -->
   <script>
     gsap.registerPlugin(ScrollTrigger);
 
-    // Smooth section snapping
+    // 1. Cursor Spotlight & Image Parallax Effect
+    const spotlight = document.getElementById('spotlight');
+    const parallaxImages = document.querySelectorAll('.parallax-img');
+
+    window.addEventListener('mousemove', (e) => {
+      spotlight.style.setProperty('--mouse-x', e.clientX + 'px');
+      spotlight.style.setProperty('--mouse-y', e.clientY + 'px');
+
+      const xPos = (e.clientX / window.innerWidth - 0.5) * 30;
+      const yPos = (e.clientY / window.innerHeight - 0.5) * 30;
+
+      gsap.to(parallaxImages, {
+        x: xPos,
+        y: yPos,
+        ease: "power2.out",
+        duration: 1.2
+      });
+    });
+
+    // 2. Lightbox Controls
+    const modal = document.getElementById('lightboxModal');
+    const lightboxImg = document.getElementById('lightboxImg');
+
+    function openLightbox(src) {
+      lightboxImg.src = src;
+      modal.classList.add('active');
+    }
+
+    function closeLightbox() {
+      modal.classList.remove('active');
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // 3. Smooth Section Snapping (Like Lumen page transitions)
     gsap.utils.toArray('.gallery-plate').forEach((plate) => {
       ScrollTrigger.create({
         trigger: plate,
@@ -441,23 +430,26 @@
       });
     });
 
-    // Local Audio Engine
+    // 4. Audio Engine (Auto-starts on first interaction: click, scroll, or mousemove)
     const ambientAudio = new Howl({
-      src: ['./assets/ambient.mp3'], // Path to your ambient.mp3 file
+      src: ['./The Seasons, Op. 37a - VI. June_ Barcarolle.mp3'],
       loop: true,
-      volume: 0.35,
+      volume: 0.4,
       html5: true
     });
 
     let isAudioActive = false;
+    const btn = document.getElementById('audioBtn');
 
-    function triggerAudioOnGesture() {
+    function initAudio() {
       if (!isAudioActive) {
         ambientAudio.play();
         if (ambientAudio.playing()) {
           isAudioActive = true;
-          document.getElementById('audioBtn').textContent = '[ AUDIO : ACTIVE ]';
-          removeGestureListeners();
+          btn.textContent = 'SOUND: ON';
+          window.removeEventListener('click', initAudio);
+          window.removeEventListener('scroll', initAudio);
+          window.removeEventListener('mousemove', initAudio);
         }
       }
     }
@@ -465,33 +457,18 @@
     function toggleAudio() {
       if (ambientAudio.playing()) {
         ambientAudio.pause();
-        document.getElementById('audioBtn').textContent = '[ AUDIO : PAUSED ]';
+        btn.textContent = 'SOUND: OFF';
       } else {
         ambientAudio.play();
         isAudioActive = true;
-        document.getElementById('audioBtn').textContent = '[ AUDIO : ACTIVE ]';
+        btn.textContent = 'SOUND: ON';
       }
     }
 
-    const gestureEvents = ['scroll', 'wheel', 'touchstart', 'click'];
-    function addGestureListeners() {
-      gestureEvents.forEach(e => window.addEventListener(e, triggerAudioOnGesture, { passive: true, once: true }));
-    }
-    function removeGestureListeners() {
-      gestureEvents.forEach(e => window.removeEventListener(e, triggerAudioOnGesture));
-    }
+    window.addEventListener('click', initAudio, { once: true });
+    window.addEventListener('scroll', initAudio, { once: true });
+    window.addEventListener('mousemove', initAudio, { once: true });
 
-    window.addEventListener('DOMContentLoaded', () => {
-      ambientAudio.play();
-      if (ambientAudio.playing()) {
-        isAudioActive = true;
-        document.getElementById('audioBtn').textContent = '[ AUDIO : ACTIVE ]';
-      } else {
-        addGestureListeners();
-      }
-    });
-
-    // Keep audio active during scrolling
     ScrollTrigger.create({
       trigger: 'body',
       start: 'top top',
