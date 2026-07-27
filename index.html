@@ -2,17 +2,18 @@
 <html lang="en" id="site-html">
 <head>
     <meta charset="UTF-8">
-    <title>Exhibition</title>
+    <title>Exhibition | Antizionism as Jew-Hatred</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Helvetica+Neue:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Helvetica+Neue:wght@300;400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b0b0b;
+            --bg-color: #030303;
             --text-color: #f0f0f0;
-            --dim-text: #9a9a9a;
-            --accent: #d4af37;
+            --dim-text: #888888;
+            --accent-gold: #d4af37;
             --frame-bg: #f4f1ea;
+            --panel-bg: rgba(10, 10, 10, 0.96);
             --mouse-x: 50vw;
             --mouse-y: 30vh;
         }
@@ -23,7 +24,20 @@
             font-family: "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             overflow-x: hidden;
-            padding: 50px;
+            scroll-behavior: smooth;
+        }
+
+        .ambient-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+                linear-gradient(to bottom, #060606, #010101);
+            z-index: 0;
         }
 
         .grain-overlay {
@@ -33,10 +47,32 @@
             width: 100vw;
             height: 100vh;
             pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
             z-index: 1;
         }
 
+        /* Drifting Bundist Image Behind Screen */
+        .bg-bundist-drift {
+            position: fixed;
+            top: -10%;
+            left: -10%;
+            width: 120vw;
+            height: 120vh;
+            object-fit: cover;
+            opacity: 0.10;
+            filter: grayscale(100%) contrast(130%) brightness(80%);
+            z-index: 2;
+            pointer-events: none;
+            animation: bundistDrift 30s ease-in-out infinite alternate;
+        }
+
+        @keyframes bundistDrift {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-35px, -25px) scale(1.06); }
+            100% { transform: translate(25px, 35px) scale(1.02); }
+        }
+
+        /* Flashlight / Spotlight Cursor Revealing Effect */
         .spotlight-overlay {
             position: fixed;
             top: 0;
@@ -44,186 +80,253 @@
             width: 100vw;
             height: 100vh;
             pointer-events: none;
-            background: radial-gradient(circle 240px at var(--mouse-x) var(--mouse-y), rgba(0, 0, 0, 0) 0%, rgba(7, 7, 7, 0.82) 65%, rgba(4, 4, 4, 0.96) 100%);
-            z-index: 2;
+            background: radial-gradient(circle 280px at var(--mouse-x) var(--mouse-y), rgba(0, 0, 0, 0) 0%, rgba(3, 3, 3, 0.89) 60%, rgba(1, 1, 1, 0.98) 100%);
+            z-index: 10;
         }
 
+        /* Fixed Top-Right Controls */
         .gallery-header {
+            position: fixed;
+            top: 30px;
+            right: 40px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            position: relative;
-            z-index: 3;
-            margin-bottom: 60px;
+            gap: 15px;
+            z-index: 100;
         }
 
-        .pill-btn {
-            background: transparent;
-            border: 1px solid var(--text-color);
+        [dir="rtl"] .gallery-header {
+            right: auto;
+            left: 40px;
+        }
+
+        .pill-btn, .audio-pill {
+            background: rgba(15, 15, 15, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             color: var(--text-color);
             padding: 8px 22px;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             letter-spacing: 2px;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            backdrop-filter: blur(8px);
         }
 
-        .pill-btn:hover {
-            background: var(--text-color);
-            color: var(--bg-color);
+        .pill-btn:hover, .audio-pill:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
         }
 
+        .audio-pill audio {
+            height: 18px;
+            opacity: 0.85;
+            filter: invert(1) hue-rotate(180deg);
+            cursor: pointer;
+        }
+
+        /* Opening Hero Section */
         .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
             position: relative;
-            z-index: 3;
-            margin-bottom: 90px;
+            z-index: 5;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 3.8rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
         }
 
         .exhibition-subtitle {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 300;
-            letter-spacing: 3px;
-            color: var(--text-color);
-            max-width: 750px;
-            margin: 0 auto;
-            line-height: 1.5;
+            letter-spacing: 2px;
+            color: var(--dim-text);
+            max-width: 650px;
+            line-height: 1.45;
             font-style: italic;
         }
 
-        .gallery-grid {
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--dim-text);
+            animation: pulseFade 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseFade {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* Vertical Scrolling Narrative Sections */
+        .exhibition-section {
+            min-height: 100vh;
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 50px;
             position: relative;
-            z-index: 3;
+            z-index: 5;
+            padding: 80px 5vw;
+        }
+
+        .exhibition-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 1350px;
+            gap: 60px;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [dir="rtl"] .exhibition-container {
+            flex-direction: row-reverse;
+        }
+
+        @keyframes subtleDrift {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(0.15deg); }
         }
 
         .art-box {
-            width: 290px;
-            height: 390px;
+            width: 380px;
+            height: 500px;
+            flex-shrink: 0;
             cursor: pointer;
             position: relative;
+            animation: subtleDrift 7s ease-in-out infinite;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .moving-container {
-            width: 100%;
-            height: 100%;
-            animation: floatBoxes 6s ease-in-out infinite alternate;
-        }
-
-        .art-box:nth-child(2) .moving-container {
-            animation-delay: -2s;
-        }
-
-        .art-box:nth-child(3) .moving-container {
-            animation-delay: -4s;
+        .exhibition-container:hover .art-box {
+            animation: none;
+            width: 48vw;
+            height: 78vh;
         }
 
         .museum-frame {
             background-color: var(--frame-bg);
-            padding: 14px 14px 40px 14px;
+            padding: 16px 16px 45px 16px;
             width: 100%;
             height: 100%;
             box-sizing: border-box;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .art-box:hover .museum-frame {
-            transform: translateY(-6px);
             box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .museum-frame img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(15%) contrast(105%);
-            transition: filter 0.4s ease;
+            filter: grayscale(40%) contrast(105%) brightness(95%);
+            transition: filter 0.6s ease, transform 0.6s ease;
         }
 
-        .art-box:hover img {
-            filter: grayscale(0%) contrast(100%);
+        .exhibition-container:hover .museum-frame {
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 35px rgba(212, 175, 55, 0.2);
         }
 
-        @keyframes floatBoxes {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-12px) rotate(0.4deg); }
+        .exhibition-container:hover .museum-frame img {
+            filter: grayscale(0%) contrast(110%) saturate(120%) brightness(102%);
         }
 
-        .expanded-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(5, 5, 5, 0.97);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-            z-index: 10;
-        }
-
-        .expanded-modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-content {
-            display: flex;
-            width: 85vw;
-            height: 80vh;
-            gap: 70px;
-            align-items: center;
-        }
-
-        .modal-frame {
-            background-color: var(--frame-bg);
-            padding: 20px 20px 55px 20px;
-            width: 50%;
-            height: 85%;
+        /* Pop-up Information Box */
+        .info-panel {
+            flex-grow: 1;
+            background: var(--panel-bg);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 40px;
             box-sizing: border-box;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            opacity: 0.15;
+            transform: translateX(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
-        .modal-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+        [dir="rtl"] .info-panel {
+            transform: translateX(-30px);
         }
 
-        .modal-text-pane {
-            width: 50%;
-            color: var(--text-color);
+        .exhibition-container:hover .info-panel {
+            opacity: 1;
+            transform: translateX(0);
         }
 
-        .modal-text-pane h3 {
+        .info-category {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .info-title {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 2.6rem;
+            font-size: 2.2rem;
             font-weight: 300;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             margin-bottom: 12px;
         }
 
-        .modal-date {
+        .info-meta {
+            display: flex;
+            gap: 25px;
+            font-size: 0.85rem;
             color: var(--dim-text);
-            font-size: 0.95rem;
-            letter-spacing: 3px;
-            margin-bottom: 35px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 12px;
         }
 
-        .typewriter-text {
-            font-size: 1.15rem;
-            line-height: 1.85;
+        .info-block {
+            margin-bottom: 16px;
+        }
+
+        .info-block h4 {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 4px;
+        }
+
+        /* Text raising and lighting up during typewriter generation */
+        .typewriter-p {
+            font-size: 0.98rem;
+            line-height: 1.6;
             font-weight: 300;
-            letter-spacing: 0.5px;
+            color: #b8b8b8;
+            margin: 0;
+            min-height: 35px;
+            transition: color 0.4s ease, text-shadow 0.4s ease, transform 0.4s ease;
+        }
+
+        .typewriter-p.active-glow {
+            color: #ffffff;
+            text-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
+            transform: translateY(-2px);
         }
 
         [dir="rtl"] {
@@ -232,130 +335,185 @@
         }
     </style>
 </head>
-<body>
+<body id="site-body">
 
+    <div class="ambient-background"></div>
     <div class="grain-overlay"></div>
+    <!-- Drifting Bundist Image Behind Screen Overlay -->
+    <img src="bundists.jpg" class="bg-bundist-drift" alt="">
     <div class="spotlight-overlay"></div>
 
+    <!-- Fixed Top Right Controls -->
     <header class="gallery-header">
-        <div class="music-control">Audio Player</div>
+        <div class="audio-pill">
+            <span style="font-size: 0.7rem; letter-spacing: 1px;">Audio</span>
+            <audio controls src="The Seasons, Op. 37a - VI. June_ Barcarolle.mp3"></audio>
+        </div>
         <button id="hebrew-toggle" class="pill-btn" onclick="toggleHebrew()">עברית</button>
     </header>
 
+    <!-- Opening Hero / Description Section -->
     <section class="hero-section">
-        <h2 class="exhibition-subtitle" data-en="First of its kind exhibition exploring antizionism as Jew-hatred" data-he="תערוכה ראשונה מסוגה החוקרת את האנטי-ציונות כשנאת יהודים">
-            First of its kind exhibition exploring antizionism as Jew-hatred
-        </h2>
+        <h1 class="hero-title" data-en="A Popular Hatred" data-he="שנאה פופולרית">A Popular Hatred</h1>
+        <p class="exhibition-subtitle" 
+           data-en="First of its kind exhibition exploring<br>antizionism as Jew-hatred" 
+           data-he="תערוכה ראשונה מסוגה החוקרת<br>את האנטי-ציונות כשנאת יהודים">
+           First of its kind exhibition exploring<br>antizionism as Jew-hatred
+        </p>
+        <div class="scroll-indicator" data-en="Scroll to Enter Gallery ↓" data-he="גלול כניסה לתערוכה ↓">Scroll to Enter Gallery ↓</div>
     </section>
 
-    <main class="gallery-grid">
-        <div class="art-box" onclick="expandPiece(this)" 
-             data-name-en="Piece Title One" data-name-he="כותרת יצירה אחת"
-             data-date-en="2026" data-date-he="2026"
-             data-bio-en="Biographical and historical context for the first piece goes here in clean minimalist prose." data-bio-he="הקשר ביוגרפי והיסטורי ליצירה הראשונה מופיע כאן בפרוזה מינימליסטית נקייה.">
-            <div class="moving-container">
+    <!-- SECTION 1: Soviet Era -->
+    <section class="exhibition-section">
+        <div class="exhibition-container" onmouseenter="startTypewriter(this)" onmouseleave="resetTypewriter(this)">
+            <div class="art-box">
                 <div class="museum-frame">
-                    <img src="image1.jpg" alt="Exhibition Piece">
+                    <img src="bundists.jpg" alt="Soviet Era Discourse">
+                </div>
+            </div>
+            <div class="info-panel">
+                <div class="info-category" data-en="Chapter I — The Soviet Paradigm" data-he="פרק א — הפרדיגמה הסובייטית">Chapter I — The Soviet Paradigm</div>
+                <h3 class="info-title" data-en="The Rhetorical Metamorphosis" data-he="המטמורפוזה הרטורית">The Rhetorical Metamorphosis</h3>
+                <div class="info-meta">
+                    <div><strong data-en="Author / Source:" data-he="יוצר / מקור:">Author / Source:</strong> <span data-en="State Archival Collection" data-he="אוסף ארכיוני ממלכתי">State Archival Collection</span></div>
+                    <div><strong data-en="Years:" data-he="שנים:">Years:</strong> 1967 — 1978</div>
+                </div>
+                <div class="info-block">
+                    <h4 data-en="Author's Life & Background" data-he="רקע וחיי היוצר">Author's Life & Background</h4>
+                    <p class="typewriter-p" data-en="Compiled from state propaganda bureau dossiers and ideological commissariat archives operating under central committee oversight during the post-Six-Day War Soviet regime." data-he="לקט מתוך תיקי לשכת התעמולה הממלכתית וארכיוני הקומיסריון האידאולוגי שפעלו תחת פיקוח הוועד המרכזי במשטר הסובייטי שלאחר מלחמת ששת הימים."></p>
+                </div>
+                <div class="info-block">
+                    <h4 data-en="Historical Information" data-he="מידע היסטורי">Historical Information</h4>
+                    <p class="typewriter-p" data-en="Examining how state-sponsored apparatuses systematically recycled traditional antisemitic visual and textual tropes—specifically cosmic conspiracy and malevolent manipulation—under the newly minted lexicon of anti-Zionism." data-he="בחינת האופן שבו מנגנונים במימון המדינה מיחזרו באופן שיטתי טרופים חזותיים וטקסטואליים אנטישמיים מסורתיים תחת הלקסיקון המחודש של אנטי-ציונות."></p>
+                </div>
+                <div class="info-block">
+                    <h4 data-en="Relation to Antizionism" data-he="קשר לאנטי-ציונות">Relation to Antizionism</h4>
+                    <p class="typewriter-p" data-en="Demonstrates the foundational blueprint where opposition to the Jewish collective was weaponized into state ideology, proving that modern anti-Zionism frequently functions as a direct continuation of classical demonization." data-he="מדגים את תכנית האב הבסיסית שבה ההתנגדות לקולקטיב היהודי הומרה לאידאולוגיה ממלכתית, ומראה כיצד אנטי-ציונות מודרנית מתפקדת כהמשך ישיר לדמוניזציה קלאסית."></p>
                 </div>
             </div>
         </div>
-        
-        <div class="art-box" onclick="expandPiece(this)" 
-             data-name-en="Piece Title Two" data-name-he="כותרת יצירה שתיים"
-             data-date-en="2026" data-date-he="2026"
-             data-bio-en="Biographical and historical context for the second piece goes here." data-bio-he="הקשר ביוגרפי והיסטורי ליצירה השנייה מופיע כאן.">
-            <div class="moving-container">
-                <div class="museum-frame">
-                    <img src="image2.jpg" alt="Exhibition Piece">
-                </div>
-            </div>
-        </div>
+    </section>
 
-        <div class="art-box" onclick="expandPiece(this)" 
-             data-name-en="Piece Title Three" data-name-he="כותרת יצירה שלוש"
-             data-date-en="2026" data-date-he="2026"
-             data-bio-en="Biographical and historical context for the third piece goes here." data-bio-he="הקשר ביוגרפי והיסטורי ליצירה השלישית מופיע כאן.">
-            <div class="moving-container">
+    <!-- SECTION 2: Arab Discourse -->
+    <section class="exhibition-section">
+        <div class="exhibition-container" onmouseenter="startTypewriter(this)" onmouseleave="resetTypewriter(this)">
+            <div class="art-box">
                 <div class="museum-frame">
-                    <img src="image3.jpg" alt="Exhibition Piece">
+                    <img src="HappyThanksgiving_pppa.jpg" alt="Regional Discourse">
+                </div>
+            </div>
+            <div class="info-panel">
+                <div class="info-category" data-en="Chapter II — Regional Dissemination" data-he="פרק ב — הפצה אזורית">Chapter II — Regional Dissemination</div>
+                <h3 class="info-title" data-en="Abolition of Distinction" data-he="ביטול ההבחנה">Abolition of Distinction</h3>
+                <div class="info-meta">
+                    <div><strong data-en="Author / Source:" data-he="יוצר / מקור:">Author / Source:</strong> <span data-en="Middle Eastern Media Institute" data-he="המכון לתקשורת המזרח התיכון">Middle Eastern Media Institute</span></div>
+                    <div><strong data-en="Years:" data-he="שנים:">Years:</strong> 1980 — 1995</div>
+                </div>
+                <div class="info-block">
+                    <h4 data-en="Author's Life & Background" data-he="רקע וחיי היוצר">Author's Life & Background</h4>
+                    <p class="typewriter-p" data-en="Documented from regional cultural ministries and state-aligned publishing houses that integrated political commentary with historical polemics." data-he="תועד מתוך משרדי תרבות אזוריים והוצאות לאור המזוהות עם המדינה אשר שילבו פרשנות פוליטית עם פולמוס היסטורי."></p>
+                </div>
+                <div class="info-block">
+                    <h4 data-en="Historical Information" data-he="מידע היסטורי">Historical Information</h4>
+                    <p class="typewriter-p" data-en="An analytical exploration of the ideological mechanism that singles out the Jewish state for unique delegitimization, applying standards demanded of no other nation while erasing indigenous Jewish historical presence." data-he="חקירה אנליטית של המנגנון האידאולוגי המבודד את המדינה היהודית ללגיטימציה ייחודית, תוך החלת סטנדרטים שאינם חלים על אף אומות אחרות."></p>
+                </div>
+                <div class="info-block">
+                    <h4 data-en="Relation to Antizionism" data-he="קשר לאנטי-ציונות">Relation to Antizionism</h4>
+                    <p class="typewriter-p" data-en="Highlights the seamless blending of political grievances with eliminationist motifs borrowed directly from European theological and racial prejudice, erasing the line between opposition to policy and denial of existence." data-he="מדגיש את המיזוג החלק של תרעומות פוליטיות עם מוטיבים חיסוליים שנלקחו ישירות מדעות קדומות אירופאיות."></p>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 
-    <div id="expanded-view" class="expanded-modal" onclick="closeExpanded(event)">
-        <div class="modal-content">
-            <div class="modal-frame">
-                <img id="modal-img" src="" alt="Zoomed Piece">
+    <!-- SECTION 3: Contemporary -->
+    <section class="exhibition-section">
+        <div class="exhibition-container" onmouseenter="startTypewriter(this)" onmouseleave="resetTypewriter(this)">
+            <div class="art-box">
+                <div class="museum-frame">
+                    <img src="mencarryweapons_pppa.jpg" alt="Contemporary Manifestations">
+                </div>
             </div>
-            <div class="modal-text-pane">
-                <h3 id="modal-title"></h3>
-                <p id="modal-date" class="modal-date"></p>
-                <div id="modal-bio" class="typewriter-text"></div>
+            <div class="info-panel">
+                <div class="info-category" data-en="Chapter III — The Sanitized Lexicon" data-he="פרק ג — הלקסיקון המטוהר">Chapter III — The Sanitized Lexicon</div>
+                <h3 class="info-title" data-en="Institutionalized Discourse" data-he="שיח ממוסד">Institutionalized Discourse</h3>
+                <div class="info-meta">
+                    <div><strong data-en="Author / Source:" data-he="יוצר / מקור:">Author / Source:</strong> <span data-en="Global Documentation Project" data-he="פרויקט תיעוד עולמי">Global Documentation Project</span></div>
+                    <div><strong data-en="Years:" data-he="שנים:">Years:</strong> 2010 — Present</div>
+                </div>
+                <div class="info-block">
+                    <h4 data-en="Author's Life & Background" data-he="רקע וחיי היוצר">Author's Life & Background</h4>
+                    <p class="typewriter-p" data-en="Compiled by independent researchers and institutional monitors tracking the translation of classical bias into modern academic, legal, and humanitarian frameworks." data-he="לוקט על ידי חוקרים עצמאיים וגופי פיקוח מוסדיים העוקבים אחר המרת הטיה קלאסית למסגרות אקדמיות, משפטיות והומניטריות מודרניות."></p>
+                </div>
+                <div class="info-block">
+                    <h4 data-en="Historical Information" data-he="מידע היסטורי">Historical Information</h4>
+                    <p class="typewriter-p" data-en="A curatorial presentation of internal correspondence and public policy manifests demonstrating how academic and humanitarian jargon serves as a veneer for classical prejudice in Western institutions." data-he="הצגה אוצרותית של תכתובות פנימיות ומניפסטים של מדיניות ציבורית המדגימים כיצד זרגון אקדמי והומניטרי משמש כציפוי לדעה קדומה קלאסית במוסדות מערביים."></p>
+                </div>
+                <div class="info-block">
+                    <h4 data-en="Relation to Antizionism" data-he="קשר לאנטי-ציונות">Relation to Antizionism</h4>
+                    <p class="typewriter-p" data-en="Exposes how modern anti-Zionist rhetoric successfully bypasses conventional definitions of bigotry by adopting human rights terminology to mask old animosities in acceptable academic dress." data-he="חושף כיצד הרטוריקה האנטי-ציונית המודרנית עוקפת בהצלחה הגדרות קונבנציונליות של קנאות על ידי אימוץ מונחי זכויות אדם."></p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <script>
         let currentLang = 'en';
 
+        // Mouse coordinates for flashlight effect
         window.addEventListener('mousemove', (e) => {
             document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
             document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
         });
 
         function toggleHebrew() {
-            const htmlTag = document.getElementById('site-html');
+            const body = document.getElementById('site-body');
             const toggleBtn = document.getElementById('hebrew-toggle');
-            const subtitle = document.querySelector('.exhibition-subtitle');
-
+            
             if (currentLang === 'en') {
                 currentLang = 'he';
-                htmlTag.setAttribute('dir', 'rtl');
+                body.setAttribute('dir', 'rtl');
                 toggleBtn.innerText = 'English';
-                subtitle.innerText = subtitle.getAttribute('data-he');
             } else {
                 currentLang = 'en';
-                htmlTag.removeAttribute('dir');
+                body.removeAttribute('dir');
                 toggleBtn.innerText = 'עברית';
-                subtitle.innerText = subtitle.getAttribute('data-en');
             }
-        }
 
-        function expandPiece(element) {
-            const modal = document.getElementById('expanded-view');
-            const modalImg = document.getElementById('modal-img');
-            const modalTitle = document.getElementById('modal-title');
-            const modalDate = document.getElementById('modal-date');
-            const modalBio = document.getElementById('modal-bio');
-
-            const imgSrc = element.querySelector('img').src;
-            const title = element.getAttribute(`data-name-${currentLang}`);
-            const date = element.getAttribute(`data-date-${currentLang}`);
-            const bio = element.getAttribute(`data-bio-${currentLang}`);
-
-            modalImg.src = imgSrc;
-            modalTitle.innerText = title;
-            modalDate.innerText = date;
-            modalBio.innerHTML = '';
-
-            modal.classList.add('active');
-
-            let i = 0;
-            function typeWriter() {
-                if (i < bio.length) {
-                    modalBio.innerHTML += bio.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 22);
+            document.querySelectorAll('[data-en]').forEach(el => {
+                if (el.getAttribute(`data-${currentLang}`)) {
+                    el.innerHTML = el.getAttribute(`data-${currentLang}`);
                 }
-            }
-            typeWriter();
+            });
         }
 
-        function closeExpanded(event) {
-            if (event.target.id === 'expanded-view') {
-                document.getElementById('expanded-view').classList.remove('active');
-            }
+        // Letter-by-letter typewriter animation with glowing lift effect
+        function startTypewriter(container) {
+            const paragraphs = container.querySelectorAll('.typewriter-p');
+            paragraphs.forEach(p => {
+                if (p.dataset.typing === "true") return;
+                p.dataset.typing = "true";
+                p.classList.add('active-glow');
+                const fullText = p.getAttribute(`data-${currentLang}`);
+                p.innerHTML = "";
+                let i = 0;
+                function type() {
+                    if (p.dataset.typing === "true" && i < fullText.length) {
+                        p.innerHTML += fullText.charAt(i);
+                        i++;
+                        setTimeout(type, 14);
+                    }
+                }
+                type();
+            });
+        }
+
+        function resetTypewriter(container) {
+            const paragraphs = container.querySelectorAll('.typewriter-p');
+            paragraphs.forEach(p => {
+                p.dataset.typing = "false";
+                p.classList.remove('active-glow');
+                p.innerHTML = "";
+            });
         }
     </script>
 </body>
