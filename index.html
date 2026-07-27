@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stop Anti-Zionism | Exhibition Gallery NYC</title>
     <style>
-        /* BASE & AMBIENT LIGHT GALLERY THEME */
+        /* BASE & SOFT MATTE GALLERY THEME */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -13,8 +13,8 @@
         }
 
         body {
-            background-color: #121214;
-            color: #f0f0f0;
+            background-color: #151518; /* Soft Matte Dark Slate */
+            color: #f0f0f5;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             overflow-x: hidden;
             cursor: default;
@@ -30,9 +30,9 @@
             pointer-events: none;
             z-index: 1;
             background: radial-gradient(
-                circle 650px at var(--cursor-x, 50%) var(--cursor-y, 50%),
-                rgba(255, 255, 255, 0.07) 0%,
-                rgba(18, 18, 20, 0) 75%
+                circle 700px at var(--cursor-x, 50%) var(--cursor-y, 50%),
+                rgba(255, 255, 255, 0.05) 0%,
+                rgba(21, 21, 24, 0) 75%
             );
         }
 
@@ -53,9 +53,9 @@
             font-size: 0.8rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            background: rgba(18, 18, 20, 0.85);
+            background: rgba(21, 21, 24, 0.85);
             padding: 8px 14px;
-            border: 1px solid #2a2a2e;
+            border: 1px solid rgba(255, 255, 255, 0.08); /* Subtler border */
             border-radius: 2px;
             backdrop-filter: blur(8px);
         }
@@ -63,7 +63,7 @@
         .lang-btn, .audio-btn {
             background: none;
             border: none;
-            color: #777;
+            color: #777780;
             cursor: pointer;
             padding: 2px 4px;
             transition: color 0.6s ease;
@@ -84,9 +84,9 @@
             align-items: center;
             justify-content: center;
             padding: 6rem 2rem 4rem 2rem;
-            border-bottom: 1px solid #26262a;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Soft boundary line */
             position: relative;
-            background: radial-gradient(circle at center, #1c1c20 0%, #121214 100%);
+            background: radial-gradient(circle at center, #1b1b1f 0%, #151518 100%);
         }
 
         .hero-container {
@@ -118,7 +118,7 @@
             font-size: 1.1rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: #a0a0a5;
+            color: #a0a0a8;
             font-weight: 400;
             min-height: 1.5rem;
         }
@@ -128,8 +128,8 @@
             font-size: 0.9rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #888890;
-            border-top: 1px solid #2a2a30;
+            color: #888892;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
             padding-top: 1rem;
             min-height: 2rem;
         }
@@ -141,7 +141,7 @@
             align-items: center;
             justify-content: center;
             padding: 5rem 2rem;
-            border-bottom: 1px solid #222226;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             position: relative;
             z-index: 2;
         }
@@ -166,23 +166,35 @@
             }
         }
 
-        /* DRAMATIC ART FRAME ELEVATION & SLOW EXAGGERATED HOVER */
+        /* DRAMATIC ART FRAME WITH MOBILE POP-UP ANIMATION & VERY SUBTLE BORDER */
         .art-box {
             position: relative;
             cursor: pointer;
             overflow: hidden;
-            background: #18181c;
-            border: 1px solid #33333a;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1),
+            background: #1a1a1e;
+            border: 1px solid rgba(255, 255, 255, 0.06); /* Softened border line */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            
+            /* SCROLL POP-UP INITIAL STATE */
+            opacity: 0;
+            transform: translateY(40px) scale(0.96);
+            transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
                         border-color 1.5s ease,
                         box-shadow 1.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .art-box:hover {
-            transform: translateY(-16px) scale(1.02);
-            border-color: #666675;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(255, 255, 255, 0.08);
+        /* SCROLL POP-UP TRIGGERED STATE */
+        .art-box.pop-in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* HOVER / ACTIVE ELEVATION OVERRIDE */
+        .art-box.pop-in:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 255, 255, 0.05);
         }
 
         .museum-frame {
@@ -191,7 +203,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #0a0a0c;
+            background: #101012; /* Subtle Inner Matte Contrast */
             min-height: 350px;
         }
 
@@ -206,38 +218,42 @@
 
         .art-box:hover .museum-frame img {
             transform: scale(1.22);
-            filter: brightness(1.2) contrast(1.15);
+            filter: brightness(1.18) contrast(1.12);
         }
 
+        /* CLICK TO ENLARGE BADGE — DISAPPEARS WHEN HOVERED / EXPANDED */
         .click-hint {
             position: absolute;
             bottom: 12px;
             right: 12px;
-            background: rgba(0, 0, 0, 0.8);
-            color: #bbb;
+            background: rgba(15, 15, 18, 0.85);
+            color: #aaa;
             font-size: 0.7rem;
             letter-spacing: 1px;
             padding: 6px 10px;
             text-transform: uppercase;
-            border: 1px solid #333;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             pointer-events: none;
-            transition: opacity 1s ease, background 1s ease;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* HIDE HINT COMPLETELY WHEN IMAGE ENLARGES */
         .art-box:hover .click-hint {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
+            opacity: 0;
+            transform: translateY(8px);
         }
 
-        /* CURATORIAL TEXT PANEL — SLOW SWEEPING FADE UP */
+        /* CURATORIAL TEXT PANEL */
         .info-panel {
             display: flex;
             flex-direction: column;
             gap: 1.25rem;
             opacity: 0;
-            transform: translateY(120px);
-            transition: opacity 2.5s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 2.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(60px);
+            transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .info-panel.visible {
@@ -258,7 +274,7 @@
             font-weight: 400;
             color: #ffffff;
             line-height: 1.2;
-            border-bottom: 1px solid #2a2a30;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             padding-bottom: 0.75rem;
             min-height: 2.5rem;
         }
@@ -275,25 +291,37 @@
             color: #ffffff;
         }
 
-        /* SLOW ELEVATING & ENLARGING INFO BOXES */
+        /* SCROLL POP-UP & SLOW ENLARGING INFO BOXES WITH SUBTLE BORDER */
         .info-block {
             margin-top: 0.5rem;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.018);
             padding: 1.2rem;
-            border-left: 2px solid #33333d;
+            border-left: 2px solid rgba(255, 255, 255, 0.08); /* Soft border line */
             border-radius: 0 4px 4px 0;
             cursor: pointer;
-            transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1),
+            
+            /* MOBILE POP-UP INITIAL STATE */
+            opacity: 0;
+            transform: translateY(30px) scale(0.97);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 1.8s cubic-bezier(0.16, 1, 0.3, 1),
                         border-color 1.5s ease,
                         background 1.5s ease,
                         box-shadow 1.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .info-block:hover, .info-block:active {
+        /* SCROLL POP-UP TRIGGERED STATE */
+        .info-block.pop-in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* HOVER / TOUCH OVERRIDE FOR INFO BOXES */
+        .info-block.pop-in:hover, .info-block.pop-in:active {
             transform: translateY(-8px) scale(1.025);
-            border-left-color: #888899;
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 255, 255, 0.04);
+            border-left-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.03);
         }
 
         .info-block h4 {
@@ -311,14 +339,14 @@
             min-height: 2.5rem;
         }
 
-        /* ENLARGED LIGHTBOX MODAL WITH SLOW DEEP ZOOM */
+        /* LIGHTBOX MODAL WITH MATTE BACKDROP */
         #lightbox {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.94);
+            background: rgba(10, 10, 12, 0.95);
             z-index: 1000;
             display: flex;
             flex-direction: column;
@@ -339,9 +367,9 @@
             max-width: 90vw;
             max-height: 85vh;
             object-fit: contain;
-            border: 1px solid #444;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95);
-            transform: scale(0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+            transform: scale(0.88);
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -387,12 +415,12 @@
 
         [dir="rtl"] .info-block {
             border-left: none;
-            border-right: 2px solid #33333d;
+            border-right: 2px solid rgba(255, 255, 255, 0.08);
             border-radius: 4px 0 0 4px;
         }
 
-        [dir="rtl"] .info-block:hover, [dir="rtl"] .info-block:active {
-            border-right-color: #888899;
+        [dir="rtl"] .info-block.pop-in:hover, [dir="rtl"] .info-block.pop-in:active {
+            border-right-color: rgba(255, 255, 255, 0.3);
         }
 
         [dir="rtl"] .click-hint {
@@ -421,7 +449,7 @@
         </div>
     </nav>
 
-    <!-- FULLSCREEN ENLARGED LIGHTBOX MODAL -->
+    <!-- FULLSCREEN LIGHTBOX MODAL -->
     <div id="lightbox" onclick="closeLightbox()">
         <button id="lightbox-close">&times;</button>
         <img id="lightbox-img" src="" alt="Enlarged Artwork">
@@ -430,7 +458,7 @@
 
     <main id="gallery">
 
-        <!-- HEADER / HERO SECTION WITH BUNDISTS IMAGE -->
+        <!-- HEADER / HERO SECTION -->
         <header class="hero-section">
             <div class="hero-container">
                 <div class="art-box interactive-target" onclick="openLightbox(this)">
@@ -447,7 +475,7 @@
             </div>
         </header>
 
-        <!-- CHAPTER I: SOVIET ERA (WITH SMART FALLBACK FOR SOVIET IMAGE) -->
+        <!-- CHAPTER I: SOVIET ERA -->
         <section class="exhibition-section">
             <div class="exhibition-container">
                 <div class="art-box interactive-target" onclick="openLightbox(this)">
@@ -614,25 +642,34 @@
             });
         }
 
-        // 3. INTERSECTION OBSERVER FOR DEEP SWEEPING SLIDE-UP PANELS
+        // 3. INTERSECTION OBSERVER FOR MOBILE SCROLL POP-UP & PANEL REVEAL
         const observerOptions = {
-            threshold: 0.2
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
         };
 
-        const sectionObserver = new IntersectionObserver((entries) => {
+        const elementObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const infoPanel = entry.target.querySelector('.info-panel');
-                    if (infoPanel && !infoPanel.classList.contains('visible')) {
-                        infoPanel.classList.add('visible');
-                        triggerPanelStreaming(entry.target);
+                    // Trigger Pop-In for Art Box & Info Blocks on Mobile/Desktop Scroll
+                    if (entry.target.classList.contains('art-box') || entry.target.classList.contains('info-block')) {
+                        entry.target.classList.add('pop-in');
+                    }
+
+                    // Trigger Section Panel Slide & Word Streaming
+                    if (entry.target.classList.contains('exhibition-section')) {
+                        const infoPanel = entry.target.querySelector('.info-panel');
+                        if (infoPanel && !infoPanel.classList.contains('visible')) {
+                            infoPanel.classList.add('visible');
+                            triggerPanelStreaming(entry.target);
+                        }
                     }
                 }
             });
         }, observerOptions);
 
-        document.querySelectorAll('.exhibition-section').forEach(section => {
-            sectionObserver.observe(section);
+        document.querySelectorAll('.exhibition-section, .art-box, .info-block').forEach(el => {
+            elementObserver.observe(el);
         });
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -640,6 +677,9 @@
             if (heroSection) {
                 triggerPanelStreaming(heroSection);
             }
+            // Ensure top hero image pops in immediately
+            const heroArtBox = document.querySelector('.hero-section .art-box');
+            if (heroArtBox) heroArtBox.classList.add('pop-in');
         });
 
         // 4. AUDIO PLAYER CONTROLLER
