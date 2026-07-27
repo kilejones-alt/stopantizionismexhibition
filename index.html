@@ -1,484 +1,362 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="site-html">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>STOP ANTIZIONISM EXHIBITION — NYC</title>
+    <meta charset="UTF-8">
+    <title>Exhibition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Helvetica+Neue:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0b0b;
+            --text-color: #f0f0f0;
+            --dim-text: #9a9a9a;
+            --accent: #d4af37;
+            --frame-bg: #f4f1ea;
+            --mouse-x: 50vw;
+            --mouse-y: 30vh;
+        }
 
-  <!-- High-End Typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
-  
-  <!-- GSAP, ScrollTrigger, & Howler Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            padding: 50px;
+        }
 
-  <style>
-    :root {
-      --bg: #050505;
-      --panel: #0a0a0a;
-      --text: #ffffff;
-      --text-dim: #7a7a7a;
-      --border-thin: rgba(255, 255, 255, 0.08);
-      --font-serif: 'Cormorant Garamond', serif;
-      --font-sans: 'Space Grotesk', sans-serif;
-    }
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      border-radius: 0px !important;
-    }
+        .spotlight-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            background: radial-gradient(circle 240px at var(--mouse-x) var(--mouse-y), rgba(0, 0, 0, 0) 0%, rgba(7, 7, 7, 0.82) 65%, rgba(4, 4, 4, 0.96) 100%);
+            z-index: 2;
+        }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: var(--font-sans);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      cursor: crosshair;
-    }
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+            margin-bottom: 60px;
+        }
 
-    /* Interactive Cursor Spotlight */
-    .spotlight-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      background: radial-gradient(circle 600px at var(--mouse-x, 50vw) var(--mouse-y, 50vh), rgba(255, 255, 255, 0.07), transparent 70%);
-      z-index: 9999;
-      mix-blend-mode: screen;
-    }
+        .pill-btn {
+            background: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 8px 22px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
 
-    /* Clean Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 30px 50px;
-      background: transparent;
-      z-index: 100;
-      mix-blend-mode: difference;
-    }
+        .pill-btn:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
 
-    .header-brand {
-      font-family: var(--font-sans);
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-    }
+        .hero-section {
+            text-align: center;
+            position: relative;
+            z-index: 3;
+            margin-bottom: 90px;
+        }
 
-    .audio-btn {
-      font-family: var(--font-sans);
-      font-size: 0.75rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text);
-      background: transparent;
-      border: 1px solid var(--border-thin);
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: background 0.4s ease;
-    }
+        .exhibition-subtitle {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: var(--text-color);
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.5;
+            font-style: italic;
+        }
 
-    .audio-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
+        .gallery-grid {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            position: relative;
+            z-index: 3;
+        }
 
-    /* Hero Section with Bundists Background */
-    .hero {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 10vw;
-      border-bottom: 1px solid var(--border-thin);
-      position: relative;
-      background-image: linear-gradient(rgba(5,5,5,0.82), rgba(5,5,5,0.94)), url('./bundists.jpg');
-      background-size: cover;
-      background-position: center;
-    }
+        .art-box {
+            width: 290px;
+            height: 390px;
+            cursor: pointer;
+            position: relative;
+        }
 
-    .hero-title {
-      font-family: var(--font-serif);
-      font-size: clamp(4rem, 10vw, 11rem);
-      font-weight: 300;
-      line-height: 0.9;
-      letter-spacing: -2px;
-      text-transform: uppercase;
-      margin-bottom: 30px;
-    }
+        .moving-container {
+            width: 100%;
+            height: 100%;
+            animation: floatBoxes 6s ease-in-out infinite alternate;
+        }
 
-    .hero-subtitle {
-      font-size: 1.2rem;
-      font-weight: 300;
-      color: var(--text-dim);
-      max-width: 700px;
-      line-height: 1.5;
-    }
+        .art-box:nth-child(2) .moving-container {
+            animation-delay: -2s;
+        }
 
-    /* Split-Screen Gallery Sections (Snapping Panels) */
-    .gallery-plate {
-      width: 100vw;
-      height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border-bottom: 1px solid var(--border-thin);
-      background: var(--bg);
-    }
+        .art-box:nth-child(3) .moving-container {
+            animation-delay: -4s;
+        }
 
-    .plate-viewport {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10vh 5vw;
-      background: var(--panel);
-      border-right: 1px solid var(--border-thin);
-      position: relative;
-      overflow: hidden;
-      cursor: zoom-in;
-    }
+        .museum-frame {
+            background-color: var(--frame-bg);
+            padding: 14px 14px 40px 14px;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
 
-    .plate-viewport img {
-      max-width: 100%;
-      max-height: 80vh;
-      object-fit: contain;
-      filter: grayscale(100%) brightness(0.8);
-      transition: filter 0.8s ease, transform 0.5s ease;
-      will-change: transform;
-    }
+        .art-box:hover .museum-frame {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8);
+        }
 
-    .plate-viewport:hover img {
-      filter: grayscale(0%) brightness(1);
-      transform: scale(1.02);
-    }
+        .museum-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(15%) contrast(105%);
+            transition: filter 0.4s ease;
+        }
 
-    .plate-info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 6vw;
-      background: var(--bg);
-    }
+        .art-box:hover img {
+            filter: grayscale(0%) contrast(100%);
+        }
 
-    .info-title {
-      font-family: var(--font-serif);
-      font-size: clamp(2.5rem, 4vw, 4rem);
-      font-weight: 300;
-      line-height: 1.1;
-      margin-bottom: 30px;
-      color: var(--text);
-    }
+        @keyframes floatBoxes {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-12px) rotate(0.4deg); }
+        }
 
-    .info-description {
-      font-size: 1rem;
-      font-weight: 300;
-      line-height: 1.8;
-      color: var(--text-dim);
-      margin-bottom: 40px;
-    }
+        .expanded-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 5, 5, 0.97);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            z-index: 10;
+        }
 
-    .info-metadata {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      border-top: 1px solid var(--border-thin);
-      padding-top: 30px;
-    }
+        .expanded-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-    .meta-label {
-      display: block;
-      font-size: 0.65rem;
-      letter-spacing: 3px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
+        .modal-content {
+            display: flex;
+            width: 85vw;
+            height: 80vh;
+            gap: 70px;
+            align-items: center;
+        }
 
-    .meta-val {
-      font-size: 0.95rem;
-      color: var(--text);
-    }
+        .modal-frame {
+            background-color: var(--frame-bg);
+            padding: 20px 20px 55px 20px;
+            width: 50%;
+            height: 85%;
+            box-sizing: border-box;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
 
-    /* Lightbox Modal (Click Image to Light Up Full Color) */
-    .lightbox-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(3, 3, 3, 0.96);
-      backdrop-filter: blur(12px);
-      z-index: 100000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
+        .modal-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
 
-    .lightbox-modal.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+        .modal-text-pane {
+            width: 50%;
+            color: var(--text-color);
+        }
 
-    .lightbox-content {
-      position: relative;
-      max-width: 90vw;
-      max-height: 90vh;
-      text-align: center;
-    }
+        .modal-text-pane h3 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 2.6rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
 
-    .lightbox-content img {
-      max-width: 85vw;
-      max-height: 82vh;
-      object-fit: contain;
-      filter: grayscale(0%) brightness(1.05) contrast(1.05);
-      animation: zoomInLight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
+        .modal-date {
+            color: var(--dim-text);
+            font-size: 0.95rem;
+            letter-spacing: 3px;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+        }
 
-    .lightbox-close {
-      position: absolute;
-      top: -45px;
-      right: 0;
-      font-family: var(--font-sans);
-      font-size: 0.8rem;
-      letter-spacing: 3px;
-      color: var(--text);
-      background: transparent;
-      border: 1px solid var(--border-thin);
-      padding: 8px 16px;
-      cursor: pointer;
-      text-transform: uppercase;
-      transition: background 0.3s;
-    }
+        .typewriter-text {
+            font-size: 1.15rem;
+            line-height: 1.85;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
 
-    .lightbox-close:hover {
-      background: rgba(255,255,255,0.15);
-    }
-
-    @keyframes zoomInLight {
-      from { transform: scale(0.92); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    @media (max-width: 960px) {
-      .gallery-plate { grid-template-columns: 1fr; height: auto; }
-      .plate-viewport { height: 70vh; border-right: none; border-bottom: 1px solid var(--border-thin); }
-      .plate-info { padding: 10vh 6vw; }
-      header { padding: 20px; }
-      .hero { padding: 0 6vw; }
-    }
-  </style>
+        [dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Dynamic Cursor Spotlight -->
-  <div class="spotlight-overlay" id="spotlight"></div>
+    <div class="grain-overlay"></div>
+    <div class="spotlight-overlay"></div>
 
-  <!-- Lightbox Modal -->
-  <div class="lightbox-modal" id="lightboxModal">
-    <div class="lightbox-content">
-      <button class="lightbox-close" onclick="closeLightbox()">CLOSE [ &times; ]</button>
-      <img id="lightboxImg" src="" alt="Enlarged Exhibit View" />
-    </div>
-  </div>
+    <header class="gallery-header">
+        <div class="music-control">Audio Player</div>
+        <button id="hebrew-toggle" class="pill-btn" onclick="toggleHebrew()">עברית</button>
+    </header>
 
-  <!-- HEADER -->
-  <header>
-    <div class="header-brand">STOP ANTIZIONISM EXHIBITION</div>
-    <button class="audio-btn" id="audioBtn" onclick="toggleAudio()">SOUND: OFF</button>
-  </header>
+    <section class="hero-section">
+        <h2 class="exhibition-subtitle" data-en="First of its kind exhibition exploring antizionism as Jew-hatred" data-he="תערוכה ראשונה מסוגה החוקרת את האנטי-ציונות כשנאת יהודים">
+            First of its kind exhibition exploring antizionism as Jew-hatred
+        </h2>
+    </section>
 
-  <!-- HERO SECTION -->
-  <section class="hero">
-    <div class="hero-content reveal-text">
-      <h1 class="hero-title">Stop Anti-Zionism</h1>
-      <p class="hero-subtitle">
-        An avant-garde digital catalog examining historical print media, political art, and regional graphics.
-      </p>
-    </div>
-  </section>
-
-  <!-- EXHIBIT PLATE 01 -->
-  <section class="gallery-plate">
-    <div class="plate-viewport" onclick="openLightbox('./j.jpg')">
-      <img src="./j.jpg" class="parallax-img" alt="Hashomer Hatzair Poster" />
-    </div>
-    <div class="plate-info reveal-text">
-      <h2 class="info-title">Hashomer Hatzair & Soviet Alignment</h2>
-      <p class="info-description">
-        Created in 1941 in Mandatory Palestine, this event graphic employs Soviet constructivist style (specifically referencing Vera Mukhina’s landmark Worker and Kolkhoz Woman motif). It documents early Left-Zionist ideological alignment with Soviet socialist realism prior to the USSR's official anti-Zionist turn post-1967.
-      </p>
-      <div class="info-metadata">
-        <div>
-          <span class="meta-label">Origin / Date</span>
-          <span class="meta-val">1941 / Mandatory Palestine</span>
+    <main class="gallery-grid">
+        <div class="art-box" onclick="expandPiece(this)" 
+             data-name-en="Piece Title One" data-name-he="כותרת יצירה אחת"
+             data-date-en="2026" data-date-he="2026"
+             data-bio-en="Biographical and historical context for the first piece goes here in clean minimalist prose." data-bio-he="הקשר ביוגרפי והיסטורי ליצירה הראשונה מופיע כאן בפרוזה מינימליסטית נקייה.">
+            <div class="moving-container">
+                <div class="museum-frame">
+                    <img src="image1.jpg" alt="Exhibition Piece">
+                </div>
+            </div>
         </div>
-        <div>
-          <span class="meta-label">Publisher</span>
-          <span class="meta-val">Hashomer Hatzair Press</span>
+        
+        <div class="art-box" onclick="expandPiece(this)" 
+             data-name-en="Piece Title Two" data-name-he="כותרת יצירה שתיים"
+             data-date-en="2026" data-date-he="2026"
+             data-bio-en="Biographical and historical context for the second piece goes here." data-bio-he="הקשר ביוגרפי והיסטורי ליצירה השנייה מופיע כאן.">
+            <div class="moving-container">
+                <div class="museum-frame">
+                    <img src="image2.jpg" alt="Exhibition Piece">
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- EXHIBIT PLATE 02 -->
-  <section class="gallery-plate">
-    <div class="plate-viewport" onclick="openLightbox('./mencarryweapons_pppa.jpg')">
-      <img src="./mencarryweapons_pppa.jpg" class="parallax-img" alt="DFLP Revolutionary Poster" />
-    </div>
-    <div class="plate-info reveal-text">
-      <h2 class="info-title">DFLP Armed Struggle Messaging</h2>
-      <p class="info-description">
-        Published by the Democratic Front for the Liberation of Palestine (DFLP), this print incorporates high-contrast woodcut illustration with Arabic verse ("Men carry weapons and continue the path"). It demonstrates how 20th-century Arab political movements adapted Third-Worldist revolutionary aesthetics.
-      </p>
-      <div class="info-metadata">
-        <div>
-          <span class="meta-label">Origin / Date</span>
-          <span class="meta-val">c. 1970s / Regional Arab Press</span>
+        <div class="art-box" onclick="expandPiece(this)" 
+             data-name-en="Piece Title Three" data-name-he="כותרת יצירה שלוש"
+             data-date-en="2026" data-date-he="2026"
+             data-bio-en="Biographical and historical context for the third piece goes here." data-bio-he="הקשר ביוגרפי והיסטורי ליצירה השלישית מופיע כאן.">
+            <div class="moving-container">
+                <div class="museum-frame">
+                    <img src="image3.jpg" alt="Exhibition Piece">
+                </div>
+            </div>
         </div>
-        <div>
-          <span class="meta-label">Organization</span>
-          <span class="meta-val">DFLP Media Division</span>
+    </main>
+
+    <div id="expanded-view" class="expanded-modal" onclick="closeExpanded(event)">
+        <div class="modal-content">
+            <div class="modal-frame">
+                <img id="modal-img" src="" alt="Zoomed Piece">
+            </div>
+            <div class="modal-text-pane">
+                <h3 id="modal-title"></h3>
+                <p id="modal-date" class="modal-date"></p>
+                <div id="modal-bio" class="typewriter-text"></div>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
 
-  <!-- EXHIBIT PLATE 03 -->
-  <section class="gallery-plate">
-    <div class="plate-viewport" onclick="openLightbox('./HappyThanksgiving_pppa.jpg')">
-      <img src="./HappyThanksgiving_pppa.jpg" class="parallax-img" alt="Happy Thanksgiving America Love Gaza Poster" />
-    </div>
-    <div class="plate-info reveal-text">
-      <h2 class="info-title">Western Anti-Imperialist Satire</h2>
-      <p class="info-description">
-        Illustrated by American political cartoonist Dwayne Booth (Mr. Fish), this graphic represents modern Western grassroots anti-Zionist commentary. The piece utilizes stark editorial caricature to link American cultural holidays directly to foreign policy critique.
-      </p>
-      <div class="info-metadata">
-        <div>
-          <span class="meta-label">Artist</span>
-          <span class="meta-val">Mr. Fish (Dwayne Booth)</span>
-        </div>
-        <div>
-          <span class="meta-label">Medium</span>
-          <span class="meta-val">Editorial Satirical Print</span>
-        </div>
-      </div>
-    </div>
-  </section>
+    <script>
+        let currentLang = 'en';
 
-  <!-- INTERACTION & AUDIO ENGINE -->
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
+        window.addEventListener('mousemove', (e) => {
+            document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+            document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+        });
 
-    // 1. Cursor Spotlight & Image Parallax Effect
-    const spotlight = document.getElementById('spotlight');
-    const parallaxImages = document.querySelectorAll('.parallax-img');
+        function toggleHebrew() {
+            const htmlTag = document.getElementById('site-html');
+            const toggleBtn = document.getElementById('hebrew-toggle');
+            const subtitle = document.querySelector('.exhibition-subtitle');
 
-    window.addEventListener('mousemove', (e) => {
-      spotlight.style.setProperty('--mouse-x', e.clientX + 'px');
-      spotlight.style.setProperty('--mouse-y', e.clientY + 'px');
-
-      const xPos = (e.clientX / window.innerWidth - 0.5) * 30;
-      const yPos = (e.clientY / window.innerHeight - 0.5) * 30;
-
-      gsap.to(parallaxImages, {
-        x: xPos,
-        y: yPos,
-        ease: "power2.out",
-        duration: 1.2
-      });
-    });
-
-    // 2. Lightbox Controls
-    const modal = document.getElementById('lightboxModal');
-    const lightboxImg = document.getElementById('lightboxImg');
-
-    function openLightbox(src) {
-      lightboxImg.src = src;
-      modal.classList.add('active');
-    }
-
-    function closeLightbox() {
-      modal.classList.remove('active');
-    }
-
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeLightbox();
-    });
-
-    // 3. Smooth Section Snapping (Like Lumen page transitions)
-    gsap.utils.toArray('.gallery-plate').forEach((plate) => {
-      ScrollTrigger.create({
-        trigger: plate,
-        start: 'top top',
-        snap: 1
-      });
-    });
-
-    // 4. Audio Engine (Auto-starts on first interaction: click, scroll, or mousemove)
-    const ambientAudio = new Howl({
-      src: ['./The Seasons, Op. 37a - VI. June_ Barcarolle.mp3'],
-      loop: true,
-      volume: 0.4,
-      html5: true
-    });
-
-    let isAudioActive = false;
-    const btn = document.getElementById('audioBtn');
-
-    function initAudio() {
-      if (!isAudioActive) {
-        ambientAudio.play();
-        if (ambientAudio.playing()) {
-          isAudioActive = true;
-          btn.textContent = 'SOUND: ON';
-          window.removeEventListener('click', initAudio);
-          window.removeEventListener('scroll', initAudio);
-          window.removeEventListener('mousemove', initAudio);
+            if (currentLang === 'en') {
+                currentLang = 'he';
+                htmlTag.setAttribute('dir', 'rtl');
+                toggleBtn.innerText = 'English';
+                subtitle.innerText = subtitle.getAttribute('data-he');
+            } else {
+                currentLang = 'en';
+                htmlTag.removeAttribute('dir');
+                toggleBtn.innerText = 'עברית';
+                subtitle.innerText = subtitle.getAttribute('data-en');
+            }
         }
-      }
-    }
 
-    function toggleAudio() {
-      if (ambientAudio.playing()) {
-        ambientAudio.pause();
-        btn.textContent = 'SOUND: OFF';
-      } else {
-        ambientAudio.play();
-        isAudioActive = true;
-        btn.textContent = 'SOUND: ON';
-      }
-    }
+        function expandPiece(element) {
+            const modal = document.getElementById('expanded-view');
+            const modalImg = document.getElementById('modal-img');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDate = document.getElementById('modal-date');
+            const modalBio = document.getElementById('modal-bio');
 
-    window.addEventListener('click', initAudio, { once: true });
-    window.addEventListener('scroll', initAudio, { once: true });
-    window.addEventListener('mousemove', initAudio, { once: true });
+            const imgSrc = element.querySelector('img').src;
+            const title = element.getAttribute(`data-name-${currentLang}`);
+            const date = element.getAttribute(`data-date-${currentLang}`);
+            const bio = element.getAttribute(`data-bio-${currentLang}`);
 
-    ScrollTrigger.create({
-      trigger: 'body',
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: () => {
-        if (isAudioActive && !ambientAudio.playing()) {
-          ambientAudio.play();
+            modalImg.src = imgSrc;
+            modalTitle.innerText = title;
+            modalDate.innerText = date;
+            modalBio.innerHTML = '';
+
+            modal.classList.add('active');
+
+            let i = 0;
+            function typeWriter() {
+                if (i < bio.length) {
+                    modalBio.innerHTML += bio.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 22);
+                }
+            }
+            typeWriter();
         }
-      }
-    });
-  </script>
+
+        function closeExpanded(event) {
+            if (event.target.id === 'expanded-view') {
+                document.getElementById('expanded-view').classList.remove('active');
+            }
+        }
+    </script>
 </body>
 </html>
