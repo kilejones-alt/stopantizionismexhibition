@@ -2,275 +2,342 @@
 
 let currentLang = localStorage.getItem('stopazLanguage') || 'en';
 let isPlaying = false;
-const STREAM_SPEED_TITLE = 42;
-const STREAM_SPEED_BODY = 26;
+const STREAM_SPEED_TITLE = 68;
+const STREAM_SPEED_LABEL = 48;
+const STREAM_SPEED_BODY = 40;
 const pageCurtain = document.createElement('div');
 pageCurtain.id = 'page-curtain';
-pageCurtain.setAttribute('aria-hidden','true');
+pageCurtain.setAttribute('aria-hidden', 'true');
 document.body.prepend(pageCurtain);
 
-/* AMBIENT LIGHT */
+/* AMBIENT LIGHT — same gliding response as the exhibition */
 const ambientLight = document.getElementById('ambient-light');
-let targetX = innerWidth / 2, targetY = innerHeight / 2;
-let currentX = targetX, currentY = targetY;
-addEventListener('mousemove', e => { targetX = e.clientX; targetY = e.clientY; }, {passive:true});
-function animateAmbient(){
-  if(ambientLight){
-    currentX += (targetX-currentX)*.04;
-    currentY += (targetY-currentY)*.04;
-    ambientLight.style.setProperty('--cursor-x', currentX+'px');
-    ambientLight.style.setProperty('--cursor-y', currentY+'px');
+let targetX = innerWidth / 2;
+let targetY = innerHeight / 2;
+let currentX = targetX;
+let currentY = targetY;
+addEventListener('mousemove', event => {
+  targetX = event.clientX;
+  targetY = event.clientY;
+}, { passive: true });
+function animateAmbient() {
+  if (ambientLight) {
+    currentX += (targetX - currentX) * 0.04;
+    currentY += (targetY - currentY) * 0.04;
+    ambientLight.style.setProperty('--cursor-x', currentX + 'px');
+    ambientLight.style.setProperty('--cursor-y', currentY + 'px');
   }
   requestAnimationFrame(animateAmbient);
 }
 animateAmbient();
 
-/* TEXT STREAMING */
-function textFor(el, lang=currentLang){ return el.getAttribute('data-'+lang) || el.textContent || ''; }
-function stopStreaming(el){
-  if(el && el.typeTimer){ clearTimeout(el.typeTimer); el.typeTimer = null; }
-  if(el) el.classList.remove('typing-caret');
+/* SLOW, MEASURED LETTER-BY-LETTER REVEALS */
+function textFor(element, lang = currentLang) {
+  return element.getAttribute('data-' + lang) || element.dataset.originalText || element.textContent || '';
 }
-function streamWords(el, text, speed=STREAM_SPEED_BODY, delay=0){
-  if(!el || !text) return Promise.resolve();
-  stopStreaming(el);
-  el.textContent = '';
-  el.classList.add('typing-caret');
+function stopStreaming(element) {
+  if (element && element.typeTimer) {
+    clearTimeout(element.typeTimer);
+    element.typeTimer = null;
+  }
+  if (element) element.classList.remove('typing-caret');
+}
+function streamWords(element, text, speed = STREAM_SPEED_BODY, delay = 0) {
+  if (!element || !text) return Promise.resolve();
+  stopStreaming(element);
+  element.textContent = '';
+  element.classList.add('typing-caret');
   const letters = Array.from(text);
   let index = 0;
   return new Promise(resolve => {
     const tick = () => {
-      if(index < letters.length){
-        el.textContent += letters[index++];
-        const punctuation = /[.,;:!?—]/.test(letters[index-1]) ? 55 : 0;
-        el.typeTimer = setTimeout(tick, speed + punctuation);
+      if (index < letters.length) {
+        const character = letters[index++];
+        element.textContent += character;
+        let pause = speed;
+        if (/[,;:]/.test(character)) pause += 70;
+        if (/[.!?—]/.test(character)) pause += 120;
+        if (character === ' ') pause = Math.max(18, speed * 0.62);
+        element.typeTimer = setTimeout(tick, pause);
       } else {
-        el.classList.remove('typing-caret');
-        el.dataset.streamed = '1';
+        element.classList.remove('typing-caret');
+        element.dataset.streamed = '1';
         resolve();
       }
     };
-    el.typeTimer = setTimeout(tick, delay);
+    element.typeTimer = setTimeout(tick, delay);
   });
 }
-function markStreamTargets(){
-  document.querySelectorAll('.era-title,.exhibit-title,.exhibit-meta strong,.exhibit-meta span,.info-block h3,.info-block p,.placeholder-badge').forEach(el => el.classList.add('stream-text'));
-  document.querySelectorAll('.stream-text').forEach(el => {
-    if(!el.dataset.originalText) el.dataset.originalText = el.textContent.trim();
+function markStreamTargets() {
+  document.querySelectorAll(
+    '.era-title,.exhibit-title,.exhibit-meta strong,.exhibit-meta span,.info-block h3,.info-block p,.placeholder-badge'
+  ).forEach(element => element.classList.add('stream-text'));
+  document.querySelectorAll('.stream-text').forEach(element => {
+    if (!element.dataset.originalText) element.dataset.originalText = element.textContent.trim();
   });
 }
-function resetStream(el){ stopStreaming(el); el.textContent=''; delete el.dataset.streamed; }
-function streamElement(el, delay=0, speed){
-  const text = textFor(el);
-  return streamWords(el, text, speed || (el.matches('h1,h2,.gallery-eyebrow,.era-title,.exhibit-title') ? STREAM_SPEED_TITLE : STREAM_SPEED_BODY), delay);
+function resetStream(element) {
+  stopStreaming(element);
+  element.textContent = '';
+  delete element.dataset.streamed;
 }
-function streamHeader(){
-  document.querySelectorAll('.home-intro .stream-text,.gallery-heading .stream-text').forEach((el,i)=>streamElement(el, i*180, STREAM_SPEED_TITLE));
+function speedFor(element) {
+  if (element.matches('h1,h2,.gallery-title,.era-title,.exhibit-title')) return STREAM_SPEED_TITLE;
+  if (element.matches('.home-kicker,.gallery-eyebrow,.exhibit-meta strong,.info-block h3,.placeholder-badge')) return STREAM_SPEED_LABEL;
+  return STREAM_SPEED_BODY;
 }
-function revealEra(card, index=0){
-  if(card.dataset.revealed) return;
-  card.dataset.revealed='1';
-  setTimeout(()=>card.classList.add('pop-in'), 120 + index*145);
-  const title=card.querySelector('.era-title');
-  if(title) setTimeout(()=>streamElement(title,0,34), 420 + index*145);
+function streamElement(element, delay = 0, speed = speedFor(element)) {
+  return streamWords(element, textFor(element), speed, delay);
 }
-function revealExhibit(card, index=0){
-  if(card.dataset.revealed) return;
-  card.dataset.revealed='1';
-  setTimeout(()=>card.classList.add('pop-in'), 80 + index*120);
-  const title=card.querySelector('.exhibit-title');
-  if(title) setTimeout(()=>streamElement(title,0,36), 360 + index*120);
-  const metaTargets=card.querySelectorAll('.exhibit-meta .stream-text');
-  metaTargets.forEach((el,i)=>setTimeout(()=>streamElement(el,0,24), 620 + index*120 + i*100));
-  card.querySelectorAll('.info-block').forEach((block,i)=>{
-    setTimeout(()=>{
-      block.classList.add('pop-in');
-      const heading=block.querySelector('h3');
-      const para=block.querySelector('p');
-      if(heading) streamElement(heading,0,25);
-      if(para) streamElement(para,160,24);
-    }, 900 + index*120 + i*340);
-  });
-  const badge=card.querySelector('.placeholder-badge');
-  if(badge) setTimeout(()=>streamElement(badge,0,24), 2050 + index*120);
-}
-
-const revealObserver = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(!entry.isIntersecting) return;
-    if(entry.target.classList.contains('era-card')) revealEra(entry.target,[...document.querySelectorAll('.era-card')].indexOf(entry.target));
-    if(entry.target.classList.contains('exhibit-card')) revealExhibit(entry.target,[...document.querySelectorAll('.exhibit-card')].indexOf(entry.target));
-  });
-},{threshold:.11,rootMargin:'0px 0px -45px 0px'});
-
-/* AUDIO: FIRST INTERACTION START + CONTINUITY BETWEEN PAGES */
-const bgAudio = document.getElementById('bg-audio');
-const audioBtn = document.getElementById('audio-btn');
-const AUDIO_PREF='stopazAudioPreference';
-const AUDIO_TIME='stopazAudioTime';
-if(bgAudio){ bgAudio.volume=.46; }
-function updateAudioBtnText(){
-  if(!audioBtn) return;
-  const labels={
-    en:isPlaying?'AUDIO: ON':'AUDIO: OFF',
-    he:isPlaying?'שמע: מופעל':'שמע: כבוי',
-    ru:isPlaying?'ЗВУК: ВКЛ':'ЗВУК: ВЫКЛ'
-  };
-  audioBtn.textContent=labels[currentLang];
-  audioBtn.classList.toggle('is-playing',isPlaying);
-}
-function saveAudioPosition(){
-  if(bgAudio && Number.isFinite(bgAudio.currentTime)) sessionStorage.setItem(AUDIO_TIME,String(bgAudio.currentTime));
-}
-function restoreAudioPosition(){
-  if(!bgAudio) return;
-  const saved=parseFloat(sessionStorage.getItem(AUDIO_TIME)||'0');
-  if(Number.isFinite(saved) && saved>0){
-    try{ bgAudio.currentTime=saved; }catch(_e){}
+async function streamHeader() {
+  const elements = [...document.querySelectorAll('.home-intro .stream-text,.gallery-heading .stream-text')];
+  for (let index = 0; index < elements.length; index += 1) {
+    if (index > 0) await new Promise(resolve => setTimeout(resolve, 320));
+    await streamElement(elements[index], index === 0 ? 180 : 0);
   }
 }
-async function startAudio(persist=true){
-  if(!bgAudio) return false;
-  if(persist) localStorage.setItem(AUDIO_PREF,'on');
-  try{
+function revealEra(card, index = 0) {
+  if (card.dataset.revealed) return;
+  card.dataset.revealed = '1';
+  const entranceDelay = 1120 + index * 430;
+  setTimeout(() => card.classList.add('pop-in'), entranceDelay);
+  const title = card.querySelector('.era-title');
+  if (title) setTimeout(() => streamElement(title), entranceDelay + 520);
+}
+function revealExhibit(card, index = 0) {
+  if (card.dataset.revealed) return;
+  card.dataset.revealed = '1';
+  const entranceDelay = 240 + index * 310;
+  setTimeout(() => card.classList.add('pop-in'), entranceDelay);
+
+  const title = card.querySelector('.exhibit-title');
+  if (title) setTimeout(() => streamElement(title), entranceDelay + 480);
+
+  const meta = card.querySelector('.exhibit-meta');
+  const metaTargets = card.querySelectorAll('.exhibit-meta .stream-text');
+  setTimeout(() => {
+    if (meta) meta.classList.add('meta-visible');
+    metaTargets.forEach((element, metaIndex) => {
+      setTimeout(() => streamElement(element), metaIndex * 190);
+    });
+  }, entranceDelay + 880);
+
+  card.querySelectorAll('.info-block').forEach((block, blockIndex) => {
+    setTimeout(() => {
+      block.classList.add('pop-in');
+      const heading = block.querySelector('h3');
+      const paragraph = block.querySelector('p');
+      if (heading) streamElement(heading);
+      if (paragraph) streamElement(paragraph, 280);
+    }, entranceDelay + 1420 + blockIndex * 760);
+  });
+
+  const badge = card.querySelector('.placeholder-badge');
+  if (badge) setTimeout(() => streamElement(badge), entranceDelay + 3900);
+}
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    if (entry.target.classList.contains('era-card')) {
+      const cards = [...document.querySelectorAll('.era-card')];
+      revealEra(entry.target, cards.indexOf(entry.target));
+    }
+    if (entry.target.classList.contains('exhibit-card')) {
+      const cards = [...document.querySelectorAll('.exhibit-card')];
+      revealExhibit(entry.target, cards.indexOf(entry.target));
+    }
+    revealObserver.unobserve(entry.target);
+  });
+}, { threshold: 0.11, rootMargin: '0px 0px -45px 0px' });
+
+/* AUDIO — immediate attempt, first-interaction start, and position continuity */
+const bgAudio = document.getElementById('bg-audio');
+const audioBtn = document.getElementById('audio-btn');
+const AUDIO_PREF = 'stopazAudioPreference';
+const AUDIO_TIME = 'stopazAudioTime';
+if (bgAudio) bgAudio.volume = 0.46;
+function updateAudioBtnText() {
+  if (!audioBtn) return;
+  const labels = {
+    en: isPlaying ? 'AUDIO: ON' : 'AUDIO: OFF',
+    he: isPlaying ? 'שמע: מופעל' : 'שמע: כבוי',
+    ru: isPlaying ? 'ЗВУК: ВКЛ' : 'ЗВУК: ВЫКЛ'
+  };
+  audioBtn.textContent = labels[currentLang];
+  audioBtn.classList.toggle('is-playing', isPlaying);
+}
+function saveAudioPosition() {
+  if (bgAudio && Number.isFinite(bgAudio.currentTime)) {
+    sessionStorage.setItem(AUDIO_TIME, String(bgAudio.currentTime));
+  }
+}
+function restoreAudioPosition() {
+  if (!bgAudio) return;
+  const saved = parseFloat(sessionStorage.getItem(AUDIO_TIME) || '0');
+  if (Number.isFinite(saved) && saved > 0) {
+    try { bgAudio.currentTime = saved; } catch (_error) { /* browser decides */ }
+  }
+}
+async function startAudio(persist = true) {
+  if (!bgAudio) return false;
+  if (persist) localStorage.setItem(AUDIO_PREF, 'on');
+  try {
     await bgAudio.play();
-    isPlaying=true;
+    isPlaying = true;
     updateAudioBtnText();
     return true;
-  }catch(_e){
-    isPlaying=false;
+  } catch (_error) {
+    isPlaying = false;
     updateAudioBtnText();
     return false;
   }
 }
-function stopAudio(persist=true){
-  if(!bgAudio) return;
+function stopAudio(persist = true) {
+  if (!bgAudio) return;
   saveAudioPosition();
   bgAudio.pause();
-  isPlaying=false;
-  if(persist) localStorage.setItem(AUDIO_PREF,'off');
+  isPlaying = false;
+  if (persist) localStorage.setItem(AUDIO_PREF, 'off');
   updateAudioBtnText();
 }
-function toggleAudio(){
-  if(!bgAudio) return;
-  if(!bgAudio.paused || isPlaying) stopAudio(true); else startAudio(true);
+function toggleAudio() {
+  if (!bgAudio) return;
+  if (!bgAudio.paused || isPlaying) stopAudio(true);
+  else startAudio(true);
 }
-function firstInteractionAudio(e){
-  if(e.target.closest && e.target.closest('#audio-btn')) return;
-  if(localStorage.getItem(AUDIO_PREF)==='off') return;
-  startAudio(true);
-  removeEventListener('pointerdown',firstInteractionAudio,true);
-  removeEventListener('keydown',firstInteractionAudio,true);
+async function firstInteractionAudio(event) {
+  if (event.target.closest && event.target.closest('#audio-btn')) return;
+  if (localStorage.getItem(AUDIO_PREF) === 'off') return;
+  const started = await startAudio(true);
+  if (started) {
+    removeEventListener('pointerdown', firstInteractionAudio, true);
+    removeEventListener('keydown', firstInteractionAudio, true);
+  }
 }
-function setupAudio(){
-  if(!bgAudio) return;
+function armFirstInteractionAudio() {
+  addEventListener('pointerdown', firstInteractionAudio, true);
+  addEventListener('keydown', firstInteractionAudio, true);
+}
+function setupAudio() {
+  if (!bgAudio) return;
   restoreAudioPosition();
-  bgAudio.addEventListener('play',()=>{isPlaying=true;updateAudioBtnText()});
-  bgAudio.addEventListener('pause',()=>{isPlaying=false;updateAudioBtnText()});
-  setInterval(()=>{if(!bgAudio.paused) saveAudioPosition()},1500);
-  const pref=localStorage.getItem(AUDIO_PREF);
-  if(pref==='on'){
-    startAudio(false).then(ok=>{
-      if(!ok){
-        addEventListener('pointerdown',firstInteractionAudio,true);
-        addEventListener('keydown',firstInteractionAudio,true);
-      }
+  bgAudio.addEventListener('play', () => { isPlaying = true; updateAudioBtnText(); });
+  bgAudio.addEventListener('pause', () => { isPlaying = false; updateAudioBtnText(); });
+  setInterval(() => { if (!bgAudio.paused) saveAudioPosition(); }, 1500);
+
+  const preference = localStorage.getItem(AUDIO_PREF);
+  if (preference !== 'off') {
+    startAudio(preference !== 'on').then(started => {
+      if (!started) armFirstInteractionAudio();
     });
-  }else if(pref!== 'off'){
-    addEventListener('pointerdown',firstInteractionAudio,true);
-    addEventListener('keydown',firstInteractionAudio,true);
   }
   updateAudioBtnText();
 }
-addEventListener('pagehide',saveAudioPosition);
+addEventListener('pagehide', saveAudioPosition);
 
 /* LANGUAGE */
-function updateImageHints(){
-  const hints={en:'Click to enlarge',he:'לחץ להגדלה',ru:'Увеличить'};
-  document.querySelectorAll('.exhibit-image-button').forEach(btn=>btn.dataset.hint=hints[currentLang]);
+function updateImageHints() {
+  const hints = { en: 'Click to enlarge', he: 'לחץ להגדלה', ru: 'Увеличить' };
+  document.querySelectorAll('.exhibit-image-button').forEach(button => {
+    button.dataset.hint = hints[currentLang];
+  });
 }
-function setLanguage(lang, animate=true){
-  currentLang=lang;
-  localStorage.setItem('stopazLanguage',lang);
-  document.documentElement.lang=lang;
-  document.documentElement.dir=lang==='he'?'rtl':'ltr';
-  ['en','he','ru'].forEach(l=>{const b=document.getElementById('btn-'+l);if(b)b.classList.toggle('active',l===lang)});
+function setLanguage(lang, animate = true) {
+  currentLang = lang;
+  localStorage.setItem('stopazLanguage', lang);
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+  ['en', 'he', 'ru'].forEach(code => {
+    const button = document.getElementById('btn-' + code);
+    if (button) button.classList.toggle('active', code === lang);
+  });
   updateAudioBtnText();
   updateImageHints();
-  document.querySelectorAll('[data-en][data-he][data-ru]').forEach(el=>{
-    const text=textFor(el,lang);
-    if(!text || el.id==='audio-btn') return;
-    if(el.classList.contains('stream-text') && animate && (el.dataset.streamed==='1' || el.closest('.gallery-heading,.home-intro,.pop-in'))){
-      streamWords(el,text,el.matches('h1,h2,.gallery-eyebrow,.era-title,.exhibit-title')?34:22);
-    }else if(!el.classList.contains('stream-text') || !animate){
-      el.textContent=text;
+  document.querySelectorAll('[data-en][data-he][data-ru]').forEach(element => {
+    const text = textFor(element, lang);
+    if (!text || element.id === 'audio-btn') return;
+    if (
+      element.classList.contains('stream-text') &&
+      animate &&
+      (element.dataset.streamed === '1' || element.closest('.gallery-heading,.home-intro,.pop-in'))
+    ) {
+      streamWords(element, text, speedFor(element));
+    } else if (!element.classList.contains('stream-text') || !animate) {
+      element.textContent = text;
     }
   });
 }
 
 /* LIGHTBOX */
-function openLightbox(button){
-  const img=button.querySelector('img');
-  const lb=document.getElementById('lightbox');
-  const lbImg=document.getElementById('lightbox-img');
-  const cap=document.getElementById('lightbox-caption');
-  if(!img||!lb||!lbImg) return;
-  lbImg.src=img.currentSrc||img.src;
-  lbImg.alt=img.alt;
-  if(cap) cap.textContent=img.alt;
-  lb.classList.add('active');
-  document.body.style.overflow='hidden';
+function openLightbox(button) {
+  const image = button.querySelector('img');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightbox-img');
+  const caption = document.getElementById('lightbox-caption');
+  if (!image || !lightbox || !lightboxImage) return;
+  lightboxImage.src = image.currentSrc || image.src;
+  lightboxImage.alt = image.alt;
+  if (caption) caption.textContent = image.alt;
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
-function closeLightbox(){
-  const lb=document.getElementById('lightbox');
-  if(lb) lb.classList.remove('active');
-  document.body.style.overflow='';
+function closeLightbox() {
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox) lightbox.classList.remove('active');
+  document.body.style.overflow = '';
 }
-addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeLightbox();
+});
 
-/* SUBTLE CARD TILT */
-function setupTilt(){
-  if(matchMedia('(hover:hover) and (pointer:fine)').matches===false) return;
-  document.querySelectorAll('.era-card,.exhibit-card').forEach(card=>{
-    card.addEventListener('pointermove',e=>{
-      const r=card.getBoundingClientRect();
-      const x=(e.clientX-r.left)/r.width-.5;
-      const y=(e.clientY-r.top)/r.height-.5;
-      card.style.setProperty('--ry',(x*2.2)+'deg');
-      card.style.setProperty('--rx',(-y*1.6)+'deg');
-    });
-    card.addEventListener('pointerleave',()=>{
-      card.style.setProperty('--ry','0deg');
-      card.style.setProperty('--rx','0deg');
-    });
-  });
-}
+/* PROFESSIONAL INTERNAL PAGE TRANSITIONS */
+let doorTransitionActive = false;
+function runDoorTransition(card, href) {
+  if (doorTransitionActive) return;
+  doorTransitionActive = true;
+  saveAudioPosition();
+  document.body.classList.add('door-transitioning');
+  card.classList.add('door-flipping');
+  card.setAttribute('aria-busy', 'true');
 
-/* SOPHISTICATED INTERNAL PAGE TRANSITIONS */
-function setupPageTransitions(){
-  document.addEventListener('click',e=>{
-    const link=e.target.closest('a[href]');
-    if(!link || e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    const href=link.getAttribute('href');
-    if(!href || href.startsWith('#') || link.target==='_blank' || /^https?:/i.test(href) || href.startsWith('mailto:')) return;
-    e.preventDefault();
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) {
+    document.body.classList.add('page-leaving');
+    setTimeout(() => { location.href = href; }, 120);
+    return;
+  }
+
+  setTimeout(() => card.classList.add('door-opening'), 1320);
+  setTimeout(() => document.body.classList.add('page-leaving'), 2580);
+  setTimeout(() => { location.href = href; }, 3320);
+}
+function setupPageTransitions() {
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a[href]');
+    if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || link.target === '_blank' || /^https?:/i.test(href) || href.startsWith('mailto:')) return;
+    event.preventDefault();
+    if (link.classList.contains('era-card')) {
+      runDoorTransition(link, href);
+      return;
+    }
     saveAudioPosition();
     document.body.classList.add('page-leaving');
-    setTimeout(()=>{location.href=href},680);
+    setTimeout(() => { location.href = href; }, 860);
   });
 }
 
 /* INITIALIZATION */
-addEventListener('DOMContentLoaded',()=>{
+addEventListener('DOMContentLoaded', () => {
   markStreamTargets();
-  setLanguage(currentLang,false);
+  setLanguage(currentLang, false);
   updateImageHints();
   document.querySelectorAll('.stream-text').forEach(resetStream);
-  document.querySelectorAll('.era-card,.exhibit-card').forEach(el=>revealObserver.observe(el));
+  document.querySelectorAll('.era-card,.exhibit-card').forEach(element => revealObserver.observe(element));
   setupAudio();
-  setupTilt();
   setupPageTransitions();
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+  requestAnimationFrame(() => requestAnimationFrame(() => {
     document.body.classList.add('page-ready');
     streamHeader();
   }));

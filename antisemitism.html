@@ -1,45 +1,768 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="dark"><title>Antisemitism Gallery | Stop Antizionism</title><link rel="stylesheet" href="site.css"></head>
-<body class="new-page gallery-page"><div id="ambient-light" aria-hidden="true"></div><audio id="bg-audio" loop src="The Seasons, Op. 37a - VI. June_ Barcarolle.mp3"></audio>
-<img class="site-brand" src="stop-antizionism-logo.png" alt="Stop Antizionism">
-<nav class="controls-nav" aria-label="Page controls"><div class="nav-box"><a class="home-btn" href="index.html" data-en="Home" data-he="בית" data-ru="Главная">Home</a></div><div class="nav-box"><button class="audio-btn" id="audio-btn" onclick="toggleAudio()">AUDIO: OFF</button></div><div class="nav-box"><button class="lang-btn active" id="btn-en" onclick="setLanguage('en')">EN</button><span style="color:#444">|</span><button class="lang-btn" id="btn-he" onclick="setLanguage('he')">HE</button><span style="color:#444">|</span><button class="lang-btn" id="btn-ru" onclick="setLanguage('ru')">RU</button></div></nav>
-<main class="gallery-index-main"><header class="gallery-heading"><p class="gallery-eyebrow stream-text" data-en="Jew-Hatred — Gallery" data-he="שנאת יהודים — גלריה" data-ru="Ненависть к евреям — Галерея">Jew-Hatred — Gallery</p><h1 class="gallery-title stream-text" data-en="Antisemitism" data-he="אנטישמיות" data-ru="Антисемитизм">Antisemitism</h1><div class="gallery-rule"></div></header><section class="exhibit-grid" aria-label="Temporary exhibit gallery"><article class="exhibit-card">
-      <h2 class="exhibit-title" data-en="The Protocols — Temporary" data-he="הפרוטוקולים — זמני" data-ru="Протоколы — временно">The Protocols — Temporary</h2>
-      <button class="exhibit-image-button" type="button" onclick="openLightbox(this)" aria-label="Enlarge The Protocols — Temporary">
-        <img class="exhibit-image" src="antisemitism-1.jpg" alt="Cover image supplied for temporary Antisemitism exhibit placement">
-      </button>
-      <div class="exhibit-body">
-        <div class="exhibit-meta"><div><strong data-en="Creator / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Creator / Source:</strong> <span data-en="To be supplied" data-he="יימסר בהמשך" data-ru="Будет предоставлено">To be supplied</span></div><div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span data-en="To be supplied" data-he="יימסר בהמשך" data-ru="Будет предоставлено">To be supplied</span></div></div>
-        <section class="info-block"><h3 data-en="Curatorial Context" data-he="הקשר אוצרותי" data-ru="Кураторский контекст">Curatorial Context</h3><p data-en="Temporary placement pending final curatorial text." data-he="מיקום זמני עד לקבלת הטקסט האוצרותי הסופי." data-ru="Временное размещение до получения окончательного кураторского текста.">Temporary placement pending final curatorial text.</p></section>
-        <section class="info-block"><h3 data-en="What the Image Shows" data-he="מה מוצג בתמונה" data-ru="Что показано на изображении">What the Image Shows</h3><p data-en="Image supplied for layout and visual testing." data-he="התמונה סופקה לצורך בדיקת פריסה ומראה." data-ru="Изображение предоставлено для проверки макета и визуального оформления.">Image supplied for layout and visual testing.</p></section>
-        <section class="info-block"><h3 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h3><p data-en="Source citation pending." data-he="הציטוט המקורי יימסר בהמשך." data-ru="Ссылка на источник будет добавлена.">Source citation pending.</p></section>
-        <span class="placeholder-badge" data-en="Temporary exhibit" data-he="מוצג זמני" data-ru="Временный экспонат">Temporary exhibit</span>
-      </div>
-    </article>
-<article class="exhibit-card">
-      <h2 class="exhibit-title" data-en="Le Juif — Temporary" data-he="לה ז׳ואיף — זמני" data-ru="Le Juif — временно">Le Juif — Temporary</h2>
-      <button class="exhibit-image-button" type="button" onclick="openLightbox(this)" aria-label="Enlarge Le Juif — Temporary">
-        <img class="exhibit-image" src="antisemitism-2.jpg" alt="Poster image supplied for temporary Antisemitism exhibit placement">
-      </button>
-      <div class="exhibit-body">
-        <div class="exhibit-meta"><div><strong data-en="Creator / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Creator / Source:</strong> <span data-en="To be supplied" data-he="יימסר בהמשך" data-ru="Будет предоставлено">To be supplied</span></div><div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span data-en="To be supplied" data-he="יימסר בהמשך" data-ru="Будет предоставлено">To be supplied</span></div></div>
-        <section class="info-block"><h3 data-en="Curatorial Context" data-he="הקשר אוצרותי" data-ru="Кураторский контекст">Curatorial Context</h3><p data-en="Temporary placement pending final curatorial text." data-he="מיקום זמני עד לקבלת הטקסט האוצרותי הסופי." data-ru="Временное размещение до получения окончательного кураторского текста.">Temporary placement pending final curatorial text.</p></section>
-        <section class="info-block"><h3 data-en="What the Image Shows" data-he="מה מוצג בתמונה" data-ru="Что показано на изображении">What the Image Shows</h3><p data-en="Image supplied for layout and visual testing." data-he="התמונה סופקה לצורך בדיקת פריסה ומראה." data-ru="Изображение предоставлено для проверки макета и визуального оформления.">Image supplied for layout and visual testing.</p></section>
-        <section class="info-block"><h3 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h3><p data-en="Source citation pending." data-he="הציטוט המקורי יימסר בהמשך." data-ru="Ссылка на источник будет добавлена.">Source citation pending.</p></section>
-        <span class="placeholder-badge" data-en="Temporary exhibit" data-he="מוצג זמני" data-ru="Временный экспонат">Temporary exhibit</span>
-      </div>
-    </article>
-<article class="exhibit-card">
-      <h2 class="exhibit-title" data-en="Storefront Image — Temporary" data-he="תמונת חלון ראווה — זמני" data-ru="Витрина — временно">Storefront Image — Temporary</h2>
-      <button class="exhibit-image-button" type="button" onclick="openLightbox(this)" aria-label="Enlarge Storefront Image — Temporary">
-        <img class="exhibit-image" src="antisemitism-3.jpg" alt="Storefront image supplied for temporary Antisemitism exhibit placement">
-      </button>
-      <div class="exhibit-body">
-        <div class="exhibit-meta"><div><strong data-en="Creator / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Creator / Source:</strong> <span data-en="To be supplied" data-he="יימסר בהמשך" data-ru="Будет предоставлено">To be supplied</span></div><div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span data-en="To be supplied" data-he="יימסר בהמשך" data-ru="Будет предоставлено">To be supplied</span></div></div>
-        <section class="info-block"><h3 data-en="Curatorial Context" data-he="הקשר אוצרותי" data-ru="Кураторский контекст">Curatorial Context</h3><p data-en="Temporary placement pending final curatorial text." data-he="מיקום זמני עד לקבלת הטקסט האוצרותי הסופי." data-ru="Временное размещение до получения окончательного кураторского текста.">Temporary placement pending final curatorial text.</p></section>
-        <section class="info-block"><h3 data-en="What the Image Shows" data-he="מה מוצג בתמונה" data-ru="Что показано на изображении">What the Image Shows</h3><p data-en="Image supplied for layout and visual testing." data-he="התמונה סופקה לצורך בדיקת פריסה ומראה." data-ru="Изображение предоставлено для проверки макета и визуального оформления.">Image supplied for layout and visual testing.</p></section>
-        <section class="info-block"><h3 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h3><p data-en="Source citation pending." data-he="הציטוט המקורי יימסר בהמשך." data-ru="Ссылка на источник будет добавлена.">Source citation pending.</p></section>
-        <span class="placeholder-badge" data-en="Temporary exhibit" data-he="מוצג זמני" data-ru="Временный экспонат">Temporary exhibit</span>
-      </div>
-    </article></section></main>
-<div id="lightbox" onclick="closeLightbox()"><button id="lightbox-close" aria-label="Close">&times;</button><img id="lightbox-img" src="" alt=""><div id="lightbox-caption"></div></div><script src="site.js"></script></body></html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antisemitism | Jew-Hatred Exhibition</title>
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2317171a'/><rect x='30' y='30' width='40' height='40' fill='%23ffffff'/></svg>">
+<style>
+        /* BASE CANVAS & BLENDED MATTE GALLERY THEME */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #17171a; /* Soft Gallery Matte Canvas */
+            color: #f8f8fc;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* AMBIENT LIGHT SPOTLIGHT */
+        #ambient-light {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(
+                circle 750px at var(--cursor-x, 50%) var(--cursor-y, 50%),
+                rgba(255, 255, 255, 0.05) 0%,
+                rgba(23, 23, 26, 0) 75%
+            );
+        }
+
+        /* MINIMALIST GALLERY CONTROLS WITH SUBTLE AMBIENT GLOW */
+        .controls-nav {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 100;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-box {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 8px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.025), inset 0 0 10px rgba(255, 255, 255, 0.015);
+            transition: box-shadow 0.8s ease, border-color 0.8s ease;
+        }
+
+        .nav-box:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 35px rgba(255, 255, 255, 0.05), inset 0 0 15px rgba(255, 255, 255, 0.03);
+        }
+
+        .lang-btn, .audio-btn {
+            background: none;
+            border: none;
+            color: #888895;
+            cursor: pointer;
+            padding: 4px 6px; /* Optimized touch target for mobile */
+            touch-action: manipulation;
+            transition: color 0.6s ease;
+            font-family: inherit;
+            font-size: inherit;
+            letter-spacing: inherit;
+            text-transform: uppercase;
+        }
+
+        .lang-btn.active, .lang-btn:hover, .audio-btn:hover {
+            color: #ffffff;
+        }
+
+        /* HERO / HEADER SECTION */
+        .hero-section {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 2rem 3rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            position: relative;
+            background: radial-gradient(circle at center, #1f1f24 0%, #17171a 100%);
+        }
+
+        .hero-container {
+            max-width: 1100px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-header-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transform: translateY(-6px);
+        }
+
+        .hero-title {
+            font-size: 3.1rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+            color: #ffffff;
+            line-height: 1.1;
+            text-transform: uppercase;
+            min-height: 3.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #c5c5d0;
+            font-weight: 400;
+            min-height: 1.5rem;
+        }
+
+        .hero-location {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #a5a5b2;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 0.75rem;
+            min-height: 2rem;
+        }
+
+        /* GALLERY LAYOUT */
+        .exhibition-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            position: relative;
+            z-index: 2;
+        }
+
+        .exhibition-container {
+            max-width: 1100px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media (max-width: 850px) {
+            .hero-container,
+            .exhibition-container {
+                grid-template-columns: 1fr;
+                gap: 2.2rem;
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+            .hero-title {
+                font-size: 2.2rem;
+                min-height: auto;
+            }
+            .controls-nav {
+                top: 1rem;
+                right: 1rem;
+            }
+        }
+
+        /* ULTRA-BLENDED ART BOX WITH SLOW 1.40 ZOOM */
+        .art-box {
+            position: relative;
+            cursor: pointer;
+            touch-action: manipulation;
+            overflow: hidden;
+            background: #1d1d21;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+            margin-top: -8px;
+            
+            opacity: 0;
+            transform: translateY(40px) scale(0.96);
+            transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 1.5s ease,
+                        box-shadow 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .art-box.pop-in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .art-box.pop-in:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .museum-frame {
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #141417;
+            min-height: 350px;
+        }
+
+        /* 4.0s ULTRA SLOW IN & OUT ZOOM */
+        .museum-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1), filter 3s ease;
+            filter: brightness(1) contrast(1.05);
+        }
+
+        .art-box:hover .museum-frame img {
+            transform: scale(1.40);
+            filter: brightness(1.18) contrast(1.12);
+        }
+
+        /* CLICK TO ENLARGE BADGE */
+        .click-hint {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(20, 20, 24, 0.88);
+            color: #ccc;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            padding: 6px 10px;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            pointer-events: none;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .art-box:hover .click-hint {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        /* CURATORIAL TEXT PANEL */
+        .info-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transform: translateY(-8px);
+            opacity: 0;
+            transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .info-panel.visible {
+            opacity: 1;
+            transform: translateY(-8px);
+        }
+
+        .info-category {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #aaaaa8;
+            min-height: 1.2rem;
+        }
+
+        .info-title {
+            font-size: 1.85rem;
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 1.2;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding-bottom: 0.6rem;
+            min-height: 2.5rem;
+        }
+
+        .info-meta {
+            font-size: 0.95rem;
+            color: #d5d5e0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .info-meta strong {
+            color: #ffffff;
+        }
+
+        /* BLENDED INFO BLOCKS */
+        .info-block {
+            margin-top: 0.3rem;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1.2rem;
+            border-left: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            touch-action: manipulation;
+            
+            opacity: 0;
+            transform: translateY(30px) scale(0.97);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 1.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 1.5s ease,
+                        background 1.5s ease;
+        }
+
+        .info-block.pop-in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .info-block.pop-in:hover, .info-block.pop-in:active {
+            transform: translateY(-8px) scale(1.025);
+            border-left-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .info-block h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b8b8c8;
+            margin-bottom: 0.3rem;
+        }
+
+        .typewriter-p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #f5f5f8;
+            min-height: 2.5rem;
+        }
+
+        /* GALLERY FOOTER STATEMENT LINK */
+        .exhibition-footer {
+            padding: 5rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            background: #141417;
+        }
+
+        .statement-link {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #9999a8;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 4px;
+            transition: color 0.4s ease, border-color 0.4s ease;
+        }
+
+        .statement-link:hover {
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+
+        /* LIGHTBOX MODAL */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(12, 12, 15, 0.96);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(12px);
+        }
+
+        #lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #lightbox-img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+            transform: scale(0.88);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #lightbox.active #lightbox-img {
+            transform: scale(1);
+        }
+
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #fff;
+            font-size: 2.2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 10px;
+            touch-action: manipulation;
+            transition: transform 0.5s ease;
+            font-family: sans-serif;
+        }
+
+        #lightbox-close:hover {
+            transform: scale(1.2);
+        }
+
+        #lightbox-caption {
+            margin-top: 18px;
+            color: #aaa;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* RTL SUPPORT FOR HEBREW */
+        [dir="rtl"] {
+            text-align: right;
+        }
+
+        [dir="rtl"] .controls-nav {
+            right: auto;
+            left: 1.5rem;
+        }
+
+        [dir="rtl"] .info-block {
+            border-left: none;
+            border-right: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 4px 0 0 4px;
+        }
+
+        [dir="rtl"] .info-block.pop-in:hover, [dir="rtl"] .info-block.pop-in:active {
+            border-right-color: rgba(255, 255, 255, 0.2);
+        }
+
+        [dir="rtl"] .click-hint {
+            right: auto;
+            left: 12px;
+        }
+    </style>
+</head>
+<body>
+<div id="ambient-light"></div>
+<audio id="bg-audio" loop src="The Seasons, Op. 37a - VI. June_ Barcarolle.mp3"></audio>
+<nav class="controls-nav">
+        <div class="nav-box"><a class="lang-btn" href="index.html" style="text-decoration:none" data-en="Home" data-he="בית" data-ru="Главная">Home</a></div>
+        <div class="nav-box"><button class="audio-btn" id="audio-btn" onclick="toggleAudio()" data-en="AUDIO: OFF" data-he="שמע: כבוי" data-ru="ЗВУК: ВЫКЛ">AUDIO: OFF</button></div>
+        <div class="nav-box"><button class="lang-btn active" id="btn-en" onclick="setLanguage('en')">EN</button><span style="color:#444;">|</span><button class="lang-btn" id="btn-he" onclick="setLanguage('he')">HE</button><span style="color:#444;">|</span><button class="lang-btn" id="btn-ru" onclick="setLanguage('ru')">RU</button></div>
+    </nav>
+<div id="lightbox" onclick="closeLightbox()"><button id="lightbox-close">&times;</button><img id="lightbox-img" src="" alt="Enlarged Artwork"><div id="lightbox-caption" data-en="Click anywhere to close" data-he="לחץ באיזשהו מקום לסגירה" data-ru="Нажмите в любом месте, чтобы закрыть">Click anywhere to close</div></div>
+<main id="gallery">
+        <header class="hero-section">
+            <div class="hero-container">
+                <div class="art-box interactive-target" onclick="openLightbox(this)">
+                    <div class="museum-frame"><img src="home-antisemitism.jpg" alt="Antisemitism gallery introduction"></div>
+                    <div class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</div>
+                </div>
+                <div class="hero-header-text">
+                    <div class="hero-subtitle stream-text" data-en="Jew-Hatred Timeline" data-he="ציר הזמן של שנאת יהודים" data-ru="Хронология ненависти к евреям">Jew-Hatred Timeline</div>
+                    <h1 class="hero-title stream-text" data-en="Antisemitism" data-he="אנטישמיות" data-ru="Антисемитизм">Antisemitism</h1>
+                    <div class="hero-location stream-text" data-en="Three Preliminary Exhibits" data-he="שלושה מוצגים ראשוניים" data-ru="Три предварительных экспоната">Three Preliminary Exhibits</div>
+                </div>
+            </div>
+        </header>
+        <section class="exhibition-section">
+            <div class="exhibition-container">
+                <div class="art-box interactive-target" onclick="openLightbox(this)">
+                    <div class="museum-frame">
+                        <img src="antisemitism-1.jpg" alt="Antisemitism preliminary exhibit 1">
+                    </div>
+                    <div class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</div>
+                </div>
+                <div class="info-panel">
+                    <div class="info-category stream-text" data-en="Chapter I — Preliminary Placement" data-he="פרק א — מיקום ראשוני" data-ru="Глава I — Предварительное размещение">Chapter I — Preliminary Placement</div>
+                    <h3 class="info-title stream-text" data-en="The Protocols — Preliminary" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">The Protocols — Preliminary</h3>
+                    <div class="info-meta">
+                        <div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+                        <div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+                    </div>
+                    <div class="info-block">
+                        <h4 data-en="Creator Bio & Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio & Context</h4>
+                        <p class="typewriter-p stream-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
+                    </div>
+                    <div class="info-block">
+                        <h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+                        <p class="typewriter-p stream-text" data-en="Temporary image placement for the developing Antisemitism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
+                    </div>
+                    <div class="info-block">
+                        <h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+                        <p class="typewriter-p stream-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="exhibition-section">
+            <div class="exhibition-container">
+                <div class="art-box interactive-target" onclick="openLightbox(this)">
+                    <div class="museum-frame">
+                        <img src="antisemitism-2.jpg" alt="Antisemitism preliminary exhibit 2">
+                    </div>
+                    <div class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</div>
+                </div>
+                <div class="info-panel">
+                    <div class="info-category stream-text" data-en="Chapter II — Preliminary Placement" data-he="פרק ב — מיקום ראשוני" data-ru="Глава II — Предварительное размещение">Chapter II — Preliminary Placement</div>
+                    <h3 class="info-title stream-text" data-en="Le Juif — Preliminary" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Le Juif — Preliminary</h3>
+                    <div class="info-meta">
+                        <div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+                        <div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+                    </div>
+                    <div class="info-block">
+                        <h4 data-en="Creator Bio & Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio & Context</h4>
+                        <p class="typewriter-p stream-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
+                    </div>
+                    <div class="info-block">
+                        <h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+                        <p class="typewriter-p stream-text" data-en="Temporary image placement for the developing Antisemitism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
+                    </div>
+                    <div class="info-block">
+                        <h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+                        <p class="typewriter-p stream-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="exhibition-section">
+            <div class="exhibition-container">
+                <div class="art-box interactive-target" onclick="openLightbox(this)">
+                    <div class="museum-frame">
+                        <img src="antisemitism-3.jpg" alt="Antisemitism preliminary exhibit 3">
+                    </div>
+                    <div class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</div>
+                </div>
+                <div class="info-panel">
+                    <div class="info-category stream-text" data-en="Chapter III — Preliminary Placement" data-he="פרק ג — מיקום ראשוני" data-ru="Глава III — Предварительное размещение">Chapter III — Preliminary Placement</div>
+                    <h3 class="info-title stream-text" data-en="Storefront Image — Preliminary" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Storefront Image — Preliminary</h3>
+                    <div class="info-meta">
+                        <div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+                        <div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+                    </div>
+                    <div class="info-block">
+                        <h4 data-en="Creator Bio & Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio & Context</h4>
+                        <p class="typewriter-p stream-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
+                    </div>
+                    <div class="info-block">
+                        <h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+                        <p class="typewriter-p stream-text" data-en="Temporary image placement for the developing Antisemitism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
+                    </div>
+                    <div class="info-block">
+                        <h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+                        <p class="typewriter-p stream-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
+                    </div>
+                </div>
+            </div>
+        </section></main>
+<!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        let currentLang = 'en';
+
+        // 0. SMART DYNAMIC IMAGE FALLBACK HANDLER
+        function handleFallbackImage(img, fallbackList) {
+            if (!img.dataset.tryIndex) {
+                img.dataset.tryIndex = "0";
+            }
+            let index = parseInt(img.dataset.tryIndex);
+            if (index < fallbackList.length) {
+                img.dataset.tryIndex = (index + 1).toString();
+                img.src = fallbackList[index];
+            } else {
+                img.onerror = null;
+                img.src = 'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\' viewBox=\'0 0 600 400\'><rect width=\'600\' height=\'400\' fill=\'%231d1d21\'/><text x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23aaa\' font-family=\'sans-serif\' font-size=\'18\'>CHAPTER I: SOVIET ERA</text></svg>';
+            }
+        }
+
+        // 1. LAZY GLIDING AMBIENT LIGHT
+        const ambientLight = document.getElementById('ambient-light');
+        let targetX = window.innerWidth / 2;
+        let targetY = window.innerHeight / 2;
+        let currentX = targetX;
+        let currentY = targetY;
+
+        window.addEventListener('mousemove', (e) => {
+            targetX = e.clientX;
+            targetY = e.clientY;
+        });
+
+        function animateAmbientLight() {
+            currentX += (targetX - currentX) * 0.04;
+            currentY += (targetY - currentY) * 0.04;
+
+            ambientLight.style.setProperty('--cursor-x', `${currentX}px`);
+            ambientLight.style.setProperty('--cursor-y', `${currentY}px`);
+
+            requestAnimationFrame(animateAmbientLight);
+        }
+        animateAmbientLight();
+
+        // 2. SLOW MEASURED WORD-BY-WORD STREAMING ENGINE
+        function streamWords(element, text, speed = 70) {
+            if (!text) return;
+            element.textContent = '';
+            const letters = Array.from(text);
+            let index = 0;
+
+            if (element.typeInterval) clearInterval(element.typeInterval);
+
+            element.typeInterval = setInterval(() => {
+                if (index < letters.length) {
+                    element.textContent += letters[index];
+                    index++;
+                } else {
+                    clearInterval(element.typeInterval);
+                }
+            }, speed);
+        }
+
+        function triggerPanelStreaming(container) {
+            const streamElements = container.querySelectorAll('.stream-text');
+            streamElements.forEach(el => {
+                const text = el.getAttribute(`data-${currentLang}`) || el.textContent;
+                streamWords(el, text, 70);
+            });
+        }
+
+        // 3. INTERSECTION OBSERVER FOR MOBILE SCROLL POP-UP & PANEL REVEAL
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const elementObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('art-box') || entry.target.classList.contains('info-block')) {
+                        entry.target.classList.add('pop-in');
+                    }
+
+                    if (entry.target.classList.contains('exhibition-section')) {
+                        const infoPanel = entry.target.querySelector('.info-panel');
+                        if (infoPanel && !infoPanel.classList.contains('visible')) {
+                            infoPanel.classList.add('visible');
+                            triggerPanelStreaming(entry.target);
+                        }
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.exhibition-section, .art-box, .info-block').forEach(el => {
+            elementObserver.observe(el);
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                triggerPanelStreaming(heroSection);
+            }
+            const heroArtBox = document.querySelector('.hero-section .art-box');
+            if (heroArtBox) heroArtBox.classList.add('pop-in');
+        });
+
+        // 4. AUDIO PLAYER CONTROLLER
+        const audio = document.getElementById('bg-audio');
+        const audioBtn = document.getElementById('audio-btn');
+        let isPlaying = false;
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                updateAudioBtnText();
+            } else {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    updateAudioBtnText();
+                }).catch(() => {
+                    console.log('Audio playback blocked by browser');
+                });
+            }
+        }
+
+        function updateAudioBtnText() {
+            if (currentLang === 'en') {
+                audioBtn.textContent = isPlaying ? "AUDIO: ON" : "AUDIO: OFF";
+            } else if (currentLang === 'he') {
+                audioBtn.textContent = isPlaying ? "שמע: מופעל" : "שמע: כבוי";
+            } else if (currentLang === 'ru') {
+                audioBtn.textContent = isPlaying ? "ЗВУК: ВКЛ" : "ЗВУК: ВЫКЛ";
+            }
+        }
+
+        // 5. CLICK TO ENLARGE LIGHTBOX LOGIC
+        function openLightbox(artBox) {
+            const img = artBox.querySelector('img');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // 6. TRILINGUAL LANGUAGE SWITCHER (EN | HE | RU)
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === 'he') ? 'rtl' : 'ltr';
+
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-he').classList.toggle('active', lang === 'he');
+            document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+
+            updateAudioBtnText();
+
+            document.querySelectorAll('[data-en][data-he][data-ru]').forEach(el => {
+                if (!el.classList.contains('stream-text') && el.id !== 'audio-btn') {
+                    const text = el.getAttribute(`data-${lang}`);
+                    if (text) el.textContent = text;
+                }
+            });
+
+            document.querySelectorAll('.hero-section, .exhibition-section').forEach(section => {
+                const panel = section.querySelector('.info-panel');
+                if (!panel || panel.classList.contains('visible') || section.classList.contains('hero-section')) {
+                    triggerPanelStreaming(section);
+                }
+            });
+        }
+    </script>
+    <script src="continuity.js"></script>
+</body>
+</html>
