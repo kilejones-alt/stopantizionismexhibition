@@ -27,43 +27,46 @@ function textFor(element, lang = currentLang) {
   return element.getAttribute(`data-${lang}`) || element.dataset.fullText || element.textContent || '';
 }
 
-function stopStreaming(element) {
-  if (element && element.typeInterval) {
-    clearInterval(element.typeInterval);
-    element.typeInterval = null;
-  }
-  if (element) element.removeAttribute('data-streaming');
-}
-
-function revealFullText(element) {
+function clearWave(element) {
   if (!element) return;
-  const fullText = textFor(element);
-  stopStreaming(element);
-  element.textContent = fullText;
-  element.dataset.streamed = '1';
+  element.removeAttribute('aria-label');
 }
 
-function streamWords(element, text, speed = 55) {
+function waveText(element, text) {
   if (!element || !text) return;
-  stopStreaming(element);
+  clearWave(element);
   element.dataset.fullText = text;
-  element.dataset.streaming = 'true';
-  element.textContent = '';
-  const letters = Array.from(text);
-  let index = 0;
-  element.typeInterval = setInterval(() => {
-    if (index < letters.length) {
-      element.textContent += letters[index++];
-    } else {
-      stopStreaming(element);
-      element.dataset.streamed = '1';
+  element.setAttribute('aria-label', text);
+  element.replaceChildren();
+
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) {
+    element.textContent = text;
+    element.dataset.waved = '1';
+    return;
+  }
+
+  let wordIndex = 0;
+  text.split(/(\s+)/).forEach(token => {
+    if (!token) return;
+    if (/^\s+$/.test(token)) {
+      element.append(document.createTextNode(token));
+      return;
     }
-  }, speed);
+    const word = document.createElement('span');
+    word.className = 'wave-word';
+    word.setAttribute('aria-hidden', 'true');
+    word.style.setProperty('--wave-index', String(wordIndex));
+    word.textContent = token;
+    element.append(word);
+    wordIndex += 1;
+  });
+  element.dataset.waved = '1';
 }
 
-function triggerPanelStreaming(container) {
-  container.querySelectorAll('.stream-text').forEach(element => {
-    streamWords(element, textFor(element), 55);
+function triggerPanelWave(container) {
+  container.querySelectorAll('.wave-text').forEach(element => {
+    waveText(element, textFor(element));
   });
 }
 
@@ -106,7 +109,7 @@ function setupRevealObserver() {
         const panel = entry.target.querySelector('.info-panel');
         if (panel && !panel.classList.contains('visible')) {
           panel.classList.add('visible');
-          triggerPanelStreaming(entry.target);
+          triggerPanelWave(entry.target);
         }
       }
       observer.unobserve(entry.target);
@@ -202,10 +205,10 @@ function setLanguage(lang, animate = true) {
     if (element.id === 'audio-btn') return;
     const text = textFor(element, lang);
     element.dataset.fullText = text;
-    if (element.classList.contains('stream-text') && animate && (element.dataset.streamed === '1' || element.closest('.visible,.hero-section'))) {
-      streamWords(element, text, 55);
+    if (element.classList.contains('wave-text') && animate && (element.dataset.waved === '1' || element.closest('.visible,.hero-section'))) {
+      waveText(element, text);
     } else {
-      stopStreaming(element);
+      clearWave(element);
       element.textContent = text;
     }
   });
@@ -306,12 +309,6 @@ function setupLightbox() {
   });
 }
 
-function setupTapToComplete() {
-  document.addEventListener('click', event => {
-    const paragraph = event.target.closest('.typewriter-p[data-streaming="true"]');
-    if (paragraph) revealFullText(paragraph);
-  });
-}
 
 addEventListener('pagehide', saveAudioPosition);
 addEventListener('pageshow', resetRestoredPage);
@@ -321,12 +318,11 @@ addEventListener('DOMContentLoaded', () => {
   setupAmbientLight();
   setupControls();
   setupLightbox();
-  setupTapToComplete();
   setLanguage(currentLang, false);
   setupRevealObserver();
 
   const heroSection = document.querySelector('.hero-section');
-  if (heroSection) triggerPanelStreaming(heroSection);
+  if (heroSection) triggerPanelWave(heroSection);
   document.querySelector('.hero-section .art-box')?.classList.add('pop-in');
   updateAudioBtnText();
 });

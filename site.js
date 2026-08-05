@@ -34,109 +34,15 @@ function animateAmbient() {
 }
 animateAmbient();
 
-/* SLOW, MEASURED LETTER-BY-LETTER REVEALS */
+/* HOMEPAGE TEXT — static; motion begins only after entering a gallery */
 function textFor(element, lang = currentLang) {
-  return element.getAttribute('data-' + lang) || element.dataset.originalText || element.textContent || '';
-}
-function stopStreaming(element) {
-  if (element && element.typeTimer) {
-    clearTimeout(element.typeTimer);
-    element.typeTimer = null;
-  }
-  if (element) element.classList.remove('typing-caret');
-}
-function streamWords(element, text, speed = STREAM_SPEED_BODY, delay = 0) {
-  if (!element || !text) return Promise.resolve();
-  stopStreaming(element);
-  element.textContent = '';
-  element.classList.add('typing-caret');
-  const letters = Array.from(text);
-  let index = 0;
-  return new Promise(resolve => {
-    const tick = () => {
-      if (index < letters.length) {
-        const character = letters[index++];
-        element.textContent += character;
-        let pause = speed;
-        if (/[,;:]/.test(character)) pause += 70;
-        if (/[.!?—]/.test(character)) pause += 120;
-        if (character === ' ') pause = Math.max(18, speed * 0.62);
-        element.typeTimer = setTimeout(tick, pause);
-      } else {
-        element.classList.remove('typing-caret');
-        element.dataset.streamed = '1';
-        resolve();
-      }
-    };
-    element.typeTimer = setTimeout(tick, delay);
-  });
-}
-function markStreamTargets() {
-  document.querySelectorAll(
-    '.era-title,.exhibit-title,.exhibit-meta strong,.exhibit-meta span,.info-block h3,.info-block p,.placeholder-badge'
-  ).forEach(element => element.classList.add('stream-text'));
-  document.querySelectorAll('.stream-text').forEach(element => {
-    if (!element.dataset.originalText) element.dataset.originalText = element.textContent.trim();
-  });
-}
-function resetStream(element) {
-  stopStreaming(element);
-  element.textContent = '';
-  delete element.dataset.streamed;
-}
-function speedFor(element) {
-  if (element.matches('h1,h2,.gallery-title,.era-title,.exhibit-title')) return STREAM_SPEED_TITLE;
-  if (element.matches('.home-kicker,.gallery-eyebrow,.exhibit-meta strong,.info-block h3,.placeholder-badge')) return STREAM_SPEED_LABEL;
-  return STREAM_SPEED_BODY;
-}
-function streamElement(element, delay = 0, speed = speedFor(element)) {
-  return streamWords(element, textFor(element), speed, delay);
-}
-async function streamHeader() {
-  const elements = [...document.querySelectorAll('.home-intro .stream-text,.gallery-heading .stream-text')];
-  for (let index = 0; index < elements.length; index += 1) {
-    if (index > 0) await new Promise(resolve => setTimeout(resolve, 320));
-    await streamElement(elements[index], index === 0 ? 180 : 0);
-  }
+  return element.getAttribute('data-' + lang) || element.textContent || '';
 }
 function revealEra(card, index = 0) {
   if (card.dataset.revealed) return;
   card.dataset.revealed = '1';
-  const entranceDelay = 1120 + index * 430;
+  const entranceDelay = 260 + index * 180;
   setTimeout(() => card.classList.add('pop-in'), entranceDelay);
-  const title = card.querySelector('.era-title');
-  if (title) setTimeout(() => streamElement(title), entranceDelay + 520);
-}
-function revealExhibit(card, index = 0) {
-  if (card.dataset.revealed) return;
-  card.dataset.revealed = '1';
-  const entranceDelay = 240 + index * 310;
-  setTimeout(() => card.classList.add('pop-in'), entranceDelay);
-
-  const title = card.querySelector('.exhibit-title');
-  if (title) setTimeout(() => streamElement(title), entranceDelay + 480);
-
-  const meta = card.querySelector('.exhibit-meta');
-  const metaTargets = card.querySelectorAll('.exhibit-meta .stream-text');
-  setTimeout(() => {
-    if (meta) meta.classList.add('meta-visible');
-    metaTargets.forEach((element, metaIndex) => {
-      setTimeout(() => streamElement(element), metaIndex * 190);
-    });
-  }, entranceDelay + 880);
-
-  card.querySelectorAll('.info-block').forEach((block, blockIndex) => {
-    setTimeout(() => {
-      block.classList.add('pop-in');
-      const heading = block.querySelector('h3');
-      const paragraph = block.querySelector('p');
-      if (heading) streamElement(heading);
-      if (paragraph) streamElement(paragraph, 280);
-    }, entranceDelay + 1420 + blockIndex * 760);
-  });
-
-  const badge = card.querySelector('.placeholder-badge');
-  if (badge) setTimeout(() => streamElement(badge), entranceDelay + 3900);
 }
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -144,10 +50,6 @@ const revealObserver = new IntersectionObserver(entries => {
     if (entry.target.classList.contains('era-card')) {
       const cards = [...document.querySelectorAll('.era-card')];
       revealEra(entry.target, cards.indexOf(entry.target));
-    }
-    if (entry.target.classList.contains('exhibit-card')) {
-      const cards = [...document.querySelectorAll('.exhibit-card')];
-      revealExhibit(entry.target, cards.indexOf(entry.target));
     }
     revealObserver.unobserve(entry.target);
   });
@@ -234,7 +136,7 @@ function updateImageHints() {
     button.dataset.hint = hints[currentLang];
   });
 }
-function setLanguage(lang, animate = true) {
+function setLanguage(lang) {
   if (!SUPPORTED_LANGUAGES.includes(lang)) lang = 'en';
   currentLang = lang;
   localStorage.setItem('stopazLanguage', lang);
@@ -249,19 +151,8 @@ function setLanguage(lang, animate = true) {
     }
   });
   updateAudioBtnText();
-  updateImageHints();
   document.querySelectorAll('[data-en][data-he][data-ru]').forEach(element => {
-    const text = textFor(element, lang);
-    if (!text || element.id === 'audio-btn') return;
-    if (
-      element.classList.contains('stream-text') &&
-      animate &&
-      (element.dataset.streamed === '1' || element.closest('.gallery-heading,.home-intro,.pop-in'))
-    ) {
-      streamWords(element, text, speedFor(element));
-    } else if (!element.classList.contains('stream-text') || !animate) {
-      element.textContent = text;
-    }
+    if (element.id !== 'audio-btn') element.textContent = textFor(element, lang);
   });
 }
 
@@ -290,7 +181,7 @@ addEventListener('keydown', event => {
 /* PROFESSIONAL INTERNAL PAGE TRANSITIONS */
 let doorTransitionActive = false;
 function runDoorTransition(card, href) {
-  if (doorTransitionActive) return;
+  if (doorTransitionActive || !card || !href) return;
   doorTransitionActive = true;
   saveAudioPosition();
   document.body.classList.add('door-transitioning');
@@ -300,28 +191,38 @@ function runDoorTransition(card, href) {
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reducedMotion) {
     document.body.classList.add('page-leaving');
-    setTimeout(() => { location.href = href; }, 120);
+    setTimeout(() => { location.assign(href); }, 140);
     return;
   }
 
-  setTimeout(() => card.classList.add('door-opening'), 1320);
-  setTimeout(() => document.body.classList.add('page-leaving'), 2580);
-  setTimeout(() => { location.href = href; }, 3320);
+  /* 0–1.9s: the clicked image card turns horizontally to its reverse side. */
+  setTimeout(() => card.classList.add('door-back-visible'), 1850);
+  /* 2.55–4.8s: the reverse side separates at the center and opens as two panels. */
+  setTimeout(() => card.classList.add('door-opening'), 2550);
+  /* Only fade the page after the door has visibly opened. */
+  setTimeout(() => document.body.classList.add('page-leaving'), 4550);
+  setTimeout(() => { location.assign(href); }, 5150);
 }
 function setupPageTransitions() {
+  document.querySelectorAll('.era-card[href]').forEach(card => {
+    card.addEventListener('click', event => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const href = card.getAttribute('href');
+      if (!href) return;
+      event.preventDefault();
+      runDoorTransition(card, href);
+    });
+  });
+
   document.addEventListener('click', event => {
-    const link = event.target.closest('a[href]');
+    const link = event.target.closest('a[href]:not(.era-card)');
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     const href = link.getAttribute('href');
     if (!href || href.startsWith('#') || link.target === '_blank' || /^https?:/i.test(href) || href.startsWith('mailto:')) return;
     event.preventDefault();
-    if (link.classList.contains('era-card')) {
-      runDoorTransition(link, href);
-      return;
-    }
     saveAudioPosition();
     document.body.classList.add('page-leaving');
-    setTimeout(() => { location.href = href; }, 860);
+    setTimeout(() => { location.assign(href); }, 860);
   });
 }
 
@@ -330,7 +231,7 @@ function resetRestoredPage() {
   doorTransitionActive = false;
   document.body.classList.remove('door-transitioning', 'page-leaving');
   document.querySelectorAll('.era-card').forEach(card => {
-    card.classList.remove('door-flipping', 'door-opening');
+    card.classList.remove('door-flipping', 'door-back-visible', 'door-opening');
     card.removeAttribute('aria-busy');
   });
   const curtain = document.getElementById('page-curtain');
@@ -341,16 +242,10 @@ addEventListener('pageshow', resetRestoredPage);
 
 /* INITIALIZATION */
 addEventListener('DOMContentLoaded', () => {
-  markStreamTargets();
-  setLanguage(currentLang, false);
-  updateImageHints();
-  document.querySelectorAll('.stream-text').forEach(resetStream);
-  document.querySelectorAll('.era-card,.exhibit-card').forEach(element => revealObserver.observe(element));
+  setLanguage(currentLang);
+  document.querySelectorAll('.era-card').forEach(element => revealObserver.observe(element));
   setupAudio();
   ['en','he','ru'].forEach(code => document.getElementById('btn-' + code)?.addEventListener('click', () => setLanguage(code)));
   setupPageTransitions();
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    document.body.classList.add('page-ready');
-    streamHeader();
-  }));
+  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('page-ready')));
 });

@@ -20,7 +20,8 @@ PHONE FUNCTIONALITY
 - Gallery artwork uses semantic buttons, keyboard focus, and accessible labels.
 - Non-hero timeline images load lazily and all gallery images have intrinsic dimensions.
 - The lightbox uses dynamic phone height, safe-area padding, scroll locking, and a 48px close control.
-- Tapping a paragraph while it is animating reveals its complete text immediately.
+- Homepage text remains fully visible and static.
+- Gallery text uses a staggered word-wave reveal on entry and while scrolling; no typewriter or caret effect remains.
 - Back-navigation restoration clears stale door and page-transition states.
 
 AUDIO
