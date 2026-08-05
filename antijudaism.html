@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+
+<html dir="ltr" lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>Antijudaism | Jew-Hatred Exhibition</title>
-<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2317171a'/><rect x='30' y='30' width='40' height='40' fill='%23ffffff'/></svg>">
+<!-- MINIMALIST GALLERY FAVICON -->
+<link href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' fill='%2317171a'/&gt;&lt;rect x='30' y='30' width='40' height='40' fill='%23ffffff'/&gt;&lt;/svg&gt;" rel="icon"/>
 <style>
         /* BASE CANVAS & BLENDED MATTE GALLERY THEME */
         * {
@@ -466,303 +468,387 @@
             right: auto;
             left: 12px;
         }
-    </style>
+
+        [dir="rtl"] #lightbox-close {
+            right: auto;
+            left: max(0.5rem, env(safe-area-inset-left));
+        }
+    
+
+        /* PHONE USABILITY AND ACCESSIBILITY */
+        .controls-nav {
+            left: auto;
+            right: max(0.75rem, env(safe-area-inset-right));
+            max-width: calc(100vw - max(1.5rem, env(safe-area-inset-left) + env(safe-area-inset-right)));
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        [dir="rtl"] .controls-nav {
+            left: max(0.75rem, env(safe-area-inset-left));
+            right: auto;
+            justify-content: flex-start;
+        }
+
+        .nav-box {
+            min-height: 46px;
+            padding: 0 6px;
+            align-items: center;
+        }
+
+        .lang-btn, .audio-btn, .home-btn {
+            min-width: 44px;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 8px;
+            border-radius: 2px;
+        }
+
+        .home-btn {
+            color: #aeb0ba;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .lang-btn:focus-visible, .audio-btn:focus-visible, .home-btn:focus-visible,
+        .art-box:focus-visible, #lightbox-close:focus-visible {
+            outline: 2px solid rgba(255,255,255,0.9);
+            outline-offset: 3px;
+        }
+
+        .audio-btn.is-playing { color: #fff; }
+
+        button.art-box {
+            width: 100%;
+            padding: 0;
+            color: inherit;
+            font: inherit;
+            text-align: inherit;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        button.art-box.pop-in:hover, button.art-box.pop-in:focus-visible {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .typewriter-p[data-streaming="true"] { cursor: pointer; }
+        .typewriter-p[data-streaming="true"]::after {
+            content: "";
+            display: inline-block;
+            width: 1px;
+            height: 1em;
+            margin-inline-start: 2px;
+            vertical-align: -0.12em;
+            background: rgba(255,255,255,0.7);
+            animation: text-caret 0.9s steps(1,end) infinite;
+        }
+        @keyframes text-caret { 50% { opacity: 0; } }
+
+        body.lightbox-open {
+            position: fixed;
+            left: 0;
+            right: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #lightbox {
+            inset: 0;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            padding:
+                max(4rem, env(safe-area-inset-top))
+                max(1rem, env(safe-area-inset-right))
+                max(1rem, env(safe-area-inset-bottom))
+                max(1rem, env(safe-area-inset-left));
+        }
+
+        #lightbox-img {
+            max-width: 100%;
+            max-height: calc(100dvh - 8rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        }
+
+        #lightbox-close {
+            top: max(0.5rem, env(safe-area-inset-top));
+            right: max(0.5rem, env(safe-area-inset-right));
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            padding: 0;
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 50%;
+            background: rgba(18,18,22,0.74);
+            line-height: 1;
+        }
+
+        @media (max-width: 600px) {
+            .controls-nav {
+                top: max(0.55rem, env(safe-area-inset-top));
+                left: max(0.75rem, env(safe-area-inset-left));
+                right: max(0.75rem, env(safe-area-inset-right));
+                justify-content: flex-end;
+                gap: 0.35rem;
+            }
+            [dir="rtl"] .controls-nav {
+                left: max(0.75rem, env(safe-area-inset-left));
+                right: max(0.75rem, env(safe-area-inset-right));
+                justify-content: flex-start;
+            }
+            .nav-box {
+                font-size: 0.66rem;
+                letter-spacing: 1px;
+            }
+            .hero-section { padding-top: 9rem; }
+            .hero-container, .exhibition-container { padding-top: 0; }
+            .exhibition-section { min-height: auto; padding: 4rem 0.75rem; }
+            .museum-frame { min-height: 0; }
+            .art-box { margin-top: 0; }
+            #lightbox-caption { max-width: 90%; line-height: 1.45; }
+        }
+
+        @media (max-width: 340px) {
+            .controls-nav { justify-content: center; }
+            .hero-section { padding-top: 12rem; }
+        }
+</style>
 </head>
 <body>
+<!-- LAZY GLIDING AMBIENT LIGHT OVERLAY -->
 <div id="ambient-light"></div>
-<audio id="bg-audio" loop src="The Seasons, Op. 37a - VI. June_ Barcarolle.mp3"></audio>
-<nav class="controls-nav">
-        <div class="nav-box"><a class="lang-btn" href="index.html" style="text-decoration:none" data-en="Home" data-he="בית" data-ru="Главная">Home</a></div>
-        <div class="nav-box"><button class="audio-btn" id="audio-btn" onclick="toggleAudio()" data-en="AUDIO: OFF" data-he="שמע: כבוי" data-ru="ЗВУК: ВЫКЛ">AUDIO: OFF</button></div>
-        <div class="nav-box"><button class="lang-btn active" id="btn-en" onclick="setLanguage('en')">EN</button><span style="color:#444;">|</span><button class="lang-btn" id="btn-he" onclick="setLanguage('he')">HE</button><span style="color:#444;">|</span><button class="lang-btn" id="btn-ru" onclick="setLanguage('ru')">RU</button></div>
-    </nav>
-<div id="lightbox" onclick="closeLightbox()"><button id="lightbox-close">&times;</button><img id="lightbox-img" src="" alt="Enlarged Artwork"><div id="lightbox-caption" data-en="Click anywhere to close" data-he="לחץ באיזשהו מקום לסגירה" data-ru="Нажмите в любом месте, чтобы закрыть">Click anywhere to close</div></div>
+<!-- BACKGROUND AUDIO ELEMENT -->
+<audio id="bg-audio" loop="" preload="none" src="The Seasons, Op. 37a - VI. June_ Barcarolle.mp3"></audio>
+<!-- MINIMALIST CONTROLS NAVBAR -->
+<nav class="controls-nav"><div class="nav-box"><a aria-label="Return to the three eras" class="home-btn" data-en="ERAS" data-he="תקופות" data-ru="ЭПОХИ" href="index.html">ERAS</a></div>
+<div class="nav-box">
+<button aria-pressed="false" class="audio-btn" data-en="AUDIO: OFF" data-he="שמע: כבוי" data-ru="ЗВУК: ВЫКЛ" id="audio-btn" type="button">AUDIO: OFF</button>
+</div>
+<div class="nav-box">
+<button class="lang-btn active" id="btn-en" type="button">EN</button>
+<span style="color:#444;">|</span>
+<button class="lang-btn" id="btn-he" type="button">HE</button>
+<span style="color:#444;">|</span>
+<button class="lang-btn" id="btn-ru" type="button">RU</button>
+</div>
+</nav>
+<!-- FULLSCREEN LIGHTBOX MODAL -->
+<div aria-hidden="true" aria-label="Enlarged artwork" aria-modal="true" id="lightbox" role="dialog">
+<button aria-label="Close enlarged artwork" id="lightbox-close" type="button">×</button>
+<img alt="Enlarged Artwork" id="lightbox-img" src=""/>
+<div data-en="Click anywhere to close" data-he="לחץ באיזשהו מקום לסגירה" data-ru="Нажмите в любом месте, чтобы закрыть" id="lightbox-caption">Click anywhere to close</div>
+</div>
 <main id="gallery">
-        <header class="hero-section">
-            <div class="hero-container">
-                <div class="art-box interactive-target" onclick="openLightbox(this)">
-                    <div class="museum-frame"><img src="home-antijudaism.jpg" alt="Antijudaism gallery introduction"></div>
-                    <div class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</div>
-                </div>
-                <div class="hero-header-text">
-                    <div class="hero-subtitle stream-text" data-en="Jew-Hatred Timeline" data-he="ציר הזמן של שנאת יהודים" data-ru="Хронология ненависти к евреям">Jew-Hatred Timeline</div>
-                    <h1 class="hero-title stream-text" data-en="Antijudaism" data-he="אנטי-יהדות" data-ru="Антииудаизм">Antijudaism</h1>
-                    <div class="hero-location stream-text" data-en="Three Preliminary Exhibits" data-he="שלושה מוצגים ראשוניים" data-ru="Три предварительных экспоната">Three Preliminary Exhibits</div>
-                </div>
-            </div>
-        </header>
-        <section class="exhibition-section">
-            <div class="exhibition-container">
-                <div class="art-box interactive-target" onclick="openLightbox(this)">
-                    <div class="museum-frame">
-                        <img src="antijudaism-1.jpg" alt="Antijudaism preliminary exhibit 1">
-                    </div>
-                    <div class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</div>
-                </div>
-                <div class="info-panel">
-                    <div class="info-category stream-text" data-en="Chapter I — Preliminary Placement" data-he="פרק א — מיקום ראשוני" data-ru="Глава I — Предварительное размещение">Chapter I — Preliminary Placement</div>
-                    <h3 class="info-title stream-text" data-en="Temporary Exhibit I" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit I</h3>
-                    <div class="info-meta">
-                        <div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-                        <div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-                    </div>
-                    <div class="info-block">
-                        <h4 data-en="Creator Bio & Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio & Context</h4>
-                        <p class="typewriter-p stream-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-                    </div>
-                    <div class="info-block">
-                        <h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-                        <p class="typewriter-p stream-text" data-en="Temporary image placement for the developing Antijudaism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
-                    </div>
-                    <div class="info-block">
-                        <h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-                        <p class="typewriter-p stream-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="exhibition-section">
-            <div class="exhibition-container">
-                <div class="art-box interactive-target" onclick="openLightbox(this)">
-                    <div class="museum-frame">
-                        <img src="antijudaism-2.jpg" alt="Antijudaism preliminary exhibit 2">
-                    </div>
-                    <div class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</div>
-                </div>
-                <div class="info-panel">
-                    <div class="info-category stream-text" data-en="Chapter II — Preliminary Placement" data-he="פרק ב — מיקום ראשוני" data-ru="Глава II — Предварительное размещение">Chapter II — Preliminary Placement</div>
-                    <h3 class="info-title stream-text" data-en="Temporary Exhibit II" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit II</h3>
-                    <div class="info-meta">
-                        <div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-                        <div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-                    </div>
-                    <div class="info-block">
-                        <h4 data-en="Creator Bio & Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio & Context</h4>
-                        <p class="typewriter-p stream-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-                    </div>
-                    <div class="info-block">
-                        <h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-                        <p class="typewriter-p stream-text" data-en="Temporary image placement for the developing Antijudaism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
-                    </div>
-                    <div class="info-block">
-                        <h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-                        <p class="typewriter-p stream-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="exhibition-section">
-            <div class="exhibition-container">
-                <div class="art-box interactive-target" onclick="openLightbox(this)">
-                    <div class="museum-frame">
-                        <img src="antijudaism-3.jpg" alt="Antijudaism preliminary exhibit 3">
-                    </div>
-                    <div class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</div>
-                </div>
-                <div class="info-panel">
-                    <div class="info-category stream-text" data-en="Chapter III — Preliminary Placement" data-he="פרק ג — מיקום ראשוני" data-ru="Глава III — Предварительное размещение">Chapter III — Preliminary Placement</div>
-                    <h3 class="info-title stream-text" data-en="Temporary Exhibit III" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit III</h3>
-                    <div class="info-meta">
-                        <div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-                        <div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-                    </div>
-                    <div class="info-block">
-                        <h4 data-en="Creator Bio & Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio & Context</h4>
-                        <p class="typewriter-p stream-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-                    </div>
-                    <div class="info-block">
-                        <h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-                        <p class="typewriter-p stream-text" data-en="Temporary image placement for the developing Antijudaism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
-                    </div>
-                    <div class="info-block">
-                        <h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-                        <p class="typewriter-p stream-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-                    </div>
-                </div>
-            </div>
-        </section></main>
+<!-- HEADER / HERO SECTION -->
+<header class="hero-section">
+<div class="hero-container">
+<button aria-label="Enlarge Antijudaism gallery introduction" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame"><img alt="Antijudaism gallery introduction" decoding="async" fetchpriority="high" height="720" loading="eager" src="home-antijudaism.jpg" width="900"/></span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="hero-header-text">
+<div class="hero-subtitle stream-text" data-en="Jew-Hatred Timeline" data-he="ציר הזמן של שנאת יהודים" data-ru="Хронология ненависти к евреям">Jew-Hatred Timeline</div>
+<h1 class="hero-title stream-text" data-en="Antijudaism" data-he="אנטי-יהדות" data-ru="Антииудаизм">Antijudaism</h1>
+<div class="hero-location stream-text" data-en="Six Timeline Positions" data-he="שישה מיקומים בציר הזמן" data-ru="Шесть позиций хронологии">Six Timeline Positions</div>
+</div>
+</div>
+</header>
+<!-- CHAPTER I: SOVIET ERA -->
+<section class="exhibition-section">
+<div class="exhibition-container">
+<button aria-label="Enlarge Antijudaism preliminary exhibit 1" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Antijudaism preliminary exhibit 1" decoding="async" fetchpriority="low" height="720" loading="lazy" src="antijudaism-1.jpg" width="900"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category stream-text" data-en="Chapter I — Preliminary Placement" data-he="פרק א — מיקום ראשוני" data-ru="Глава I — Предварительное размещение">Chapter I — Preliminary Placement</div>
+<h3 class="info-title stream-text" data-en="Temporary Exhibit I" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit I</h3>
+<div class="info-meta">
+<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="typewriter-p stream-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="typewriter-p stream-text" data-en="Temporary image placement for the developing Antijudaism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="typewriter-p stream-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
+</div>
+</div>
+</div>
+</section>
+<!-- CHAPTER II: ARAB REGIONAL DISCOURSE -->
+<section class="exhibition-section">
+<div class="exhibition-container">
+<button aria-label="Enlarge Antijudaism preliminary exhibit 2" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Antijudaism preliminary exhibit 2" decoding="async" fetchpriority="low" height="600" loading="lazy" src="antijudaism-2.jpg" width="600"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category stream-text" data-en="Chapter II — Preliminary Placement" data-he="פרק ב — מיקום ראשוני" data-ru="Глава II — Предварительное размещение">Chapter II — Preliminary Placement</div>
+<h3 class="info-title stream-text" data-en="Temporary Exhibit II" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit II</h3>
+<div class="info-meta">
+<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="typewriter-p stream-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="typewriter-p stream-text" data-en="Temporary image placement for the developing Antijudaism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="typewriter-p stream-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
+</div>
+</div>
+</div>
+</section>
+<!-- CHAPTER III: WESTERN MANIFESTATIONS -->
+<section class="exhibition-section">
+<div class="exhibition-container">
+<button aria-label="Enlarge Antijudaism preliminary exhibit 3" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Antijudaism preliminary exhibit 3" decoding="async" fetchpriority="low" height="600" loading="lazy" src="antijudaism-3.jpg" width="600"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category stream-text" data-en="Chapter III — Preliminary Placement" data-he="פרק ג — מיקום ראשוני" data-ru="Глава III — Предварительное размещение">Chapter III — Preliminary Placement</div>
+<h3 class="info-title stream-text" data-en="Temporary Exhibit III" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit III</h3>
+<div class="info-meta">
+<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="typewriter-p stream-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="typewriter-p stream-text" data-en="Temporary image placement for the developing Antijudaism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="typewriter-p stream-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
+</div>
+</div>
+</div>
+</section>
+<section class="exhibition-section reserved-timeline-position">
+<div class="exhibition-container">
+<button aria-label="Enlarge Antijudaism reserved timeline exhibit 4" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Antijudaism reserved timeline exhibit 4" decoding="async" fetchpriority="low" height="950" loading="lazy" src="antijudaism-4.jpg" width="1400"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category stream-text" data-en="Chapter IV — Reserved Placement" data-he="פרק ד — מיקום שמור" data-ru="Глава IV — Зарезервированное место">Chapter IV — Reserved Placement</div>
+<h3 class="info-title stream-text" data-en="Temporary Exhibit IV" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit IV</h3>
+<div class="info-meta">
+<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="typewriter-p stream-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="typewriter-p stream-text" data-en="Reserved image position for the developing Antijudaism timeline." data-he="מיקום תמונה שמור עבור ציר הזמן המתפתח." data-ru="Зарезервированное место для изображения в развивающейся хронологии."></p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="typewriter-p stream-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
+</div>
+</div>
+</div>
+</section>
+<section class="exhibition-section reserved-timeline-position">
+<div class="exhibition-container">
+<button aria-label="Enlarge Antijudaism reserved timeline exhibit 5" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Antijudaism reserved timeline exhibit 5" decoding="async" fetchpriority="low" height="950" loading="lazy" src="antijudaism-5.jpg" width="1400"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category stream-text" data-en="Chapter V — Reserved Placement" data-he="פרק ה — מיקום שמור" data-ru="Глава V — Зарезервированное место">Chapter V — Reserved Placement</div>
+<h3 class="info-title stream-text" data-en="Temporary Exhibit V" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit V</h3>
+<div class="info-meta">
+<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="typewriter-p stream-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="typewriter-p stream-text" data-en="Reserved image position for the developing Antijudaism timeline." data-he="מיקום תמונה שמור עבור ציר הזמן המתפתח." data-ru="Зарезервированное место для изображения в развивающейся хронологии."></p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="typewriter-p stream-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
+</div>
+</div>
+</div>
+</section>
+<section class="exhibition-section reserved-timeline-position">
+<div class="exhibition-container">
+<button aria-label="Enlarge Antijudaism reserved timeline exhibit 6" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Antijudaism reserved timeline exhibit 6" decoding="async" fetchpriority="low" height="950" loading="lazy" src="antijudaism-6.jpg" width="1400"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category stream-text" data-en="Chapter VI — Reserved Placement" data-he="פרק ו — מיקום שמור" data-ru="Глава VI — Зарезервированное место">Chapter VI — Reserved Placement</div>
+<h3 class="info-title stream-text" data-en="Temporary Exhibit VI" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit VI</h3>
+<div class="info-meta">
+<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="stream-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="typewriter-p stream-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="typewriter-p stream-text" data-en="Reserved image position for the developing Antijudaism timeline." data-he="מיקום תמונה שמור עבור ציר הזמן המתפתח." data-ru="Зарезервированное место для изображения в развивающейся хронологии."></p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="typewriter-p stream-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- EXHIBITION FOOTER STATEMENT -->
+<footer class="exhibition-footer">
+<a class="statement-link stream-text" data-en="Return to the Three Eras" data-he="חזרה לשלוש התקופות" data-ru="Вернуться к трём эпохам" href="index.html">Return to the Three Eras</a>
+</footer>
 <!-- INTERACTIVE JAVASCRIPT -->
-    <script>
-        let currentLang = 'en';
 
-        // 0. SMART DYNAMIC IMAGE FALLBACK HANDLER
-        function handleFallbackImage(img, fallbackList) {
-            if (!img.dataset.tryIndex) {
-                img.dataset.tryIndex = "0";
-            }
-            let index = parseInt(img.dataset.tryIndex);
-            if (index < fallbackList.length) {
-                img.dataset.tryIndex = (index + 1).toString();
-                img.src = fallbackList[index];
-            } else {
-                img.onerror = null;
-                img.src = 'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\' viewBox=\'0 0 600 400\'><rect width=\'600\' height=\'400\' fill=\'%231d1d21\'/><text x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23aaa\' font-family=\'sans-serif\' font-size=\'18\'>CHAPTER I: SOVIET ERA</text></svg>';
-            }
-        }
 
-        // 1. LAZY GLIDING AMBIENT LIGHT
-        const ambientLight = document.getElementById('ambient-light');
-        let targetX = window.innerWidth / 2;
-        let targetY = window.innerHeight / 2;
-        let currentX = targetX;
-        let currentY = targetY;
-
-        window.addEventListener('mousemove', (e) => {
-            targetX = e.clientX;
-            targetY = e.clientY;
-        });
-
-        function animateAmbientLight() {
-            currentX += (targetX - currentX) * 0.04;
-            currentY += (targetY - currentY) * 0.04;
-
-            ambientLight.style.setProperty('--cursor-x', `${currentX}px`);
-            ambientLight.style.setProperty('--cursor-y', `${currentY}px`);
-
-            requestAnimationFrame(animateAmbientLight);
-        }
-        animateAmbientLight();
-
-        // 2. SLOW MEASURED WORD-BY-WORD STREAMING ENGINE
-        function streamWords(element, text, speed = 70) {
-            if (!text) return;
-            element.textContent = '';
-            const letters = Array.from(text);
-            let index = 0;
-
-            if (element.typeInterval) clearInterval(element.typeInterval);
-
-            element.typeInterval = setInterval(() => {
-                if (index < letters.length) {
-                    element.textContent += letters[index];
-                    index++;
-                } else {
-                    clearInterval(element.typeInterval);
-                }
-            }, speed);
-        }
-
-        function triggerPanelStreaming(container) {
-            const streamElements = container.querySelectorAll('.stream-text');
-            streamElements.forEach(el => {
-                const text = el.getAttribute(`data-${currentLang}`) || el.textContent;
-                streamWords(el, text, 70);
-            });
-        }
-
-        // 3. INTERSECTION OBSERVER FOR MOBILE SCROLL POP-UP & PANEL REVEAL
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const elementObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    if (entry.target.classList.contains('art-box') || entry.target.classList.contains('info-block')) {
-                        entry.target.classList.add('pop-in');
-                    }
-
-                    if (entry.target.classList.contains('exhibition-section')) {
-                        const infoPanel = entry.target.querySelector('.info-panel');
-                        if (infoPanel && !infoPanel.classList.contains('visible')) {
-                            infoPanel.classList.add('visible');
-                            triggerPanelStreaming(entry.target);
-                        }
-                    }
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.exhibition-section, .art-box, .info-block').forEach(el => {
-            elementObserver.observe(el);
-        });
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const heroSection = document.querySelector('.hero-section');
-            if (heroSection) {
-                triggerPanelStreaming(heroSection);
-            }
-            const heroArtBox = document.querySelector('.hero-section .art-box');
-            if (heroArtBox) heroArtBox.classList.add('pop-in');
-        });
-
-        // 4. AUDIO PLAYER CONTROLLER
-        const audio = document.getElementById('bg-audio');
-        const audioBtn = document.getElementById('audio-btn');
-        let isPlaying = false;
-
-        function toggleAudio() {
-            if (isPlaying) {
-                audio.pause();
-                isPlaying = false;
-                updateAudioBtnText();
-            } else {
-                audio.play().then(() => {
-                    isPlaying = true;
-                    updateAudioBtnText();
-                }).catch(() => {
-                    console.log('Audio playback blocked by browser');
-                });
-            }
-        }
-
-        function updateAudioBtnText() {
-            if (currentLang === 'en') {
-                audioBtn.textContent = isPlaying ? "AUDIO: ON" : "AUDIO: OFF";
-            } else if (currentLang === 'he') {
-                audioBtn.textContent = isPlaying ? "שמע: מופעל" : "שמע: כבוי";
-            } else if (currentLang === 'ru') {
-                audioBtn.textContent = isPlaying ? "ЗВУК: ВКЛ" : "ЗВУК: ВЫКЛ";
-            }
-        }
-
-        // 5. CLICK TO ENLARGE LIGHTBOX LOGIC
-        function openLightbox(artBox) {
-            const img = artBox.querySelector('img');
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            
-            lightboxImg.src = img.src;
-            lightboxImg.alt = img.alt;
-            lightbox.classList.add('active');
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-        }
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeLightbox();
-        });
-
-        // 6. TRILINGUAL LANGUAGE SWITCHER (EN | HE | RU)
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.documentElement.lang = lang;
-            document.documentElement.dir = (lang === 'he') ? 'rtl' : 'ltr';
-
-            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-            document.getElementById('btn-he').classList.toggle('active', lang === 'he');
-            document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
-
-            updateAudioBtnText();
-
-            document.querySelectorAll('[data-en][data-he][data-ru]').forEach(el => {
-                if (!el.classList.contains('stream-text') && el.id !== 'audio-btn') {
-                    const text = el.getAttribute(`data-${lang}`);
-                    if (text) el.textContent = text;
-                }
-            });
-
-            document.querySelectorAll('.hero-section, .exhibition-section').forEach(section => {
-                const panel = section.querySelector('.info-panel');
-                if (!panel || panel.classList.contains('visible') || section.classList.contains('hero-section')) {
-                    triggerPanelStreaming(section);
-                }
-            });
-        }
-    </script>
-    <script src="continuity.js"></script>
-</body>
+<script src="gallery.js"></script></body>
 </html>

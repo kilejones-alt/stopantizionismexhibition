@@ -33,7 +33,7 @@ body.page-ready .controls-nav{opacity:1;transform:none}
 .nav-box{display:flex;gap:.45rem;align-items:center;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;background:rgba(255,255,255,.03);padding:8px 12px;border:1px solid rgba(255,255,255,.06);border-radius:3px;backdrop-filter:blur(8px);box-shadow:0 0 25px rgba(255,255,255,.025),inset 0 0 10px rgba(255,255,255,.015);transition:box-shadow .8s ease,border-color .8s ease,transform .8s var(--ease),background .8s ease}
 .nav-box:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.045);box-shadow:0 0 35px rgba(255,255,255,.05),inset 0 0 15px rgba(255,255,255,.03)}
 .nav-separator{color:#444}
-.lang-btn,.audio-btn,.home-btn{background:none;border:0;color:#888895;cursor:pointer;padding:4px 6px;touch-action:manipulation;transition:color .6s ease;font:inherit;letter-spacing:inherit;text-transform:uppercase;text-decoration:none}
+.lang-btn,.audio-btn,.home-btn{background:none;border:0;color:#888895;cursor:pointer;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 8px;touch-action:manipulation;transition:color .6s ease;font:inherit;letter-spacing:inherit;text-transform:uppercase;text-decoration:none}
 .lang-btn.active,.lang-btn:hover,.audio-btn:hover,.home-btn:hover{color:#fff}
 .audio-btn.is-playing{color:#fff;text-shadow:0 0 14px rgba(255,255,255,.25)}
 
@@ -122,8 +122,8 @@ body.page-ready .gallery-rule{transform:scaleX(1)}
   [dir="rtl"] .site-brand-link{left:.65rem}
   .controls-nav{top:.65rem;left:.55rem;gap:.25rem}
   [dir="rtl"] .controls-nav{right:.55rem}
-  .nav-box{font-size:.53rem;letter-spacing:.7px;padding:5px 6px;gap:.2rem}
-  .lang-btn,.audio-btn,.home-btn{padding:3px 4px}
+  .nav-box{font-size:.62rem;letter-spacing:.7px;padding:0 4px;gap:.1rem;min-height:46px}
+  .lang-btn,.audio-btn,.home-btn{min-width:44px;min-height:44px;padding:0 5px}
   .home-main{padding:6.4rem .48rem 4.5rem}
   .home-kicker{font-size:.66rem;letter-spacing:.22em;margin-bottom:.85rem}
   .home-title{font-size:clamp(2.7rem,13vw,3.45rem);letter-spacing:.025em;line-height:.95}
@@ -188,3 +188,8 @@ body.door-transitioning .home-intro,body.door-transitioning .desktop-connector,b
   .era-enter{font-size:.58rem}
 }
 @media(prefers-reduced-motion:reduce){.door-rotator,.door-panel,.door-back-label{transition:none!important}}
+
+
+/* MOBILE CONTROL RELIABILITY */
+.lang-btn:focus-visible,.audio-btn:focus-visible,.home-btn:focus-visible,.era-card:focus-visible{outline:2px solid rgba(255,255,255,.92);outline-offset:3px}
+@media(max-width:720px){.controls-nav{max-width:calc(100vw - 1.1rem);flex-wrap:wrap}.site-brand-link{top:max(.7rem,env(safe-area-inset-top))}.controls-nav{top:max(.65rem,env(safe-area-inset-top));left:max(.55rem,env(safe-area-inset-left))}}

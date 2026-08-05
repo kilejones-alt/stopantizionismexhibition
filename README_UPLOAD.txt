@@ -1,4 +1,4 @@
-STOPAZ responsive Jew-Hatred site — homepage rebuilt from current GitHub repo
+STOPAZ responsive Jew-Hatred site — audited phone-first repository
 
 UPLOAD
 1. Extract the replacement ZIP.
@@ -8,40 +8,32 @@ UPLOAD
 5. Do not upload the ZIP itself or the outer folder as a nested directory.
 
 PAGES
-- index.html: Jew-Hatred homepage using the Antizionism exhibition's matte gallery design and interactions
-- antijudaism.html: temporary three-item gallery
-- antisemitism.html: temporary three-item gallery
-- exhibition.html: current Antizionism exhibition preserved
+- index.html: Jew-Hatred homepage with three slow horizontal flip-and-door entries
+- antijudaism.html: Antizionism-format gallery with six timeline positions
+- antisemitism.html: Antizionism-format gallery with six timeline positions
+- exhibition.html: Antizionism gallery with six timeline positions
 
-RESPONSIVE LAYOUT
-- Laptop and desktop: three era cards left to right with a three-way connector
-- Phone: large era cards top to bottom with one centered vertical connector
-
-HOMEPAGE DESIGN
-- Black-and-white Stop Antizionism logo at the upper right
-- Logo lifts, enlarges, brightens, and gains a restrained glow on hover
-- Stop Antizionism introduction followed by the Garamond-style Jew-Hatred title
-- Same matte charcoal palette, ambient light, card framing, image zoom, lift, shadow, and control styling as the Antizionism exhibition
-
-TEXT REVEALS
-- Letters appear individually at a slower, measured pace
-- Main titles: 68 ms base interval per character
-- Labels: 48 ms base interval per character
-- Description text: 40 ms base interval per character
-- Punctuation adds a natural pause
+PHONE FUNCTIONALITY
+- Phone remains the priority when layout tradeoffs are necessary.
+- Gallery controls use 44px minimum touch targets and wrap safely at 320px.
+- Every gallery has an ERAS control returning to the three-door homepage.
+- Gallery artwork uses semantic buttons, keyboard focus, and accessible labels.
+- Non-hero timeline images load lazily and all gallery images have intrinsic dimensions.
+- The lightbox uses dynamic phone height, safe-area padding, scroll locking, and a 48px close control.
+- Tapping a paragraph while it is animating reveals its complete text immediately.
+- Back-navigation restoration clears stale door and page-transition states.
 
 AUDIO
-- The site attempts playback immediately.
-- Browsers may block audible autoplay before the visitor interacts.
-- The first click, tap, or key press starts the music when autoplay is blocked.
-- Audio preference and playback position continue across internal page changes when the browser permits it.
+- Audio does not autoplay and the 7.1 MB file is not preloaded.
+- Playback begins only after the visitor presses AUDIO.
+- One active audio controller is used per page.
+- Playback position is saved for the browsing session.
 
-TEMPORARY CONTENT
-Unknown titles, creators, dates, descriptions, and citations remain marked as pending. No metadata was invented.
+CURRENT CONTENT
+- Each era page contains six vertically stacked timeline positions: three current entries and three replaceable reserved entries.
+- Unknown titles, creators, dates, descriptions, and citations remain marked as pending. No metadata was invented.
+- The Antisemitism homepage image is a sharpened 4x enlargement of the existing archival image; its source content was not changed.
 
-
-CURRENT UPDATE
-- Homepage Stop Antizionism kicker removed; logo remains top right.
-- All three homepage doors use a slow horizontal flip, reverse-side reveal, and gallery-door opening transition.
-- Antijudaism and Antisemitism are full Antizionism-style timeline galleries with three preliminary exhibits each.
-- exhibition.html remains byte-for-byte unchanged.
+FINAL AUDIT
+- Obsolete continuity.js was removed; it was unused and contained superseded autoplay logic.
+- HTML structure, JavaScript syntax, CSS parsing, local links, assets, image dimensions, translations, touch targets, lightbox behavior, and all three door routes were rechecked.

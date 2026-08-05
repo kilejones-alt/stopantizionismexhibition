@@ -1,7 +1,10 @@
 'use strict';
 
-let currentLang = localStorage.getItem('stopazLanguage') || 'en';
+const SUPPORTED_LANGUAGES = ['en', 'he', 'ru'];
+const savedLanguage = localStorage.getItem('stopazLanguage');
+let currentLang = SUPPORTED_LANGUAGES.includes(savedLanguage) ? savedLanguage : 'en';
 let isPlaying = false;
+let audioStartPending = false;
 const STREAM_SPEED_TITLE = 68;
 const STREAM_SPEED_LABEL = 48;
 const STREAM_SPEED_BODY = 40;
@@ -150,10 +153,9 @@ const revealObserver = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.11, rootMargin: '0px 0px -45px 0px' });
 
-/* AUDIO — immediate attempt, first-interaction start, and position continuity */
+/* AUDIO — explicit visitor control only; no autoplay or first-interaction start */
 const bgAudio = document.getElementById('bg-audio');
 const audioBtn = document.getElementById('audio-btn');
-const AUDIO_PREF = 'stopazAudioPreference';
 const AUDIO_TIME = 'stopazAudioTime';
 if (bgAudio) bgAudio.volume = 0.46;
 function updateAudioBtnText() {
@@ -165,72 +167,62 @@ function updateAudioBtnText() {
   };
   audioBtn.textContent = labels[currentLang];
   audioBtn.classList.toggle('is-playing', isPlaying);
+  audioBtn.setAttribute('aria-pressed', String(isPlaying));
 }
 function saveAudioPosition() {
   if (bgAudio && Number.isFinite(bgAudio.currentTime)) {
     sessionStorage.setItem(AUDIO_TIME, String(bgAudio.currentTime));
   }
 }
-function restoreAudioPosition() {
+function seekSavedAudioPosition() {
   if (!bgAudio) return;
-  const saved = parseFloat(sessionStorage.getItem(AUDIO_TIME) || '0');
-  if (Number.isFinite(saved) && saved > 0) {
-    try { bgAudio.currentTime = saved; } catch (_error) { /* browser decides */ }
+  const saved = Number.parseFloat(sessionStorage.getItem(AUDIO_TIME) || '0');
+  if (Number.isFinite(saved) && saved > 0 && Number.isFinite(bgAudio.duration) && saved < bgAudio.duration) {
+    try { bgAudio.currentTime = saved; } catch (_error) { /* Browser controls seeking readiness. */ }
   }
 }
-async function startAudio(persist = true) {
-  if (!bgAudio) return false;
-  if (persist) localStorage.setItem(AUDIO_PREF, 'on');
+function waitForAudioMetadata() {
+  if (!bgAudio || bgAudio.readyState >= 1) return Promise.resolve();
+  return new Promise(resolve => {
+    bgAudio.addEventListener('loadedmetadata', resolve, { once: true });
+    setTimeout(resolve, 1800);
+  });
+}
+async function startAudio() {
+  if (!bgAudio || audioStartPending) return false;
+  audioStartPending = true;
+  audioBtn?.setAttribute('aria-busy', 'true');
   try {
+    bgAudio.load();
+    await waitForAudioMetadata();
+    seekSavedAudioPosition();
     await bgAudio.play();
-    isPlaying = true;
-    updateAudioBtnText();
     return true;
   } catch (_error) {
     isPlaying = false;
     updateAudioBtnText();
     return false;
+  } finally {
+    audioStartPending = false;
+    audioBtn?.removeAttribute('aria-busy');
   }
 }
-function stopAudio(persist = true) {
+function stopAudio() {
   if (!bgAudio) return;
   saveAudioPosition();
   bgAudio.pause();
-  isPlaying = false;
-  if (persist) localStorage.setItem(AUDIO_PREF, 'off');
-  updateAudioBtnText();
 }
 function toggleAudio() {
-  if (!bgAudio) return;
-  if (!bgAudio.paused || isPlaying) stopAudio(true);
-  else startAudio(true);
-}
-async function firstInteractionAudio(event) {
-  if (event.target.closest && event.target.closest('#audio-btn')) return;
-  if (localStorage.getItem(AUDIO_PREF) === 'off') return;
-  const started = await startAudio(true);
-  if (started) {
-    removeEventListener('pointerdown', firstInteractionAudio, true);
-    removeEventListener('keydown', firstInteractionAudio, true);
-  }
-}
-function armFirstInteractionAudio() {
-  addEventListener('pointerdown', firstInteractionAudio, true);
-  addEventListener('keydown', firstInteractionAudio, true);
+  if (!bgAudio || audioStartPending) return;
+  if (bgAudio.paused) startAudio();
+  else stopAudio();
 }
 function setupAudio() {
   if (!bgAudio) return;
-  restoreAudioPosition();
   bgAudio.addEventListener('play', () => { isPlaying = true; updateAudioBtnText(); });
   bgAudio.addEventListener('pause', () => { isPlaying = false; updateAudioBtnText(); });
-  setInterval(() => { if (!bgAudio.paused) saveAudioPosition(); }, 1500);
-
-  const preference = localStorage.getItem(AUDIO_PREF);
-  if (preference !== 'off') {
-    startAudio(preference !== 'on').then(started => {
-      if (!started) armFirstInteractionAudio();
-    });
-  }
+  bgAudio.addEventListener('ended', () => { isPlaying = false; updateAudioBtnText(); });
+  audioBtn?.addEventListener('click', toggleAudio);
   updateAudioBtnText();
 }
 addEventListener('pagehide', saveAudioPosition);
@@ -243,13 +235,18 @@ function updateImageHints() {
   });
 }
 function setLanguage(lang, animate = true) {
+  if (!SUPPORTED_LANGUAGES.includes(lang)) lang = 'en';
   currentLang = lang;
   localStorage.setItem('stopazLanguage', lang);
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
   ['en', 'he', 'ru'].forEach(code => {
     const button = document.getElementById('btn-' + code);
-    if (button) button.classList.toggle('active', code === lang);
+    if (button) {
+      const active = code === lang;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    }
   });
   updateAudioBtnText();
   updateImageHints();
@@ -328,6 +325,20 @@ function setupPageTransitions() {
   });
 }
 
+
+function resetRestoredPage() {
+  doorTransitionActive = false;
+  document.body.classList.remove('door-transitioning', 'page-leaving');
+  document.querySelectorAll('.era-card').forEach(card => {
+    card.classList.remove('door-flipping', 'door-opening');
+    card.removeAttribute('aria-busy');
+  });
+  const curtain = document.getElementById('page-curtain');
+  if (curtain) curtain.removeAttribute('style');
+  requestAnimationFrame(() => document.body.classList.add('page-ready'));
+}
+addEventListener('pageshow', resetRestoredPage);
+
 /* INITIALIZATION */
 addEventListener('DOMContentLoaded', () => {
   markStreamTargets();
@@ -336,6 +347,7 @@ addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.stream-text').forEach(resetStream);
   document.querySelectorAll('.era-card,.exhibit-card').forEach(element => revealObserver.observe(element));
   setupAudio();
+  ['en','he','ru'].forEach(code => document.getElementById('btn-' + code)?.addEventListener('click', () => setLanguage(code)));
   setupPageTransitions();
   requestAnimationFrame(() => requestAnimationFrame(() => {
     document.body.classList.add('page-ready');
