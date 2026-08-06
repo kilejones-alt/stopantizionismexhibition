@@ -2,7 +2,8 @@
 
 const SUPPORTED_LANGUAGES = ['en', 'he', 'ru'];
 const savedLanguage = localStorage.getItem('stopazLanguage');
-let currentLang = SUPPORTED_LANGUAGES.includes(savedLanguage) ? savedLanguage : 'en';
+const isEnglishOnlyPage = document.body.classList.contains('overview-page');
+let currentLang = isEnglishOnlyPage ? 'en' : (SUPPORTED_LANGUAGES.includes(savedLanguage) ? savedLanguage : 'en');
 let isPlaying = false;
 let audioStartPending = false;
 const STREAM_SPEED_TITLE = 68;
@@ -37,6 +38,62 @@ animateAmbient();
 /* HOMEPAGE TEXT — static; motion begins only after entering a gallery */
 function textFor(element, lang = currentLang) {
   return element.getAttribute('data-' + lang) || element.textContent || '';
+}
+
+/* HOMEPAGE TITLE — one restrained oxblood sweep, left to right */
+const HOME_TITLE_SWEEP_DELAY = 3500;
+const HOME_TITLE_SWEEP_STAGGER = 280;
+let homeTitleSweepTimer = 0;
+let homeTitleSweepFinished = false;
+
+function prepareHomeTitleLetters() {
+  const title = document.querySelector('.home-title');
+  if (!title) return;
+  const fullText = title.getAttribute('data-' + currentLang) || title.textContent || '';
+  title.setAttribute('aria-label', fullText);
+  title.textContent = '';
+  [...fullText].forEach(character => {
+    const span = document.createElement('span');
+    span.className = 'home-title-char';
+    span.setAttribute('aria-hidden', 'true');
+    if (/\s/.test(character)) {
+      span.classList.add('is-space');
+      span.textContent = '\u00a0';
+    } else {
+      if (/[-–—־:]/.test(character)) span.classList.add('is-punctuation');
+      span.textContent = character;
+    }
+    title.appendChild(span);
+  });
+}
+
+function runHomeTitleSweep() {
+  if (homeTitleSweepFinished || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const title = document.querySelector('.home-title');
+  if (!title) return;
+  const characters = [...title.querySelectorAll('.home-title-char:not(.is-space)')];
+  characters.sort((a, b) => {
+    const aRect = a.getBoundingClientRect();
+    const bRect = b.getBoundingClientRect();
+    return Math.abs(aRect.top - bRect.top) > 4 ? aRect.top - bRect.top : aRect.left - bRect.left;
+  });
+  characters.forEach((character, index) => {
+    character.style.setProperty('--sweep-delay', `${index * HOME_TITLE_SWEEP_STAGGER}ms`);
+  });
+  homeTitleSweepFinished = true;
+  title.classList.remove('title-sweep-running');
+  void title.offsetWidth;
+  title.classList.add('title-sweep-running');
+  const totalDuration = (characters.length - 1) * HOME_TITLE_SWEEP_STAGGER + 750;
+  setTimeout(() => title.classList.remove('title-sweep-running'), totalDuration + 100);
+}
+
+function scheduleHomeTitleSweep() {
+  if (!document.body.classList.contains('home-page') || homeTitleSweepFinished || homeTitleSweepTimer) return;
+  homeTitleSweepTimer = window.setTimeout(() => {
+    homeTitleSweepTimer = 0;
+    runHomeTitleSweep();
+  }, HOME_TITLE_SWEEP_DELAY);
 }
 function revealEra(card, index = 0) {
   if (card.dataset.revealed) return;
@@ -139,7 +196,7 @@ function updateImageHints() {
 function setLanguage(lang) {
   if (!SUPPORTED_LANGUAGES.includes(lang)) lang = 'en';
   currentLang = lang;
-  localStorage.setItem('stopazLanguage', lang);
+  if (!isEnglishOnlyPage) localStorage.setItem('stopazLanguage', lang);
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
   ['en', 'he', 'ru'].forEach(code => {
@@ -154,6 +211,7 @@ function setLanguage(lang) {
   document.querySelectorAll('[data-en][data-he][data-ru]').forEach(element => {
     if (element.id !== 'audio-btn') element.textContent = textFor(element, lang);
   });
+  prepareHomeTitleLetters();
 }
 
 /* LIGHTBOX */
@@ -195,16 +253,34 @@ function runDoorTransition(card, href) {
     return;
   }
 
-  /* 0–1.9s: the clicked image card turns horizontally to its reverse side. */
-  setTimeout(() => card.classList.add('door-back-visible'), 1850);
-  /* 2.55–4.8s: the reverse side separates at the center and opens as two panels. */
-  setTimeout(() => card.classList.add('door-opening'), 2550);
-  /* Only fade the page after the door has visibly opened. */
-  setTimeout(() => document.body.classList.add('page-leaving'), 4550);
-  setTimeout(() => { location.assign(href); }, 5150);
+  const phoneDoor = matchMedia('(max-width: 720px)').matches;
+  const timings = phoneDoor
+    ? { back: 1650, open: 2250, fade: 4000, navigate: 4550 }
+    : { back: 1850, open: 2550, fade: 4550, navigate: 5150 };
+
+  /* The phone sequence is approximately 12% quicker while retaining the full flip, pause, and architectural opening. */
+  setTimeout(() => card.classList.add('door-back-visible'), timings.back);
+  setTimeout(() => card.classList.add('door-opening'), timings.open);
+  setTimeout(() => document.body.classList.add('page-leaving'), timings.fade);
+  setTimeout(() => { location.assign(href); }, timings.navigate);
 }
 function setupPageTransitions() {
+  const prefetchedPages = new Set();
+  const prefetchPage = card => {
+    const href = card.getAttribute('href');
+    if (!href || prefetchedPages.has(href)) return;
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = href;
+    document.head.appendChild(link);
+    prefetchedPages.add(href);
+  };
+
   document.querySelectorAll('.era-card[href]').forEach(card => {
+    card.addEventListener('pointerenter', () => prefetchPage(card), { once: true, passive: true });
+    card.addEventListener('focus', () => prefetchPage(card), { once: true });
+    card.addEventListener('touchstart', () => prefetchPage(card), { once: true, passive: true });
     card.addEventListener('click', event => {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       const href = card.getAttribute('href');
@@ -247,5 +323,8 @@ addEventListener('DOMContentLoaded', () => {
   setupAudio();
   ['en','he','ru'].forEach(code => document.getElementById('btn-' + code)?.addEventListener('click', () => setLanguage(code)));
   setupPageTransitions();
-  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('page-ready')));
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.body.classList.add('page-ready');
+    scheduleHomeTitleSweep();
+  }));
 });
