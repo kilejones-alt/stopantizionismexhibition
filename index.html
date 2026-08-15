@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html dir="ltr" lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -8,106 +7,107 @@
 <title>Jew-Hatred | Stop Antizionism</title>
 <link href="site.css" rel="stylesheet"/>
 <link as="image" fetchpriority="high" href="home-antijudaism.webp" rel="preload" type="image/webp"/>
+<style>
+/* Door artwork: show the complete selected work. No cropping on the three front doors. */
+.home-page .era-image-wrap{
+  background:#141417;
+}
+.home-page .era-image{
+  object-fit:contain !important;
+  object-position:center center !important;
+  transform-origin:center center;
+}
+/* Keep the complete artwork visible even when a door is hovered. */
+.home-page .era-card:hover .era-image,
+.home-page .era-card:focus-visible .era-image{
+  transform:scale(1.035) !important;
+}
+/* No additional homepage prose below the doors. */
+.home-page .exhibition-announcement{display:none !important;}
+</style>
 </head>
 <body class="new-page home-page">
 <div aria-hidden="true" id="ambient-light"></div>
 <audio id="bg-audio" loop="" preload="none" src="The Seasons, Op. 37a - VI. June_ Barcarolle.mp3"></audio>
-<a aria-label="Stop Antizionism home" class="site-brand-link" href="index.html"><img alt="Stop Antizionism" class="site-brand" decoding="async" fetchpriority="high" height="292" loading="eager" src="stop-antizionism-logo.png" width="2048"/></a>
-<nav aria-label="Page controls" class="controls-nav">
-<div class="nav-box"><button aria-pressed="false" class="audio-btn" id="audio-btn" type="button">AUDIO: OFF</button></div>
-<div class="nav-box">
-<button class="lang-btn active" id="btn-en" type="button">EN</button><span class="nav-separator">|</span>
-<button class="lang-btn" id="btn-he" type="button">HE</button><span class="nav-separator">|</span>
-<button class="lang-btn" id="btn-ru" type="button">RU</button>
-</div>
-</nav>
-<main class="home-main">
-<header class="home-intro">
-<h1 class="home-title" data-en="Jew-Hatred" data-he="שנאת יהודים" data-ru="Ненависть к евреям">Jew-Hatred</h1>
-<p class="home-statement" data-en="The world’s first art exhibition addressing the third era of Jew-hatred: Antizionism." data-he="תערוכת האמנות הראשונה בעולם העוסקת בעידן השלישי של שנאת יהודים: אנטי־ציונות." data-ru="Первая в мире художественная выставка, посвящённая третьей эпохе ненависти к евреям: антисионизму.">The world’s first art exhibition addressing the third era of Jew-hatred: Antizionism.</p>
-<svg aria-hidden="true" class="desktop-connector" preserveaspectratio="none" viewbox="0 0 1000 110">
-<path d="M500 0V38M500 38H166.667M500 38H833.333M166.667 38V110M500 38V110M833.333 38V110"></path>
-<circle cx="166.667" cy="110" r="3"></circle>
-<circle cx="500" cy="110" r="3"></circle>
-<circle cx="833.333" cy="110" r="3"></circle>
-</svg>
-</header>
-<section aria-label="Three eras of Jew-hatred" class="era-grid">
-<a aria-label="Open Antijudaism gallery" class="era-card" href="antijudaism.html" style="--door-image:url('home-antijudaism.webp')">
-<span aria-hidden="true" class="mobile-node"></span>
-<div class="door-rotator">
-<div class="door-face door-front">
-<div class="era-inner">
-<div class="era-head"><h2 class="era-title" data-en="Antijudaism" data-he="אנטי-יהדות" data-ru="Антииудаизм">Antijudaism</h2></div>
-<div class="era-image-wrap"><img alt="Antijudaism gallery image" class="era-image" decoding="async" fetchpriority="high" height="936" loading="eager" src="home-antijudaism.webp" width="1200"/></div>
-</div>
-<span aria-hidden="true" class="era-arrow">→</span>
-</div>
-<div aria-hidden="true" class="door-face door-back">
-<div class="door-aperture"></div>
-<div class="door-panel door-panel-left"></div>
-<div class="door-panel door-panel-right"></div>
-<div class="door-back-label">
-<strong class="era-back-title" data-en="Antijudaism" data-he="אנטי-יהדות" data-ru="Антииудаизм">Antijudaism</strong>
-<span class="era-enter" data-en="Enter Gallery" data-he="כניסה לגלריה" data-ru="Войти в галерею">Enter Gallery</span>
-</div>
-</div>
-</div>
-</a>
-<a aria-label="Open Antisemitism gallery" class="era-card" href="antisemitism.html" style="--door-image:url('home-antisemitism.webp')">
-<span aria-hidden="true" class="mobile-node"></span>
-<div class="door-rotator">
-<div class="door-face door-front">
-<div class="era-inner">
-<div class="era-head"><h2 class="era-title" data-en="Antisemitism" data-he="אנטישמיות" data-ru="Антисемитизм">Antisemitism</h2></div>
-<div class="era-image-wrap"><img alt="Antisemitism gallery image" class="era-image" decoding="async" fetchpriority="low" height="936" loading="lazy" src="home-antisemitism.webp" width="1200"/></div>
-</div>
-<span aria-hidden="true" class="era-arrow">→</span>
-</div>
-<div aria-hidden="true" class="door-face door-back">
-<div class="door-aperture"></div>
-<div class="door-panel door-panel-left"></div>
-<div class="door-panel door-panel-right"></div>
-<div class="door-back-label">
-<strong class="era-back-title" data-en="Antisemitism" data-he="אנטישמיות" data-ru="Антисемитизм">Antisemitism</strong>
-<span class="era-enter" data-en="Enter Gallery" data-he="כניסה לגלריה" data-ru="Войти в галерею">Enter Gallery</span>
-</div>
-</div>
-</div>
-</a>
-<a aria-label="Open Antizionism gallery" class="era-card antizionism" href="exhibition.html" style="--door-image:url('home-antizionism.webp')">
-<span aria-hidden="true" class="mobile-node"></span>
-<div class="door-rotator">
-<div class="door-face door-front">
-<div class="era-inner">
-<div class="era-head"><h2 class="era-title" data-en="Antizionism" data-he="אנטי-ציונות" data-ru="Антисионизм">Antizionism</h2></div>
-<div class="era-image-wrap"><img alt="Antizionism gallery image" class="era-image" decoding="async" fetchpriority="low" height="936" loading="lazy" src="home-antizionism.webp" width="1200"/></div>
-</div>
-<span aria-hidden="true" class="era-arrow">→</span>
-</div>
-<div aria-hidden="true" class="door-face door-back">
-<div class="door-aperture"></div>
-<div class="door-panel door-panel-left"></div>
-<div class="door-panel door-panel-right"></div>
-<div class="door-back-label">
-<strong class="era-back-title" data-en="Antizionism" data-he="אנטי-ציונות" data-ru="Антисионизм">Antizionism</strong>
-<span class="era-enter" data-en="Enter Gallery" data-he="כניסה לגלריה" data-ru="Войти в галерею">Enter Gallery</span>
-</div>
-</div>
-</div>
-</a>
-</section>
-<section aria-labelledby="exhibition-announcement-title" class="exhibition-announcement">
-<div class="announcement-rule" aria-hidden="true"></div>
-<p class="announcement-eyebrow" data-en="Upcoming Exhibition · New York City" data-he="תערוכה קרובה · ניו יורק" data-ru="Предстоящая выставка · Нью-Йорк">Upcoming Exhibition · New York City</p>
-<p class="announcement-presenter" data-en="Stop Antizionism, a Cohesion Partnership Initiative, presents" data-he="Stop Antizionism, יוזמה של Cohesion Partnership, מציגה" data-ru="Stop Antizionism, инициатива Cohesion Partnership, представляет">Stop Antizionism, a Cohesion Partnership Initiative, presents</p>
-<h2 class="announcement-title" id="exhibition-announcement-title" data-en="The Third Era: Antizionism and the History of Jew-Hatred" data-he="העידן השלישי: אנטי־ציונות וההיסטוריה של שנאת יהודים" data-ru="Третья эпоха: антисионизм и история ненависти к евреям">The Third Era: Antizionism and the History of Jew-Hatred</h2>
-<p class="announcement-subtitle" data-en="Three Streams, One River: The Making of Antizionism" data-he="שלושה זרמים, נהר אחד: התהוות האנטי־ציונות" data-ru="Три потока, одна река: формирование антисионизма">Three Streams, One River: The Making of Antizionism</p>
-<p class="announcement-deck" data-en="A landmark educational exhibition exploring the history and evolution of modern antizionism, coming to New York City." data-he="תערוכה חינוכית פורצת דרך הבוחנת את ההיסטוריה וההתפתחות של האנטי־ציונות המודרנית, המגיעה לניו יורק." data-ru="Знаковая образовательная выставка об истории и развитии современного антисионизма, которая пройдёт в Нью-Йорке.">A landmark educational exhibition exploring the history and evolution of modern antizionism, coming to New York City.</p>
-<a class="announcement-link" href="overview.html"><span data-en="Exhibition Overview" data-he="סקירת התערוכה" data-ru="Обзор выставки">Exhibition Overview</span><span aria-hidden="true">→</span></a>
-</section>
 
+<a aria-label="Stop Antizionism home" class="site-brand-link" href="index.html">
+  <img alt="Stop Antizionism" class="site-brand" decoding="async" fetchpriority="high" height="292" loading="eager" src="stop-antizionism-logo.png" width="2048"/>
+</a>
+
+<nav aria-label="Page controls" class="controls-nav">
+  <div class="nav-box"><button aria-pressed="false" class="audio-btn" id="audio-btn" type="button">AUDIO: OFF</button></div>
+  <div class="nav-box">
+    <button class="lang-btn active" id="btn-en" type="button">EN</button><span class="nav-separator">|</span>
+    <button class="lang-btn" id="btn-he" type="button">HE</button><span class="nav-separator">|</span>
+    <button class="lang-btn" id="btn-ru" type="button">RU</button>
+  </div>
+</nav>
+
+<main class="home-main">
+  <header class="home-intro">
+    <h1 class="home-title" data-en="Jew-Hatred" data-he="שנאת יהודים" data-ru="Ненависть к евреям">Jew-Hatred</h1>
+    <svg aria-hidden="true" class="desktop-connector" preserveAspectRatio="none" viewBox="0 0 1000 110">
+      <path d="M500 0V38M500 38H166.667M500 38H833.333M166.667 38V110M500 38V110M833.333 38V110"></path>
+      <circle cx="166.667" cy="110" r="3"></circle>
+      <circle cx="500" cy="110" r="3"></circle>
+      <circle cx="833.333" cy="110" r="3"></circle>
+    </svg>
+  </header>
+
+  <section aria-label="Three eras of Jew-hatred" class="era-grid">
+    <a aria-label="Open Antijudaism gallery" class="era-card" href="antijudaism.html" style="--door-image:url('home-antijudaism.webp')">
+      <span aria-hidden="true" class="mobile-node"></span>
+      <div class="door-rotator">
+        <div class="door-face door-front">
+          <div class="era-inner">
+            <div class="era-head"><h2 class="era-title" data-en="Antijudaism" data-he="אנטי-יהדות" data-ru="Антииудаизм">Antijudaism</h2></div>
+            <div class="era-image-wrap"><img alt="Antijudaism gallery image" class="era-image" decoding="async" fetchpriority="high" loading="eager" src="home-antijudaism.webp"/></div>
+          </div>
+          <span aria-hidden="true" class="era-arrow">→</span>
+        </div>
+        <div aria-hidden="true" class="door-face door-back">
+          <div class="door-aperture"></div><div class="door-panel door-panel-left"></div><div class="door-panel door-panel-right"></div>
+          <div class="door-back-label"><strong class="era-back-title" data-en="Antijudaism" data-he="אנטי-יהדות" data-ru="Антииудаизм">Antijudaism</strong><span class="era-enter" data-en="Enter Gallery" data-he="כניסה לגלריה" data-ru="Войти в галерею">Enter Gallery</span></div>
+        </div>
+      </div>
+    </a>
+
+    <a aria-label="Open Antisemitism gallery" class="era-card" href="antisemitism.html" style="--door-image:url('home-antisemitism.webp')">
+      <span aria-hidden="true" class="mobile-node"></span>
+      <div class="door-rotator">
+        <div class="door-face door-front">
+          <div class="era-inner">
+            <div class="era-head"><h2 class="era-title" data-en="Antisemitism" data-he="אנטישמיות" data-ru="Антисемитизм">Antisemitism</h2></div>
+            <div class="era-image-wrap"><img alt="Antisemitism gallery image" class="era-image" decoding="async" fetchpriority="low" loading="lazy" src="home-antisemitism.webp"/></div>
+          </div>
+          <span aria-hidden="true" class="era-arrow">→</span>
+        </div>
+        <div aria-hidden="true" class="door-face door-back">
+          <div class="door-aperture"></div><div class="door-panel door-panel-left"></div><div class="door-panel door-panel-right"></div>
+          <div class="door-back-label"><strong class="era-back-title" data-en="Antisemitism" data-he="אנטישמיות" data-ru="Антисемитизм">Antisemitism</strong><span class="era-enter" data-en="Enter Gallery" data-he="כניסה לגלריה" data-ru="Войти в галерею">Enter Gallery</span></div>
+        </div>
+      </div>
+    </a>
+
+    <a aria-label="Open Antizionism gallery" class="era-card antizionism" href="exhibition.html" style="--door-image:url('home-antizionism.webp')">
+      <span aria-hidden="true" class="mobile-node"></span>
+      <div class="door-rotator">
+        <div class="door-face door-front">
+          <div class="era-inner">
+            <div class="era-head"><h2 class="era-title" data-en="Antizionism" data-he="אנטי-ציונות" data-ru="Антисионизм">Antizionism</h2></div>
+            <div class="era-image-wrap"><img alt="Antizionism gallery image" class="era-image" decoding="async" fetchpriority="low" loading="lazy" src="home-antizionism.webp"/></div>
+          </div>
+          <span aria-hidden="true" class="era-arrow">→</span>
+        </div>
+        <div aria-hidden="true" class="door-face door-back">
+          <div class="door-aperture"></div><div class="door-panel door-panel-left"></div><div class="door-panel door-panel-right"></div>
+          <div class="door-back-label"><strong class="era-back-title" data-en="Antizionism" data-he="אנטי-ציונות" data-ru="Антисионизм">Antizionism</strong><span class="era-enter" data-en="Enter Gallery" data-he="כניסה לגלריה" data-ru="Войти в галерею">Enter Gallery</span></div>
+        </div>
+      </div>
+    </a>
+  </section>
 </main>
+
 <script src="site.js"></script>
 </body>
 </html>

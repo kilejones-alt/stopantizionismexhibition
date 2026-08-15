@@ -26,54 +26,15 @@
     audioButton.classList.toggle('continuity-playing',playing);
   }
   function save(){if(audioEl&&Number.isFinite(audioEl.currentTime))sessionStorage.setItem(AUDIO_TIME,String(audioEl.currentTime))}
-  function restore(){
-    if(!audioEl)return;
-    const t=parseFloat(sessionStorage.getItem(AUDIO_TIME)||'0');
-    if(Number.isFinite(t)&&t>0){try{audioEl.currentTime=t}catch(_e){}}
-  }
-  async function play(persist){
-    if(!audioEl)return false;
-    if(persist)localStorage.setItem(AUDIO_PREF,'on');
-    try{await audioEl.play();updateButton();return true}catch(_e){updateButton();return false}
-  }
-  function pause(persist){
-    if(!audioEl)return;
-    save();audioEl.pause();if(persist)localStorage.setItem(AUDIO_PREF,'off');updateButton();
-  }
+  function restore(){if(!audioEl)return;const t=parseFloat(sessionStorage.getItem(AUDIO_TIME)||'0');if(Number.isFinite(t)&&t>0){try{audioEl.currentTime=t}catch(_e){}}}
+  async function play(persist){if(!audioEl)return false;if(persist)localStorage.setItem(AUDIO_PREF,'on');try{await audioEl.play();updateButton();return true}catch(_e){updateButton();return false}}
+  function pause(persist){if(!audioEl)return;save();audioEl.pause();if(persist)localStorage.setItem(AUDIO_PREF,'off');updateButton()}
   window.toggleAudio=function(){if(!audioEl)return;if(audioEl.paused)play(true);else pause(true)};
   const originalSetLanguage=window.setLanguage;
-  window.setLanguage=function(selected){
-    if(typeof originalSetLanguage==='function')originalSetLanguage(selected);
-    localStorage.setItem('stopazLanguage',selected);
-    updateButton();
-  };
-  function firstInteraction(e){
-    if(e.target.closest&&e.target.closest('#audio-btn'))return;
-    if(localStorage.getItem(AUDIO_PREF)==='off')return;
-    play(true);
-    removeEventListener('pointerdown',firstInteraction,true);
-    removeEventListener('keydown',firstInteraction,true);
-  }
-  if(audioEl){
-    audioEl.volume=.46;
-    restore();
-    audioEl.addEventListener('play',updateButton);
-    audioEl.addEventListener('pause',updateButton);
-    setInterval(()=>{if(!audioEl.paused)save()},1500);
-    const savedLanguage=localStorage.getItem('stopazLanguage');
-    if(savedLanguage&&typeof originalSetLanguage==='function')originalSetLanguage(savedLanguage);
-    const pref=localStorage.getItem(AUDIO_PREF);
-    if(pref==='on')play(false).then(ok=>{if(!ok){addEventListener('pointerdown',firstInteraction,true);addEventListener('keydown',firstInteraction,true)}});
-    else if(pref!=='off'){addEventListener('pointerdown',firstInteraction,true);addEventListener('keydown',firstInteraction,true)}
-    updateButton();
-  }
+  window.setLanguage=function(selected){if(typeof originalSetLanguage==='function')originalSetLanguage(selected);localStorage.setItem('stopazLanguage',selected);updateButton()};
+  function firstInteraction(e){if(e.target.closest&&e.target.closest('#audio-btn'))return;if(localStorage.getItem(AUDIO_PREF)==='off')return;play(true);removeEventListener('pointerdown',firstInteraction,true);removeEventListener('keydown',firstInteraction,true)}
+  if(audioEl){audioEl.volume=.46;restore();audioEl.addEventListener('play',updateButton);audioEl.addEventListener('pause',updateButton);setInterval(()=>{if(!audioEl.paused)save()},1500);const savedLanguage=localStorage.getItem('stopazLanguage');if(savedLanguage&&typeof originalSetLanguage==='function')originalSetLanguage(savedLanguage);const pref=localStorage.getItem(AUDIO_PREF);if(pref==='on')play(false).then(ok=>{if(!ok){addEventListener('pointerdown',firstInteraction,true);addEventListener('keydown',firstInteraction,true)}});else if(pref!=='off'){addEventListener('pointerdown',firstInteraction,true);addEventListener('keydown',firstInteraction,true)}updateButton()}
   addEventListener('pagehide',save);
-  document.addEventListener('click',e=>{
-    const link=e.target.closest('a[href]');
-    if(!link||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
-    const href=link.getAttribute('href');
-    if(!href||href.startsWith('#')||link.target==='_blank'||/^https?:/i.test(href)||href.startsWith('mailto:'))return;
-    e.preventDefault();save();document.body.classList.add('continuity-leaving');setTimeout(()=>location.href=href,680);
-  });
+  document.addEventListener('click',e=>{const link=e.target.closest('a[href]');if(!link||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;const href=link.getAttribute('href');if(!href||href.startsWith('#')||link.target==='_blank'||/^https?:/i.test(href)||href.startsWith('mailto:'))return;e.preventDefault();save();document.body.classList.add('continuity-leaving');setTimeout(()=>location.href=href,680)});
   requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.add('continuity-ready')));
 })();

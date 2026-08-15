@@ -1,9 +1,11 @@
 'use strict';
 
 const SUPPORTED_LANGUAGES = ['en', 'he', 'ru'];
-const savedLanguage = localStorage.getItem('stopazLanguage');
-const isEnglishOnlyPage = document.body.classList.contains('overview-page');
-let currentLang = isEnglishOnlyPage ? 'en' : (SUPPORTED_LANGUAGES.includes(savedLanguage) ? savedLanguage : 'en');
+const LANGUAGE_SESSION_KEY = 'stopazSessionLanguage';
+const savedLanguage = sessionStorage.getItem(LANGUAGE_SESSION_KEY);
+/* Every new browser tab/session starts in English. A visitor can explicitly switch
+   to Hebrew or Russian; that choice then follows them through this tab only. */
+let currentLang = SUPPORTED_LANGUAGES.includes(savedLanguage) ? savedLanguage : 'en';
 let isPlaying = false;
 let audioStartPending = false;
 const STREAM_SPEED_TITLE = 68;
@@ -13,6 +15,49 @@ const pageCurtain = document.createElement('div');
 pageCurtain.id = 'page-curtain';
 pageCurtain.setAttribute('aria-hidden', 'true');
 document.body.prepend(pageCurtain);
+
+/* HOME MOTION TUNING — quicker while retaining the architectural door sequence. */
+const homeMotionTuning = document.createElement('style');
+homeMotionTuning.textContent = `
+  .home-title.title-sweep-running .home-title-char:not(.is-space){animation-duration:.58s}
+  .home-title.title-sweep-running .home-title-char.is-punctuation{animation-duration:.38s}
+  .door-rotator{transition-duration:1.42s!important;-webkit-transition-duration:1.42s!important;transition-timing-function:cubic-bezier(.22,.72,.22,1)!important;-webkit-transition-timing-function:cubic-bezier(.22,.72,.22,1)!important}
+  .door-panel{transition-duration:1.7s!important;-webkit-transition-duration:1.7s!important;transition-timing-function:cubic-bezier(.22,.72,.22,1)!important;-webkit-transition-timing-function:cubic-bezier(.22,.72,.22,1)!important}
+  .era-card.door-opening .door-aperture{animation-duration:1.75s!important}
+  @media(max-width:720px){
+    .door-rotator{transition-duration:1.28s!important;-webkit-transition-duration:1.28s!important}
+    .door-panel{transition-duration:1.5s!important;-webkit-transition-duration:1.5s!important}
+    .era-card.door-opening .door-aperture{animation-duration:1.55s!important}
+  }
+`;
+document.head.appendChild(homeMotionTuning);
+
+/* LANGUAGE PARITY — Hebrew mirrors the English/Russian physical layout.
+   Russian remains LTR. These rules intentionally override physical left/right
+   anchors that do not automatically respond to document direction. */
+const languageParityStyles = document.createElement('style');
+languageParityStyles.id = 'language-parity-styles';
+languageParityStyles.textContent = `
+  html[dir="rtl"] .controls-nav{left:auto!important;right:1.35rem!important;flex-direction:row-reverse}
+  html[dir="rtl"] .site-brand-link{right:auto!important;left:1.5rem!important}
+  html[dir="rtl"] .era-arrow{right:auto!important;left:.8rem!important}
+  html[dir="rtl"] .era-card:hover .era-arrow,
+  html[dir="rtl"] .era-card:focus-visible .era-arrow{transform:translateX(-4px)}
+  html[dir="rtl"] .overview-section,
+  html[dir="rtl"] .stream-item,
+  html[dir="rtl"] .sequence-item{direction:rtl}
+  html[dir="rtl"] .overview-copy,
+  html[dir="rtl"] .overview-label,
+  html[dir="rtl"] .stream-item,
+  html[dir="rtl"] .sequence-item,
+  html[dir="rtl"] .overview-partnership{text-align:right}
+  html[dir="rtl"] .announcement-link{flex-direction:row-reverse}
+  @media(max-width:720px){
+    html[dir="rtl"] .controls-nav{left:auto!important;right:max(.75rem,env(safe-area-inset-right))!important}
+    html[dir="rtl"] .site-brand-link{right:auto!important;left:max(.75rem,env(safe-area-inset-left))!important}
+  }
+`;
+document.head.appendChild(languageParityStyles);
 
 /* AMBIENT LIGHT — same gliding response as the exhibition */
 const ambientLight = document.getElementById('ambient-light');
@@ -41,8 +86,8 @@ function textFor(element, lang = currentLang) {
 }
 
 /* HOMEPAGE TITLE — one restrained oxblood sweep, left to right */
-const HOME_TITLE_SWEEP_DELAY = 3500;
-const HOME_TITLE_SWEEP_STAGGER = 280;
+const HOME_TITLE_SWEEP_DELAY = 2600;
+const HOME_TITLE_SWEEP_STAGGER = 120;
 let homeTitleSweepTimer = 0;
 let homeTitleSweepFinished = false;
 
@@ -75,7 +120,8 @@ function runHomeTitleSweep() {
   characters.sort((a, b) => {
     const aRect = a.getBoundingClientRect();
     const bRect = b.getBoundingClientRect();
-    return Math.abs(aRect.top - bRect.top) > 4 ? aRect.top - bRect.top : aRect.left - bRect.left;
+    if (Math.abs(aRect.top - bRect.top) > 4) return aRect.top - bRect.top;
+    return currentLang === 'he' ? bRect.left - aRect.left : aRect.left - bRect.left;
   });
   characters.forEach((character, index) => {
     character.style.setProperty('--sweep-delay', `${index * HOME_TITLE_SWEEP_STAGGER}ms`);
@@ -84,8 +130,8 @@ function runHomeTitleSweep() {
   title.classList.remove('title-sweep-running');
   void title.offsetWidth;
   title.classList.add('title-sweep-running');
-  const totalDuration = (characters.length - 1) * HOME_TITLE_SWEEP_STAGGER + 750;
-  setTimeout(() => title.classList.remove('title-sweep-running'), totalDuration + 100);
+  const totalDuration = (characters.length - 1) * HOME_TITLE_SWEEP_STAGGER + 580;
+  setTimeout(() => title.classList.remove('title-sweep-running'), totalDuration + 80);
 }
 
 function scheduleHomeTitleSweep() {
@@ -193,10 +239,29 @@ function updateImageHints() {
     button.dataset.hint = hints[currentLang];
   });
 }
+function updateDirectionalUI() {
+  const rtl = currentLang === 'he';
+  document.querySelectorAll('.era-arrow').forEach(arrow => {
+    arrow.textContent = rtl ? '←' : '→';
+  });
+  document.querySelectorAll('.announcement-link [aria-hidden="true"]').forEach(arrow => {
+    arrow.textContent = rtl ? '←' : '→';
+  });
+}
+
+function updateDocumentMetadata() {
+  const body = document.body;
+  const title = body?.getAttribute(`data-title-${currentLang}`);
+  if (title) document.title = title;
+  const description = body?.getAttribute(`data-description-${currentLang}`);
+  const meta = document.querySelector('meta[name="description"]');
+  if (description && meta) meta.setAttribute('content', description);
+}
+
 function setLanguage(lang) {
   if (!SUPPORTED_LANGUAGES.includes(lang)) lang = 'en';
   currentLang = lang;
-  if (!isEnglishOnlyPage) localStorage.setItem('stopazLanguage', lang);
+  sessionStorage.setItem(LANGUAGE_SESSION_KEY, lang);
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
   ['en', 'he', 'ru'].forEach(code => {
@@ -208,6 +273,8 @@ function setLanguage(lang) {
     }
   });
   updateAudioBtnText();
+  updateDirectionalUI();
+  updateDocumentMetadata();
   document.querySelectorAll('[data-en][data-he][data-ru]').forEach(element => {
     if (element.id !== 'audio-btn') element.textContent = textFor(element, lang);
   });
@@ -255,10 +322,9 @@ function runDoorTransition(card, href) {
 
   const phoneDoor = matchMedia('(max-width: 720px)').matches;
   const timings = phoneDoor
-    ? { back: 1650, open: 2250, fade: 4000, navigate: 4550 }
-    : { back: 1850, open: 2550, fade: 4550, navigate: 5150 };
+    ? { back: 1250, open: 1700, fade: 3050, navigate: 3450 }
+    : { back: 1400, open: 1900, fade: 3400, navigate: 3850 };
 
-  /* The phone sequence is approximately 12% quicker while retaining the full flip, pause, and architectural opening. */
   setTimeout(() => card.classList.add('door-back-visible'), timings.back);
   setTimeout(() => card.classList.add('door-opening'), timings.open);
   setTimeout(() => document.body.classList.add('page-leaving'), timings.fade);
@@ -301,7 +367,6 @@ function setupPageTransitions() {
     setTimeout(() => { location.assign(href); }, 860);
   });
 }
-
 
 function resetRestoredPage() {
   doorTransitionActive = false;
