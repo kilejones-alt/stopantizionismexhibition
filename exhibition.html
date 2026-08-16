@@ -242,6 +242,32 @@
             filter: brightness(1.18) contrast(1.12);
         }
 
+
+        .placeholder-art-box {
+            cursor: default;
+        }
+
+        .art-box.placeholder-art-box.pop-in:hover,
+        .art-box.placeholder-art-box:hover {
+            transform: translateY(0) scale(1);
+            border-color: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .placeholder-art-box .museum-frame {
+            min-height: 350px;
+            background: #141417;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+        }
+
+        .placeholder-art-box .museum-frame::after {
+            content: '';
+            display: block;
+            width: 78%;
+            height: 0;
+            padding-bottom: 58%;
+        }
+
         /* CLICK TO ENLARGE BADGE */
         .click-hint {
             position: absolute;
@@ -633,7 +659,6 @@
         }
 
 </style>
-
 <style id="compact-controls-2026-08-15">
 /* Smaller, quieter language/audio controls. */
 .controls-nav{gap:.5rem!important}
@@ -646,7 +671,7 @@
 }
 </style>
 </head>
-<body>
+<body data-antizionism-timeline="selected-art-2026-08-15">
 <!-- LAZY GLIDING AMBIENT LIGHT OVERLAY -->
 <div id="ambient-light"></div>
 <!-- BACKGROUND AUDIO ELEMENT -->
@@ -690,163 +715,484 @@
 <!-- CHAPTER I: SOVIET ERA -->
 <section class="exhibition-section">
 <div class="exhibition-container">
-<button aria-label="Enlarge Ball for 24 Years of the Soviet Union" class="art-box interactive-target exhibit-image-button" type="button">
+<button aria-label="Enlarge The Traitor: Degradation of Alfred Dreyfus, Le Petit Journal, 13 January 1895" class="art-box interactive-target exhibit-image-button" type="button">
 <span class="museum-frame">
-<img alt="Ball for 24 Years of the Soviet Union" decoding="async" fetchpriority="low" height="480" loading="lazy" onerror="handleFallbackImage(this, ['j.jpg', 'j.png', 'j.jpeg', 'J.jpg', 'J.JPG'])" src="j.jpg" width="340"/>
+<img alt="The Traitor: Degradation of Alfred Dreyfus, Le Petit Journal, 13 January 1895" decoding="async" fetchpriority="low" height="1453" loading="lazy" src="timeline-dreyfus-1895.jpg" width="1280"/>
 </span>
 <span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
 </button>
 <div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter I — Soviet Era" data-he="פרק א — התקופה הסובייטית" data-ru="Глава I — Советская Эпоха">Chapter I — Soviet Era</div>
-<h3 class="info-title wave-text" data-en="Ball for 24 Years of the Soviet Union" data-he="נשף 24 שנות ברית המועצות" data-ru="Бал в честь 24-летия Советского Союза">Ball for 24 Years of the Soviet Union</h3>
+<div class="info-category wave-text" data-en="Dreyfus Affair" data-he="פרשת דרייפוס" data-ru="Дело Дрейфуса">Dreyfus Affair</div>
+<h3 class="info-title wave-text" data-en="The Degradation of Alfred Dreyfus" data-he="השפלת אלפרד דרייפוס" data-ru="Разжалование Альфреда Дрейфуса">The Degradation of Alfred Dreyfus</h3>
 <div class="info-meta">
-<div><strong data-en="Author / Designer:" data-he="יוצר / מעצב:" data-ru="Автор / Дизайнер:">Author / Designer:</strong> <span class="wave-text" data-en="A. Amarant" data-he="א. אמרנט" data-ru="А. Амарант">A. Amarant</span></div>
-<div><strong data-en="Date:" data-he="תאריך יצירה:" data-ru="Дата создания:">Date:</strong> <span class="wave-text" data-en="November 1941" data-he="נובמבר 1941" data-ru="Ноябрь 1941">November 1941</span></div>
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Henri Meyer / Le Petit Journal" data-he="אנרי מאייר / Le Petit Journal" data-ru="Анри Мейер / Le Petit Journal">Henri Meyer / Le Petit Journal</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="13 January 1895" data-he="13 בינואר 1895" data-ru="13 января 1895">13 January 1895</span></div>
 </div>
 <div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר יוצר" data-ru="Биография автора и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Issued by HaShomer Hatzair and the Socialist League, a labor youth movement in Mandatory Palestine with close ties to Moscow. The artwork was created by Avraham Amarant, an artist from Kibbutz Mizra who blended Soviet design with local pioneer themes." data-he="הופק על ידי השומר הצעיר והליגה הסוציאליסטית, תנועת נוער בארץ ישראל המנדטורית שהייתה בעלת קשרים הדוקים למוסקבה. היצירה נוצרה על ידי אברהם אמרנט, אמן מקיבוץ מזרע ושילבה עיצוב סובייטי עם נושאים חלוציים." data-ru="Выпущено организациями «Ха-Шомер ха-Цаир» и «Социалистическая лига» — левым молодежным движением в подмандатной Палестине, имевшим тесные связи с Москвой. Автором плаката стал Авраам Амарант, художник из кибуца Мизра, совместивший советский авангард с местной пионерской тематикой."></p>
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="Henri Meyer, a French illustrator and caricaturist, drew the scene for Le Petit Journal’s illustrated supplement." data-he="הנרי מאייר, מאייר וקריקטוריסט צרפתי, צייר את הסצנה עבור המוסף המאויר של Le Petit Journal." data-ru="Анри Мейер, французский иллюстратор и карикатурист, создал эту сцену для иллюстрированного приложения Le Petit Journal.">Henri Meyer, a French illustrator and caricaturist, drew the scene for Le Petit Journal’s illustrated supplement.</p>
 </div>
 <div class="info-block">
 <h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="A 1941 artwork marking twenty-four years since the October Revolution. It adapts Vera Mukhina's famous Soviet monument, Worker and Kolkhoz Woman, showing worker unity and support for the Soviet Union." data-he="יצירה משנת 1941 לציון עשרים וארבע שנים למהפכת אוקטובר. היא משתמשת באנדרטה הסובייטית המפורסמת של ורה מוחינה, פועל ואשת קולחוז, כדי להציג אחדות פועלים ותמיכה בברית המועצות." data-ru="Работа 1941 года, посвященная 24-й годовщине Октябрьской революции. В ней использован мотив знаменитой скульптуры Веры Мухиной «Рабочий и колхозница», символизирующий солидарность трудящихся и поддержку СССР."></p>
+<p class="wave-p wave-text" data-en="Captain Alfred Dreyfus stands at the École Militaire in Paris while an officer breaks his sword and strips him of rank." data-he="קפטן אלפרד דרייפוס עומד באקול מיליטר בפריז בעוד קצין שובר את חרבו ושולל ממנו את דרגתו." data-ru="Капитан Альфред Дрейфус стоит в Военной школе в Париже, пока офицер ломает его саблю и лишает его звания.">Captain Alfred Dreyfus stands at the École Militaire in Paris while an officer breaks his sword and strips him of rank.</p>
 </div>
 <div class="info-block">
 <h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Zionist Archives holdings, containing historical wartime flyers and movement artwork." data-he="אוספי הארכיון הציוני, הכוללים כרוזים היסטוריים וכרזות מתקופת המלחמה." data-ru="Собрание Центрального сионистского архива, содержащее листовки и художественные материалы времен Второй мировой войны."></p>
+<p class="wave-p wave-text" data-en="Gallica / Bibliothèque nationale de France; public-domain reproduction also preserved on Wikimedia Commons." data-he="Gallica / הספרייה הלאומית של צרפת; העתק בנחלת הכלל נשמר גם ב-Wikimedia Commons." data-ru="Gallica / Национальная библиотека Франции; репродукция в общественном достоянии также хранится на Wikimedia Commons.">Gallica / Bibliothèque nationale de France; public-domain reproduction also preserved on Wikimedia Commons.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section placeholder-entry" data-empty-record="true">
+<div class="exhibition-container">
+<div aria-label="Reserved timeline position for Lenin, Bund, and the National Question" class="art-box placeholder-art-box" role="img">
+<span class="museum-frame"></span>
+</div>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1903 — Lenin, Bund, and the National Question" data-he="1903 — לנין, הבונד והשאלה הלאומית" data-ru="1903 — Ленин, Бунд и национальный вопрос">1903 — Lenin, Bund, and the National Question</div>
+<h3 class="info-title wave-text" data-en="Lenin, Bund, and the National Question" data-he="לנין, הבונד והשאלה הלאומית" data-ru="Ленин, Бунд и национальный вопрос">Lenin, Bund, and the National Question</h3>
+<div class="info-meta">
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1903" data-he="1903" data-ru="1903">1903</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section">
+<div class="exhibition-container">
+<button aria-label="Enlarge Herman S. Shapiro, Kishinev Massacre Elegy, 1904" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Herman S. Shapiro, Kishinev Massacre Elegy, 1904" decoding="async" fetchpriority="low" height="1264" loading="lazy" src="timeline-kishinev-1904.jpg" width="960"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="Kishinev Pogrom" data-he="פוגרום קישינב" data-ru="Кишинёвский погром">Kishinev Pogrom</div>
+<h3 class="info-title wave-text" data-en="Kishinev Massacre Elegy" data-he="אלגיה לטבח קישינב" data-ru="Элегия о Кишинёвском погроме">Kishinev Massacre Elegy</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Herman S. Shapiro" data-he="הרמן ס. שפירו" data-ru="Герман С. Шапиро">Herman S. Shapiro</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1904" data-he="1904" data-ru="1904">1904</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="Herman S. Shapiro composed and arranged the elegy in New York in 1904, one year after the Kishinev pogrom." data-he="הרמן ס. שפירו הלחין ועיבד את האלגיה בניו יורק בשנת 1904, שנה לאחר פוגרום קישינב." data-ru="Герман С. Шапиро сочинил и аранжировал элегию в Нью-Йорке в 1904 году, через год после Кишинёвского погрома.">Herman S. Shapiro composed and arranged the elegy in New York in 1904, one year after the Kishinev pogrom.</p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="A red sheet-music cover surrounds scenes of violence from the Kishinev pogrom and a portrait of composer Herman S. Shapiro." data-he="עטיפת תווים אדומה מקיפה סצנות אלימות מפוגרום קישינב ודיוקן של המלחין הרמן ס. שפירו." data-ru="Красная обложка нотного издания окружает сцены насилия Кишинёвского погрома и портрет композитора Германа С. Шапиро.">A red sheet-music cover surrounds scenes of violence from the Kishinev pogrom and a portrait of composer Herman S. Shapiro.</p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="Library of Congress, Irene Heskes Collection, Music Division." data-he="ספריית הקונגרס, אוסף Irene Heskes, חטיבת המוזיקה." data-ru="Библиотека Конгресса, коллекция Irene Heskes, музыкальный отдел.">Library of Congress, Irene Heskes Collection, Music Division.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section" data-history-en="In 1913 Bolshevik writers debated which peoples constituted nations and which national movements they regarded as legitimate. This later Soviet edition preserves Stalin’s contribution to that debate." data-history-he="ב-1913 דנו כותבים בולשביקים בשאלה אילו עמים נחשבים לאומות ואילו תנועות לאומיות הם ראו כלגיטימיות. מהדורה סובייטית מאוחרת זו משמרת את תרומתו של סטלין לוויכוח." data-history-ru="В 1913 году большевистские авторы спорили о том, какие народы являются нациями и какие национальные движения они считали легитимными. Это более позднее советское издание сохраняет вклад Сталина в ту дискуссию.">
+<div class="exhibition-container">
+<button aria-label="Enlarge Joseph Stalin, Marxism and the National and Colonial Question, 1935 dust jacket" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Joseph Stalin, Marxism and the National and Colonial Question, 1935 dust jacket" decoding="async" fetchpriority="low" height="1305" loading="lazy" src="timeline-stalin-national-question-1935.jpg" width="960"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1913 — Marxism and the National Question" data-he="1913 — מרקסיזם והשאלה הלאומית" data-ru="1913 — Марксизм и национальный вопрос">1913 — Marxism and the National Question</div>
+<h3 class="info-title wave-text" data-en="Marxism and the National and Colonial Question" data-he="מרקסיזם והשאלה הלאומית והקולוניאלית" data-ru="Марксизм и национально-колониальный вопрос">Marxism and the National and Colonial Question</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Joseph Stalin; 1935 Moscow edition" data-he="יוסיף סטלין; מהדורת מוסקבה, 1935" data-ru="Иосиф Сталин; московское издание 1935 года">Joseph Stalin; 1935 Moscow edition</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1935 edition; includes the 1913 national-question essay" data-he="מהדורת 1935; כוללת את המאמר על השאלה הלאומית מ-1913" data-ru="Издание 1935 года; включает работу 1913 года о национальном вопросе">1935 edition; includes the 1913 national-question essay</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="The volume collects Stalin’s writings and speeches on nationality and colonial questions, including his 1913 essay on the national question." data-he="הכרך אוסף כתבים ונאומים של סטלין על שאלות לאומיות וקולוניאליות, ובהם מאמרו מ-1913 על השאלה הלאומית." data-ru="Том содержит работы и выступления Сталина по национальному и колониальному вопросам, включая его статью 1913 года о национальном вопросе.">The volume collects Stalin’s writings and speeches on nationality and colonial questions, including his 1913 essay on the national question.</p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="Brown dust jacket for the 1935 Moscow edition of Marxism and the National and Colonial Question, issued in the Marxist-Leninist Library." data-he="עטיפת נייר חומה למהדורת מוסקבה משנת 1935 של Marxism and the National and Colonial Question, שיצאה במסגרת הספרייה המרקסיסטית־לניניסטית." data-ru="Коричневая суперобложка московского издания 1935 года Marxism and the National and Colonial Question из серии «Марксистско-ленинская библиотека».">Brown dust jacket for the 1935 Moscow edition of Marxism and the National and Colonial Question, issued in the Marxist-Leninist Library.</p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="Wikimedia Commons; digital image by Tim Davenport from his collection. Text-only design and scan released to the public domain." data-he="Wikimedia Commons; צילום דיגיטלי מאוסף טים דבנפורט. העיצוב הטקסטואלי והסריקה שוחררו לנחלת הכלל." data-ru="Wikimedia Commons; цифровое изображение из коллекции Тима Давенпорта. Текстовый дизайн и скан переданы в общественное достояние.">Wikimedia Commons; digital image by Tim Davenport from his collection. Text-only design and scan released to the public domain.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section" data-history-en="The 1920 congress made colonial rule and national liberation central questions for Communist strategy. Its theses placed Zionism within the politics of British imperial rule in Palestine." data-history-he="הקונגרס של 1920 הציב שלטון קולוניאלי ושחרור לאומי במרכז האסטרטגיה הקומוניסטית. התזות שלו מיקמו את הציונות בתוך הפוליטיקה של השלטון האימפריאלי הבריטי בארץ ישראל." data-history-ru="Конгресс 1920 года сделал колониальное господство и национальное освобождение центральными вопросами коммунистической стратегии. Его тезисы поместили сионизм в контекст британского имперского правления в Палестине.">
+<div class="exhibition-container">
+<button aria-label="Enlarge Theses Presented to the Second World Congress of the Communist International, 1920 cover" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Theses Presented to the Second World Congress of the Communist International, 1920 cover" decoding="async" fetchpriority="low" height="737" loading="lazy" src="timeline-comintern-theses-1920.jpg" width="500"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1920 — Second Comintern Congress" data-he="1920 — הקונגרס השני של הקומינטרן" data-ru="1920 — Второй конгресс Коминтерна">1920 — Second Comintern Congress</div>
+<h3 class="info-title wave-text" data-en="Theses Presented to the Second World Congress" data-he="תזות שהוצגו לקונגרס העולמי השני" data-ru="Тезисы, представленные Второму всемирному конгрессу">Theses Presented to the Second World Congress</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Communist International (Comintern)" data-he="האינטרנציונל הקומוניסטי (קומינטרן)" data-ru="Коммунистический интернационал (Коминтерн)">Communist International (Comintern)</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1920" data-he="1920" data-ru="1920">1920</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="The Communist International published the volume for its Second World Congress, including theses on national and colonial questions." data-he="האינטרנציונל הקומוניסטי פרסם את הכרך עבור הקונגרס העולמי השני שלו, ובו תזות על שאלות לאומיות וקולוניאליות." data-ru="Коммунистический интернационал издал этот том для своего Второго всемирного конгресса; в него вошли тезисы по национальному и колониальному вопросам.">The Communist International published the volume for its Second World Congress, including theses on national and colonial questions.</p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="Printed cover of the 1920 theses prepared for the Second World Congress of the Communist International in Petrograd and Moscow." data-he="עטיפת הדפוס של התזות מ-1920 שהוכנו עבור הקונגרס העולמי השני של האינטרנציונל הקומוניסטי בפטרוגרד ובמוסקבה." data-ru="Печатная обложка тезисов 1920 года, подготовленных для Второго всемирного конгресса Коммунистического интернационала в Петрограде и Москве.">Printed cover of the 1920 theses prepared for the Second World Congress of the Communist International in Petrograd and Moscow.</p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="Wikimedia Commons / University of Helsinki digitization; 1920 publication marked public domain." data-he="Wikimedia Commons / דיגיטציה של אוניברסיטת הלסינקי; הפרסום משנת 1920 מסומן כנחלת הכלל." data-ru="Wikimedia Commons / оцифровка Университета Хельсинки; издание 1920 года отмечено как общественное достояние.">Wikimedia Commons / University of Helsinki digitization; 1920 publication marked public domain.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section" data-history-en="The poster is not antizionist. It belongs to the broader Soviet campaign against independent Jewish religious and communal institutions, alongside state suppression of Zionist organizations and other Jewish political movements." data-history-he="הכרזה אינה אנטי-ציונית. היא שייכת למסע הסובייטי הרחב נגד מוסדות דת וקהילה יהודיים עצמאיים, לצד דיכוי ארגונים ציוניים ותנועות פוליטיות יהודיות אחרות בידי המדינה." data-history-ru="Плакат сам по себе не антисионистский. Он относится к более широкой советской кампании против независимых еврейских религиозных и общинных институтов, наряду с государственным подавлением сионистских организаций и других еврейских политических движений.">
+<div class="exhibition-container">
+<button aria-label="Enlarge Soviet Yiddish propaganda poster contrasting the cheder with the Soviet school, circa 1920 to 1932" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Soviet Yiddish propaganda poster contrasting the cheder with the Soviet school, circa 1920 to 1932" decoding="async" fetchpriority="low" height="1011" loading="lazy" src="timeline-anti-cheder-yiddish.jpg" width="692"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1920–32 — Sovietization of Jewish Life" data-he="1920–1932 — סובייטיזציה של החיים היהודיים" data-ru="1920–1932 — Советизация еврейской жизни">1920–32 — Sovietization of Jewish Life</div>
+<h3 class="info-title wave-text" data-en="The Old School / The Soviet School" data-he="החדר הישן / בית הספר הסובייטי" data-ru="Старая школа / Советская школа">The Old School / The Soviet School</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Soviet state printing; specific agency unknown" data-he="דפוס מדינתי סובייטי; הסוכנות המדויקת אינה ידועה" data-ru="Советская государственная печать; конкретное ведомство неизвестно">Soviet state printing; specific agency unknown</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="c. 1920–1932" data-he="בקירוב 1920–1932" data-ru="ок. 1920–1932">c. 1920–1932</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="An anonymous Soviet artist produced the Yiddish poster during campaigns to move Jewish children from religious schools into state education." data-he="אמן סובייטי אנונימי יצר את הכרזה ביידיש במסגרת מסעות להעברת ילדים יהודים מבתי ספר דתיים לחינוך ממלכתי." data-ru="Анонимный советский художник создал плакат на идише в ходе кампаний по переводу еврейских детей из религиозных школ в государственную систему образования.">An anonymous Soviet artist produced the Yiddish poster during campaigns to move Jewish children from religious schools into state education.</p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="A Yiddish poster contrasts a traditional cheder and Jewish occupations with Soviet schools, factories, farms, and vocational training." data-he="כרזה ביידיש מעמתת חדר מסורתי ועיסוקים יהודיים עם בתי ספר סובייטיים, מפעלים, חוות והכשרה מקצועית." data-ru="Плакат на идише противопоставляет традиционный хедер и еврейские занятия советским школам, фабрикам, колхозам и профессиональному обучению.">A Yiddish poster contrasts a traditional cheder and Jewish occupations with Soviet schools, factories, farms, and vocational training.</p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="Wikimedia Commons; Soviet state printing, source record from LiveAuctioneers; marked public domain in Russia." data-he="Wikimedia Commons; דפוס מדינתי סובייטי, תיעוד מקור מ-LiveAuctioneers; מסומן כנחלת הכלל ברוסיה." data-ru="Wikimedia Commons; советская государственная печать, источник в записи LiveAuctioneers; отмечено как общественное достояние в России.">Wikimedia Commons; Soviet state printing, source record from LiveAuctioneers; marked public domain in Russia.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section">
+<div class="exhibition-container">
+<button aria-label="Enlarge Falastin newspaper anti-Zionist crocodile cartoon, 18 June 1936" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Falastin newspaper anti-Zionist crocodile cartoon, 18 June 1936" decoding="async" fetchpriority="low" height="774" loading="lazy" src="antizionism-5.jpg" width="774"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1936 — Zionism and Imperial Power" data-he="1936 — ציונות וכוח אימפריאלי" data-ru="1936 — Сионизм и имперская власть">1936 — Zionism and Imperial Power</div>
+<h3 class="info-title wave-text" data-en="Zionism as a Crocodile" data-he="הציונות כתנין" data-ru="Сионизм как крокодил">Zionism as a Crocodile</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Falastin newspaper" data-he="העיתון פלסטין" data-ru="Газета Falastin">Falastin newspaper</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="18 June 1936" data-he="18 ביוני 1936" data-ru="18 июня 1936">18 June 1936</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="The Arabic-language newspaper Falastin published the cartoon in Jaffa on 18 June 1936." data-he="העיתון הערבי פלסטין פרסם את הקריקטורה ביפו ב-18 ביוני 1936." data-ru="Арабоязычная газета Falastin опубликовала карикатуру в Яффе 18 июня 1936 года.">The Arabic-language newspaper Falastin published the cartoon in Jaffa on 18 June 1936.</p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="A crocodile marked as Zionism faces Palestinian Arabs while a British officer stands above it. The crocodile says it will swallow them “peacefully.”" data-he="תנין המסומן כציונות ניצב מול ערבים פלסטינים בעוד קצין בריטי עומד מעליו. התנין אומר כי יבלע אותם ״בשלום״." data-ru="Крокодил с надписью «сионизм» обращён к палестинским арабам, а над ним стоит британский офицер. Крокодил говорит, что проглотит их «мирно».">A crocodile marked as Zionism faces Palestinian Arabs while a British officer stands above it. The crocodile says it will swallow them “peacefully.”</p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="National Library of Israel newspaper holdings; reproduction preserved on Wikimedia Commons under a public-domain/CC0 record." data-he="אוספי העיתונות של הספרייה הלאומית של ישראל; העתק נשמר גם ב-Wikimedia Commons ברישום נחלת הכלל/CC0." data-ru="Газетные фонды Национальной библиотеки Израиля; репродукция также хранится на Wikimedia Commons с отметкой общественного достояния/CC0.">National Library of Israel newspaper holdings; reproduction preserved on Wikimedia Commons under a public-domain/CC0 record.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section" data-history-en="After leaving British-controlled Palestine and Iraq, al-Husseini worked with Nazi Germany. From Europe he participated in Arabic-language broadcasts attacking Britain, Jews, and Zionism and urging support for the Axis." data-history-he="לאחר שעזב את ארץ ישראל שבשליטת בריטניה ואת עיראק, אל-חוסייני פעל עם גרמניה הנאצית. מאירופה השתתף בשידורים בערבית שתקפו את בריטניה, יהודים והציונות וקראו לתמיכה במדינות הציר." data-history-ru="После отъезда из контролируемой Британией Палестины и Ирака аль-Хусейни сотрудничал с нацистской Германией. Из Европы он участвовал в арабоязычных передачах против Британии, евреев и сионизма и призывал поддерживать страны Оси.">
+<div class="exhibition-container">
+<button aria-label="Enlarge Amin al-Husseini meeting Adolf Hitler, 28 November 1941" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Amin al-Husseini meeting Adolf Hitler, 28 November 1941" decoding="async" fetchpriority="low" height="600" loading="lazy" src="timeline-husseini-hitler-1941.jpg" width="792"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1941 — Nazi–Arab Collaboration" data-he="1941 — שיתוף פעולה נאצי–ערבי" data-ru="1941 — Нацистско-арабское сотрудничество">1941 — Nazi–Arab Collaboration</div>
+<h3 class="info-title wave-text" data-en="Amin al-Husseini Meets Adolf Hitler" data-he="אמין אל-חוסייני נפגש עם אדולף היטלר" data-ru="Амин аль-Хусейни встречается с Адольфом Гитлером">Amin al-Husseini Meets Adolf Hitler</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Heinrich Hoffmann / German Federal Archive" data-he="היינריך הופמן / הארכיון הפדרלי הגרמני" data-ru="Генрих Гофман / Федеральный архив Германии">Heinrich Hoffmann / German Federal Archive</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="28 November 1941" data-he="28 בנובמבר 1941" data-ru="28 ноября 1941">28 November 1941</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="Heinrich Hoffmann, Hitler’s official photographer, photographed the meeting on 28 November 1941." data-he="היינריך הופמן, צלמו הרשמי של היטלר, צילם את הפגישה ב-28 בנובמבר 1941." data-ru="Генрих Гофман, официальный фотограф Гитлера, снял встречу 28 ноября 1941 года.">Heinrich Hoffmann, Hitler’s official photographer, photographed the meeting on 28 November 1941.</p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="A press photograph shows Amin al-Husseini seated opposite Adolf Hitler during their Berlin meeting." data-he="תצלום עיתונות מציג את אמין אל-חוסייני יושב מול אדולף היטלר במהלך פגישתם בברלין." data-ru="Пресс-фотография показывает Амина аль-Хусейни, сидящего напротив Адольфа Гитлера во время их встречи в Берлине.">A press photograph shows Amin al-Husseini seated opposite Adolf Hitler during their Berlin meeting.</p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="Bundesarchiv, Bild 146-1987-004-09A / Heinrich Hoffmann / CC BY-SA 3.0 Germany." data-he="Bundesarchiv, Bild 146-1987-004-09A / Heinrich Hoffmann / CC BY-SA 3.0 Germany." data-ru="Bundesarchiv, Bild 146-1987-004-09A / Heinrich Hoffmann / CC BY-SA 3.0 Germany.">Bundesarchiv, Bild 146-1987-004-09A / Heinrich Hoffmann / CC BY-SA 3.0 Germany.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section" data-history-en="Published during the war, the periodical carried Nazi propaganda into Arabic print culture, combining anti-British politics, antisemitism, support for al-Husseini, and hostility to Zionism." data-history-he="כתב העת, שפורסם בזמן המלחמה, העביר תעמולה נאצית לתרבות הדפוס הערבית ושילב פוליטיקה אנטי-בריטית, אנטישמיות, תמיכה באל-חוסייני ועוינות לציונות." data-history-ru="Во время войны издание переносило нацистскую пропаганду в арабскую печатную культуру, сочетая антибританскую политику, антисемитизм, поддержку аль-Хусейни и враждебность к сионизму.">
+<div class="exhibition-container">
+<button aria-label="Enlarge Barid al-Sharq Arabic illustrated periodical published in Berlin during the Second World War" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Barid al-Sharq Arabic illustrated periodical published in Berlin during the Second World War" decoding="async" fetchpriority="low" height="825" loading="lazy" src="timeline-barid-al-sharq.jpg" width="657"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1941–44 — Nazi Propaganda in Arabic" data-he="1941–1944 — תעמולה נאצית בערבית" data-ru="1941–1944 — Нацистская пропаганда на арабском языке">1941–44 — Nazi Propaganda in Arabic</div>
+<h3 class="info-title wave-text" data-en="Barid al-Sharq" data-he="בריד א-שרק" data-ru="Barid al-Sharq">Barid al-Sharq</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Reich Ministry of Public Enlightenment and Propaganda" data-he="משרד הרייך לתעמולה ולהשכלת העם" data-ru="Рейхсминистерство народного просвещения и пропаганды">Reich Ministry of Public Enlightenment and Propaganda</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Illustrated run documented through 1941–44" data-he="סדרה מאוירת מתועדת בשנים 1941–1944" data-ru="Иллюстрированное издание документировано в 1941–1944 годах">Illustrated run documented through 1941–44</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="Barid al-Sharq was an illustrated Arabic-language periodical produced in Berlin under the Reich propaganda apparatus for readers in the Arab world." data-he="בריד א-שרק היה כתב עת מאויר בערבית שהופק בברלין במסגרת מנגנון התעמולה של הרייך עבור קוראים בעולם הערבי." data-ru="Barid al-Sharq был иллюстрированным арабоязычным журналом, выпускавшимся в Берлине в рамках пропагандистского аппарата Рейха для аудитории арабского мира.">Barid al-Sharq was an illustrated Arabic-language periodical produced in Berlin under the Reich propaganda apparatus for readers in the Arab world.</p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="An Arabic-language cover places a photograph of Amin al-Husseini with Hitler beneath the masthead Barid al-Sharq." data-he="עטיפה בערבית מציבה תצלום של אמין אל-חוסייני עם היטלר מתחת לכותרת Barid al-Sharq." data-ru="Арабоязычная обложка помещает фотографию Амина аль-Хусейни с Гитлером под заголовком Barid al-Sharq.">An Arabic-language cover places a photograph of Amin al-Husseini with Hitler beneath the masthead Barid al-Sharq.</p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="Wikimedia Commons; source record traces holdings of the illustrated Berlin periodical. Marked public domain under German law." data-he="Wikimedia Commons; תיעוד המקור מפנה לאוספי כתב העת המאויר מברלין. מסומן כנחלת הכלל לפי הדין הגרמני." data-ru="Wikimedia Commons; запись источника указывает на фонды берлинского иллюстрированного журнала. Отмечено как общественное достояние по немецкому праву.">Wikimedia Commons; source record traces holdings of the illustrated Berlin periodical. Marked public domain under German law.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section" data-history-en="The leaflet adapted Nazi antisemitic propaganda to an Arab audience. It presented German hostility to Jews and cooperation with al-Husseini as compatible with Arab political interests." data-history-he="הכרוז התאים תעמולה אנטישמית נאצית לקהל ערבי. הוא הציג את העוינות הגרמנית ליהודים ואת שיתוף הפעולה עם אל-חוסייני כתואמים אינטרסים פוליטיים ערביים." data-history-ru="Листовка адаптировала нацистскую антисемитскую пропаганду для арабской аудитории. Немецкая враждебность к евреям и сотрудничество с аль-Хусейни подавались как совместимые с арабскими политическими интересами.">
+<div class="exhibition-container">
+<button aria-label="Enlarge German Second World War propaganda leaflet addressed to Arab soldiers in Arabic and French" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="German Second World War propaganda leaflet addressed to Arab soldiers in Arabic and French" decoding="async" fetchpriority="low" height="768" loading="lazy" src="timeline-german-arab-leaflet-wwii.jpg" width="1132"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1941–45 — German Propaganda to Arab Soldiers" data-he="1941–1945 — תעמולה גרמנית לחיילים ערבים" data-ru="1941–1945 — Немецкая пропаганда для арабских солдат">1941–45 — German Propaganda to Arab Soldiers</div>
+<h3 class="info-title wave-text" data-en="“Soldats Arabes!”" data-he="״חיילים ערבים!״" data-ru="«Арабские солдаты!»">“Soldats Arabes!”</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="German psychological-warfare operations" data-he="מערך הלוחמה הפסיכולוגית הגרמני" data-ru="Немецкие органы психологической войны">German psychological-warfare operations</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Second World War" data-he="מלחמת העולם השנייה" data-ru="Вторая мировая война">Second World War</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="German psychological-warfare units prepared the leaflet for Arabic-speaking soldiers in North Africa." data-he="יחידות הלוחמה הפסיכולוגית הגרמניות הכינו את הכרוז עבור חיילים דוברי ערבית בצפון אפריקה." data-ru="Немецкие подразделения психологической войны подготовили листовку для арабоязычных солдат в Северной Африке.">German psychological-warfare units prepared the leaflet for Arabic-speaking soldiers in North Africa.</p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="Arabic and French text tells Arab soldiers that Germany is at war with Jews, calls Germany a friend of Arab peoples, and invokes the Grand Mufti of Jerusalem." data-he="טקסט בערבית ובצרפתית אומר לחיילים ערבים כי גרמניה נלחמת ביהודים, מכנה את גרמניה ידידת העמים הערביים ומזכיר את המופתי הגדול של ירושלים." data-ru="Арабский и французский текст сообщает арабским солдатам, что Германия воюет с евреями, называет Германию другом арабских народов и ссылается на великого муфтия Иерусалима.">Arabic and French text tells Arab soldiers that Germany is at war with Jews, calls Germany a friend of Arab peoples, and invokes the Grand Mufti of Jerusalem.</p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="Wikimedia Commons; German psychological-warfare leaflet. Commons marks the work public domain under its Egyptian copyright analysis." data-he="Wikimedia Commons; כרוז לוחמה פסיכולוגית גרמני. ב-Commons היצירה מסומנת כנחלת הכלל לפי ניתוח זכויות היוצרים המצרי." data-ru="Wikimedia Commons; немецкая листовка психологической войны. Commons отмечает работу как общественное достояние согласно анализу египетского авторского права.">Wikimedia Commons; German psychological-warfare leaflet. Commons marks the work public domain under its Egyptian copyright analysis.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section" data-history-en="The Soviet government dissolved the Jewish Anti-Fascist Committee in 1948. Markish was arrested in January 1949 and executed with other Jewish defendants on 12 August 1952, the date remembered as the Night of the Murdered Poets." data-history-he="הממשלה הסובייטית פירקה את הוועד היהודי האנטי־פשיסטי ב-1948. מרקיש נעצר בינואר 1949 והוצא להורג עם נאשמים יהודים אחרים ב-12 באוגוסט 1952, התאריך שנזכר כליל המשוררים הנרצחים." data-history-ru="Советское правительство распустило Еврейский антифашистский комитет в 1948 году. Маркиш был арестован в январе 1949 года и расстрелян вместе с другими еврейскими обвиняемыми 12 августа 1952 года — в дату, известную как Ночь убитых поэтов.">
+<div class="exhibition-container">
+<button aria-label="Enlarge Peretz Markish MGB prison photograph after his arrest in January 1949" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Peretz Markish MGB prison photograph after his arrest in January 1949" decoding="async" fetchpriority="low" height="276" loading="lazy" src="timeline-peretz-markish-1949.jpg" width="400"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1948–52 — Jewish Anti-Fascist Committee" data-he="1948–1952 — הוועד היהודי האנטי־פשיסטי" data-ru="1948–1952 — Еврейский антифашистский комитет">1948–52 — Jewish Anti-Fascist Committee</div>
+<h3 class="info-title wave-text" data-en="Peretz Markish after Arrest" data-he="פרץ מרקיש לאחר מעצרו" data-ru="Перец Маркиш после ареста">Peretz Markish after Arrest</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="USSR Ministry for State Security (MGB)" data-he="המשרד לביטחון המדינה של ברית המועצות (MGB)" data-ru="Министерство государственной безопасности СССР (МГБ)">USSR Ministry for State Security (MGB)</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="January 1949" data-he="ינואר 1949" data-ru="Январь 1949">January 1949</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="The Soviet Ministry for State Security made the identification photograph after arresting Markish, a Yiddish poet and member of the Jewish Anti-Fascist Committee’s presidium." data-he="המשרד הסובייטי לביטחון המדינה צילם את תצלום הזיהוי לאחר מעצרו של מרקיש, משורר ביידיש וחבר נשיאות הוועד היהודי האנטי-פשיסטי." data-ru="Советское Министерство государственной безопасности сделало опознавательный снимок после ареста Маркиша, идишского поэта и члена президиума Еврейского антифашистского комитета.">The Soviet Ministry for State Security made the identification photograph after arresting Markish, a Yiddish poet and member of the Jewish Anti-Fascist Committee’s presidium.</p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="The MGB photographed Peretz Markish in profile and from the front after his January 1949 arrest." data-he="ה-MGB צילם את פרץ מרקיש בפרופיל ומלפנים לאחר מעצרו בינואר 1949." data-ru="МГБ сфотографировало Переца Маркиша в профиль и анфас после его ареста в январе 1949 года.">The MGB photographed Peretz Markish in profile and from the front after his January 1949 arrest.</p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="Central Archive of the Federal Security Service of the Russian Federation; scanned by Last Address; Wikimedia Commons marks the official state record public domain." data-he="הארכיון המרכזי של שירות הביטחון הפדרלי של הפדרציה הרוסית; נסרק בידי Last Address; Wikimedia Commons מסמן את הרישום הממשלתי הרשמי כנחלת הכלל." data-ru="Центральный архив ФСБ Российской Федерации; скан «Последнего адреса»; Wikimedia Commons отмечает официальный государственный документ как общественное достояние.">Central Archive of the Federal Security Service of the Russian Federation; scanned by Last Address; Wikimedia Commons marks the official state record public domain.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section placeholder-entry" data-empty-record="true">
+<div class="exhibition-container">
+<div aria-label="Reserved timeline position for The Slánský Trial" class="art-box placeholder-art-box" role="img">
+<span class="museum-frame"></span>
+</div>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1952 — Slánský Trial" data-he="1952 — משפט סלנסקי" data-ru="1952 — процесс Сланского">1952 — Slánský Trial</div>
+<h3 class="info-title wave-text" data-en="The Slánský Trial" data-he="משפט סלנסקי" data-ru="Процесс Сланского">The Slánský Trial</h3>
+<div class="info-meta">
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1952" data-he="1952" data-ru="1952">1952</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section">
+<div class="exhibition-container">
+<button aria-label="Enlarge Soviet decree awarding Lidiya Timashuk the Order of Lenin, 20 January 1953" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Soviet decree awarding Lidiya Timashuk the Order of Lenin, 20 January 1953" decoding="async" fetchpriority="low" height="800" loading="lazy" src="timeline-timashuk-1953.png" width="597"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="Doctors' Plot" data-he="עלילת הרופאים" data-ru="Дело врачей">Doctors' Plot</div>
+<h3 class="info-title wave-text" data-en="Decree Awarding Lidiya Timashuk the Order of Lenin" data-he="צו להענקת עיטור לנין ללידיה טימאשוק" data-ru="Указ о награждении Лидии Тимашук орденом Ленина">Decree Awarding Lidiya Timashuk the Order of Lenin</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Presidium of the Supreme Soviet of the USSR" data-he="נשיאות הסובייט העליון של ברית המועצות" data-ru="Президиум Верховного Совета СССР">Presidium of the Supreme Soviet of the USSR</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="20 January 1953" data-he="20 בינואר 1953" data-ru="20 января 1953">20 January 1953</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="The Presidium of the Supreme Soviet issued the decree on 20 January 1953, during the Doctors’ Plot campaign." data-he="נשיאות הסובייט העליון הוציאה את הצו ב-20 בינואר 1953, במהלך מסע ״עלילת הרופאים״." data-ru="Президиум Верховного Совета издал указ 20 января 1953 года, во время кампании «дела врачей».">The Presidium of the Supreme Soviet issued the decree on 20 January 1953, during the Doctors’ Plot campaign.</p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="The decree awards Lidiya Timashuk the Order of Lenin for helping expose the alleged doctors’ conspiracy." data-he="הצו מעניק ללידיה טימאשוק את עיטור לנין על סיועה בחשיפת הקנוניה הרפואית הנטענת." data-ru="Указ награждает Лидию Тимашук орденом Ленина за помощь в раскрытии предполагаемого заговора врачей.">The decree awards Lidiya Timashuk the Order of Lenin for helping expose the alleged doctors’ conspiracy.</p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="Official Soviet government decree; public-domain reproduction preserved on Wikimedia Commons." data-he="צו רשמי של ממשלת ברית המועצות; העתק בנחלת הכלל נשמר ב-Wikimedia Commons." data-ru="Официальный советский государственный указ; репродукция в общественном достоянии хранится на Wikimedia Commons.">Official Soviet government decree; public-domain reproduction preserved on Wikimedia Commons.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section placeholder-entry" data-empty-record="true">
+<div class="exhibition-container">
+<div aria-label="Reserved timeline position for Fayez Sayegh, Zionist Colonialism in Palestine" class="art-box placeholder-art-box" role="img">
+<span class="museum-frame"></span>
+</div>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1965 — Sayegh and Settler-Colonialism" data-he="1965 — סאיג׳ והקולוניאליזם המתנחלי" data-ru="1965 — Саиг и поселенческий колониализм">1965 — Sayegh and Settler-Colonialism</div>
+<h3 class="info-title wave-text" data-en="Fayez Sayegh, Zionist Colonialism in Palestine" data-he="פאיז סאיג׳, הציונות כקולוניאליזם בפלסטין" data-ru="Файез Саиг, «Сионистский колониализм в Палестине»">Fayez Sayegh, Zionist Colonialism in Palestine</h3>
+<div class="info-meta">
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1965" data-he="1965" data-ru="1965">1965</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section placeholder-entry" data-empty-record="true">
+<div class="exhibition-container">
+<div aria-label="Reserved timeline position for Soviet Antizionist Campaign / Zionology" class="art-box placeholder-art-box" role="img">
+<span class="museum-frame"></span>
+</div>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1967 — Soviet Antizionist Campaign" data-he="1967 — הקמפיין האנטי-ציוני הסובייטי" data-ru="1967 — советская антисионистская кампания">1967 — Soviet Antizionist Campaign</div>
+<h3 class="info-title wave-text" data-en="Soviet Antizionist Campaign / Zionology" data-he="הקמפיין האנטי-ציוני הסובייטי / זיונולוגיה" data-ru="Советская антисионистская кампания / сионилогия">Soviet Antizionist Campaign / Zionology</h3>
+<div class="info-meta">
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1967" data-he="1967" data-ru="1967">1967</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section" data-history-en="On 10 November 1975 the UN General Assembly adopted Resolution 3379, declaring Zionism “a form of racism and racial discrimination.” The demonstration opposed that resolution." data-history-he="ב-10 בנובמבר 1975 אימצה העצרת הכללית של האו״ם את החלטה 3379, שהכריזה כי הציונות היא ״צורה של גזענות ואפליה גזעית״. ההפגנה התנגדה להחלטה זו." data-history-ru="10 ноября 1975 года Генеральная Ассамблея ООН приняла резолюцию 3379, объявив сионизм «формой расизма и расовой дискриминации». Демонстрация была направлена против этой резолюции.">
+<div class="exhibition-container">
+<button aria-label="Enlarge Thousands demonstrating against United Nations General Assembly Resolution 3379 in 1975" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<img alt="Thousands demonstrating against United Nations General Assembly Resolution 3379 in 1975" decoding="async" fetchpriority="low" height="1194" loading="lazy" src="timeline-unga-3379-1975.jpg" width="1920"/>
+</span>
+<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1975 — UN Resolution 3379" data-he="1975 — החלטת האו״ם 3379" data-ru="1975 — Резолюция ООН 3379">1975 — UN Resolution 3379</div>
+<h3 class="info-title wave-text" data-en="Demonstration against Resolution 3379" data-he="הפגנה נגד החלטה 3379" data-ru="Демонстрация против резолюции 3379">Demonstration against Resolution 3379</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="IPPA photographer / Dan Hadani collection" data-he="צלם IPPA / אוסף דן הדני" data-ru="Фотограф IPPA / коллекция Дана Хадани">IPPA photographer / Dan Hadani collection</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1975" data-he="1975" data-ru="1975">1975</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="An IPPA photographer made the image in 1975; it is preserved in the Dan Hadani press-photo collection at the National Library of Israel." data-he="צלם IPPA צילם את התמונה ב-1975; היא נשמרת באוסף תצלומי העיתונות של דן הדני בספרייה הלאומית של ישראל." data-ru="Фотограф IPPA сделал снимок в 1975 году; он хранится в пресс-фотоколлекции Дана Хадани в Национальной библиотеке Израиля.">An IPPA photographer made the image in 1975; it is preserved in the Dan Hadani press-photo collection at the National Library of Israel.</p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="A black-and-white photograph shows demonstrators with Israeli flags and hand-lettered signs opposing UN General Assembly Resolution 3379." data-he="תצלום בשחור-לבן מציג מפגינים עם דגלי ישראל ושלטים בכתב יד נגד החלטה 3379 של העצרת הכללית של האו״ם." data-ru="Черно-белая фотография показывает демонстрантов с израильскими флагами и рукописными плакатами против резолюции 3379 Генеральной Ассамблеи ООН.">A black-and-white photograph shows demonstrators with Israeli flags and hand-lettered signs opposing UN General Assembly Resolution 3379.</p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="Dan Hadani collection / National Library of Israel / The Pritzker Family National Photography Collection / CC BY 4.0." data-he="אוסף דן הדני / הספרייה הלאומית של ישראל / אוסף הצילום הלאומי ע״ש משפחת פריצקר / CC BY 4.0." data-ru="Коллекция Дана Хадани / Национальная библиотека Израиля / Национальная фотоколлекция семьи Прицкер / CC BY 4.0.">Dan Hadani collection / National Library of Israel / The Pritzker Family National Photography Collection / CC BY 4.0.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section placeholder-entry" data-empty-record="true">
+<div class="exhibition-container">
+<div aria-label="Reserved timeline position for Durban Conference" class="art-box placeholder-art-box" role="img">
+<span class="museum-frame"></span>
+</div>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="2001 — Durban Conference" data-he="2001 — ועידת דרבן" data-ru="2001 — конференция в Дурбане">2001 — Durban Conference</div>
+<h3 class="info-title wave-text" data-en="Durban Conference" data-he="ועידת דרבן" data-ru="Конференция в Дурбане">Durban Conference</h3>
+<div class="info-meta">
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="2001" data-he="2001" data-ru="2001">2001</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
 </div>
 </div>
 </div>
 </section>
 <!-- CHAPTER II: ARAB REGIONAL DISCOURSE -->
-<section class="exhibition-section">
-<div class="exhibition-container">
-<button aria-label="Enlarge Democratic Popular Front Poster" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<img alt="Democratic Popular Front Poster" decoding="async" fetchpriority="low" height="480" loading="lazy" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\' viewBox=\'0 0 600 400\'&gt;&lt;rect width=\'600\' height=\'400\' fill=\'%231d1d21\'/&gt;&lt;text x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23aaa\' font-family=\'sans-serif\' font-size=\'18\'&gt;CHAPTER II: ARAB REGIONAL&lt;/text&gt;&lt;/svg&gt;';" src="mencarryweapons_pppa.jpg" width="334"/>
-</span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
-</button>
-<div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter II — Islamist" data-he="פרק ב — אסלאמיסטי" data-ru="Глава II — Исламистский">Chapter II — Islamist</div>
-<h3 class="info-title wave-text" data-en="Democratic Popular Front for the Liberation of Palestine" data-he="החזית הדמוקרטית לשחרור פלסטין" data-ru="Демократический фронт освобождения Палестины">Democratic Popular Front for the Liberation of Palestine</h3>
-<div class="info-meta">
-<div><strong data-en="Author / Publisher:" data-he="יוצר / מוציא לאור:" data-ru="Автор / Издатель:">Author / Publisher:</strong> <span class="wave-text" data-en="DPFLP Information Department" data-he="מחלקת ההסברה של החזית הדמוקרטית" data-ru="Департамент информации ДФОП">DPFLP Information Department</span></div>
-<div><strong data-en="Date:" data-he="תאריך יצירה:" data-ru="Дата создания:">Date:</strong> <span class="wave-text" data-en="c. 1970" data-he="סביבות 1970" data-ru="ок. 1970 г.">c. 1970</span></div>
-</div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר יוצר" data-ru="Биография автора и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Formed in 1969 by Nayef Hawatmeh after splitting from the Popular Front for the Liberation of Palestine, this group used posters to promote armed struggle. Their media team worked with artists in Beirut and Amman to build a recognized visual style for the movement." data-he="קבוצה זו, שהוקמה בשנת 1969 על ידי נאיף חוואתמה לאחר פרישה מהחזית העממית לשחרור פלסטין, השתמשה בכרזות כדי לקדם מאבק מזוין. צוות ההסברה שלה עבד עם אמנים בביירות ובעמאן כדי ליצור סגנון חזותי מוכר לתנועה." data-ru="Организация, основанная в 1969 году Наифом Хаватме после раскола с НФОП, активно использовала политический плакат для пропаганды вооруженной борьбы. Их информационный отдел сотрудничал с художниками в Бейруте и Аммане для создания узнаваемого визуального стиля."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="A 1970s print showing drawings of armed figures alongside banners and flags. The Arabic text reads: Men carry weapons and continue the way, aiming to inspire fighters and supporters." data-he="כרזה משנות ה-70 המציגה איורים של דמויות חמושות לצד דגלים. הכיתוב בערבית אומר: גברים נושאים נשק וממשיכים בדרך, במטרה לעודד לוחמים ותומכים." data-ru="Плакат 1970-х годов с изображением вооруженных бойцов на фоне знамен. Надпись на арабском языке гласит: «Мужчины берут оружие и продолжают путь», призывая сторонников к продолжению борьбы."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Middle Eastern collections containing historical posters, flyers, and protest materials from the era." data-he="אוספים מהמזרח התיכון הכוללים כרזות היסטוריות, כרוזים וחומרי מחאה מאותה תקופה." data-ru="Архивные коллекции Ближнего Востока, содержащие исторические плакаты, листовки и агитационные материалы эпохи."></p>
-</div>
-</div>
-</div>
-</section>
-<!-- CHAPTER III: WESTERN MANIFESTATIONS -->
-<section class="exhibition-section">
-<div class="exhibition-container">
-<button aria-label="Enlarge Happy Thanksgiving America" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<img alt="Happy Thanksgiving America" decoding="async" fetchpriority="low" height="480" loading="lazy" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\' viewBox=\'0 0 600 400\'&gt;&lt;rect width=\'600\' height=\'400\' fill=\'%231d1d21\'/&gt;&lt;text x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23aaa\' font-family=\'sans-serif\' font-size=\'18\'&gt;CHAPTER III: WESTERN&lt;/text&gt;&lt;/svg&gt;';" src="HappyThanksgiving_pppa.jpg" width="317"/>
-</span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
-</button>
-<div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter III — Western Manifestations" data-he="פרק ג — ביטויים מערביים" data-ru="Глава III — Западные Проявления">Chapter III — Western Manifestations</div>
-<h3 class="info-title wave-text" data-en="Happy Thanksgiving America, Love, Gaza" data-he="חג הודיה שמח אמריקה, באהבה, עזה" data-ru="С Днем благодарения, Америка! С любовью, Газа">Happy Thanksgiving America, Love, Gaza</h3>
-<div class="info-meta">
-<div><strong data-en="Author / Artist:" data-he="יוצר / אמן:" data-ru="Автор / Художник:">Author / Artist:</strong> <span class="wave-text" data-en="Mr. Fish (Dwayne Booth)" data-he="מיסטר פיש (דווין בות')" data-ru="Mr. Fish (Дуэйн Бут)">Mr. Fish (Dwayne Booth)</span></div>
-<div><strong data-en="Date:" data-he="תאריך יצירה:" data-ru="Дата создания:">Date:</strong> <span class="wave-text" data-en="November 2023" data-he="נובמבר 2023" data-ru="Ноябрь 2023">November 2023</span></div>
-</div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר יוצר" data-ru="Биография автора и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Dwayne Booth, drawing under the name Mr. Fish, is an American political cartoonist whose work criticizes US foreign policy and government actions for publications like Truthdig. He combines fine art drawing techniques with sharp political satire." data-he="דווין בות', המאייר תחת השם מיסטר פיש, הוא קריקטוריסט פוליטי אמריקאי שעבודתו מבקרת את מדיניות החוץ של ארה״ב ואת פעולות הממשל עבור גופי תקשורת כמו Truthdig. הוא משלב טכניקות רישום עם סאטירה פוליטית חדה." data-ru="Дуэйн Бут, публикующийся под псевдонимом Mr. Fish — американский политический карикатурист, критикующий внешнюю политику США для изданий вроде Truthdig. В своих работах он сочетает классическую графику с острой сатирой."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="A modern illustration contrasting Thanksgiving with a red bloody handprint and the words Love, Gaza. It criticizes US military support through direct visual satire." data-he="איור עכשווי המציב את חג ההודיה מול טביעת יד אדומה ומדממת והמילים באהבה, עזה. היצירה מבקרת את התמיכה הצבאית האמריקאית באמצעות סאטירה חזותית ישירה." data-ru="Современная иллюстративная работа, противопоставляющая традиционный американский праздник День благодарения кровавому отпечатку руки с надписью «С любовью, Газа», выражающая протест против военной поддержки США."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Archives tracking modern street protest posters and artwork across major European and American cities." data-he="ארכיונים העוקבים אחר כרזות מחאה ואמנות רחוב מודרנית בערים מרכזיות באירופה ובארה״ב." data-ru="Архивные данные, фиксирующие современное уличное искусство и протестные плакаты в городах Европы и США."></p>
-</div>
-</div>
-</div>
-</section>
-<section class="exhibition-section reserved-timeline-position">
-<div class="exhibition-container">
-<button aria-label="Enlarge Antizionism reserved timeline exhibit 5" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<img alt="Antizionism reserved timeline exhibit 5" decoding="async" fetchpriority="low" height="950" loading="lazy" src="antizionism-5.jpg" width="1400"/>
-</span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
-</button>
-<div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter V — Reserved Placement" data-he="פרק ה — מיקום שמור" data-ru="Глава V — Зарезервированное место">Chapter V — Reserved Placement</div>
-<h3 class="info-title wave-text" data-en="Temporary Exhibit V" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit V</h3>
-<div class="info-meta">
-<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-</div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="Reserved image position for the developing Antizionism timeline." data-he="מיקום תמונה שמור עבור ציר הזמן המתפתח." data-ru="Зарезервированное место для изображения в развивающейся хронологии."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-</div>
-</div>
-</div>
-</section>
-<section class="exhibition-section reserved-timeline-position">
-<div class="exhibition-container">
-<button aria-label="Enlarge Antizionism reserved timeline exhibit 6" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<img alt="Antizionism reserved timeline exhibit 6" decoding="async" fetchpriority="low" height="950" loading="lazy" src="antizionism-6.jpg" width="1400"/>
-</span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
-</button>
-<div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter VI — Reserved Placement" data-he="פרק ו — מיקום שמור" data-ru="Глава VI — Зарезервированное место">Chapter VI — Reserved Placement</div>
-<h3 class="info-title wave-text" data-en="Temporary Exhibit VI" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit VI</h3>
-<div class="info-meta">
-<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-</div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="Reserved image position for the developing Antizionism timeline." data-he="מיקום תמונה שמור עבור ציר הזמן המתפתח." data-ru="Зарезервированное место для изображения в развивающейся хронологии."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-</div>
-</div>
-</div>
-</section>
 </main>
 <!-- EXHIBITION FOOTER STATEMENT -->
 <footer class="exhibition-footer">
 <a class="statement-link wave-text" data-en="Return to the Three Eras" data-he="חזרה לשלוש התקופות" data-ru="Вернуться к трём эпохам" href="index.html">Return to the Three Eras</a>
 </footer>
 <!-- INTERACTIVE JAVASCRIPT -->
-
-
 <script src="gallery.js"></script></body>
 </html>

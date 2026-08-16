@@ -17,10 +17,13 @@
   object-position:center center !important;
   transform-origin:center center;
 }
-/* Keep the complete artwork visible even when a door is hovered. */
+/* Keep every pixel of the selected door art visible. The door card may move; the artwork itself never scales/crops. */
+.home-page .era-image,
 .home-page .era-card:hover .era-image,
 .home-page .era-card:focus-visible .era-image{
-  transform:scale(1.035) !important;
+  transform:none !important;
+  object-fit:contain !important;
+  object-position:50% 50% !important;
 }
 /* No additional homepage prose below the doors. */
 .home-page .exhibition-announcement{display:none !important;}
@@ -89,13 +92,13 @@
       </div>
     </a>
 
-    <a aria-label="Open Antizionism gallery" class="era-card antizionism" href="exhibition.html" style="--door-image:url('home-antizionism.webp')">
+    <a aria-label="Open Antizionism gallery" class="era-card antizionism" href="exhibition.html" style="--door-image:url('door-antizionism-fuentes-full.jpg')">
       <span aria-hidden="true" class="mobile-node"></span>
       <div class="door-rotator">
         <div class="door-face door-front">
           <div class="era-inner">
             <div class="era-head"><h2 class="era-title" data-en="Antizionism" data-he="אנטי-ציונות" data-ru="Антисионизм">Antizionism</h2></div>
-            <div class="era-image-wrap"><img alt="Antizionism gallery image" class="era-image" decoding="async" fetchpriority="low" loading="lazy" src="home-antizionism.webp"/></div>
+            <div class="era-image-wrap"><img alt="Antizionism gallery image" class="era-image" decoding="async" fetchpriority="low" loading="lazy" src="door-antizionism-fuentes-full.jpg"/></div>
           </div>
           <span aria-hidden="true" class="era-arrow">→</span>
         </div>

@@ -102,52 +102,55 @@ function makeHistoricalSettingBlock(texts) {
 }
 
 function archiveSettingFor(section, index) {
-  const isAntizionismGallery = /(?:^|\/)exhibition\.html$/i.test(location.pathname);
-  if (!isAntizionismGallery) {
+  const path = location.pathname;
+  const isAntizionismGallery = /(?:^|\/)exhibition\.html$/i.test(path);
+  const titleElement = section.querySelector('.info-title');
+  const title = titleElement?.getAttribute('data-en') || titleElement?.textContent?.trim() || '';
+
+  if (section.getAttribute('data-empty-record') === 'true') {
+    return { en: '', he: '', ru: '' };
+  }
+
+  const directHistory = section.getAttribute('data-history-en');
+  if (directHistory) {
     return {
-      en: 'Historical context will be added with the final object research, including the circumstances of production, intended audience, controversy and place within the wider history.',
-      he: 'ההקשר ההיסטורי יתווסף עם השלמת המחקר על הפריט, לרבות נסיבות יצירתו, קהל היעד, המחלוקת שאליה השתייך ומקומו בהיסטוריה הרחבה יותר.',
-      ru: 'Исторический контекст будет добавлен после завершения исследования объекта, включая обстоятельства его создания, предполагаемую аудиторию, связанную с ним полемику и его место в более широкой истории.'
+      en: directHistory,
+      he: section.getAttribute('data-history-he') || directHistory,
+      ru: section.getAttribute('data-history-ru') || directHistory
     };
   }
-  const custom = [
-    {
-      en: 'Created in Mandatory Palestine during the Second World War, when left-Zionist labor movements publicly identified with the Soviet anti-fascist struggle. The object belongs to the prehistory of the later rupture between Soviet state politics and Zionism.',
-      he: 'הפריט נוצר בארץ ישראל המנדטורית בזמן מלחמת העולם השנייה, כאשר תנועות עבודה ציוניות־שמאליות הזדהו בפומבי עם המאבק האנטי־פשיסטי הסובייטי. הוא שייך לפרק שקדם לקרע המאוחר יותר בין מדיניות המדינה הסובייטית לציונות.',
-      ru: 'Объект был создан в подмандатной Палестине во время Второй мировой войны, когда левые сионистские рабочие движения публично отождествляли себя с советской антифашистской борьбой. Он относится к предыстории последующего разрыва между советской государственной политикой и сионизмом.'
+
+  const byTitle = {
+    'The Degradation of Alfred Dreyfus': {
+      en: 'Dreyfus, a Jewish French army officer, was publicly degraded on 5 January 1895 after being convicted of treason. The case became a national crisis shaped by forged evidence, political division, and antisemitic agitation.',
+      he: 'דרייפוס, קצין יהודי בצבא צרפת, הושפל בפומבי ב-5 בינואר 1895 לאחר שהורשע בבגידה. הפרשה הפכה למשבר לאומי שניזון מראיות מזויפות, פילוג פוליטי ותסיסה אנטישמית.',
+      ru: 'Дрейфус, еврейский офицер французской армии, был публично разжалован 5 января 1895 года после осуждения за измену. Дело превратилось в национальный кризис, связанный с поддельными доказательствами, политическим расколом и антисемитской агитацией.'
     },
-    {
-      en: 'Produced in the political world that followed the 1967 war, when Palestinian revolutionary organizations increasingly framed armed struggle through anti-imperialist and anti-colonial language. Posters were designed for mobilization as well as international circulation.',
-      he: 'הפריט נוצר בעולם הפוליטי שלאחר מלחמת 1967, כאשר ארגונים מהפכניים פלסטיניים תיארו יותר ויותר את המאבק המזוין בשפה אנטי־אימפריאליסטית ואנטי־קולוניאלית. הכרזות נועדו הן לגיוס והן להפצה בינלאומית.',
-      ru: 'Объект возник в политической среде после войны 1967 года, когда палестинские революционные организации всё чаще описывали вооружённую борьбу языком антиимпериализма и антиколониализма. Плакаты предназначались и для мобилизации, и для международного распространения.'
+    'Kishinev Massacre Elegy': {
+      en: 'The April 1903 pogrom in Kishinev killed and injured Jews and destroyed homes and shops. Shapiro’s 1904 score was part of the Jewish memorial response in the United States.',
+      he: 'פוגרום קישינב באפריל 1903 הרג ופצע יהודים והרס בתים וחנויות. היצירה של שפירו מ-1904 הייתה חלק מתגובת ההנצחה היהודית בארצות הברית.',
+      ru: 'Кишинёвский погром апреля 1903 года привёл к гибели и ранениям евреев и разрушению домов и магазинов. Партитура Шапиро 1904 года стала частью еврейской мемориальной реакции в США.'
     },
-    {
-      en: 'Made during the Israel–Hamas war that followed October 7, 2023, this work circulated inside a mass protest environment in which images linked Palestinian suffering to American military and political support for Israel.',
-      he: 'היצירה נוצרה במהלך מלחמת ישראל–חמאס שלאחר 7 באוקטובר 2023 והופצה בתוך סביבת מחאה המונית שבה דימויים קשרו את הסבל הפלסטיני לתמיכה הצבאית והפוליטית האמריקאית בישראל.',
-      ru: 'Работа была создана во время войны Израиля и ХАМАС, начавшейся после 7 октября 2023 года, и распространялась в среде массовых протестов, где палестинские страдания связывались с американской военной и политической поддержкой Израиля.'
+    'Zionism as a Crocodile': {
+      en: 'Published during the 1936–39 Arab Revolt, the cartoon depicts Zionism as predatory and protected by British power.',
+      he: 'הקריקטורה פורסמה במהלך המרד הערבי של 1936–1939 ומציגה את הציונות ככוח טורף המוגן בידי בריטניה.',
+      ru: 'Карикатура была опубликована во время Арабского восстания 1936–1939 годов и изображает сионизм как хищную силу под защитой Британии.'
     },
-    {
-      en: 'Published in the early Soviet anti-religious campaign, before mature Soviet antizionism. Its fusion of Judaism, moneylending, capitalism and hidden economic power preserves visual stereotypes that later Soviet “Zionology” could redirect toward the figure of the Zionist.',
-      he: 'הפריט פורסם בשלב המוקדם של המערכה הסובייטית נגד הדת, לפני התגבשות האנטי־ציונות הסובייטית המאוחרת. החיבור בין יהדות, הלוואה בריבית, קפיטליזם וכוח כלכלי נסתר משמר סטריאוטיפים חזותיים שאותם יכלה ה״ציונולוגיה״ הסובייטית המאוחרת להסיט אל דמות ה״ציוני״.',
-      ru: 'Опубликованный в ранний период советской антирелигиозной кампании, до зрелого советского антисионизма, этот образ соединяет иудаизм, ростовщичество, капитализм и скрытую экономическую власть. Такие визуальные стереотипы позднейшая советская «сионология» могла перенаправить на фигуру «сиониста».'
+    'Decree Awarding Lidiya Timashuk the Order of Lenin': {
+      en: 'Soviet authorities accused a group of prominent physicians, most of them Jewish, of conspiring to murder Soviet leaders. After Stalin’s death, the case collapsed and Timashuk’s award was revoked.',
+      he: 'השלטונות הסובייטיים האשימו קבוצת רופאים בכירים, רובם יהודים, בקנוניה לרצוח מנהיגים סובייטיים. לאחר מות סטלין קרסה הפרשה והעיטור של טימאשוק בוטל.',
+      ru: 'Советские власти обвинили группу видных врачей, большинство из которых были евреями, в заговоре с целью убийства советских руководителей. После смерти Сталина дело развалилось, а награда Тимашук была отменена.'
     },
-    {
-      en: 'Published during the 1936–39 Arab Revolt under the British Mandate. The cartoon casts Zionism as a predatory crocodile protected by British authority, visually joining Zionism to imperial power decades before settler-colonial language became standard.',
-      he: 'הקריקטורה פורסמה במהלך המרד הערבי של 1936–1939 תחת המנדט הבריטי. היא מציגה את הציונות כתנין טורף המוגן בידי השלטון הבריטי, ובכך קושרת חזותית את הציונות לכוח אימפריאלי עשרות שנים לפני שהשפה של קולוניאליזם התיישבותי נעשתה מקובלת.',
-      ru: 'Карикатура была опубликована во время Арабского восстания 1936–1939 годов при британском мандате. Сионизм изображён как хищный крокодил, защищаемый британской властью, что визуально связывает сионизм с имперской силой задолго до распространения языка поселенческого колониализма.'
-    },
-    {
-      en: 'Created two years after UN General Assembly Resolution 3379 declared Zionism “a form of racism and racial discrimination.” The print translates that international political formula into the visual language of American movement graphics.',
-      he: 'ההדפס נוצר שנתיים לאחר שהחלטה 3379 של העצרת הכללית של האו״ם הכריזה כי הציונות היא ״צורה של גזענות ואפליה גזעית״. הוא מתרגם את הנוסחה הפוליטית הבינלאומית הזאת לשפה החזותית של גרפיקה תנועתית אמריקאית.',
-      ru: 'Работа создана через два года после того, как резолюция 3379 Генеральной Ассамблеи ООН объявила сионизм «формой расизма и расовой дискриминации». Оттиск переводит эту международную политическую формулу на язык американской активистской графики.'
-    }
-  ];
-  return custom[index] || {
-    en: 'This object is presented within the political, institutional and visual circumstances in which it was produced and circulated.',
-    he: 'הפריט מוצג בתוך הנסיבות הפוליטיות, המוסדיות והחזותיות שבהן נוצר והופץ.',
-    ru: 'Объект представлен в политических, институциональных и визуальных обстоятельствах, в которых он был создан и распространялся.'
+  };
+
+  if (byTitle[title]) return byTitle[title];
+  return {
+    en: isAntizionismGallery ? 'History will be added when the final object research is complete.' : 'History will be added when the final object research is complete.',
+    he: 'ההיסטוריה תתווסף לאחר השלמת המחקר הסופי על הפריט.',
+    ru: 'История будет добавлена после завершения окончательного исследования объекта.'
   };
 }
+
 function installArchiveStaggerStyles() {
   if (document.getElementById('archive-stagger-styles')) return;
   const style = document.createElement('style');
@@ -218,8 +221,7 @@ function normalizeArchivePanels() {
   });
 }
 
-/* Fill the reserved Antizionism positions with the selected archival works.
-   The Falastin source image is supplied alongside this script; the Fuentes print loads from the Smithsonian image service so the complete artwork remains visible. */
+/* Fill the remaining reserved Antizionism position with the selected Falastin archival work. Fuentes is door-only. */
 function setMultilingualText(element, en, he = en, ru = en) {
   if (!element) return;
   element.setAttribute('data-en', en);
@@ -240,42 +242,19 @@ function populateSelectedAntizionismWorks() {
       creator: { en: 'Falastin newspaper; artist attribution varies by source', he: 'העיתון פלסטין; ייחוס האמן משתנה בין המקורות', ru: 'Газета Falastin; атрибуция художника различается по источникам' },
       date: { en: '18 June 1936', he: '18 ביוני 1936', ru: '18 июня 1936' },
       creatorText: {
-        en: 'Falastin was an Arabic-language Palestinian newspaper published in Jaffa. The image appeared during the Arab Revolt under the British Mandate and belongs to the newspaper’s political visual culture.',
-        he: 'פלסטין היה עיתון פלסטיני בשפה הערבית שיצא לאור ביפו. הדימוי הופיע במהלך המרד הערבי תחת המנדט הבריטי ושייך לתרבות החזותית הפוליטית של העיתון.',
-        ru: 'Falastin была палестинской арабоязычной газетой, издававшейся в Яффе. Изображение появилось во время Арабского восстания при британском мандате и относится к политической визуальной культуре газеты.'
+        en: 'The Arabic-language newspaper Falastin published the cartoon in Jaffa on 18 June 1936.',
+        he: 'העיתון הערבי פלסטין פרסם את הקריקטורה ביפו ב-18 ביוני 1936.',
+        ru: 'Арабоязычная газета Falastin опубликовала карикатуру в Яффе 18 июня 1936 года.'
       },
       objectText: {
-        en: 'A British officer stands over a crocodile labelled as Zionism. The crocodile tells Palestinian Arabs not to fear because it will swallow them “peacefully,” representing Zionism as predatory while protected by British power.',
-        he: 'קצין בריטי ניצב מעל תנין המסומן כציונות. התנין אומר לערבים הפלסטינים שלא לפחד משום שהוא יבלע אותם ״בשלום״, וכך מציג את הציונות ככוח טורף המוגן בידי בריטניה.',
-        ru: 'Британский офицер стоит над крокодилом, обозначенным как сионизм. Крокодил говорит палестинским арабам не бояться, потому что проглотит их «мирно», изображая сионизм хищной силой под защитой Британии.'
+        en: 'A crocodile marked as Zionism faces Palestinian Arabs while a British officer stands above it. The crocodile says it will swallow them “peacefully.”',
+        he: 'תנין המסומן כציונות ניצב מול ערבים פלסטינים בעוד קצין בריטי עומד מעליו. התנין אומר כי יבלע אותם ״בשלום״.',
+        ru: 'Крокодил с надписью «сионизм» обращён к палестинским арабам, а над ним стоит британский офицер. Крокодил говорит, что проглотит их «мирно».'
       },
       archiveText: {
         en: 'National Library of Israel newspaper holdings; high-resolution reproduction also preserved on Wikimedia Commons under a CC0 public-domain dedication.',
         he: 'אוספי העיתונות של הספרייה הלאומית של ישראל; העתק ברזולוציה גבוהה נשמר גם ב-Wikimedia Commons בהקדשת CC0 לנחלת הכלל.',
         ru: 'Газетные фонды Национальной библиотеки Израиля; репродукция высокого разрешения также хранится на Wikimedia Commons с посвящением в общественное достояние CC0.'
-      }
-    },
-    {
-      image: 'antizionism-6.jpg',
-      alt: 'Juan Fuentes, Zionism is Racism, 1977',
-      category: { en: 'Racism — Post-Resolution 3379', he: 'גזענות — לאחר החלטה 3379', ru: 'Расизм — после резолюции 3379' },
-      title: { en: 'Zionism is Racism', he: 'ציונות היא גזענות', ru: 'Сионизм — это расизм' },
-      creator: { en: 'Juan Fuentes', he: 'חואן פואנטס', ru: 'Хуан Фуэнтес' },
-      date: { en: '1977', he: '1977', ru: '1977' },
-      creatorText: {
-        en: 'Juan Fuentes is an American printmaker and graphic artist associated with socially engaged and movement-based print culture. This offset print translated a major international political slogan into a stark red-and-black graphic.',
-        he: 'חואן פואנטס הוא אמן הדפס וגרפיקה אמריקאי המזוהה עם תרבות הדפס חברתית ותנועתית. הדפס אופסט זה תרגם סיסמה פוליטית בינלאומית מרכזית לשפה גרפית חדה באדום ושחור.',
-        ru: 'Хуан Фуэнтес — американский график и мастер печатной графики, связанный с социально ангажированной активистской культурой. Этот офсетный оттиск перевёл важный международный политический лозунг в резкий красно-чёрный визуальный язык.'
-      },
-      objectText: {
-        en: 'A group of figures is rendered in high-contrast red and black beneath the slogan “Zionism is Racism,” turning the post-1975 political equation into a compact visual statement.',
-        he: 'קבוצת דמויות מוצגת בניגודיות גבוהה של אדום ושחור מתחת לסיסמה ״ציונות היא גזענות״, והופכת את המשוואה הפוליטית שלאחר 1975 להצהרה חזותית תמציתית.',
-        ru: 'Группа фигур выполнена в высококонтрастной красно-чёрной гамме под лозунгом «Сионизм — это расизм», превращая политическую формулу после 1975 года в компактное визуальное высказывание.'
-      },
-      archiveText: {
-        en: 'Smithsonian American Art Museum, object 2019.54.2, Gift of Lincoln Cushing / Docs Populi. The museum records the artwork as ©1977 Juan R. Fuentes; permission or a documented fair-use basis should be confirmed for public exhibition.',
-        he: 'מוזיאון סמית׳סוניאן לאמנות אמריקאית, פריט 2019.54.2, מתנת Lincoln Cushing / Docs Populi. המוזיאון מציין את היצירה כ-©1977 Juan R. Fuentes; לפני הצגה פומבית יש לאשר רשות שימוש או בסיס מתועד לשימוש הוגן.',
-        ru: 'Smithsonian American Art Museum, объект 2019.54.2, дар Lincoln Cushing / Docs Populi. Музей указывает ©1977 Juan R. Fuentes; для публичной экспозиции следует подтвердить разрешение либо документированное основание добросовестного использования.'
       }
     }
   ];

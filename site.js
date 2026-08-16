@@ -19,15 +19,15 @@ document.body.prepend(pageCurtain);
 /* HOME MOTION TUNING — quicker while retaining the architectural door sequence. */
 const homeMotionTuning = document.createElement('style');
 homeMotionTuning.textContent = `
-  .home-title.title-sweep-running .home-title-char:not(.is-space){animation-duration:.58s}
-  .home-title.title-sweep-running .home-title-char.is-punctuation{animation-duration:.38s}
-  .door-rotator{transition-duration:1.42s!important;-webkit-transition-duration:1.42s!important;transition-timing-function:cubic-bezier(.22,.72,.22,1)!important;-webkit-transition-timing-function:cubic-bezier(.22,.72,.22,1)!important}
-  .door-panel{transition-duration:1.7s!important;-webkit-transition-duration:1.7s!important;transition-timing-function:cubic-bezier(.22,.72,.22,1)!important;-webkit-transition-timing-function:cubic-bezier(.22,.72,.22,1)!important}
-  .era-card.door-opening .door-aperture{animation-duration:1.75s!important}
+  .home-title.title-sweep-running .home-title-char:not(.is-space){animation-duration:.36s}
+  .home-title.title-sweep-running .home-title-char.is-punctuation{animation-duration:.24s}
+  .door-rotator{transition-duration:.72s!important;-webkit-transition-duration:.72s!important;transition-timing-function:cubic-bezier(.22,.72,.22,1)!important;-webkit-transition-timing-function:cubic-bezier(.22,.72,.22,1)!important}
+  .door-panel{transition-duration:1.05s!important;-webkit-transition-duration:1.05s!important;transition-timing-function:cubic-bezier(.22,.72,.22,1)!important;-webkit-transition-timing-function:cubic-bezier(.22,.72,.22,1)!important}
+  .era-card.door-opening .door-aperture{animation-duration:1.15s!important}
   @media(max-width:720px){
-    .door-rotator{transition-duration:1.28s!important;-webkit-transition-duration:1.28s!important}
-    .door-panel{transition-duration:1.5s!important;-webkit-transition-duration:1.5s!important}
-    .era-card.door-opening .door-aperture{animation-duration:1.55s!important}
+    .door-rotator{transition-duration:.64s!important;-webkit-transition-duration:.64s!important}
+    .door-panel{transition-duration:.94s!important;-webkit-transition-duration:.94s!important}
+    .era-card.door-opening .door-aperture{animation-duration:1.02s!important}
   }
 `;
 document.head.appendChild(homeMotionTuning);
@@ -86,8 +86,8 @@ function textFor(element, lang = currentLang) {
 }
 
 /* HOMEPAGE TITLE — one restrained oxblood sweep, left to right */
-const HOME_TITLE_SWEEP_DELAY = 2600;
-const HOME_TITLE_SWEEP_STAGGER = 120;
+const HOME_TITLE_SWEEP_DELAY = 1650;
+const HOME_TITLE_SWEEP_STAGGER = 55;
 let homeTitleSweepTimer = 0;
 let homeTitleSweepFinished = false;
 
@@ -130,7 +130,7 @@ function runHomeTitleSweep() {
   title.classList.remove('title-sweep-running');
   void title.offsetWidth;
   title.classList.add('title-sweep-running');
-  const totalDuration = (characters.length - 1) * HOME_TITLE_SWEEP_STAGGER + 580;
+  const totalDuration = (characters.length - 1) * HOME_TITLE_SWEEP_STAGGER + 360;
   setTimeout(() => title.classList.remove('title-sweep-running'), totalDuration + 80);
 }
 
@@ -322,8 +322,8 @@ function runDoorTransition(card, href) {
 
   const phoneDoor = matchMedia('(max-width: 720px)').matches;
   const timings = phoneDoor
-    ? { back: 1250, open: 1700, fade: 3050, navigate: 3450 }
-    : { back: 1400, open: 1900, fade: 3400, navigate: 3850 };
+    ? { back: 600, open: 800, fade: 1650, navigate: 2050 }
+    : { back: 680, open: 900, fade: 1800, navigate: 2250 };
 
   setTimeout(() => card.classList.add('door-back-visible'), timings.back);
   setTimeout(() => card.classList.add('door-opening'), timings.open);
