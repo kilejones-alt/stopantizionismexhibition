@@ -8,7 +8,8 @@ CURRENT SITE STATE
 - Compact AUDIO / EN / HE / RU controls.
 - English is the default on a fresh visit. Hebrew/Russian persist only within the current tab/session after selection.
 - Audio never starts for a visitor who has not turned it on. If a visitor enabled audio previously, the site attempts to resume it across pages, subject to browser autoplay restrictions.
-- Wall labels render Object -> Creator -> History -> Archive.
+- Antizionism is a vertical museum timeline: a continuous center spine, alternating artwork/label sides, year nodes, and Object -> Creator -> History -> Archive wall labels.
+- Wall labels rise roughly 96px into place in a restrained stagger and remain visually attached to the timeline rather than floating as separate cards.
 - Thanksgiving, Gays for Gaza, Sweden protest and Moor are not used.
 
 ANTIZIONISM TIMELINE

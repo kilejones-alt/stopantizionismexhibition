@@ -16,7 +16,7 @@ pageCurtain.id = 'page-curtain';
 pageCurtain.setAttribute('aria-hidden', 'true');
 document.body.prepend(pageCurtain);
 
-/* HOME MOTION TUNING — quicker while retaining the architectural door sequence. */
+/* HOME MOTION TUNING */
 const homeMotionTuning = document.createElement('style');
 homeMotionTuning.textContent = `
   .home-title.title-sweep-running .home-title-char:not(.is-space){animation-duration:.36s}
@@ -112,13 +112,12 @@ function prepareHomeTitleLetters() {
   });
 }
 
-function runBrandDoubleBeat() {
-  const brand = document.querySelector('.site-brand-link');
-  if (!brand || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  brand.classList.remove('brand-double-beat');
-  void brand.offsetWidth;
-  brand.classList.add('brand-double-beat');
-  window.setTimeout(() => brand.classList.remove('brand-double-beat'), 1280);
+function runPostTitleAccent() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.body.classList.remove('title-afterglow');
+  void document.body.offsetWidth;
+  document.body.classList.add('title-afterglow');
+  window.setTimeout(() => document.body.classList.remove('title-afterglow'), 1100);
 }
 
 function runHomeTitleSweep() {
@@ -141,8 +140,8 @@ function runHomeTitleSweep() {
   title.classList.add('title-sweep-running');
   const totalDuration = (characters.length - 1) * HOME_TITLE_SWEEP_STAGGER + 360;
   setTimeout(() => title.classList.remove('title-sweep-running'), totalDuration + 80);
-  /* Let the red sweep fully clear JEW-HATRED, then answer with two fast double-beats. */
-  setTimeout(runBrandDoubleBeat, totalDuration + 125);
+  /* After the oxblood sweep, let the thresholds answer once — no logo reveal. */
+  setTimeout(runPostTitleAccent, totalDuration + 140);
 }
 
 function scheduleHomeTitleSweep() {
@@ -316,31 +315,67 @@ addEventListener('keydown', event => {
 
 /* PROFESSIONAL INTERNAL PAGE TRANSITIONS */
 let doorTransitionActive = false;
+
+function apertureToneFor(href) {
+  if (/antijudaism\.html(?:$|[?#])/i.test(href)) return '#fff9ec';
+  if (/antisemitism\.html(?:$|[?#])/i.test(href)) return '#fffefe';
+  if (/exhibition\.html(?:$|[?#])/i.test(href)) return '#fff6f3';
+  return '#fffaf2';
+}
+
+function ensureEraApertureLayer() {
+  let layer = document.getElementById('era-aperture-layer');
+  if (layer) return layer;
+  layer = document.createElement('div');
+  layer.id = 'era-aperture-layer';
+  layer.setAttribute('aria-hidden', 'true');
+  const figure = document.createElement('div');
+  figure.id = 'era-aperture-figure';
+  layer.appendChild(figure);
+  document.body.appendChild(layer);
+  return layer;
+}
+
+function apertureOriginFor(card) {
+  const image = card.querySelector('.era-image');
+  const rect = (image || card).getBoundingClientRect();
+  const cards = [...document.querySelectorAll('.era-card[href]')];
+  const index = Math.max(0, cards.indexOf(card));
+  const focal = [
+    { x: .56, y: .44 },
+    { x: .48, y: .50 },
+    { x: .54, y: .46 }
+  ][index] || { x: .52, y: .48 };
+  return {
+    x: rect.left + rect.width * focal.x,
+    y: rect.top + rect.height * focal.y
+  };
+}
+
 function runDoorTransition(card, href) {
   if (doorTransitionActive || !card || !href) return;
   doorTransitionActive = true;
   saveAudioPosition();
-  document.body.classList.add('door-transitioning');
-  card.classList.add('door-flipping');
   card.setAttribute('aria-busy', 'true');
 
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reducedMotion) {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.body.classList.add('page-leaving');
-    setTimeout(() => { location.assign(href); }, 140);
+    setTimeout(() => { location.assign(href); }, 120);
     return;
   }
 
-  const phoneDoor = matchMedia('(max-width: 720px)').matches;
-  const timings = phoneDoor
-    ? { back: 600, open: 800, fade: 1650, navigate: 2050 }
-    : { back: 680, open: 900, fade: 1800, navigate: 2250 };
+  document.body.classList.add('door-transitioning');
+  card.classList.add('door-flipping');
 
-  setTimeout(() => card.classList.add('door-back-visible'), timings.back);
-  setTimeout(() => card.classList.add('door-opening'), timings.open);
-  setTimeout(() => document.body.classList.add('page-leaving'), timings.fade);
-  setTimeout(() => { location.assign(href); }, timings.navigate);
+  const flipDuration = innerWidth <= 720 ? 520 : 580;
+  const panelDelay = flipDuration + 110;
+  const navigateDelay = panelDelay + (innerWidth <= 720 ? 680 : 760);
+
+  setTimeout(() => card.classList.add('door-back-visible'), flipDuration - 70);
+  setTimeout(() => card.classList.add('door-opening'), panelDelay);
+  setTimeout(() => { location.assign(href); }, navigateDelay);
 }
+
 function setupPageTransitions() {
   const prefetchedPages = new Set();
   const prefetchPage = card => {
@@ -391,11 +426,12 @@ function setupDoorImageResolve() {
 
 function resetRestoredPage() {
   doorTransitionActive = false;
-  document.body.classList.remove('door-transitioning', 'page-leaving');
+  document.body.classList.remove('door-transitioning', 'aperture-preparing', 'page-leaving');
   document.querySelectorAll('.era-card').forEach(card => {
-    card.classList.remove('door-flipping', 'door-back-visible', 'door-opening');
+    card.classList.remove('door-flipping', 'door-back-visible', 'door-opening', 'aperture-selected');
     card.removeAttribute('aria-busy');
   });
+  document.getElementById('era-aperture-layer')?.remove();
   const curtain = document.getElementById('page-curtain');
   if (curtain) curtain.removeAttribute('style');
   requestAnimationFrame(() => document.body.classList.add('page-ready'));

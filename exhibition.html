@@ -5,6 +5,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>Stop Antizionism | Exhibition Gallery NYC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Source+Sans+3:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+
 <!-- MINIMALIST GALLERY FAVICON -->
 <link href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' fill='%2317171a'/&gt;&lt;rect x='30' y='30' width='40' height='40' fill='%23ffffff'/&gt;&lt;/svg&gt;" rel="icon"/>
 <style>
@@ -457,7 +461,7 @@
         .info-panel {
             display: flex;
             flex-direction: column;
-            gap: 0.95rem;
+            gap: 0.72rem;
             align-self: start;
             position: relative;
             padding-left: 2rem;
@@ -484,22 +488,25 @@
         }
 
 
-        /* HISTORY IS THE INTERPRETIVE FIELD — full-width beneath artwork + catalogue labels. */
+        /* HISTORY — interpretive note beneath the artwork only, matching the frame width. */
         .history-panel {
-            grid-column: 1 / -1;
+            grid-column: 1;
             grid-row: 2;
-            width: min(92%, 1080px);
-            justify-self: center;
-            margin-top: clamp(1.45rem, 2.5vw, 2.3rem);
-            padding: 1.15rem 0 0;
-            background: transparent;
-            border: 0;
-            border-top: 1px solid rgba(255,255,255,0.12);
-            border-radius: 0;
-            box-shadow: none;
+            width: 100%;
+            justify-self: stretch;
+            align-self: start;
+            margin-top: clamp(0.95rem, 1.7vw, 1.35rem);
+            padding: 0.8rem 0.95rem 0.88rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 4px;
+            box-shadow: 0 18px 36px rgba(0,0,0,0.14);
             cursor: default;
             position: relative;
             z-index: 2;
+        }
+        .timeline-art-right .history-panel {
+            grid-column: 2;
         }
 
         .history-panel::before,
@@ -508,18 +515,18 @@
         }
 
         .history-panel h4 {
-            margin: 0 0 0.45rem;
-            font-size: 0.78rem;
-            letter-spacing: 1.8px;
-            color: #d0d0da;
+            margin: 0 0 0.35rem;
+            font-size: 0.76rem;
+            letter-spacing: 1.65px;
+            color: #d8d8e2;
         }
 
         .history-panel .wave-p {
-            max-width: 980px;
+            max-width: none;
             margin: 0;
-            font-size: clamp(1rem, 1.25vw, 1.08rem);
-            line-height: 1.66;
-            color: #f3f3f6;
+            font-size: clamp(0.95rem, 1.08vw, 1rem);
+            line-height: 1.56;
+            color: #f1f1f5;
         }
 
         .history-panel.archive-stagger-block.pop-in:hover,
@@ -530,12 +537,13 @@
         }
 
         @media (max-width: 850px) {
-            .history-panel {
+            .history-panel,
+            .timeline-art-right .history-panel {
                 grid-column: 1;
                 grid-row: auto;
                 width: 100%;
                 margin-top: 0.4rem;
-                padding-top: 1rem;
+                padding: 0.82rem 0.88rem 0.9rem;
             }
         }
 
@@ -571,9 +579,9 @@
 
         /* BLENDED INFO BLOCKS */
         .info-block {
-            margin-top: 0.22rem;
+            margin-top: 0.12rem;
             background: rgba(255, 255, 255, 0.02);
-            padding: 1rem 1.08rem 1.06rem;
+            padding: 0.82rem 0.98rem 0.88rem;
             border-left: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 0 4px 4px 0;
             cursor: pointer;
@@ -627,18 +635,18 @@
         }
 
         .info-block h4 {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #b8b8c8;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.24rem;
         }
 
         .wave-p {
-            font-size: 0.96rem;
-            line-height: 1.6;
+            font-size: 0.94rem;
+            line-height: 1.54;
             color: #f5f5f8;
-            min-height: 2.5rem;
+            min-height: 2.2rem;
         }
 
         /* GALLERY FOOTER STATEMENT LINK */
@@ -1112,6 +1120,160 @@
   .controls-nav{transition:none!important}
 }
 </style>
+
+<style id="final-exhibition-system">
+:root{--museum-sans:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--museum-serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--oxblood:#74262d;--oxblood-soft:rgba(116,38,45,.72)}
+body{font-family:var(--museum-sans);font-optical-sizing:auto}
+.hero-title,.info-title{font-family:var(--museum-serif);font-weight:500;letter-spacing:.005em}
+.info-title{font-size:clamp(1.9rem,2.65vw,2.35rem);line-height:1.04;text-transform:none}
+.hero-title{font-size:clamp(3.25rem,5vw,4.65rem);line-height:.98}
+.info-category,.info-meta,.info-block h4,.history-panel h4,.timeline-node,.chronology-rail,.viewer-toolbar,.provenance-record{font-family:var(--museum-sans)}
+.timeline-node{font-weight:600;letter-spacing:.16em;text-transform:uppercase;font-variant-caps:all-small-caps}
+.info-block h4,.history-panel h4{font-weight:600;letter-spacing:.13em;text-transform:uppercase}
+.info-meta{font-weight:400}
+.info-meta strong{font-weight:600}
+.info-category{font-weight:500;letter-spacing:.12em}
+.wave-p{font-size:clamp(.98rem,1.05vw,1.04rem);line-height:1.56;letter-spacing:.002em}
+
+/* History is a compact interpretive note under the artwork column only. */
+.history-panel{min-height:0!important;padding:.72rem .9rem .78rem!important;margin-top:clamp(.75rem,1.2vw,1rem)!important;border-color:rgba(255,255,255,.045)!important;background:rgba(255,255,255,.015)!important}
+.history-panel .wave-p{font-size:clamp(.94rem,1vw,.99rem);line-height:1.48}
+
+/* The chronology records the visitor's passage: gray future, oxblood completed path. */
+.timeline-section{--timeline-progress:0%;--focus-opacity:.86;--focus-brightness:.94}
+.timeline-section::before{background:rgba(255,255,255,.075)!important}
+.timeline-section::after{content:"";position:absolute;left:50%;top:0;width:1px;height:var(--timeline-progress);transform:translateX(-50%);background:linear-gradient(to bottom,rgba(116,38,45,.18),var(--oxblood-soft));pointer-events:none;z-index:0}
+.timeline-section .exhibition-container{opacity:var(--focus-opacity);filter:brightness(var(--focus-brightness)) saturate(.92);transition:opacity .75s cubic-bezier(.16,1,.3,1),filter .75s ease}
+.timeline-section.timeline-active .exhibition-container{opacity:1;filter:none}
+.timeline-node{position:relative}
+.timeline-node::after{content:"";position:absolute;left:50%;bottom:-.42rem;width:4px;height:4px;border-radius:50%;transform:translateX(-50%) scale(.55);background:transparent;transition:background .6s ease,transform .6s cubic-bezier(.16,1,.3,1),box-shadow .6s ease}
+.timeline-active .timeline-node::after{background:var(--oxblood);transform:translateX(-50%) scale(1);box-shadow:0 0 0 4px rgba(116,38,45,.08)}
+.timeline-active .timeline-node{border-color:rgba(255,255,255,.16)!important;box-shadow:0 12px 30px rgba(0,0,0,.28)!important}
+
+/* Archive is an expandable provenance drawer, not another equal-weight card. */
+.archive-provenance-block{padding:0!important;overflow:visible;background:rgba(255,255,255,.012)!important}
+.archive-provenance-block>h4,.archive-provenance-block>.wave-p{display:none!important}
+.archive-drawer{width:100%;border:0}
+.archive-drawer summary{list-style:none;cursor:pointer;padding:.8rem .95rem .82rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;color:#c6c6d0;font-size:.76rem;letter-spacing:1.4px;text-transform:uppercase;user-select:none}
+.archive-drawer summary::-webkit-details-marker{display:none}
+.archive-drawer summary::after{content:"+";font-size:1rem;font-weight:300;color:rgba(255,255,255,.52);transition:transform .45s cubic-bezier(.16,1,.3,1),color .45s ease}
+.archive-drawer[open] summary::after{transform:rotate(45deg);color:#fff}
+.provenance-record{padding:0 .95rem .95rem;border-top:1px solid rgba(255,255,255,.04);font-size:.82rem;line-height:1.42;color:#cfcfd7}
+.provenance-row{display:grid;grid-template-columns:minmax(6.6rem,.36fr) 1fr;gap:.8rem;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.035)}
+.provenance-row:last-child{border-bottom:0}
+.provenance-key{font-size:.68rem;letter-spacing:1.2px;text-transform:uppercase;color:#83838f}
+.provenance-value{color:#e7e7ed;overflow-wrap:anywhere}
+
+/* Edge chronology: almost absent until the visitor asks for it. */
+.chronology-rail{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:88;display:flex;align-items:stretch;color:#9b9ba6}
+.chronology-current{display:none}
+.chronology-list{display:flex;flex-direction:column;gap:1px;padding:.45rem .38rem .45rem .25rem;background:linear-gradient(to right,rgba(15,15,19,.76),rgba(15,15,19,.08));backdrop-filter:blur(10px);opacity:.22;transform:translateX(calc(-100% + 8px));transition:opacity .45s ease,transform .55s cubic-bezier(.16,1,.3,1)}
+.chronology-rail:hover .chronology-list,.chronology-rail:focus-within .chronology-list{opacity:.96;transform:translateX(0)}
+.chronology-item{appearance:none;border:0;background:none;color:inherit;font:500 .67rem/1 var(--museum-sans);letter-spacing:1.3px;padding:.34rem .42rem .34rem .65rem;text-align:left;cursor:pointer;position:relative;white-space:nowrap}
+.chronology-item::before{content:"";position:absolute;left:.1rem;top:50%;width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.18);transform:translateY(-50%);transition:background .4s ease,transform .4s ease}
+.chronology-item.is-active{color:#fff}
+.chronology-item.is-active::before{background:var(--oxblood);transform:translateY(-50%) scale(1.25)}
+
+/* Full-screen object viewer. It uses the original source image, then lets the visitor inspect it. */
+#lightbox{padding:0!important;background:rgba(7,7,10,.985)!important;backdrop-filter:blur(18px)!important;overflow:hidden}
+#object-viewer-stage{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;touch-action:none;cursor:grab}
+#object-viewer-stage.is-dragging{cursor:grabbing}
+#lightbox-img{max-width:92vw!important;max-height:88svh!important;width:auto;height:auto;border:0!important;box-shadow:0 28px 90px rgba(0,0,0,.78)!important;transform-origin:center center;transition:none!important;will-change:transform;user-select:none;-webkit-user-drag:none}
+#lightbox.active #lightbox-img{transform:none}
+#lightbox-close{z-index:5;top:max(.7rem,env(safe-area-inset-top))!important;right:max(.8rem,env(safe-area-inset-right))!important;width:42px!important;height:42px!important;font:300 1.8rem/1 var(--museum-sans)!important;border:1px solid rgba(255,255,255,.1)!important;background:rgba(10,10,14,.42)!important;backdrop-filter:blur(12px);border-radius:50%;display:grid;place-items:center;padding:0!important}
+.viewer-toolbar{position:absolute;z-index:5;left:50%;bottom:max(1rem,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;align-items:center;gap:.2rem;padding:.28rem;background:rgba(10,10,14,.52);border:1px solid rgba(255,255,255,.08);border-radius:999px;backdrop-filter:blur(14px)}
+.viewer-tool{appearance:none;border:0;background:transparent;color:#d8d8e0;width:36px;height:34px;border-radius:999px;font:400 1rem/1 var(--museum-sans);cursor:pointer}
+.viewer-tool:hover,.viewer-tool:focus-visible{background:rgba(255,255,255,.07);color:#fff}
+.viewer-provenance{position:absolute;z-index:5;left:max(1rem,env(safe-area-inset-left));bottom:max(1rem,env(safe-area-inset-bottom));width:min(28rem,calc(100vw - 2rem));color:#d7d7de}
+.viewer-provenance summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:.6rem;padding:.48rem .7rem;border:1px solid rgba(255,255,255,.08);background:rgba(10,10,14,.48);backdrop-filter:blur(14px);border-radius:2px;font:.66rem/1 var(--museum-sans);letter-spacing:1.5px;text-transform:uppercase}
+.viewer-provenance summary::-webkit-details-marker{display:none}
+.viewer-provenance-panel{margin-top:.45rem;padding:.85rem .95rem;background:rgba(10,10,14,.88);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(16px);font:.82rem/1.45 var(--museum-sans)}
+#lightbox-caption{position:absolute;z-index:4;top:max(1.1rem,env(safe-area-inset-top));left:50%;transform:translateX(-50%);margin:0!important;max-width:min(58vw,760px);font-family:var(--museum-serif);font-size:clamp(1rem,1.6vw,1.35rem)!important;letter-spacing:.01em!important;text-transform:none!important;color:rgba(255,255,255,.78)!important;pointer-events:none}
+#lightbox-caption{display:flex;flex-direction:column;align-items:center;gap:.2rem;text-align:center}
+.viewer-caption-title{font-family:var(--museum-serif)}
+.viewer-caption-date{font:500 .62rem/1.2 var(--museum-sans);letter-spacing:1.45px;text-transform:uppercase;color:rgba(255,255,255,.48)}
+
+/* Mobile is deliberately recomposed rather than a squeezed desktop installation. */
+@media(max-width:850px){
+  .exhibition-section{padding:4.35rem .9rem 5.2rem!important;min-height:auto!important}
+  .exhibition-container{display:flex!important;flex-direction:column!important;gap:1rem!important;padding:0!important}
+  .art-box{order:1;width:100%;margin:0!important}
+  .info-panel,.timeline-art-right .info-panel{order:2;width:100%;padding:0!important;gap:.68rem!important}
+  .history-panel,.timeline-art-right .history-panel{order:3;width:100%!important;margin-top:.25rem!important;padding:.72rem .82rem .78rem!important}
+  .museum-frame{min-height:0!important;max-height:70svh!important}
+  .museum-frame>.responsive-art-picture{max-height:70svh}
+  .museum-frame img.gallery-image{max-height:70svh!important;max-width:100%!important;width:auto!important}
+  .museum-frame img.gallery-image.quality-source-limited{max-width:min(92%,var(--native-display-max,680px))!important}
+  .info-category{margin-top:.35rem}
+  .info-title{font-size:clamp(2rem,9vw,2.75rem);line-height:1}
+  .info-meta{font-size:.9rem}
+  .info-block{padding:.78rem .88rem .82rem!important}
+  .timeline-section::before,.timeline-section::after,.timeline-section .exhibition-container::after,.timeline-marker{display:none!important}
+  .timeline-section .exhibition-container{opacity:1!important;filter:none!important}
+  .chronology-rail{left:max(.65rem,env(safe-area-inset-left));top:max(.72rem,env(safe-area-inset-top));bottom:auto;transform:none;display:block;z-index:96}
+  .chronology-current{display:inline-flex;align-items:center;justify-content:center;min-width:3.8rem;height:34px;padding:0 .72rem;border:1px solid rgba(255,255,255,.1);background:rgba(12,12,16,.68);backdrop-filter:blur(14px);color:#e7e7ed;border-radius:999px;font:500 .68rem/1 var(--museum-sans);letter-spacing:1.2px}
+  .chronology-current::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--oxblood);margin-right:.45rem}
+  [dir="rtl"] .chronology-current::before{margin-right:0;margin-left:.45rem}
+  .chronology-list{position:absolute;left:0;top:2.65rem;bottom:auto;max-height:58svh;overflow:auto;padding:.4rem;background:rgba(10,10,14,.94);border:1px solid rgba(255,255,255,.08);border-radius:4px;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .3s ease,transform .35s cubic-bezier(.16,1,.3,1)}
+  .chronology-rail.is-open .chronology-list{opacity:1;pointer-events:auto;transform:none}
+  .chronology-item{min-width:5.3rem;padding:.5rem .6rem .5rem .8rem}
+  .viewer-provenance{bottom:max(4.4rem,calc(env(safe-area-inset-bottom) + 4.1rem));width:calc(100vw - 2rem)}
+  .viewer-toolbar{bottom:max(.8rem,env(safe-area-inset-bottom))}
+  #lightbox-caption{top:max(.9rem,env(safe-area-inset-top));max-width:66vw;font-size:1rem!important}
+}
+
+@media(prefers-reduced-motion:reduce){.timeline-section .exhibition-container,.chronology-list,.timeline-node::after{transition:none!important}}
+</style>
+
+<style id="history-side-override">
+/* Desktop: keep History in the text column and prevent it from falling below the artwork frame. */
+@media (min-width: 851px) {
+  .info-panel {
+    height: var(--art-height, auto) !important;
+    max-height: var(--art-height, none) !important;
+    overflow: hidden;
+  }
+  .history-panel,
+  .timeline-art-right .history-panel {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: auto !important;
+    margin-top: 0.12rem !important;
+    padding: 0.82rem 0.98rem 0.88rem !important;
+    background: rgba(255,255,255,0.02) !important;
+    border: 0 !important;
+    border-left: 1px solid rgba(255,255,255,0.06) !important;
+    border-radius: 0 4px 4px 0 !important;
+    box-shadow: none !important;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  .history-panel.archive-stagger-block.pop-in:hover,
+  .history-panel.archive-stagger-block.pop-in:active {
+    transform: translateY(-7px) scale(1.012) !important;
+    border-left-color: rgba(255,255,255,0.2) !important;
+    background: rgba(255,255,255,0.045) !important;
+    box-shadow: 0 18px 34px rgba(0,0,0,0.16) !important;
+  }
+  .timeline-art-right .history-panel {
+    border-left: 0 !important;
+    border-right: 1px solid rgba(255,255,255,0.06) !important;
+    border-radius: 4px 0 0 4px !important;
+  }
+  .history-panel h4 {
+    margin-bottom: 0.24rem !important;
+  }
+  .history-panel .wave-p {
+    font-size: clamp(0.92rem,0.98vw,0.98rem) !important;
+    line-height: 1.5 !important;
+  }
+}
+@media (max-width: 850px) {
+  .info-panel {height:auto !important;max-height:none !important;overflow:visible !important;}
+}
+</style>
+
 </head>
 <body data-antizionism-timeline="selected-art-2026-08-15">
 <!-- LAZY GLIDING AMBIENT LIGHT OVERLAY -->
@@ -1135,7 +1297,7 @@
 <div aria-hidden="true" aria-label="Enlarged artwork" aria-modal="true" id="lightbox" role="dialog">
 <button aria-label="Close enlarged artwork" id="lightbox-close" type="button">×</button>
 <img alt="Enlarged Artwork" id="lightbox-img" src=""/>
-<div data-en="Click anywhere to close" data-he="לחץ באיזשהו מקום לסגירה" data-ru="Нажмите в любом месте, чтобы закрыть" id="lightbox-caption">Click anywhere to close</div>
+<div id="lightbox-caption"></div>
 </div>
 <main id="gallery">
 <!-- HEADER / HERO SECTION -->
@@ -1145,7 +1307,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="bundists-560.webp 560w, bundists-960.webp 960w" type="image/webp"/><img alt="Bund Archival Image" class="gallery-image quality-standard" data-native-height="828" data-native-width="960" decoding="async" fetchpriority="high" height="828" loading="eager" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\' viewBox=\'0 0 600 400\'&gt;&lt;rect width=\'600\' height=\'400\' fill=\'%231d1d21\'/&gt;&lt;text x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23aaa\' font-family=\'sans-serif\' font-size=\'20\'&gt;BUND ARCHIVAL EXHIBIT IMAGE&lt;/text&gt;&lt;/svg&gt;';" sizes="(max-width: 850px) 94vw, 46vw" src="bundists.jpg" width="960"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="hero-header-text">
 <div class="hero-subtitle wave-text" data-en="First-of-its-Kind Art Exhibition" data-he="תערוכת אמנות ראשונה מסוגה" data-ru="Первая в своем роде художественная выставка">First-of-its-Kind Art Exhibition</div>
@@ -1161,7 +1323,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-dreyfus-1895-720.webp 720w, timeline-dreyfus-1895-1280.webp 1280w" type="image/webp"/><img alt="The Traitor: Degradation of Alfred Dreyfus, Le Petit Journal, 13 January 1895" class="gallery-image quality-hires" data-native-height="1453" data-native-width="1280" decoding="async" fetchpriority="low" height="1453" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-dreyfus-1895.jpg" width="1280"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="Dreyfus Affair" data-he="פרשת דרייפוס" data-ru="Дело Дрейфуса">Dreyfus Affair</div>
@@ -1215,7 +1377,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-kishinev-1904-560.webp 560w, timeline-kishinev-1904-960.webp 960w" type="image/webp"/><img alt="Herman S. Shapiro, Kishinev Massacre Elegy, 1904" class="gallery-image quality-standard" data-native-height="1264" data-native-width="960" decoding="async" fetchpriority="low" height="1264" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-kishinev-1904.jpg" width="960"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="Kishinev Pogrom" data-he="פוגרום קישינב" data-ru="Кишинёвский погром">Kishinev Pogrom</div>
@@ -1244,7 +1406,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-stalin-national-question-1935-560.webp 560w, timeline-stalin-national-question-1935-960.webp 960w" type="image/webp"/><img alt="Joseph Stalin, Marxism and the National and Colonial Question, 1935 dust jacket" class="gallery-image quality-standard" data-native-height="1305" data-native-width="960" decoding="async" fetchpriority="low" height="1305" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-stalin-national-question-1935.jpg" width="960"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="1913 — Marxism and the National Question" data-he="1913 — מרקסיזם והשאלה הלאומית" data-ru="1913 — Марксизм и национальный вопрос">1913 — Marxism and the National Question</div>
@@ -1273,7 +1435,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-comintern-theses-1920-500.webp 500w" type="image/webp"/><img alt="Theses Presented to the Second World Congress of the Communist International, 1920 cover" class="gallery-image quality-source-limited" data-native-height="737" data-native-width="500" decoding="async" fetchpriority="low" height="737" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-comintern-theses-1920.jpg" width="500"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="1920 — Second Comintern Congress" data-he="1920 — הקונגרס השני של הקומינטרן" data-ru="1920 — Второй конгресс Коминтерна">1920 — Second Comintern Congress</div>
@@ -1302,7 +1464,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-anti-cheder-yiddish-692.webp 692w" type="image/webp"/><img alt="Soviet Yiddish propaganda poster contrasting the cheder with the Soviet school, circa 1920 to 1932" class="gallery-image quality-standard" data-native-height="1011" data-native-width="692" decoding="async" fetchpriority="low" height="1011" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-anti-cheder-yiddish.jpg" width="692"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="1920–32 — Sovietization of Jewish Life" data-he="1920–1932 — סובייטיזציה של החיים היהודיים" data-ru="1920–1932 — Советизация еврейской жизни">1920–32 — Sovietization of Jewish Life</div>
@@ -1331,7 +1493,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antizionism-5-560.webp 560w, antizionism-5-774.webp 774w" type="image/webp"/><img alt="Falastin newspaper anti-Zionist crocodile cartoon, 18 June 1936" class="gallery-image quality-standard" data-native-height="774" data-native-width="774" decoding="async" fetchpriority="low" height="774" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antizionism-5.jpg" width="774"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="1936 — Zionism and Imperial Power" data-he="1936 — ציונות וכוח אימפריאלי" data-ru="1936 — Сионизм и имперская власть">1936 — Zionism and Imperial Power</div>
@@ -1360,7 +1522,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-husseini-hitler-1941-560.webp 560w, timeline-husseini-hitler-1941-792.webp 792w" type="image/webp"/><img alt="Amin al-Husseini meeting Adolf Hitler, 28 November 1941" class="gallery-image quality-standard" data-native-height="600" data-native-width="792" decoding="async" fetchpriority="low" height="600" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-husseini-hitler-1941.jpg" width="792"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="1941 — Nazi–Arab Collaboration" data-he="1941 — שיתוף פעולה נאצי–ערבי" data-ru="1941 — Нацистско-арабское сотрудничество">1941 — Nazi–Arab Collaboration</div>
@@ -1389,7 +1551,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-barid-al-sharq-657.webp 657w" type="image/webp"/><img alt="Barid al-Sharq Arabic illustrated periodical published in Berlin during the Second World War" class="gallery-image quality-standard" data-native-height="825" data-native-width="657" decoding="async" fetchpriority="low" height="825" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-barid-al-sharq.jpg" width="657"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="1941–44 — Nazi Propaganda in Arabic" data-he="1941–1944 — תעמולה נאצית בערבית" data-ru="1941–1944 — Нацистская пропаганда на арабском языке">1941–44 — Nazi Propaganda in Arabic</div>
@@ -1418,7 +1580,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-german-arab-leaflet-wwii-720.webp 720w, timeline-german-arab-leaflet-wwii-1132.webp 1132w" type="image/webp"/><img alt="German Second World War propaganda leaflet addressed to Arab soldiers in Arabic and French" class="gallery-image quality-hires" data-native-height="768" data-native-width="1132" decoding="async" fetchpriority="low" height="768" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-german-arab-leaflet-wwii.jpg" width="1132"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="1941–45 — German Propaganda to Arab Soldiers" data-he="1941–1945 — תעמולה גרמנית לחיילים ערבים" data-ru="1941–1945 — Немецкая пропаганда для арабских солдат">1941–45 — German Propaganda to Arab Soldiers</div>
@@ -1447,7 +1609,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-peretz-markish-1949-400.webp 400w" type="image/webp"/><img alt="Peretz Markish MGB prison photograph after his arrest in January 1949" class="gallery-image quality-source-limited" data-native-height="276" data-native-width="400" decoding="async" fetchpriority="low" height="276" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-peretz-markish-1949.jpg" width="400"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="1948–52 — Jewish Anti-Fascist Committee" data-he="1948–1952 — הוועד היהודי האנטי־פשיסטי" data-ru="1948–1952 — Еврейский антифашистский комитет">1948–52 — Jewish Anti-Fascist Committee</div>
@@ -1501,7 +1663,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-timashuk-1953-597.webp 597w" type="image/webp"/><img alt="Soviet decree awarding Lidiya Timashuk the Order of Lenin, 20 January 1953" class="gallery-image quality-source-limited" data-native-height="800" data-native-width="597" decoding="async" fetchpriority="low" height="800" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-timashuk-1953.png" width="597"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="Doctors' Plot" data-he="עלילת הרופאים" data-ru="Дело врачей">Doctors' Plot</div>
@@ -1580,7 +1742,7 @@
 <span class="museum-frame">
 <picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-unga-3379-1975-720.webp 720w, timeline-unga-3379-1975-1600.webp 1600w" type="image/webp"/><img alt="Thousands demonstrating against United Nations General Assembly Resolution 3379 in 1975" class="gallery-image quality-hires" data-native-height="1194" data-native-width="1920" decoding="async" fetchpriority="low" height="1194" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-unga-3379-1975.jpg" width="1920"/></picture>
 </span>
-<span class="click-hint" data-en="Click to enlarge" data-he="לחץ להגדלה" data-ru="Увеличить">Click to enlarge</span>
+<span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="1975 — UN Resolution 3379" data-he="1975 — החלטת האו״ם 3379" data-ru="1975 — Резолюция ООН 3379">1975 — UN Resolution 3379</div>
