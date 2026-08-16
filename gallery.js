@@ -72,6 +72,13 @@ function triggerPanelWave(container) {
   });
 }
 
+function triggerWaveWithin(container) {
+  if (!container) return;
+  container.querySelectorAll('.wave-text').forEach(element => {
+    waveText(element, textFor(element));
+  });
+}
+
 /* THE ARCHIVE — exactly four animated object labels per image.
    Existing curatorial copy is preserved:
    What the Image is About -> Object
@@ -158,25 +165,25 @@ function installArchiveStaggerStyles() {
   style.textContent = `
     .info-panel > .info-block.archive-stagger-block {
       opacity: 0;
-      transform: translateY(44px) scale(.965);
-      filter: blur(2.4px);
+      transform: translate(var(--archive-entry-x, 0px), 96px) scale(.94);
+      filter: blur(5px);
       transition:
-        opacity 1.55s cubic-bezier(.16,1,.3,1),
-        transform 1.95s cubic-bezier(.16,1,.3,1),
-        filter 1.65s cubic-bezier(.16,1,.3,1),
-        border-color 1.5s ease,
-        background 1.5s ease,
-        box-shadow 1.5s ease;
+        opacity 1.25s cubic-bezier(.16,1,.3,1),
+        transform 1.55s cubic-bezier(.16,1,.3,1),
+        filter 1.35s cubic-bezier(.16,1,.3,1),
+        border-color 1.2s ease,
+        background 1.2s ease,
+        box-shadow 1.2s ease;
       will-change: opacity, transform, filter;
     }
     .info-panel > .info-block.archive-stagger-block.pop-in {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translate(0, 0) scale(1);
       filter: blur(0);
     }
     .info-panel > .info-block.archive-stagger-block.pop-in:hover,
     .info-panel > .info-block.archive-stagger-block.pop-in:active {
-      transform: translateY(-8px) scale(1.025);
+      transform: translateY(-14px) scale(1.012);
     }
     @media (prefers-reduced-motion: reduce) {
       .info-panel > .info-block.archive-stagger-block {
@@ -327,8 +334,8 @@ function setupAmbientLight() {
 /* SLOW CURATORIAL STAGGER — each gallery section behaves as one composed reveal.
    As the visitor scrolls the artwork into view, the image settles first, then
    Object -> Creator -> History -> Archive rise out in sequence. */
-const ARCHIVE_STAGGER_START = 520;
-const ARCHIVE_STAGGER_STEP = 560;
+const ARCHIVE_STAGGER_START = 340;
+const ARCHIVE_STAGGER_STEP = 240;
 
 function revealArchiveSection(section) {
   if (!section || section.dataset.archiveRevealed === '1') return;
@@ -336,21 +343,31 @@ function revealArchiveSection(section) {
 
   const artwork = section.querySelector('.art-box');
   const panel = section.querySelector('.info-panel');
+  const headerWaveTargets = [
+    section.querySelector('.info-category'),
+    section.querySelector('.info-title'),
+    ...section.querySelectorAll('.info-meta .wave-text'),
+    section.querySelector('.timeline-node')
+  ].filter(Boolean);
   const blocks = [...section.querySelectorAll('.info-panel > .info-block')];
 
-  /* The artwork is the visual anchor: let it arrive before the wall labels. */
+  /* The artwork anchors the section, then the wall text settles in behind it. */
   artwork?.classList.add('pop-in');
 
   if (panel && !panel.classList.contains('visible')) {
     panel.classList.add('visible');
-    triggerPanelWave(section);
   }
+
+  headerWaveTargets.forEach(element => {
+    waveText(element, textFor(element));
+  });
 
   blocks.forEach((block, index) => {
     block.classList.add('archive-stagger-block');
     block.style.setProperty('--archive-stagger-order', String(index));
     window.setTimeout(() => {
       block.classList.add('pop-in');
+      triggerWaveWithin(block);
     }, ARCHIVE_STAGGER_START + (index * ARCHIVE_STAGGER_STEP));
   });
 }
@@ -365,6 +382,67 @@ function setupRevealObserver() {
   }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
 
   document.querySelectorAll('.exhibition-section').forEach(section => observer.observe(section));
+}
+
+
+function timelineYearFor(section) {
+  const category = section.querySelector('.info-category');
+  const categoryText = category?.getAttribute('data-en') || category?.textContent || '';
+  const categoryYear = categoryText.match(/(?:18|19|20)\d{2}(?:\s*[–-]\s*\d{2,4})?/);
+  if (categoryYear) return categoryYear[0].replace(/\s+/g, '');
+
+  const dateText = [...section.querySelectorAll('.info-meta .wave-text')]
+    .map(el => el.getAttribute('data-en') || el.textContent || '')
+    .join(' ');
+  const dateYear = dateText.match(/(?:18|19|20)\d{2}(?:\s*[–-]\s*\d{2,4})?/);
+  return dateYear ? dateYear[0].replace(/\s+/g, '') : '';
+}
+
+function setupVerticalMuseumTimeline() {
+  if (!/(?:^|\/)exhibition\.html$/i.test(location.pathname)) return;
+
+  const sections = [...document.querySelectorAll('main#gallery > .exhibition-section')];
+  sections.forEach((section, index) => {
+    const container = section.querySelector('.exhibition-container');
+    const artwork = container?.querySelector(':scope > .art-box');
+    const panel = container?.querySelector(':scope > .info-panel');
+    if (!container || !artwork || !panel) return;
+
+    section.classList.add('timeline-section');
+    section.classList.add(index % 2 === 0 ? 'timeline-art-left' : 'timeline-art-right');
+
+    const year = timelineYearFor(section);
+    if (year) section.dataset.timelineYear = year;
+
+    if (!container.querySelector(':scope > .timeline-marker')) {
+      const marker = document.createElement('div');
+      marker.className = 'timeline-marker';
+      marker.setAttribute('aria-hidden', 'true');
+
+      const node = document.createElement('span');
+      node.className = 'timeline-node wave-text';
+      node.setAttribute('data-en', year);
+      node.setAttribute('data-he', year);
+      node.setAttribute('data-ru', year);
+      node.textContent = year;
+      marker.appendChild(node);
+      container.appendChild(marker);
+    }
+  });
+}
+
+function setupTimelineActiveObserver() {
+  if (!/(?:^|\/)exhibition\.html$/i.test(location.pathname)) return;
+  const sections = [...document.querySelectorAll('.exhibition-section.timeline-section')];
+  if (!sections.length) return;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('timeline-active', entry.isIntersecting);
+    });
+  }, { threshold: 0, rootMargin: '-38% 0px -38% 0px' });
+
+  sections.forEach(section => observer.observe(section));
 }
 
 function updateAudioBtnText() {
@@ -566,11 +644,13 @@ addEventListener('DOMContentLoaded', () => {
   installArchiveStaggerStyles();
   populateSelectedAntizionismWorks();
   normalizeArchivePanels();
+  setupVerticalMuseumTimeline();
   setupAmbientLight();
   setupControls();
   setupLightbox();
   setLanguage(currentLang, false);
   setupRevealObserver();
+  setupTimelineActiveObserver();
 
   const heroSection = document.querySelector('.hero-section');
   if (heroSection) triggerPanelWave(heroSection);
