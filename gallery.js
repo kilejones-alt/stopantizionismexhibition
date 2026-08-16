@@ -163,7 +163,8 @@ function installArchiveStaggerStyles() {
   const style = document.createElement('style');
   style.id = 'archive-stagger-styles';
   style.textContent = `
-    .info-panel > .info-block.archive-stagger-block {
+    .info-panel > .info-block.archive-stagger-block,
+    .history-panel.archive-stagger-block {
       opacity: 0;
       transform: translate(var(--archive-entry-x, 0px), 96px) scale(.94);
       filter: blur(5px);
@@ -176,17 +177,21 @@ function installArchiveStaggerStyles() {
         box-shadow 1.2s ease;
       will-change: opacity, transform, filter;
     }
-    .info-panel > .info-block.archive-stagger-block.pop-in {
+    .info-panel > .info-block.archive-stagger-block.pop-in,
+    .history-panel.archive-stagger-block.pop-in {
       opacity: 1;
       transform: translate(0, 0) scale(1);
       filter: blur(0);
     }
     .info-panel > .info-block.archive-stagger-block.pop-in:hover,
-    .info-panel > .info-block.archive-stagger-block.pop-in:active {
+    .info-panel > .info-block.archive-stagger-block.pop-in:active,
+    .history-panel.archive-stagger-block.pop-in:hover,
+    .history-panel.archive-stagger-block.pop-in:active {
       transform: translateY(-14px) scale(1.012);
     }
     @media (prefers-reduced-motion: reduce) {
-      .info-panel > .info-block.archive-stagger-block {
+      .info-panel > .info-block.archive-stagger-block,
+      .history-panel.archive-stagger-block {
         opacity: 1 !important;
         transform: none !important;
         filter: none !important;
@@ -219,12 +224,17 @@ function normalizeArchivePanels() {
       archiveBlock.before(historical);
     }
 
-    /* Put the four fields in the requested museum order without discarding any existing copy. */
+    /* Catalogue fields stay beside the artwork; History becomes the interpretive field below both columns. */
     const historical = panel.querySelector('.archive-historical-setting');
     panel.appendChild(objectBlock);
     panel.appendChild(creatorBlock);
-    if (historical) panel.appendChild(historical);
     panel.appendChild(archiveBlock);
+
+    const container = section.querySelector('.exhibition-container');
+    if (historical && container) {
+      historical.classList.add('history-panel');
+      container.appendChild(historical);
+    }
   });
 }
 
@@ -350,8 +360,9 @@ function revealArchiveSection(section) {
     section.querySelector('.timeline-node')
   ].filter(Boolean);
   const blocks = [...section.querySelectorAll('.info-panel > .info-block')];
+  const history = section.querySelector('.history-panel');
 
-  /* The artwork anchors the section, then the wall text settles in behind it. */
+  /* The artwork anchors the section, then catalogue labels, then History last. */
   artwork?.classList.add('pop-in');
 
   if (panel && !panel.classList.contains('visible')) {
@@ -370,6 +381,16 @@ function revealArchiveSection(section) {
       triggerWaveWithin(block);
     }, ARCHIVE_STAGGER_START + (index * ARCHIVE_STAGGER_STEP));
   });
+
+  if (history) {
+    const historyIndex = blocks.length;
+    history.classList.add('archive-stagger-block');
+    history.style.setProperty('--archive-stagger-order', String(historyIndex));
+    window.setTimeout(() => {
+      history.classList.add('pop-in');
+      triggerWaveWithin(history);
+    }, ARCHIVE_STAGGER_START + (historyIndex * ARCHIVE_STAGGER_STEP));
+  }
 }
 
 function replayArtwork(artwork) {
@@ -391,6 +412,7 @@ function replayArchiveWords(section) {
     section.querySelector('.timeline-node')
   ].filter(Boolean);
   const blocks = [...section.querySelectorAll('.info-panel > .info-block')];
+  const history = section.querySelector('.history-panel');
 
   /* Rebuild the word spans each time the visitor returns to this exhibit so the
      sentence assembly is not a one-time effect. Keep the boxes themselves in
@@ -402,6 +424,9 @@ function replayArchiveWords(section) {
   blocks.forEach((block, index) => {
     window.setTimeout(() => triggerWaveWithin(block), 180 + (index * 150));
   });
+  if (history) {
+    window.setTimeout(() => triggerWaveWithin(history), 180 + (blocks.length * 150));
+  }
 }
 
 function setupRevealObserver() {
@@ -485,11 +510,21 @@ function timelineYearFor(section) {
     .map(el => el.getAttribute('data-en') || el.textContent || '')
     .join(' ');
   const dateYear = dateText.match(/(?:18|19|20)\d{2}(?:\s*[–-]\s*\d{2,4})?/);
-  return dateYear ? dateYear[0].replace(/\s+/g, '') : '';
+  if (dateYear) return dateYear[0].replace(/\s+/g, '');
+
+  /* The two shorter era galleries are still being curated. Until final dates
+     replace their preliminary metadata, use the existing chapter numeral as
+     the restrained spine marker rather than inventing a date. */
+  const chapter = categoryText.match(/Chapter\s+([IVX]+)/i);
+  return chapter ? chapter[1].toUpperCase() : '';
+}
+
+function isEraGalleryPage() {
+  return /(?:^|\/)(?:exhibition|antijudaism|antisemitism)\.html$/i.test(location.pathname);
 }
 
 function setupVerticalMuseumTimeline() {
-  if (!/(?:^|\/)exhibition\.html$/i.test(location.pathname)) return;
+  if (!isEraGalleryPage()) return;
 
   const sections = [...document.querySelectorAll('main#gallery > .exhibition-section')];
   sections.forEach((section, index) => {
@@ -522,7 +557,7 @@ function setupVerticalMuseumTimeline() {
 }
 
 function setupTimelineActiveObserver() {
-  if (!/(?:^|\/)exhibition\.html$/i.test(location.pathname)) return;
+  if (!isEraGalleryPage()) return;
   const sections = [...document.querySelectorAll('.exhibition-section.timeline-section')];
   if (!sections.length) return;
 
@@ -684,6 +719,53 @@ function resetRestoredPage() {
   document.querySelectorAll('[aria-busy="true"]').forEach(element => element.removeAttribute('aria-busy'));
 }
 
+
+
+function setupGalleryImagePolish() {
+  document.querySelectorAll('.museum-frame img').forEach(image => {
+    image.classList.add('gallery-image');
+    const declaredWidth = Number.parseInt(image.dataset.nativeWidth || image.getAttribute('width') || '0', 10);
+    const classify = () => {
+      const width = declaredWidth || image.naturalWidth || 0;
+      image.classList.remove('quality-source-limited','quality-standard','quality-hires');
+      if (width && width < 650) {
+        image.classList.add('quality-source-limited');
+        const nativeDisplay = Math.min(720, Math.max(width, Math.round(width * 1.55)));
+        image.style.setProperty('--native-display-max', `${nativeDisplay}px`);
+      } else if (width && width < 1000) {
+        image.classList.add('quality-standard');
+      } else {
+        image.classList.add('quality-hires');
+      }
+    };
+    const reveal = () => {
+      classify();
+      requestAnimationFrame(() => image.classList.add('is-loaded'));
+    };
+    if (image.complete && image.naturalWidth) reveal();
+    else image.addEventListener('load', reveal, { once: true });
+  });
+}
+
+function setupGalleryChrome() {
+  const nav = document.querySelector('.controls-nav');
+  if (!nav) return;
+  let settleTimer = 0;
+  const updateQuietState = () => {
+    nav.classList.toggle('chrome-quiet', window.scrollY > 90);
+  };
+  const onScroll = () => {
+    updateQuietState();
+    if (window.scrollY > 90) nav.classList.add('chrome-moving');
+    window.clearTimeout(settleTimer);
+    settleTimer = window.setTimeout(() => nav.classList.remove('chrome-moving'), 320);
+  };
+  updateQuietState();
+  addEventListener('scroll', onScroll, { passive: true });
+  nav.addEventListener('pointerenter', () => nav.classList.remove('chrome-moving'));
+  nav.addEventListener('focusin', () => nav.classList.remove('chrome-moving'));
+}
+
 function setupControls() {
   audioBtn?.addEventListener('click', toggleAudio);
   ['en', 'he', 'ru'].forEach(code => {
@@ -736,6 +818,8 @@ addEventListener('DOMContentLoaded', () => {
   normalizeArchivePanels();
   setupVerticalMuseumTimeline();
   setupAmbientLight();
+  setupGalleryImagePolish();
+  setupGalleryChrome();
   setupControls();
   setupLightbox();
   setLanguage(currentLang, false);

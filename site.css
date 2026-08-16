@@ -353,3 +353,20 @@ body.page-ready .site-brand-link:hover .site-brand{opacity:.98;filter:grayscale(
 .home-page .era-card.antizionism .era-image-wrap{padding:0!important;background:#0d0d10!important;}
 .home-page .era-card.antizionism .era-image{width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;object-position:50% 50%!important;transform:none!important;}
 
+
+
+/* AWARD HOME IMAGE PIPELINE — soft resolve without changing the selected door art. */
+.era-image-wrap>.responsive-art-picture{display:block;width:100%;height:100%}
+.era-image-wrap>.responsive-art-picture>.era-image{width:100%;height:100%}
+.home-page .era-image.door-source-image{
+  opacity:.08;
+  filter:blur(7px) brightness(.9) contrast(1.02);
+  transition:opacity .9s cubic-bezier(.16,1,.3,1),filter 1.25s ease!important;
+  animation:doorImageFailsafe .65s 3s forwards;
+}
+.home-page .era-image.door-source-image.is-loaded{
+  opacity:1;
+  filter:brightness(1) contrast(1.05);
+}
+@keyframes doorImageFailsafe{to{opacity:1;filter:brightness(1) contrast(1.05)}}
+@media(prefers-reduced-motion:reduce){.home-page .era-image.door-source-image{opacity:1!important;filter:brightness(1) contrast(1.05)!important;animation:none!important}}

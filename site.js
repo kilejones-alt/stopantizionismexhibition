@@ -379,6 +379,16 @@ function setupPageTransitions() {
   });
 }
 
+
+
+function setupDoorImageResolve() {
+  document.querySelectorAll('.era-image').forEach(image => {
+    const reveal = () => requestAnimationFrame(() => image.classList.add('is-loaded'));
+    if (image.complete && image.naturalWidth) reveal();
+    else image.addEventListener('load', reveal, { once: true });
+  });
+}
+
 function resetRestoredPage() {
   doorTransitionActive = false;
   document.body.classList.remove('door-transitioning', 'page-leaving');
@@ -397,6 +407,7 @@ addEventListener('DOMContentLoaded', () => {
   setLanguage(currentLang);
   document.querySelectorAll('.era-card').forEach(element => revealObserver.observe(element));
   setupAudio();
+  setupDoorImageResolve();
   ['en','he','ru'].forEach(code => document.getElementById('btn-' + code)?.addEventListener('click', () => setLanguage(code)));
   setupPageTransitions();
   requestAnimationFrame(() => requestAnimationFrame(() => {
