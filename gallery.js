@@ -372,16 +372,106 @@ function revealArchiveSection(section) {
   });
 }
 
+function replayArtwork(artwork) {
+  if (!artwork) return;
+  artwork.classList.add('pop-in');
+  artwork.classList.remove('art-reenter');
+  void artwork.offsetWidth;
+  artwork.classList.add('art-reenter', 'art-in-view');
+  window.setTimeout(() => artwork.classList.remove('art-reenter'), 950);
+}
+
+function replayArchiveWords(section) {
+  if (!section || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const headerWaveTargets = [
+    section.querySelector('.info-category'),
+    section.querySelector('.info-title'),
+    ...section.querySelectorAll('.info-meta .wave-text'),
+    section.querySelector('.timeline-node')
+  ].filter(Boolean);
+  const blocks = [...section.querySelectorAll('.info-panel > .info-block')];
+
+  /* Rebuild the word spans each time the visitor returns to this exhibit so the
+     sentence assembly is not a one-time effect. Keep the boxes themselves in
+     place; only the typography performs again. */
+  headerWaveTargets.forEach((element, index) => {
+    window.setTimeout(() => waveText(element, textFor(element)), index * 55);
+  });
+
+  blocks.forEach((block, index) => {
+    window.setTimeout(() => triggerWaveWithin(block), 180 + (index * 150));
+  });
+}
+
 function setupRevealObserver() {
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      revealArchiveSection(entry.target);
-      observer.unobserve(entry.target);
+      const section = entry.target;
+
+      const artwork = section.querySelector('.art-box');
+
+      if (!entry.isIntersecting) {
+        section.dataset.archiveInView = '0';
+        artwork?.classList.remove('art-in-view');
+        return;
+      }
+
+      /* IntersectionObserver fires for entrances from either direction. Leaving
+         the section arms both the typography and artwork so scrolling up or down
+         through the same exhibit replays the complete gallery movement. */
+      if (section.dataset.archiveInView === '1') return;
+      section.dataset.archiveInView = '1';
+
+      if (section.dataset.archiveRevealed !== '1') {
+        revealArchiveSection(section);
+        artwork?.classList.add('art-in-view');
+      } else {
+        replayArtwork(artwork);
+        replayArchiveWords(section);
+      }
     });
   }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
 
   document.querySelectorAll('.exhibition-section').forEach(section => observer.observe(section));
+}
+
+
+function setupHeroReplayObserver() {
+  const hero = document.querySelector('.hero-section');
+  if (!hero) return;
+  const artwork = hero.querySelector('.art-box');
+
+  const replayHero = () => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      artwork?.classList.add('pop-in');
+      hero.querySelectorAll('.wave-text').forEach(element => {
+        element.textContent = textFor(element);
+      });
+      return;
+    }
+
+    replayArtwork(artwork);
+    const targets = [...hero.querySelectorAll('.wave-text')];
+    targets.forEach((element, index) => {
+      window.setTimeout(() => waveText(element, textFor(element)), index * 95);
+    });
+  };
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        hero.dataset.heroInView = '0';
+        artwork?.classList.remove('art-in-view');
+        return;
+      }
+      if (hero.dataset.heroInView === '1') return;
+      hero.dataset.heroInView = '1';
+      replayHero();
+    });
+  }, { threshold: 0.22, rootMargin: '0px 0px -8% 0px' });
+
+  observer.observe(hero);
 }
 
 
@@ -651,9 +741,6 @@ addEventListener('DOMContentLoaded', () => {
   setLanguage(currentLang, false);
   setupRevealObserver();
   setupTimelineActiveObserver();
-
-  const heroSection = document.querySelector('.hero-section');
-  if (heroSection) triggerPanelWave(heroSection);
-  document.querySelector('.hero-section .art-box')?.classList.add('pop-in');
+  setupHeroReplayObserver();
   updateAudioBtnText();
 });

@@ -259,6 +259,12 @@ body.door-transitioning .home-intro,body.door-transitioning .desktop-connector,b
 /* 2026-08-15 CURRENT FULL-REPO PARITY + COMPACT CONTROLS */
 .site-brand-link{top:1.25rem;right:1.5rem;width:10.5rem}
 .site-brand{opacity:.82}
+/* After the JEW-HATRED oxblood sweep, the STOP Antizionism mark answers with two quick double-beats. */
+.site-brand-link.brand-double-beat .site-brand{animation:stopazBrandDoubleBeat 1.18s cubic-bezier(.22,.61,.36,1) both}
+@keyframes stopazBrandDoubleBeat{
+  0%,7%,19%,31%,58%,70%,82%,100%{opacity:.82;filter:grayscale(1) brightness(0) invert(1);transform:scale(1)}
+  11%,23%,62%,74%{opacity:1;filter:grayscale(1) brightness(0) invert(1) brightness(1.7) drop-shadow(0 0 7px rgba(255,255,255,.92)) drop-shadow(0 0 18px rgba(255,255,255,.34));transform:scale(1.025)}
+}
 body.page-ready .site-brand-link:hover{transform:translateY(-3px) scale(1.025)}
 body.page-ready .site-brand-link:hover .site-brand{opacity:.98;filter:grayscale(1) brightness(0) invert(1) drop-shadow(0 8px 18px rgba(255,255,255,.08))}
 .controls-nav{gap:.5rem}

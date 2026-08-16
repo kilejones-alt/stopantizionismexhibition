@@ -112,6 +112,15 @@ function prepareHomeTitleLetters() {
   });
 }
 
+function runBrandDoubleBeat() {
+  const brand = document.querySelector('.site-brand-link');
+  if (!brand || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  brand.classList.remove('brand-double-beat');
+  void brand.offsetWidth;
+  brand.classList.add('brand-double-beat');
+  window.setTimeout(() => brand.classList.remove('brand-double-beat'), 1280);
+}
+
 function runHomeTitleSweep() {
   if (homeTitleSweepFinished || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const title = document.querySelector('.home-title');
@@ -132,6 +141,8 @@ function runHomeTitleSweep() {
   title.classList.add('title-sweep-running');
   const totalDuration = (characters.length - 1) * HOME_TITLE_SWEEP_STAGGER + 360;
   setTimeout(() => title.classList.remove('title-sweep-running'), totalDuration + 80);
+  /* Let the red sweep fully clear JEW-HATRED, then answer with two fast double-beats. */
+  setTimeout(runBrandDoubleBeat, totalDuration + 125);
 }
 
 function scheduleHomeTitleSweep() {
