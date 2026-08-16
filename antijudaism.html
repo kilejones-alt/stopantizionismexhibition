@@ -1273,6 +1273,121 @@ body{font-family:var(--museum-sans);font-optical-sizing:auto}
 }
 </style>
 
+
+<style id="v6-gallery-layout-fixes">
+/* Keep the Antizionism hero title on one line on desktop. */
+@media (min-width: 851px) {
+  body[data-antizionism-timeline] .hero-title {
+    font-size:clamp(2.75rem,3.85vw,3.8rem)!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+    letter-spacing:.002em!important;
+  }
+
+  /* Year belongs to the central chronology gutter, never on top of the object title. */
+  .timeline-marker {
+    top:0!important;
+    transform:translate(-50%,-135%)!important;
+  }
+
+  /* Compact only as much as needed to guarantee a visible History field. */
+  .info-panel {
+    gap:.56rem!important;
+  }
+  .info-panel.is-tight {
+    gap:.42rem!important;
+  }
+  .info-panel.is-tighter {
+    gap:.32rem!important;
+  }
+  .info-panel.is-tight .info-title,
+  .info-panel.is-tighter .info-title {
+    font-size:clamp(1.72rem,2.25vw,2.08rem)!important;
+    line-height:1.06!important;
+    padding-bottom:.42rem!important;
+  }
+  .info-panel.is-tight .info-meta,
+  .info-panel.is-tighter .info-meta {
+    font-size:.9rem!important;
+    gap:.14rem!important;
+  }
+  .info-panel.is-tight .info-block {
+    padding:.64rem .82rem .68rem!important;
+  }
+  .info-panel.is-tighter .info-block {
+    padding:.52rem .75rem .56rem!important;
+  }
+  .info-panel.is-tight .wave-p,
+  .info-panel.is-tighter .wave-p {
+    font-size:.91rem!important;
+    line-height:1.42!important;
+    min-height:0!important;
+  }
+  .history-panel,
+  .timeline-art-right .history-panel {
+    min-height:78px!important;
+    margin-top:.08rem!important;
+    scrollbar-width:thin;
+  }
+}
+
+/* The title word animation cannot descend into Creator/Date while settling. */
+.info-title .wave-word {
+  animation-name:infoTitleWordReveal!important;
+}
+@keyframes infoTitleWordReveal {
+  0% { opacity:0; transform:translateY(.26em) rotateX(-16deg); filter:blur(4px); }
+  64% { opacity:1; transform:translateY(-.015em) rotateX(1deg); filter:blur(.2px); }
+  100% { opacity:1; transform:none; filter:none; }
+}
+.info-title {
+  margin-bottom:.08rem!important;
+}
+
+/* Header controls exist only at the top of the gallery. */
+.controls-nav.chrome-hidden {
+  opacity:0!important;
+  transform:translateY(-14px) scale(.97)!important;
+  filter:none!important;
+  pointer-events:none!important;
+  visibility:hidden;
+  transition:opacity .26s ease,transform .34s cubic-bezier(.16,1,.3,1),visibility 0s linear .34s!important;
+}
+.controls-nav:not(.chrome-hidden) {
+  visibility:visible;
+}
+
+/* Restore the deeper, longer museum drift zoom. Low-resolution sources stay conservative. */
+.museum-frame img.gallery-image {
+  --active-zoom:1.30!important;
+  --hover-zoom:1.39!important;
+  transition:opacity .9s cubic-bezier(.16,1,.3,1),filter 1.25s ease,transform 14.5s cubic-bezier(.16,1,.3,1)!important;
+}
+.museum-frame img.gallery-image.quality-source-limited {
+  --active-zoom:1.045!important;
+  --hover-zoom:1.075!important;
+}
+.museum-frame img.gallery-image.quality-standard {
+  --active-zoom:1.27!important;
+  --hover-zoom:1.36!important;
+}
+.museum-frame img.gallery-image.quality-hires {
+  --active-zoom:1.32!important;
+  --hover-zoom:1.42!important;
+}
+@media (max-width:850px) {
+  .timeline-marker {display:none!important;}
+  .info-title {margin-bottom:0!important;}
+}
+</style>
+
+
+<style id="v7-static-clarity">
+.info-panel::before,.info-block::before,.info-block::after,.timeline-art-right .info-panel::before,.timeline-art-right .info-panel>.info-block::before,.timeline-art-right .info-panel>.info-block::after{display:none!important;content:none!important}
+.info-category,.info-title,.info-meta,.info-panel>.info-block,.history-panel{flex-shrink:0}
+.exhibit-image-button{cursor:zoom-in!important}
+</style>
+<style id="wall-archive-hidden-style">.wall-archive-hidden{display:none!important}</style>
 </head>
 <body>
 <!-- LAZY GLIDING AMBIENT LIGHT OVERLAY -->
@@ -1303,196 +1418,109 @@ body{font-family:var(--museum-sans);font-optical-sizing:auto}
 <header class="hero-section">
 <div class="hero-container">
 <button aria-label="Enlarge Antijudaism gallery introduction" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="home-antijudaism-720.webp 720w, home-antijudaism-1280.webp 1280w" type="image/webp"/><img alt="Antijudaism gallery introduction" class="gallery-image quality-hires" data-native-height="1594" data-native-width="1280" decoding="async" fetchpriority="high" height="1594" loading="eager" sizes="(max-width: 850px) 94vw, 46vw" src="home-antijudaism.jpg" width="1280"/></picture></span>
+<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="home-antijudaism-720.webp 720w, home-antijudaism-1280.webp 1280w" type="image/webp"/><img alt="Antijudaism gallery introduction" class="gallery-image quality-hires" data-native-height="3072" data-native-width="2048" decoding="async" fetchpriority="high" height="3072" loading="eager" sizes="(max-width: 850px) 94vw, 46vw" src="home-antijudaism.jpg" width="2048"/></picture></span>
 <span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="hero-header-text">
 <div class="hero-subtitle wave-text" data-en="Jew-Hatred Timeline" data-he="ציר הזמן של שנאת יהודים" data-ru="Хронология ненависти к евреям">Jew-Hatred Timeline</div>
 <h1 class="hero-title wave-text" data-en="Antijudaism" data-he="אנטי-יהדות" data-ru="Антииудаизм">Antijudaism</h1>
-<div class="hero-location wave-text" data-en="Six Timeline Positions" data-he="שישה מיקומים בציר הזמן" data-ru="Шесть позиций хронологии">Six Timeline Positions</div>
+<div class="hero-location wave-text" data-en="Five Timeline Positions" data-he="חמישה מיקומים בציר הזמן" data-ru="Пять позиций хронологии">Five Timeline Positions</div>
 </div>
 </div>
 </header>
 <!-- CHAPTER I: SOVIET ERA -->
-<section class="exhibition-section">
+<section class="exhibition-section" data-history-en="Ecclesia and Synagoga became one of medieval Christianity’s most durable visual formulas for representing the displacement of Judaism by the Church." data-history-he="Ecclesia and Synagoga became one of medieval Christianity’s most durable visual formulas for representing the displacement of Judaism by the Church." data-history-ru="Ecclesia and Synagoga became one of medieval Christianity’s most durable visual formulas for representing the displacement of Judaism by the Church.">
 <div class="exhibition-container">
-<button aria-label="Enlarge Antijudaism preliminary exhibit 1" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antijudaism-1-560.webp 560w, antijudaism-1-900.webp 900w" type="image/webp"/><img alt="Antijudaism preliminary exhibit 1" class="gallery-image quality-standard" data-native-height="720" data-native-width="900" decoding="async" fetchpriority="low" height="720" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antijudaism-1.jpg" width="900"/></picture>
-</span>
+<button aria-label="Examine Synagoga, Strasbourg Cathedral" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antijudaism-1-720.webp 720w, antijudaism-1-1400.webp 1400w" type="image/webp"/><img alt="Synagoga, Strasbourg Cathedral" class="gallery-image quality-hires" data-native-height="3072" data-native-width="2048" decoding="async" fetchpriority="low" height="3072" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antijudaism-1.jpg" width="2048"/></picture></span>
 <span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter I — Preliminary Placement" data-he="פרק א — מיקום ראשוני" data-ru="Глава I — Предварительное размещение">Chapter I — Preliminary Placement</div>
-<h3 class="info-title wave-text" data-en="Temporary Exhibit I" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit I</h3>
+<div class="info-category wave-text" data-en="c. 1230 — Supersession" data-he="c. 1230 — Supersession" data-ru="c. 1230 — Supersession">c. 1230 — Supersession</div>
+<h3 class="info-title wave-text" data-en="Synagoga, Strasbourg Cathedral" data-he="Synagoga, Strasbourg Cathedral" data-ru="Synagoga, Strasbourg Cathedral">Synagoga, Strasbourg Cathedral</h3>
 <div class="info-meta">
-<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Unknown Gothic sculptor; photograph by Rama" data-he="Unknown Gothic sculptor; photograph by Rama" data-ru="Unknown Gothic sculptor; photograph by Rama">Unknown Gothic sculptor; photograph by Rama</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="c. 1230 (sculpture); 2006 photograph" data-he="c. 1230 (sculpture); 2006 photograph" data-ru="c. 1230 (sculpture); 2006 photograph">c. 1230 (sculpture); 2006 photograph</span></div>
 </div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="Temporary image placement for the developing Antijudaism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-</div>
+<div class="info-block"><h4 data-en="Creator" data-he="יוצר" data-ru="Автор">Creator</h4><p class="wave-p wave-text" data-en="The sculptural program at Strasbourg Cathedral used personification to stage the Christian claim that the Church had superseded Judaism." data-he="The sculptural program at Strasbourg Cathedral used personification to stage the Christian claim that the Church had superseded Judaism." data-ru="The sculptural program at Strasbourg Cathedral used personification to stage the Christian claim that the Church had superseded Judaism.">The sculptural program at Strasbourg Cathedral used personification to stage the Christian claim that the Church had superseded Judaism.</p></div>
+<div class="info-block"><h4 data-en="Object" data-he="אובייקט" data-ru="Объект">Object</h4><p class="wave-p wave-text" data-en="The blindfolded figure of Synagoga personifies Judaism as defeated and spiritually unseeing, paired at Strasbourg Cathedral with the triumphant Ecclesia." data-he="The blindfolded figure of Synagoga personifies Judaism as defeated and spiritually unseeing, paired at Strasbourg Cathedral with the triumphant Ecclesia." data-ru="The blindfolded figure of Synagoga personifies Judaism as defeated and spiritually unseeing, paired at Strasbourg Cathedral with the triumphant Ecclesia.">The blindfolded figure of Synagoga personifies Judaism as defeated and spiritually unseeing, paired at Strasbourg Cathedral with the triumphant Ecclesia.</p></div>
+<div class="info-block"><h4 data-en="Archive" data-he="ארכיון" data-ru="Архив">Archive</h4><p class="wave-p wave-text" data-en="Strasbourg Cathedral; digital photograph by Rama, Wikimedia Commons, CC BY-SA 2.0 France." data-he="Strasbourg Cathedral; digital photograph by Rama, Wikimedia Commons, CC BY-SA 2.0 France." data-ru="Strasbourg Cathedral; digital photograph by Rama, Wikimedia Commons, CC BY-SA 2.0 France.">Strasbourg Cathedral; digital photograph by Rama, Wikimedia Commons, CC BY-SA 2.0 France.</p></div>
 </div>
 </div>
 </section>
-<!-- CHAPTER II: ARAB REGIONAL DISCOURSE -->
-<section class="exhibition-section">
+<section class="exhibition-section" data-history-en="Medieval visual culture increasingly marked Jews as a distinct social category through recognizable clothing and bodily signs, making religious difference immediately legible." data-history-he="Medieval visual culture increasingly marked Jews as a distinct social category through recognizable clothing and bodily signs, making religious difference immediately legible." data-history-ru="Medieval visual culture increasingly marked Jews as a distinct social category through recognizable clothing and bodily signs, making religious difference immediately legible.">
 <div class="exhibition-container">
-<button aria-label="Enlarge Antijudaism preliminary exhibit 2" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antijudaism-2-600.webp 600w" type="image/webp"/><img alt="Antijudaism preliminary exhibit 2" class="gallery-image quality-source-limited" data-native-height="600" data-native-width="600" decoding="async" fetchpriority="low" height="600" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antijudaism-2.jpg" width="600"/></picture>
-</span>
+<button aria-label="Examine Süßkind of Trimberg, Codex Manesse" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antijudaism-2-720.webp 720w, antijudaism-2-1400.webp 1400w" type="image/webp"/><img alt="Süßkind of Trimberg, Codex Manesse" class="gallery-image quality-hires" data-native-height="1464" data-native-width="958" decoding="async" fetchpriority="low" height="1464" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antijudaism-2.jpg" width="958"/></picture></span>
 <span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter II — Preliminary Placement" data-he="פרק ב — מיקום ראשוני" data-ru="Глава II — Предварительное размещение">Chapter II — Preliminary Placement</div>
-<h3 class="info-title wave-text" data-en="Temporary Exhibit II" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit II</h3>
+<div class="info-category wave-text" data-en="1305–1340 — Marked Difference" data-he="1305–1340 — Marked Difference" data-ru="1305–1340 — Marked Difference">1305–1340 — Marked Difference</div>
+<h3 class="info-title wave-text" data-en="Süßkind of Trimberg, Codex Manesse" data-he="Süßkind of Trimberg, Codex Manesse" data-ru="Süßkind of Trimberg, Codex Manesse">Süßkind of Trimberg, Codex Manesse</h3>
 <div class="info-meta">
-<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Master of the Codex Manesse, Additional Painter I" data-he="Master of the Codex Manesse, Additional Painter I" data-ru="Master of the Codex Manesse, Additional Painter I">Master of the Codex Manesse, Additional Painter I</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="between 1305 and 1340" data-he="between 1305 and 1340" data-ru="between 1305 and 1340">between 1305 and 1340</span></div>
 </div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="Temporary image placement for the developing Antijudaism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-</div>
+<div class="info-block"><h4 data-en="Creator" data-he="יוצר" data-ru="Автор">Creator</h4><p class="wave-p wave-text" data-en="The Codex Manesse is a richly illuminated anthology of Middle High German lyric poetry assembled in Heidelberg; Süßkind is its only identified Jewish poet." data-he="The Codex Manesse is a richly illuminated anthology of Middle High German lyric poetry assembled in Heidelberg; Süßkind is its only identified Jewish poet." data-ru="The Codex Manesse is a richly illuminated anthology of Middle High German lyric poetry assembled in Heidelberg; Süßkind is its only identified Jewish poet.">The Codex Manesse is a richly illuminated anthology of Middle High German lyric poetry assembled in Heidelberg; Süßkind is its only identified Jewish poet.</p></div>
+<div class="info-block"><h4 data-en="Object" data-he="אובייקט" data-ru="Объект">Object</h4><p class="wave-p wave-text" data-en="The manuscript portrait identifies the Jewish poet Süßkind of Trimberg through dress, beard, and the pointed Jewish hat while placing him before a secular authority." data-he="The manuscript portrait identifies the Jewish poet Süßkind of Trimberg through dress, beard, and the pointed Jewish hat while placing him before a secular authority." data-ru="The manuscript portrait identifies the Jewish poet Süßkind of Trimberg through dress, beard, and the pointed Jewish hat while placing him before a secular authority.">The manuscript portrait identifies the Jewish poet Süßkind of Trimberg through dress, beard, and the pointed Jewish hat while placing him before a secular authority.</p></div>
+<div class="info-block"><h4 data-en="Archive" data-he="ארכיון" data-ru="Архив">Archive</h4><p class="wave-p wave-text" data-en="Codex Manesse, fol. 355r; Heidelberg University Library, Cod. Pal. germ. 848; Wikimedia Commons reproduction." data-he="Codex Manesse, fol. 355r; Heidelberg University Library, Cod. Pal. germ. 848; Wikimedia Commons reproduction." data-ru="Codex Manesse, fol. 355r; Heidelberg University Library, Cod. Pal. germ. 848; Wikimedia Commons reproduction.">Codex Manesse, fol. 355r; Heidelberg University Library, Cod. Pal. germ. 848; Wikimedia Commons reproduction.</p></div>
 </div>
 </div>
 </section>
-<!-- CHAPTER III: WESTERN MANIFESTATIONS -->
-<section class="exhibition-section">
+<section class="exhibition-section" data-history-en="The Black Death persecutions demonstrate how older religious suspicions could be converted into collective conspiracy accusations during catastrophe, with entire Jewish communities punished for an imagined hidden crime." data-history-he="The Black Death persecutions demonstrate how older religious suspicions could be converted into collective conspiracy accusations during catastrophe, with entire Jewish communities punished for an imagined hidden crime." data-history-ru="The Black Death persecutions demonstrate how older religious suspicions could be converted into collective conspiracy accusations during catastrophe, with entire Jewish communities punished for an imagined hidden crime.">
 <div class="exhibition-container">
-<button aria-label="Enlarge Antijudaism preliminary exhibit 3" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antijudaism-3-600.webp 600w" type="image/webp"/><img alt="Antijudaism preliminary exhibit 3" class="gallery-image quality-source-limited" data-native-height="600" data-native-width="600" decoding="async" fetchpriority="low" height="600" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antijudaism-3.jpg" width="600"/></picture>
-</span>
+<button aria-label="Examine Burning of Jews during the Black Death" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antijudaism-3-720.webp 720w, antijudaism-3-1400.webp 1400w" type="image/webp"/><img alt="Burning of Jews during the Black Death" class="gallery-image quality-hires" data-native-height="1001" data-native-width="1473" decoding="async" fetchpriority="low" height="1001" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antijudaism-3.jpg" width="1473"/></picture></span>
 <span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter III — Preliminary Placement" data-he="פרק ג — מיקום ראשוני" data-ru="Глава III — Предварительное размещение">Chapter III — Preliminary Placement</div>
-<h3 class="info-title wave-text" data-en="Temporary Exhibit III" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit III</h3>
+<div class="info-category wave-text" data-en="1349 — Pestilence and Collective Guilt" data-he="1349 — Pestilence and Collective Guilt" data-ru="1349 — Pestilence and Collective Guilt">1349 — Pestilence and Collective Guilt</div>
+<h3 class="info-title wave-text" data-en="Burning of Jews during the Black Death" data-he="Burning of Jews during the Black Death" data-ru="Burning of Jews during the Black Death">Burning of Jews during the Black Death</h3>
 <div class="info-meta">
-<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Medieval manuscript illuminator" data-he="Medieval manuscript illuminator" data-ru="Medieval manuscript illuminator">Medieval manuscript illuminator</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1349" data-he="1349" data-ru="1349">1349</span></div>
 </div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="Temporary image placement for the developing Antijudaism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-</div>
+<div class="info-block"><h4 data-en="Creator" data-he="יוצר" data-ru="Автор">Creator</h4><p class="wave-p wave-text" data-en="The image belongs to the visual record of the persecutions that accompanied the plague crisis across parts of Europe." data-he="The image belongs to the visual record of the persecutions that accompanied the plague crisis across parts of Europe." data-ru="The image belongs to the visual record of the persecutions that accompanied the plague crisis across parts of Europe.">The image belongs to the visual record of the persecutions that accompanied the plague crisis across parts of Europe.</p></div>
+<div class="info-block"><h4 data-en="Object" data-he="אובייקט" data-ru="Объект">Object</h4><p class="wave-p wave-text" data-en="An illuminated manuscript scene represents Jews being burned during the Black Death persecutions, when Jewish communities were accused of poisoning wells and spreading plague." data-he="An illuminated manuscript scene represents Jews being burned during the Black Death persecutions, when Jewish communities were accused of poisoning wells and spreading plague." data-ru="An illuminated manuscript scene represents Jews being burned during the Black Death persecutions, when Jewish communities were accused of poisoning wells and spreading plague.">An illuminated manuscript scene represents Jews being burned during the Black Death persecutions, when Jewish communities were accused of poisoning wells and spreading plague.</p></div>
+<div class="info-block"><h4 data-en="Archive" data-he="ארכיון" data-ru="Архив">Archive</h4><p class="wave-p wave-text" data-en="Medieval manuscript image; public-domain reproduction circulated through Wikimedia Commons." data-he="Medieval manuscript image; public-domain reproduction circulated through Wikimedia Commons." data-ru="Medieval manuscript image; public-domain reproduction circulated through Wikimedia Commons.">Medieval manuscript image; public-domain reproduction circulated through Wikimedia Commons.</p></div>
 </div>
 </div>
 </section>
-<section class="exhibition-section reserved-timeline-position">
+<section class="exhibition-section" data-history-en="Host-desecration legends transformed Christian theology into an accusation of physical Jewish violence against Christ’s body, and helped legitimate persecution through a highly visual narrative." data-history-he="Host-desecration legends transformed Christian theology into an accusation of physical Jewish violence against Christ’s body, and helped legitimate persecution through a highly visual narrative." data-history-ru="Host-desecration legends transformed Christian theology into an accusation of physical Jewish violence against Christ’s body, and helped legitimate persecution through a highly visual narrative.">
 <div class="exhibition-container">
-<button aria-label="Enlarge Antijudaism reserved timeline exhibit 4" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antijudaism-4-720.webp 720w, antijudaism-4-1400.webp 1400w" type="image/webp"/><img alt="Antijudaism reserved timeline exhibit 4" class="gallery-image quality-hires" data-native-height="950" data-native-width="1400" decoding="async" fetchpriority="low" height="950" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antijudaism-4.jpg" width="1400"/></picture>
-</span>
+<button aria-label="Examine Miracle of the Profaned Host" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antijudaism-4-720.webp 720w, antijudaism-4-1400.webp 1400w" type="image/webp"/><img alt="Miracle of the Profaned Host" class="gallery-image quality-standard" data-native-height="647" data-native-width="1161" decoding="async" fetchpriority="low" height="647" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antijudaism-4.jpg" width="1161"/></picture></span>
 <span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter IV — Reserved Placement" data-he="פרק ד — מיקום שמור" data-ru="Глава IV — Зарезервированное место">Chapter IV — Reserved Placement</div>
-<h3 class="info-title wave-text" data-en="Temporary Exhibit IV" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit IV</h3>
+<div class="info-category wave-text" data-en="1467–1468 — Host Desecration" data-he="1467–1468 — Host Desecration" data-ru="1467–1468 — Host Desecration">1467–1468 — Host Desecration</div>
+<h3 class="info-title wave-text" data-en="Miracle of the Profaned Host" data-he="Miracle of the Profaned Host" data-ru="Miracle of the Profaned Host">Miracle of the Profaned Host</h3>
 <div class="info-meta">
-<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Paolo Uccello" data-he="Paolo Uccello" data-ru="Paolo Uccello">Paolo Uccello</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1467–1468" data-he="1467–1468" data-ru="1467–1468">1467–1468</span></div>
 </div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="Reserved image position for the developing Antijudaism timeline." data-he="מיקום תמונה שמור עבור ציר הזמן המתפתח." data-ru="Зарезервированное место для изображения в развивающейся хронологии."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-</div>
+<div class="info-block"><h4 data-en="Creator" data-he="יוצר" data-ru="Автор">Creator</h4><p class="wave-p wave-text" data-en="Paolo Uccello, a major Florentine painter, produced the six-part predella for the Corpus Domini confraternity in Urbino." data-he="Paolo Uccello, a major Florentine painter, produced the six-part predella for the Corpus Domini confraternity in Urbino." data-ru="Paolo Uccello, a major Florentine painter, produced the six-part predella for the Corpus Domini confraternity in Urbino.">Paolo Uccello, a major Florentine painter, produced the six-part predella for the Corpus Domini confraternity in Urbino.</p></div>
+<div class="info-block"><h4 data-en="Object" data-he="אובייקט" data-ru="Объект">Object</h4><p class="wave-p wave-text" data-en="One panel from Uccello’s predella narrates the host-desecration legend, a story in which Jews were accused of attacking the consecrated Eucharist." data-he="One panel from Uccello’s predella narrates the host-desecration legend, a story in which Jews were accused of attacking the consecrated Eucharist." data-ru="One panel from Uccello’s predella narrates the host-desecration legend, a story in which Jews were accused of attacking the consecrated Eucharist.">One panel from Uccello’s predella narrates the host-desecration legend, a story in which Jews were accused of attacking the consecrated Eucharist.</p></div>
+<div class="info-block"><h4 data-en="Archive" data-he="ארכיון" data-ru="Архив">Archive</h4><p class="wave-p wave-text" data-en="Paolo Uccello, Miracle of the Profaned Host, tempera on panel; public-domain reproduction via Wikimedia Commons / Web Gallery of Art." data-he="Paolo Uccello, Miracle of the Profaned Host, tempera on panel; public-domain reproduction via Wikimedia Commons / Web Gallery of Art." data-ru="Paolo Uccello, Miracle of the Profaned Host, tempera on panel; public-domain reproduction via Wikimedia Commons / Web Gallery of Art.">Paolo Uccello, Miracle of the Profaned Host, tempera on panel; public-domain reproduction via Wikimedia Commons / Web Gallery of Art.</p></div>
 </div>
 </div>
 </section>
-<section class="exhibition-section reserved-timeline-position">
+<section class="exhibition-section" data-history-en="The Simon of Trent cult gave the blood libel an exceptionally powerful printed afterlife, turning an accusation already used against Jews into a reproducible image for a mass reading public." data-history-he="The Simon of Trent cult gave the blood libel an exceptionally powerful printed afterlife, turning an accusation already used against Jews into a reproducible image for a mass reading public." data-history-ru="The Simon of Trent cult gave the blood libel an exceptionally powerful printed afterlife, turning an accusation already used against Jews into a reproducible image for a mass reading public.">
 <div class="exhibition-container">
-<button aria-label="Enlarge Antijudaism reserved timeline exhibit 5" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antijudaism-5-720.webp 720w, antijudaism-5-1400.webp 1400w" type="image/webp"/><img alt="Antijudaism reserved timeline exhibit 5" class="gallery-image quality-hires" data-native-height="950" data-native-width="1400" decoding="async" fetchpriority="low" height="950" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antijudaism-5.jpg" width="1400"/></picture>
-</span>
+<button aria-label="Examine Simon of Trent in the Nuremberg Chronicle" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antijudaism-5-720.webp 720w, antijudaism-5-1400.webp 1400w" type="image/webp"/><img alt="Simon of Trent in the Nuremberg Chronicle" class="gallery-image quality-source-limited" data-native-height="474" data-native-width="474" decoding="async" fetchpriority="low" height="474" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antijudaism-5.jpg" width="474"/></picture></span>
 <span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter V — Reserved Placement" data-he="פרק ה — מיקום שמור" data-ru="Глава V — Зарезервированное место">Chapter V — Reserved Placement</div>
-<h3 class="info-title wave-text" data-en="Temporary Exhibit V" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit V</h3>
+<div class="info-category wave-text" data-en="1493 — Ritual Murder" data-he="1493 — Ritual Murder" data-ru="1493 — Ritual Murder">1493 — Ritual Murder</div>
+<h3 class="info-title wave-text" data-en="Simon of Trent in the Nuremberg Chronicle" data-he="Simon of Trent in the Nuremberg Chronicle" data-ru="Simon of Trent in the Nuremberg Chronicle">Simon of Trent in the Nuremberg Chronicle</h3>
 <div class="info-meta">
-<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Workshop of Michael Wolgemut and Wilhelm Pleydenwurff" data-he="Workshop of Michael Wolgemut and Wilhelm Pleydenwurff" data-ru="Workshop of Michael Wolgemut and Wilhelm Pleydenwurff">Workshop of Michael Wolgemut and Wilhelm Pleydenwurff</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1493" data-he="1493" data-ru="1493">1493</span></div>
 </div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="Reserved image position for the developing Antijudaism timeline." data-he="מיקום תמונה שמור עבור ציר הזמן המתפתח." data-ru="Зарезервированное место для изображения в развивающейся хронологии."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-</div>
-</div>
-</div>
-</section>
-<section class="exhibition-section reserved-timeline-position">
-<div class="exhibition-container">
-<button aria-label="Enlarge Antijudaism reserved timeline exhibit 6" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antijudaism-6-720.webp 720w, antijudaism-6-1400.webp 1400w" type="image/webp"/><img alt="Antijudaism reserved timeline exhibit 6" class="gallery-image quality-hires" data-native-height="950" data-native-width="1400" decoding="async" fetchpriority="low" height="950" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antijudaism-6.jpg" width="1400"/></picture>
-</span>
-<span aria-hidden="true" class="click-hint">+</span>
-</button>
-<div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter VI — Reserved Placement" data-he="פרק ו — מיקום שמור" data-ru="Глава VI — Зарезервированное место">Chapter VI — Reserved Placement</div>
-<h3 class="info-title wave-text" data-en="Temporary Exhibit VI" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Temporary Exhibit VI</h3>
-<div class="info-meta">
-<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-</div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="Reserved image position for the developing Antijudaism timeline." data-he="מיקום תמונה שמור עבור ציר הזמן המתפתח." data-ru="Зарезервированное место для изображения в развивающейся хронологии."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-</div>
+<div class="info-block"><h4 data-en="Creator" data-he="יוצר" data-ru="Автор">Creator</h4><p class="wave-p wave-text" data-en="The Nuremberg Chronicle, compiled by Hartmann Schedel and illustrated by the Wolgemut-Pleydenwurff workshop, was one of the most ambitious illustrated books of the incunable period." data-he="The Nuremberg Chronicle, compiled by Hartmann Schedel and illustrated by the Wolgemut-Pleydenwurff workshop, was one of the most ambitious illustrated books of the incunable period." data-ru="The Nuremberg Chronicle, compiled by Hartmann Schedel and illustrated by the Wolgemut-Pleydenwurff workshop, was one of the most ambitious illustrated books of the incunable period.">The Nuremberg Chronicle, compiled by Hartmann Schedel and illustrated by the Wolgemut-Pleydenwurff workshop, was one of the most ambitious illustrated books of the incunable period.</p></div>
+<div class="info-block"><h4 data-en="Object" data-he="אובייקט" data-ru="Объект">Object</h4><p class="wave-p wave-text" data-en="The woodcut illustrates the false ritual-murder accusation surrounding Simon of Trent, depicting Jews as participants in the killing of a Christian child." data-he="The woodcut illustrates the false ritual-murder accusation surrounding Simon of Trent, depicting Jews as participants in the killing of a Christian child." data-ru="The woodcut illustrates the false ritual-murder accusation surrounding Simon of Trent, depicting Jews as participants in the killing of a Christian child.">The woodcut illustrates the false ritual-murder accusation surrounding Simon of Trent, depicting Jews as participants in the killing of a Christian child.</p></div>
+<div class="info-block"><h4 data-en="Archive" data-he="ארכיון" data-ru="Архив">Archive</h4><p class="wave-p wave-text" data-en="Hartmann Schedel, Nuremberg Chronicle, 1493; public-domain reproduction via Wikimedia Commons." data-he="Hartmann Schedel, Nuremberg Chronicle, 1493; public-domain reproduction via Wikimedia Commons." data-ru="Hartmann Schedel, Nuremberg Chronicle, 1493; public-domain reproduction via Wikimedia Commons.">Hartmann Schedel, Nuremberg Chronicle, 1493; public-domain reproduction via Wikimedia Commons.</p></div>
 </div>
 </div>
 </section>

@@ -1273,6 +1273,121 @@ body{font-family:var(--museum-sans);font-optical-sizing:auto}
 }
 </style>
 
+
+<style id="v6-gallery-layout-fixes">
+/* Keep the Antizionism hero title on one line on desktop. */
+@media (min-width: 851px) {
+  body[data-antizionism-timeline] .hero-title {
+    font-size:clamp(2.75rem,3.85vw,3.8rem)!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+    letter-spacing:.002em!important;
+  }
+
+  /* Year belongs to the central chronology gutter, never on top of the object title. */
+  .timeline-marker {
+    top:0!important;
+    transform:translate(-50%,-135%)!important;
+  }
+
+  /* Compact only as much as needed to guarantee a visible History field. */
+  .info-panel {
+    gap:.56rem!important;
+  }
+  .info-panel.is-tight {
+    gap:.42rem!important;
+  }
+  .info-panel.is-tighter {
+    gap:.32rem!important;
+  }
+  .info-panel.is-tight .info-title,
+  .info-panel.is-tighter .info-title {
+    font-size:clamp(1.72rem,2.25vw,2.08rem)!important;
+    line-height:1.06!important;
+    padding-bottom:.42rem!important;
+  }
+  .info-panel.is-tight .info-meta,
+  .info-panel.is-tighter .info-meta {
+    font-size:.9rem!important;
+    gap:.14rem!important;
+  }
+  .info-panel.is-tight .info-block {
+    padding:.64rem .82rem .68rem!important;
+  }
+  .info-panel.is-tighter .info-block {
+    padding:.52rem .75rem .56rem!important;
+  }
+  .info-panel.is-tight .wave-p,
+  .info-panel.is-tighter .wave-p {
+    font-size:.91rem!important;
+    line-height:1.42!important;
+    min-height:0!important;
+  }
+  .history-panel,
+  .timeline-art-right .history-panel {
+    min-height:78px!important;
+    margin-top:.08rem!important;
+    scrollbar-width:thin;
+  }
+}
+
+/* The title word animation cannot descend into Creator/Date while settling. */
+.info-title .wave-word {
+  animation-name:infoTitleWordReveal!important;
+}
+@keyframes infoTitleWordReveal {
+  0% { opacity:0; transform:translateY(.26em) rotateX(-16deg); filter:blur(4px); }
+  64% { opacity:1; transform:translateY(-.015em) rotateX(1deg); filter:blur(.2px); }
+  100% { opacity:1; transform:none; filter:none; }
+}
+.info-title {
+  margin-bottom:.08rem!important;
+}
+
+/* Header controls exist only at the top of the gallery. */
+.controls-nav.chrome-hidden {
+  opacity:0!important;
+  transform:translateY(-14px) scale(.97)!important;
+  filter:none!important;
+  pointer-events:none!important;
+  visibility:hidden;
+  transition:opacity .26s ease,transform .34s cubic-bezier(.16,1,.3,1),visibility 0s linear .34s!important;
+}
+.controls-nav:not(.chrome-hidden) {
+  visibility:visible;
+}
+
+/* Restore the deeper, longer museum drift zoom. Low-resolution sources stay conservative. */
+.museum-frame img.gallery-image {
+  --active-zoom:1.30!important;
+  --hover-zoom:1.39!important;
+  transition:opacity .9s cubic-bezier(.16,1,.3,1),filter 1.25s ease,transform 14.5s cubic-bezier(.16,1,.3,1)!important;
+}
+.museum-frame img.gallery-image.quality-source-limited {
+  --active-zoom:1.045!important;
+  --hover-zoom:1.075!important;
+}
+.museum-frame img.gallery-image.quality-standard {
+  --active-zoom:1.27!important;
+  --hover-zoom:1.36!important;
+}
+.museum-frame img.gallery-image.quality-hires {
+  --active-zoom:1.32!important;
+  --hover-zoom:1.42!important;
+}
+@media (max-width:850px) {
+  .timeline-marker {display:none!important;}
+  .info-title {margin-bottom:0!important;}
+}
+</style>
+
+
+<style id="v7-static-clarity">
+.info-panel::before,.info-block::before,.info-block::after,.timeline-art-right .info-panel::before,.timeline-art-right .info-panel>.info-block::before,.timeline-art-right .info-panel>.info-block::after{display:none!important;content:none!important}
+.info-category,.info-title,.info-meta,.info-panel>.info-block,.history-panel{flex-shrink:0}
+.exhibit-image-button{cursor:zoom-in!important}
+</style>
+<style id="wall-archive-hidden-style">.wall-archive-hidden{display:none!important}</style>
 </head>
 <body>
 <!-- LAZY GLIDING AMBIENT LIGHT OVERLAY -->
@@ -1303,194 +1418,109 @@ body{font-family:var(--museum-sans);font-optical-sizing:auto}
 <header class="hero-section">
 <div class="hero-container">
 <button aria-label="Enlarge Antisemitism gallery introduction" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="home-antisemitism-560.webp 560w, home-antisemitism-812.webp 812w" type="image/webp"/><img alt="Antisemitism gallery introduction" class="gallery-image quality-standard" data-native-height="1138" data-native-width="812" decoding="async" fetchpriority="high" height="1138" loading="eager" sizes="(max-width: 850px) 94vw, 46vw" src="home-antisemitism.jpg" width="812"/></picture></span>
+<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="home-antisemitism-720.webp 720w, home-antisemitism-1280.webp 1280w" type="image/webp"/><img alt="Antisemitism gallery introduction" class="gallery-image quality-hires" data-native-height="2048" data-native-width="1589" decoding="async" fetchpriority="high" height="2048" loading="eager" sizes="(max-width: 850px) 94vw, 46vw" src="home-antisemitism.jpg" width="1589"/></picture></span>
 <span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="hero-header-text">
 <div class="hero-subtitle wave-text" data-en="Jew-Hatred Timeline" data-he="ציר הזמן של שנאת יהודים" data-ru="Хронология ненависти к евреям">Jew-Hatred Timeline</div>
 <h1 class="hero-title wave-text" data-en="Antisemitism" data-he="אנטישמיות" data-ru="Антисемитизм">Antisemitism</h1>
-<div class="hero-location wave-text" data-en="Six Timeline Positions" data-he="שישה מיקומים בציר הזמן" data-ru="Шесть позиций хронологии">Six Timeline Positions</div>
+<div class="hero-location wave-text" data-en="Five Timeline Positions" data-he="חמישה מיקומים בציר הזמן" data-ru="Пять позиций хронологии">Five Timeline Positions</div>
 </div>
 </div>
 </header>
 <!-- CHAPTER I: SOVIET ERA -->
-<section class="exhibition-section">
+<section class="exhibition-section" data-history-en="At the beginning of the twentieth century, violent exclusion and mass displacement were lived consequences of antisemitism across the Russian Empire and Eastern Europe. Hirszenberg translated that condition into the scale and gravity of history painting." data-history-he="At the beginning of the twentieth century, violent exclusion and mass displacement were lived consequences of antisemitism across the Russian Empire and Eastern Europe. Hirszenberg translated that condition into the scale and gravity of history painting." data-history-ru="At the beginning of the twentieth century, violent exclusion and mass displacement were lived consequences of antisemitism across the Russian Empire and Eastern Europe. Hirszenberg translated that condition into the scale and gravity of history painting.">
 <div class="exhibition-container">
-<button aria-label="Enlarge Antisemitism preliminary exhibit 1" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antisemitism-1-247.webp 247w" type="image/webp"/><img alt="Antisemitism preliminary exhibit 1" class="gallery-image quality-source-limited" data-native-height="385" data-native-width="247" decoding="async" fetchpriority="low" height="385" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antisemitism-1.jpg" width="247"/></picture>
-</span>
+<button aria-label="Examine Exile" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antisemitism-1-720.webp 720w, antisemitism-1-1400.webp 1400w" type="image/webp"/><img alt="Exile" class="gallery-image quality-hires" data-native-height="844" data-native-width="1500" decoding="async" fetchpriority="low" height="844" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antisemitism-1.jpg" width="1500"/></picture></span>
 <span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter I — Preliminary Placement" data-he="פרק א — מיקום ראשוני" data-ru="Глава I — Предварительное размещение">Chapter I — Preliminary Placement</div>
-<h3 class="info-title wave-text" data-en="The Protocols — Preliminary" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">The Protocols — Preliminary</h3>
+<div class="info-category wave-text" data-en="1904 — Exile" data-he="1904 — Exile" data-ru="1904 — Exile">1904 — Exile</div>
+<h3 class="info-title wave-text" data-en="Exile" data-he="Exile" data-ru="Exile">Exile</h3>
 <div class="info-meta">
-<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-</div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="Temporary image placement for the developing Antisemitism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-</div>
-</div>
-</div>
-</section>
-<!-- CHAPTER II: ARAB REGIONAL DISCOURSE -->
-<section class="exhibition-section">
-<div class="exhibition-container">
-<button aria-label="Enlarge Antisemitism preliminary exhibit 2" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antisemitism-2-384.webp 384w" type="image/webp"/><img alt="Antisemitism preliminary exhibit 2" class="gallery-image quality-source-limited" data-native-height="520" data-native-width="384" decoding="async" fetchpriority="low" height="520" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antisemitism-2.jpg" width="384"/></picture>
-</span>
-<span aria-hidden="true" class="click-hint">+</span>
-</button>
-<div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter II — Preliminary Placement" data-he="פרק ב — מיקום ראשוני" data-ru="Глава II — Предварительное размещение">Chapter II — Preliminary Placement</div>
-<h3 class="info-title wave-text" data-en="Le Juif — Preliminary" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Le Juif — Preliminary</h3>
-<div class="info-meta">
-<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-</div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="Temporary image placement for the developing Antisemitism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-</div>
-</div>
-</div>
-</section>
-<!-- CHAPTER III: WESTERN MANIFESTATIONS -->
-<section class="exhibition-section">
-<div class="exhibition-container">
-<button aria-label="Enlarge Antisemitism preliminary exhibit 3" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antisemitism-3-560.webp 560w, antisemitism-3-960.webp 960w" type="image/webp"/><img alt="Antisemitism preliminary exhibit 3" class="gallery-image quality-standard" data-native-height="598" data-native-width="960" decoding="async" fetchpriority="low" height="598" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antisemitism-3.jpg" width="960"/></picture>
-</span>
-<span aria-hidden="true" class="click-hint">+</span>
-</button>
-<div class="info-panel">
-<div class="info-category wave-text" data-en="Chapter III — Preliminary Placement" data-he="פרק ג — מיקום ראשוני" data-ru="Глава III — Предварительное размещение">Chapter III — Preliminary Placement</div>
-<h3 class="info-title wave-text" data-en="Storefront Image — Preliminary" data-he="מוצג זמני — פרטים בהמשך" data-ru="Предварительный экспонат — сведения ожидаются">Storefront Image — Preliminary</h3>
-<div class="info-meta">
-<div><strong data-en="Author / Source:" data-he="יוצר / מקור:" data-ru="Автор / источник:">Author / Source:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Details pending" data-he="פרטים בהמשך" data-ru="Сведения ожидаются">Details pending</span></div>
-</div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Curatorial text will be added when the final source information is supplied." data-he="טקסט אוצרותי יתווסף לאחר קבלת פרטי המקור הסופיים." data-ru="Кураторский текст будет добавлен после получения окончательных данных об источнике."></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="Temporary image placement for the developing Antisemitism timeline." data-he="מיקום תמונה זמני עבור ציר הזמן המתפתח." data-ru="Временное размещение изображения для развивающейся хронологии."></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Citation pending." data-he="הציטוט המקורי יתווסף בהמשך." data-ru="Ссылка на источник ожидается."></p>
-</div>
-</div>
-</div>
-</section>
-<section class="exhibition-section reserved-timeline-position">
-<div class="exhibition-container">
-<button aria-label="Enlarge The Traitor: Degradation of Alfred Dreyfus, Le Petit Journal, 13 January 1895" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antisemitism-4-720.webp 720w, antisemitism-4-1280.webp 1280w" type="image/webp"/><img alt="The Traitor: Degradation of Alfred Dreyfus, Le Petit Journal, 13 January 1895" class="gallery-image quality-hires" data-native-height="1453" data-native-width="1280" decoding="async" fetchpriority="low" height="1453" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antisemitism-4.jpg" width="1280"/></picture>
-</span>
-<span aria-hidden="true" class="click-hint">+</span>
-</button>
-<div class="info-panel">
-<div class="info-category wave-text" data-en="Dreyfus Affair" data-he="פרשת דרייפוס" data-ru="Дело Дрейфуса">Dreyfus Affair</div>
-<h3 class="info-title wave-text" data-en="The Degradation of Alfred Dreyfus" data-he="השפלת אלפרד דרייפוס" data-ru="Разжалование Альфреда Дрейфуса">The Degradation of Alfred Dreyfus</h3>
-<div class="info-meta">
-<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Henri Meyer / Le Petit Journal" data-he="אנרי מאייר / Le Petit Journal" data-ru="Анри Мейер / Le Petit Journal">Henri Meyer / Le Petit Journal</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="13 January 1895" data-he="13 בינואר 1895" data-ru="13 января 1895">13 January 1895</span></div>
-</div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Henri Meyer was a French illustrator and caricaturist. This image appeared on the illustrated supplement of Le Petit Journal during the Dreyfus Affair." data-he="אנרי מאייר היה מאייר וקריקטוריסט צרפתי. הדימוי הופיע במוסף המאויר של Le Petit Journal במהלך פרשת דרייפוס." data-ru="Анри Мейер был французским иллюстратором и карикатуристом. Изображение вышло в иллюстрированном приложении Le Petit Journal во время дела Дрейфуса.">Henri Meyer was a French illustrator and caricaturist. This image appeared on the illustrated supplement of Le Petit Journal during the Dreyfus Affair.</p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="An illustrated depiction of Captain Alfred Dreyfus being stripped of his military rank at the École Militaire in Paris." data-he="תיאור מאויר של שלילת דרגתו הצבאית של קפטן אלפרד דרייפוס באקול מיליטר בפריז." data-ru="Иллюстрированное изображение лишения капитана Альфреда Дрейфуса воинского звания в Военной школе в Париже.">An illustrated depiction of Captain Alfred Dreyfus being stripped of his military rank at the École Militaire in Paris.</p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Gallica / Bibliothèque nationale de France; public-domain reproduction also preserved on Wikimedia Commons." data-he="Gallica / הספרייה הלאומית של צרפת; העתק בנחלת הכלל נשמר גם ב-Wikimedia Commons." data-ru="Gallica / Национальная библиотека Франции; репродукция в общественном достоянии также хранится на Wikimedia Commons.">Gallica / Bibliothèque nationale de France; public-domain reproduction also preserved on Wikimedia Commons.</p>
-</div>
-</div>
-</div>
-</section><section class="exhibition-section reserved-timeline-position">
-<div class="exhibition-container">
-<button aria-label="Enlarge Herman S. Shapiro, Kishinev Massacre Elegy, 1904" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antisemitism-5-560.webp 560w, antisemitism-5-960.webp 960w" type="image/webp"/><img alt="Herman S. Shapiro, Kishinev Massacre Elegy, 1904" class="gallery-image quality-standard" data-native-height="1264" data-native-width="960" decoding="async" fetchpriority="low" height="1264" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antisemitism-5.jpg" width="960"/></picture>
-</span>
-<span aria-hidden="true" class="click-hint">+</span>
-</button>
-<div class="info-panel">
-<div class="info-category wave-text" data-en="Kishinev Pogrom" data-he="פוגרום קישינב" data-ru="Кишинёвский погром">Kishinev Pogrom</div>
-<h3 class="info-title wave-text" data-en="Kishinev Massacre Elegy" data-he="אלגיה לטבח קישינב" data-ru="Элегия о Кишинёвском погроме">Kishinev Massacre Elegy</h3>
-<div class="info-meta">
-<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Herman S. Shapiro" data-he="הרמן ס. שפירו" data-ru="Герман С. Шапиро">Herman S. Shapiro</span></div>
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Samuel Hirszenberg" data-he="Samuel Hirszenberg" data-ru="Samuel Hirszenberg">Samuel Hirszenberg</span></div>
 <div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1904" data-he="1904" data-ru="1904">1904</span></div>
 </div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="Herman S. Shapiro composed and arranged this illustrated musical elegy in New York after the 1903 Kishinev pogrom." data-he="הרמן ס. שפירו הלחין ועיבד אלגיה מוזיקלית מאוירת זו בניו יורק לאחר פוגרום קישינב ב-1903." data-ru="Герман С. Шапиро сочинил и аранжировал эту иллюстрированную музыкальную элегию в Нью-Йорке после Кишинёвского погрома 1903 года.">Herman S. Shapiro composed and arranged this illustrated musical elegy in New York after the 1903 Kishinev pogrom.</p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="A red illustrated sheet-music cover memorializing the victims of the April 1903 Kishinev pogrom." data-he="עטיפת תווים מאוירת באדום המנציחה את קורבנות פוגרום קישינב באפריל 1903." data-ru="Красная иллюстрированная обложка нотного издания, посвящённая жертвам Кишинёвского погрома апреля 1903 года.">A red illustrated sheet-music cover memorializing the victims of the April 1903 Kishinev pogrom.</p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Library of Congress, Irene Heskes Collection, Music Division." data-he="ספריית הקונגרס, אוסף Irene Heskes, חטיבת המוזיקה." data-ru="Библиотека Конгресса, коллекция Irene Heskes, музыкальный отдел.">Library of Congress, Irene Heskes Collection, Music Division.</p>
+<div class="info-block"><h4 data-en="Creator" data-he="יוצר" data-ru="Автор">Creator</h4><p class="wave-p wave-text" data-en="Samuel Hirszenberg was a Polish-Jewish realist and symbolist painter whose major works repeatedly addressed Jewish vulnerability, wandering, and exclusion." data-he="Samuel Hirszenberg was a Polish-Jewish realist and symbolist painter whose major works repeatedly addressed Jewish vulnerability, wandering, and exclusion." data-ru="Samuel Hirszenberg was a Polish-Jewish realist and symbolist painter whose major works repeatedly addressed Jewish vulnerability, wandering, and exclusion.">Samuel Hirszenberg was a Polish-Jewish realist and symbolist painter whose major works repeatedly addressed Jewish vulnerability, wandering, and exclusion.</p></div>
+<div class="info-block"><h4 data-en="Object" data-he="אובייקט" data-ru="Объект">Object</h4><p class="wave-p wave-text" data-en="A long procession of Jewish men, women, and children moves behind an isolated elderly figure, turning forced movement and displacement into a monumental collective image." data-he="A long procession of Jewish men, women, and children moves behind an isolated elderly figure, turning forced movement and displacement into a monumental collective image." data-ru="A long procession of Jewish men, women, and children moves behind an isolated elderly figure, turning forced movement and displacement into a monumental collective image.">A long procession of Jewish men, women, and children moves behind an isolated elderly figure, turning forced movement and displacement into a monumental collective image.</p></div>
+<div class="info-block"><h4 data-en="Archive" data-he="ארכיון" data-ru="Архив">Archive</h4><p class="wave-p wave-text" data-en="Samuel Hirszenberg, Exile, 1904; public-domain reproduction, Wikimedia Commons." data-he="Samuel Hirszenberg, Exile, 1904; public-domain reproduction, Wikimedia Commons." data-ru="Samuel Hirszenberg, Exile, 1904; public-domain reproduction, Wikimedia Commons.">Samuel Hirszenberg, Exile, 1904; public-domain reproduction, Wikimedia Commons.</p></div>
 </div>
 </div>
-</div>
-</section><section class="exhibition-section reserved-timeline-position">
+</section>
+<section class="exhibition-section" data-history-en="The painting belongs to a moment when pogrom violence made mourning itself a political and communal condition. Its crowd is not an abstraction of “the Jew” but a society living under recurrent threat." data-history-he="The painting belongs to a moment when pogrom violence made mourning itself a political and communal condition. Its crowd is not an abstraction of “the Jew” but a society living under recurrent threat." data-history-ru="The painting belongs to a moment when pogrom violence made mourning itself a political and communal condition. Its crowd is not an abstraction of “the Jew” but a society living under recurrent threat.">
 <div class="exhibition-container">
-<button aria-label="Enlarge Soviet decree awarding Lidiya Timashuk the Order of Lenin, 20 January 1953" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antisemitism-6-597.webp 597w" type="image/webp"/><img alt="Soviet decree awarding Lidiya Timashuk the Order of Lenin, 20 January 1953" class="gallery-image quality-source-limited" data-native-height="800" data-native-width="597" decoding="async" fetchpriority="low" height="800" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antisemitism-6.jpg" width="597"/></picture>
-</span>
+<button aria-label="Examine The Black Banner" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antisemitism-2-720.webp 720w, antisemitism-2-1400.webp 1400w" type="image/webp"/><img alt="The Black Banner" class="gallery-image quality-source-limited" data-native-height="223" data-native-width="600" decoding="async" fetchpriority="low" height="223" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antisemitism-2.jpg" width="600"/></picture></span>
 <span aria-hidden="true" class="click-hint">+</span>
 </button>
 <div class="info-panel">
-<div class="info-category wave-text" data-en="Doctors' Plot" data-he="עלילת הרופאים" data-ru="Дело врачей">Doctors' Plot</div>
-<h3 class="info-title wave-text" data-en="Decree Awarding Lidiya Timashuk the Order of Lenin" data-he="צו להענקת עיטור לנין ללידיה טימאשוק" data-ru="Указ о награждении Лидии Тимашук орденом Ленина">Decree Awarding Lidiya Timashuk the Order of Lenin</h3>
+<div class="info-category wave-text" data-en="1905 — Mourning" data-he="1905 — Mourning" data-ru="1905 — Mourning">1905 — Mourning</div>
+<h3 class="info-title wave-text" data-en="The Black Banner" data-he="The Black Banner" data-ru="The Black Banner">The Black Banner</h3>
 <div class="info-meta">
-<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Presidium of the Supreme Soviet of the USSR" data-he="נשיאות הסובייט העליון של ברית המועצות" data-ru="Президиум Верховного Совета СССР">Presidium of the Supreme Soviet of the USSR</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="20 January 1953" data-he="20 בינואר 1953" data-ru="20 января 1953">20 January 1953</span></div>
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Samuel Hirszenberg" data-he="Samuel Hirszenberg" data-ru="Samuel Hirszenberg">Samuel Hirszenberg</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1905" data-he="1905" data-ru="1905">1905</span></div>
 </div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="An official decree of the Presidium of the Supreme Soviet issued during the Stalin-era Doctors’ Plot campaign." data-he="צו רשמי של נשיאות הסובייט העליון שהוצא במהלך מסע ״עלילת הרופאים״ בתקופת סטלין." data-ru="Официальный указ Президиума Верховного Совета, изданный во время сталинской кампании «дела врачей».">An official decree of the Presidium of the Supreme Soviet issued during the Stalin-era Doctors’ Plot campaign.</p>
+<div class="info-block"><h4 data-en="Creator" data-he="יוצר" data-ru="Автор">Creator</h4><p class="wave-p wave-text" data-en="Hirszenberg painted The Black Banner amid intensified pogrom violence; the work was exhibited in Paris in 1906." data-he="Hirszenberg painted The Black Banner amid intensified pogrom violence; the work was exhibited in Paris in 1906." data-ru="Hirszenberg painted The Black Banner amid intensified pogrom violence; the work was exhibited in Paris in 1906.">Hirszenberg painted The Black Banner amid intensified pogrom violence; the work was exhibited in Paris in 1906.</p></div>
+<div class="info-block"><h4 data-en="Object" data-he="אובייקט" data-ru="Объект">Object</h4><p class="wave-p wave-text" data-en="A dense Jewish funeral procession advances beneath a dark sky, the black banner and compressed crowd turning mourning into a collective public image." data-he="A dense Jewish funeral procession advances beneath a dark sky, the black banner and compressed crowd turning mourning into a collective public image." data-ru="A dense Jewish funeral procession advances beneath a dark sky, the black banner and compressed crowd turning mourning into a collective public image.">A dense Jewish funeral procession advances beneath a dark sky, the black banner and compressed crowd turning mourning into a collective public image.</p></div>
+<div class="info-block"><h4 data-en="Archive" data-he="ארכיון" data-ru="Архив">Archive</h4><p class="wave-p wave-text" data-en="Samuel Hirszenberg, The Black Banner, 1905; The Jewish Museum, New York; public-domain reproduction via Wikimedia Commons." data-he="Samuel Hirszenberg, The Black Banner, 1905; The Jewish Museum, New York; public-domain reproduction via Wikimedia Commons." data-ru="Samuel Hirszenberg, The Black Banner, 1905; The Jewish Museum, New York; public-domain reproduction via Wikimedia Commons.">Samuel Hirszenberg, The Black Banner, 1905; The Jewish Museum, New York; public-domain reproduction via Wikimedia Commons.</p></div>
 </div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="The decree awarded Lidiya Timashuk the Order of Lenin for her role in the supposed exposure of the Doctors’ Plot; the award was later revoked." data-he="הצו העניק ללידיה טימאשוק את עיטור לנין על תפקידה בחשיפה כביכול של ״עלילת הרופאים״; העיטור בוטל מאוחר יותר." data-ru="Указ награждал Лидию Тимашук орденом Ленина за её роль в предполагаемом «разоблачении» дела врачей; позднее награда была отменена.">The decree awarded Lidiya Timashuk the Order of Lenin for her role in the supposed exposure of the Doctors’ Plot; the award was later revoked.</p>
 </div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Official Soviet government decree; public-domain reproduction preserved on Wikimedia Commons." data-he="צו רשמי של ממשלת ברית המועצות; העתק בנחלת הכלל נשמר ב-Wikimedia Commons." data-ru="Официальный советский государственный указ; репродукция в общественном достоянии хранится на Wikimedia Commons.">Official Soviet government decree; public-domain reproduction preserved on Wikimedia Commons.</p>
+</section>
+<section class="exhibition-section" data-history-en="The wave of pogroms helped produce organized Jewish self-defense alongside emigration and political radicalization. Krestin makes that generational rupture the subject of the painting itself." data-history-he="The wave of pogroms helped produce organized Jewish self-defense alongside emigration and political radicalization. Krestin makes that generational rupture the subject of the painting itself." data-history-ru="The wave of pogroms helped produce organized Jewish self-defense alongside emigration and political radicalization. Krestin makes that generational rupture the subject of the painting itself.">
+<div class="exhibition-container">
+<button aria-label="Examine The Birth of Jewish Resistance" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antisemitism-3-720.webp 720w, antisemitism-3-1400.webp 1400w" type="image/webp"/><img alt="The Birth of Jewish Resistance" class="gallery-image quality-standard" data-native-height="766" data-native-width="1024" decoding="async" fetchpriority="low" height="766" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antisemitism-3.jpg" width="1024"/></picture></span>
+<span aria-hidden="true" class="click-hint">+</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1905 — Jewish Self-Defense" data-he="1905 — Jewish Self-Defense" data-ru="1905 — Jewish Self-Defense">1905 — Jewish Self-Defense</div>
+<h3 class="info-title wave-text" data-en="The Birth of Jewish Resistance" data-he="The Birth of Jewish Resistance" data-ru="The Birth of Jewish Resistance">The Birth of Jewish Resistance</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Lazar Krestin" data-he="Lazar Krestin" data-ru="Lazar Krestin">Lazar Krestin</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1905" data-he="1905" data-ru="1905">1905</span></div>
 </div>
+<div class="info-block"><h4 data-en="Creator" data-he="יוצר" data-ru="Автор">Creator</h4><p class="wave-p wave-text" data-en="Lazar Krestin, a Lithuanian-born Jewish painter trained in Vilnius and Vienna, made the work in reaction to the wave of anti-Jewish riots following the 1903 Kishinev pogrom." data-he="Lazar Krestin, a Lithuanian-born Jewish painter trained in Vilnius and Vienna, made the work in reaction to the wave of anti-Jewish riots following the 1903 Kishinev pogrom." data-ru="Lazar Krestin, a Lithuanian-born Jewish painter trained in Vilnius and Vienna, made the work in reaction to the wave of anti-Jewish riots following the 1903 Kishinev pogrom.">Lazar Krestin, a Lithuanian-born Jewish painter trained in Vilnius and Vienna, made the work in reaction to the wave of anti-Jewish riots following the 1903 Kishinev pogrom.</p></div>
+<div class="info-block"><h4 data-en="Object" data-he="אובייקט" data-ru="Объект">Object</h4><p class="wave-p wave-text" data-en="Young Jewish men and women move forward armed with clubs and a pistol while older bearded figures recede into the background." data-he="Young Jewish men and women move forward armed with clubs and a pistol while older bearded figures recede into the background." data-ru="Young Jewish men and women move forward armed with clubs and a pistol while older bearded figures recede into the background.">Young Jewish men and women move forward armed with clubs and a pistol while older bearded figures recede into the background.</p></div>
+<div class="info-block"><h4 data-en="Archive" data-he="ארכיון" data-ru="Архив">Archive</h4><p class="wave-p wave-text" data-en="Lazar Krestin, The Birth of Jewish Resistance, 1905; Magnes Collection of Jewish Art and Life; public-domain image via Wikimedia Commons." data-he="Lazar Krestin, The Birth of Jewish Resistance, 1905; Magnes Collection of Jewish Art and Life; public-domain image via Wikimedia Commons." data-ru="Lazar Krestin, The Birth of Jewish Resistance, 1905; Magnes Collection of Jewish Art and Life; public-domain image via Wikimedia Commons.">Lazar Krestin, The Birth of Jewish Resistance, 1905; Magnes Collection of Jewish Art and Life; public-domain image via Wikimedia Commons.</p></div>
+</div>
+</div>
+</section>
+<section class="exhibition-section" data-history-en="Minkowski shifts attention from the moment of violence to its human residue: injury, bereavement, homelessness, and the destruction of ordinary family life." data-history-he="Minkowski shifts attention from the moment of violence to its human residue: injury, bereavement, homelessness, and the destruction of ordinary family life." data-history-ru="Minkowski shifts attention from the moment of violence to its human residue: injury, bereavement, homelessness, and the destruction of ordinary family life.">
+<div class="exhibition-container">
+<button aria-label="Examine After the Pogrom" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antisemitism-4-720.webp 720w, antisemitism-4-1400.webp 1400w" type="image/webp"/><img alt="After the Pogrom" class="gallery-image quality-hires" data-native-height="2048" data-native-width="1589" decoding="async" fetchpriority="low" height="2048" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antisemitism-4.jpg" width="1589"/></picture></span>
+<span aria-hidden="true" class="click-hint">+</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="c. 1910 — After the Pogrom" data-he="c. 1910 — After the Pogrom" data-ru="c. 1910 — After the Pogrom">c. 1910 — After the Pogrom</div>
+<h3 class="info-title wave-text" data-en="After the Pogrom" data-he="After the Pogrom" data-ru="After the Pogrom">After the Pogrom</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Maurycy Minkowski" data-he="Maurycy Minkowski" data-ru="Maurycy Minkowski">Maurycy Minkowski</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="c. 1910" data-he="c. 1910" data-ru="c. 1910">c. 1910</span></div>
+</div>
+<div class="info-block"><h4 data-en="Creator" data-he="יוצר" data-ru="Автор">Creator</h4><p class="wave-p wave-text" data-en="Maurycy Minkowski was a Polish-Jewish painter who traveled to areas affected by pogroms and made Jewish displacement and suffering central subjects of his work." data-he="Maurycy Minkowski was a Polish-Jewish painter who traveled to areas affected by pogroms and made Jewish displacement and suffering central subjects of his work." data-ru="Maurycy Minkowski was a Polish-Jewish painter who traveled to areas affected by pogroms and made Jewish displacement and suffering central subjects of his work.">Maurycy Minkowski was a Polish-Jewish painter who traveled to areas affected by pogroms and made Jewish displacement and suffering central subjects of his work.</p></div>
+<div class="info-block"><h4 data-en="Object" data-he="אובייקט" data-ru="Объект">Object</h4><p class="wave-p wave-text" data-en="Displaced women, children, and an injured man sit together after a pogrom, their stillness and physical proximity conveying shock rather than spectacle." data-he="Displaced women, children, and an injured man sit together after a pogrom, their stillness and physical proximity conveying shock rather than spectacle." data-ru="Displaced women, children, and an injured man sit together after a pogrom, their stillness and physical proximity conveying shock rather than spectacle.">Displaced women, children, and an injured man sit together after a pogrom, their stillness and physical proximity conveying shock rather than spectacle.</p></div>
+<div class="info-block"><h4 data-en="Archive" data-he="ארכיון" data-ru="Архив">Archive</h4><p class="wave-p wave-text" data-en="Maurycy Minkowski, After the Pogrom, c. 1910, oil on canvas; The Jewish Museum, New York; public-domain reproduction." data-he="Maurycy Minkowski, After the Pogrom, c. 1910, oil on canvas; The Jewish Museum, New York; public-domain reproduction." data-ru="Maurycy Minkowski, After the Pogrom, c. 1910, oil on canvas; The Jewish Museum, New York; public-domain reproduction.">Maurycy Minkowski, After the Pogrom, c. 1910, oil on canvas; The Jewish Museum, New York; public-domain reproduction.</p></div>
+</div>
+</div>
+</section>
+<section class="exhibition-section" data-history-en="Modernist fragmentation becomes historical testimony: the pogrom is represented not through perpetrators but through a built Jewish world broken apart." data-history-he="Modernist fragmentation becomes historical testimony: the pogrom is represented not through perpetrators but through a built Jewish world broken apart." data-history-ru="Modernist fragmentation becomes historical testimony: the pogrom is represented not through perpetrators but through a built Jewish world broken apart.">
+<div class="exhibition-container">
+<button aria-label="Examine Small Town after the Pogrom" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame"><picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="antisemitism-5-720.webp 720w, antisemitism-5-1400.webp 1400w" type="image/webp"/><img alt="Small Town after the Pogrom" class="gallery-image quality-standard" data-native-height="768" data-native-width="977" decoding="async" fetchpriority="low" height="768" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="antisemitism-5.jpg" width="977"/></picture></span>
+<span aria-hidden="true" class="click-hint">+</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1917 — Ruined Shtetl" data-he="1917 — Ruined Shtetl" data-ru="1917 — Ruined Shtetl">1917 — Ruined Shtetl</div>
+<h3 class="info-title wave-text" data-en="Small Town after the Pogrom" data-he="Small Town after the Pogrom" data-ru="Small Town after the Pogrom">Small Town after the Pogrom</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="Issachar Ber Ryback" data-he="Issachar Ber Ryback" data-ru="Issachar Ber Ryback">Issachar Ber Ryback</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1917" data-he="1917" data-ru="1917">1917</span></div>
+</div>
+<div class="info-block"><h4 data-en="Creator" data-he="יוצר" data-ru="Автор">Creator</h4><p class="wave-p wave-text" data-en="Issachar Ber Ryback was a Jewish modernist associated with the Kultur-Lige. His early work drew on the towns, synagogues, and visual culture of Eastern European Jewish life." data-he="Issachar Ber Ryback was a Jewish modernist associated with the Kultur-Lige. His early work drew on the towns, synagogues, and visual culture of Eastern European Jewish life." data-ru="Issachar Ber Ryback was a Jewish modernist associated with the Kultur-Lige. His early work drew on the towns, synagogues, and visual culture of Eastern European Jewish life.">Issachar Ber Ryback was a Jewish modernist associated with the Kultur-Lige. His early work drew on the towns, synagogues, and visual culture of Eastern European Jewish life.</p></div>
+<div class="info-block"><h4 data-en="Object" data-he="אובייקט" data-ru="Объект">Object</h4><p class="wave-p wave-text" data-en="Buildings collapse into jagged planes in Ryback’s vision of a small Jewish town after a pogrom, with the shtetl itself appearing physically shattered." data-he="Buildings collapse into jagged planes in Ryback’s vision of a small Jewish town after a pogrom, with the shtetl itself appearing physically shattered." data-ru="Buildings collapse into jagged planes in Ryback’s vision of a small Jewish town after a pogrom, with the shtetl itself appearing physically shattered.">Buildings collapse into jagged planes in Ryback’s vision of a small Jewish town after a pogrom, with the shtetl itself appearing physically shattered.</p></div>
+<div class="info-block"><h4 data-en="Archive" data-he="ארכיון" data-ru="Архив">Archive</h4><p class="wave-p wave-text" data-en="Issachar Ber Ryback, Small Town after the Pogrom, 1917; public-domain image via Wikimedia Commons." data-he="Issachar Ber Ryback, Small Town after the Pogrom, 1917; public-domain image via Wikimedia Commons." data-ru="Issachar Ber Ryback, Small Town after the Pogrom, 1917; public-domain image via Wikimedia Commons.">Issachar Ber Ryback, Small Town after the Pogrom, 1917; public-domain image via Wikimedia Commons.</p></div>
 </div>
 </div>
 </section></main>

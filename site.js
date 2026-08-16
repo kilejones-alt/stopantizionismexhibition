@@ -316,40 +316,46 @@ addEventListener('keydown', event => {
 /* PROFESSIONAL INTERNAL PAGE TRANSITIONS */
 let doorTransitionActive = false;
 
-function apertureToneFor(href) {
-  if (/antijudaism\.html(?:$|[?#])/i.test(href)) return '#fff9ec';
-  if (/antisemitism\.html(?:$|[?#])/i.test(href)) return '#fffefe';
-  if (/exhibition\.html(?:$|[?#])/i.test(href)) return '#fff6f3';
-  return '#fffaf2';
+function pageFlipLabelFor(card) {
+  const title = card.querySelector('.era-title');
+  return title?.getAttribute('data-' + currentLang) || title?.textContent?.trim() || '';
 }
 
-function ensureEraApertureLayer() {
-  let layer = document.getElementById('era-aperture-layer');
-  if (layer) return layer;
-  layer = document.createElement('div');
-  layer.id = 'era-aperture-layer';
+function createPageFlipLayer(card) {
+  document.getElementById('era-pageflip-layer')?.remove();
+  const rect = card.getBoundingClientRect();
+  const front = card.querySelector('.door-front') || card;
+  const layer = document.createElement('div');
+  layer.id = 'era-pageflip-layer';
   layer.setAttribute('aria-hidden', 'true');
-  const figure = document.createElement('div');
-  figure.id = 'era-aperture-figure';
-  layer.appendChild(figure);
+  layer.style.setProperty('--flip-left', `${rect.left}px`);
+  layer.style.setProperty('--flip-top', `${rect.top}px`);
+  layer.style.setProperty('--flip-width', `${rect.width}px`);
+  layer.style.setProperty('--flip-height', `${rect.height}px`);
+
+  const destination = document.createElement('div');
+  destination.className = 'era-pageflip-destination';
+
+  const sheet = document.createElement('div');
+  sheet.className = 'era-pageflip-sheet';
+
+  const frontFace = document.createElement('div');
+  frontFace.className = 'era-pageflip-face era-pageflip-front';
+  const frontClone = front.cloneNode(true);
+  frontClone.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
+  frontClone.querySelectorAll('a,button').forEach(node => node.setAttribute('tabindex','-1'));
+  frontClone.querySelectorAll('.era-arrow,.mobile-node').forEach(node => node.remove());
+  frontFace.appendChild(frontClone);
+
+  const backFace = document.createElement('div');
+  backFace.className = 'era-pageflip-face era-pageflip-back';
+  const backArt = card.querySelector('.era-image');
+  if (backArt) backFace.style.backgroundImage = `url("${backArt.currentSrc || backArt.src}")`;
+
+  sheet.append(frontFace, backFace);
+  layer.append(destination, sheet);
   document.body.appendChild(layer);
   return layer;
-}
-
-function apertureOriginFor(card) {
-  const image = card.querySelector('.era-image');
-  const rect = (image || card).getBoundingClientRect();
-  const cards = [...document.querySelectorAll('.era-card[href]')];
-  const index = Math.max(0, cards.indexOf(card));
-  const focal = [
-    { x: .56, y: .44 },
-    { x: .48, y: .50 },
-    { x: .54, y: .46 }
-  ][index] || { x: .52, y: .48 };
-  return {
-    x: rect.left + rect.width * focal.x,
-    y: rect.top + rect.height * focal.y
-  };
 }
 
 function runDoorTransition(card, href) {
@@ -364,16 +370,15 @@ function runDoorTransition(card, href) {
     return;
   }
 
-  document.body.classList.add('door-transitioning');
-  card.classList.add('door-flipping');
+  const layer = createPageFlipLayer(card);
+  document.body.classList.add('pageflip-transitioning');
+  card.classList.add('pageflip-source');
+  requestAnimationFrame(() => requestAnimationFrame(() => layer.classList.add('is-turning')));
 
-  const flipDuration = innerWidth <= 720 ? 520 : 580;
-  const panelDelay = flipDuration + 110;
-  const navigateDelay = panelDelay + (innerWidth <= 720 ? 680 : 760);
-
-  setTimeout(() => card.classList.add('door-back-visible'), flipDuration - 70);
-  setTimeout(() => card.classList.add('door-opening'), panelDelay);
-  setTimeout(() => { location.assign(href); }, navigateDelay);
+  /* One continuous turn: the selected exhibition card becomes a sheet and flips
+     across its left binding edge while the next page appears beneath it. */
+  const duration = innerWidth <= 720 ? 920 : 1040;
+  setTimeout(() => { location.assign(href); }, duration);
 }
 
 function setupPageTransitions() {
@@ -426,12 +431,13 @@ function setupDoorImageResolve() {
 
 function resetRestoredPage() {
   doorTransitionActive = false;
-  document.body.classList.remove('door-transitioning', 'aperture-preparing', 'page-leaving');
+  document.body.classList.remove('door-transitioning', 'aperture-preparing', 'pageflip-transitioning', 'page-leaving');
   document.querySelectorAll('.era-card').forEach(card => {
-    card.classList.remove('door-flipping', 'door-back-visible', 'door-opening', 'aperture-selected');
+    card.classList.remove('door-flipping', 'door-back-visible', 'door-opening', 'aperture-selected', 'pageflip-source');
     card.removeAttribute('aria-busy');
   });
   document.getElementById('era-aperture-layer')?.remove();
+  document.getElementById('era-pageflip-layer')?.remove();
   const curtain = document.getElementById('page-curtain');
   if (curtain) curtain.removeAttribute('style');
   requestAnimationFrame(() => document.body.classList.add('page-ready'));

@@ -211,6 +211,63 @@ function installArchiveStaggerStyles() {
   document.head.appendChild(style);
 }
 
+function installGalleryClarityStyles() {
+  if (document.getElementById('gallery-clarity-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'gallery-clarity-styles';
+  style.textContent = `
+    /* Keep one chronology: the central spine. Remove secondary rails/dots attached to catalogue boxes. */
+    .info-panel::before,
+    .info-block::before,
+    .info-block::after,
+    .timeline-art-right .info-panel::before,
+    .timeline-art-right .info-panel > .info-block::before,
+    .timeline-art-right .info-panel > .info-block::after { display:none!important; content:none!important; }
+
+    /* Catalogue boxes should read as labels, not mini timelines. */
+    .info-panel > .info-block,
+    .history-panel { flex-shrink:0; }
+    .info-category,.info-title,.info-meta { flex-shrink:0; }
+    .info-panel > .info-block { border-left-color:rgba(255,255,255,.045)!important; }
+    .timeline-art-right .info-panel > .info-block { border-right-color:rgba(255,255,255,.045)!important; }
+
+    .info-title { position:relative; z-index:2; margin-bottom:.3rem!important; }
+    .info-meta { position:relative; z-index:1; margin-top:.05rem; }
+    .info-title.title-long { font-size:clamp(1.62rem,2.05vw,1.96rem)!important; line-height:1.04!important; }
+    .info-title.title-very-long { font-size:clamp(1.45rem,1.82vw,1.78rem)!important; line-height:1.04!important; }
+
+    /* The entire artwork is the museum-viewer affordance; the tiny + remains secondary. */
+    .exhibit-image-button { cursor:zoom-in!important; }
+    #object-viewer-stage { cursor:grab!important; }
+    #object-viewer-stage.is-dragging { cursor:grabbing!important; }
+
+    @media(min-width:851px){
+      .info-panel.is-tight .info-block{padding:.58rem .78rem .62rem!important}
+      .info-panel.is-tighter .info-block{padding:.46rem .7rem .5rem!important}
+      .info-panel.is-tight .info-block h4,.info-panel.is-tighter .info-block h4{font-size:.7rem!important;margin-bottom:.18rem!important}
+      .info-panel.is-tight .wave-p{font-size:.88rem!important;line-height:1.36!important}
+      .info-panel.is-tighter .wave-p{font-size:.84rem!important;line-height:1.32!important}
+      .info-panel.is-tight .history-panel,.info-panel.is-tighter .history-panel{min-height:54px!important}
+      .info-panel.is-ultra-tight{gap:.22rem!important}
+      .info-panel.is-ultra-tight .info-title{font-size:clamp(1.34rem,1.7vw,1.62rem)!important;line-height:1.02!important;padding-bottom:.26rem!important;margin-bottom:.12rem!important}
+      .info-panel.is-ultra-tight .info-meta{font-size:.82rem!important;line-height:1.22!important;gap:.08rem!important}
+      .info-panel.is-ultra-tight .info-block{padding:.3rem .62rem .34rem!important;margin-top:.04rem!important}
+      .info-panel.is-ultra-tight .info-block h4{font-size:.64rem!important;margin-bottom:.12rem!important;letter-spacing:.11em!important}
+      .info-panel.is-ultra-tight .wave-p{font-size:.78rem!important;line-height:1.24!important;min-height:0!important}
+      .info-panel.is-ultra-tight .history-panel{min-height:34px!important;padding:.3rem .62rem .34rem!important}
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function classifyGalleryTitles() {
+  document.querySelectorAll('.info-title').forEach(title => {
+    const text = title.getAttribute('data-en') || title.textContent || '';
+    title.classList.toggle('title-long', text.length >= 38 && text.length < 56);
+    title.classList.toggle('title-very-long', text.length >= 56);
+  });
+}
+
 function normalizeArchivePanels() {
   document.querySelectorAll('.exhibition-section').forEach((section, index) => {
     const panel = section.querySelector('.info-panel');
@@ -226,6 +283,9 @@ function normalizeArchivePanels() {
     setArchiveHeading(objectBlock.querySelector('h4'), 'Object', 'אובייקט', 'Объект');
     setArchiveHeading(creatorBlock.querySelector('h4'), 'Creator', 'יוצר', 'Автор');
     setArchiveHeading(archiveBlock.querySelector('h4'), 'Archive', 'ארכיון', 'Архив');
+    /* Archive remains in the DOM as the provenance source for the museum viewer,
+       but it is no longer a wall box. */
+    archiveBlock.classList.add('wall-archive-hidden');
 
     if (!panel.querySelector('.archive-historical-setting')) {
       const historical = makeHistoricalSettingBlock(archiveSettingFor(section, index));
@@ -280,7 +340,7 @@ function copyLocalizedText(source, className = '') {
 function enhanceArchiveProvenance() {
   document.querySelectorAll('.exhibition-section').forEach(section => {
     if (section.getAttribute('data-empty-record') === 'true') return;
-    const blocks = [...section.querySelectorAll('.info-panel > .info-block')];
+    const blocks = [...section.querySelectorAll('.info-panel > .info-block:not(.wall-archive-hidden)')];
     const archiveBlock = blocks.find(block => (block.querySelector('h4')?.getAttribute('data-en') || block.querySelector('h4')?.textContent || '').trim() === 'Archive');
     if (!archiveBlock || archiveBlock.querySelector('.archive-drawer')) return;
 
@@ -455,7 +515,7 @@ function revealArchiveSection(section) {
     ...section.querySelectorAll('.info-meta .wave-text'),
     section.querySelector('.timeline-node')
   ].filter(Boolean);
-  const blocks = [...section.querySelectorAll('.info-panel > .info-block')];
+  const blocks = [...section.querySelectorAll('.info-panel > .info-block:not(.wall-archive-hidden)')];
   const history = section.querySelector('.history-panel');
 
   /* The artwork anchors the section, then catalogue labels, then History last. */
@@ -479,13 +539,13 @@ function revealArchiveSection(section) {
   });
 
   if (history) {
-    const historyIndex = blocks.length;
     history.classList.add('archive-stagger-block');
-    history.style.setProperty('--archive-stagger-order', String(historyIndex));
+    history.style.setProperty('--archive-stagger-order', String(Math.max(0, blocks.length - 1)));
     window.setTimeout(() => {
       history.classList.add('pop-in');
       triggerWaveWithin(history);
-    }, ARCHIVE_STAGGER_START + (historyIndex * ARCHIVE_STAGGER_STEP));
+      scheduleHistoryFit();
+    }, 560);
   }
 }
 
@@ -512,6 +572,7 @@ function fitHistoryPanels() {
     const artwork = section.querySelector('.art-box');
     if (!panel || !history || !artwork) return;
 
+    panel.classList.remove('is-tight', 'is-tighter', 'is-ultra-tight');
     panel.style.removeProperty('--art-height');
     history.style.removeProperty('max-height');
     history.style.removeProperty('overflow-y');
@@ -522,12 +583,33 @@ function fitHistoryPanels() {
     if (!artHeight) return;
     panel.style.setProperty('--art-height', `${artHeight}px`);
 
-    const siblings = [...panel.children].filter(child => child !== history);
-    const used = siblings.reduce((sum, child) => sum + outerHeightWithMargins(child), 0);
-    const gapValue = parseFloat(window.getComputedStyle(panel).gap || '0') || 0;
-    const totalGaps = gapValue * Math.max(0, panel.children.length - 1);
-    const available = Math.max(72, Math.floor(artHeight - used - totalGaps));
-    history.style.maxHeight = `${available}px`;
+    const measureAvailable = () => {
+      const siblings = [...panel.children].filter(child => child !== history);
+      const used = siblings.reduce((sum, child) => sum + outerHeightWithMargins(child), 0);
+      const gapValue = parseFloat(window.getComputedStyle(panel).gap || '0') || 0;
+      const totalGaps = gapValue * Math.max(0, panel.children.length - 1);
+      return Math.floor(artHeight - used - totalGaps - 12);
+    };
+
+    let available = measureAvailable();
+    if (available < 112) {
+      panel.classList.add('is-tight');
+      available = measureAvailable();
+    }
+    if (available < 92) {
+      panel.classList.add('is-tighter');
+      available = measureAvailable();
+    }
+    if (available < 62) {
+      panel.classList.add('is-ultra-tight');
+      available = measureAvailable();
+    }
+
+    /* History remains present but its physical bottom is clamped to the artwork frame. */
+    const historyTop = history.getBoundingClientRect().top;
+    const artBottom = artwork.getBoundingClientRect().bottom;
+    const exactAvailable = Math.max(18, Math.floor(artBottom - historyTop - 2));
+    history.style.maxHeight = `${Math.min(available, exactAvailable)}px`;
     history.style.overflowY = 'auto';
   });
 }
@@ -549,7 +631,7 @@ function replayArchiveWords(section) {
     ...section.querySelectorAll('.info-meta .wave-text'),
     section.querySelector('.timeline-node')
   ].filter(Boolean);
-  const blocks = [...section.querySelectorAll('.info-panel > .info-block')];
+  const blocks = [...section.querySelectorAll('.info-panel > .info-block:not(.wall-archive-hidden)')];
   const history = section.querySelector('.history-panel');
 
   /* Rebuild the word spans each time the visitor returns to this exhibit so the
@@ -725,13 +807,13 @@ function setupHeroReplayObserver() {
 function timelineYearFor(section) {
   const category = section.querySelector('.info-category');
   const categoryText = category?.getAttribute('data-en') || category?.textContent || '';
-  const categoryYear = categoryText.match(/(?:18|19|20)\d{2}(?:\s*[–-]\s*\d{2,4})?/);
+  const categoryYear = categoryText.match(/(?:1\d{3}|20\d{2})(?:\s*[–-]\s*\d{2,4})?/);
   if (categoryYear) return categoryYear[0].replace(/\s+/g, '');
 
   const dateText = [...section.querySelectorAll('.info-meta .wave-text')]
     .map(el => el.getAttribute('data-en') || el.textContent || '')
     .join(' ');
-  const dateYear = dateText.match(/(?:18|19|20)\d{2}(?:\s*[–-]\s*\d{2,4})?/);
+  const dateYear = dateText.match(/(?:1\d{3}|20\d{2})(?:\s*[–-]\s*\d{2,4})?/);
   if (dateYear) return dateYear[0].replace(/\s+/g, '');
 
   /* The two shorter era galleries are still being curated. Until final dates
@@ -1245,20 +1327,16 @@ function setupGalleryImagePolish() {
 function setupGalleryChrome() {
   const nav = document.querySelector('.controls-nav');
   if (!nav) return;
-  let settleTimer = 0;
-  const updateQuietState = () => {
-    nav.classList.toggle('chrome-quiet', window.scrollY > 90);
+  const update = () => {
+    const hidden = window.scrollY > 72;
+    nav.classList.toggle('chrome-hidden', hidden);
+    nav.classList.remove('chrome-quiet', 'chrome-moving');
+    if (hidden) nav.setAttribute('inert', '');
+    else nav.removeAttribute('inert');
   };
-  const onScroll = () => {
-    updateQuietState();
-    if (window.scrollY > 90) nav.classList.add('chrome-moving');
-    window.clearTimeout(settleTimer);
-    settleTimer = window.setTimeout(() => nav.classList.remove('chrome-moving'), 320);
-  };
-  updateQuietState();
-  addEventListener('scroll', onScroll, { passive: true });
-  nav.addEventListener('pointerenter', () => nav.classList.remove('chrome-moving'));
-  nav.addEventListener('focusin', () => nav.classList.remove('chrome-moving'));
+  update();
+  addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update, { passive: true });
 }
 
 function setupControls() {
@@ -1369,6 +1447,8 @@ addEventListener('DOMContentLoaded', () => {
   setupEraApertureArrival();
   resetRestoredPage();
   installArchiveStaggerStyles();
+  installGalleryClarityStyles();
+  classifyGalleryTitles();
   populateSelectedAntizionismWorks();
   normalizeArchivePanels();
   scheduleHistoryFit();
