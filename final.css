@@ -556,3 +556,160 @@ body.door-cutting .era-card:not(.door-cut-source){
     max-width:none!important;
   }
 }
+
+/* 2026-08-17 CHRONOLOGY INTERLEAVE — approved text becomes a visible wall beat between objects. */
+html[lang="en"] .history-wall-hidden{display:none!important}
+html:not([lang="en"]) .chronology-interlude[data-script-language="en"]{display:none!important}
+
+/* No central timeline hardware. Chronology is carried by the sequence of dated object headings
+   and the full-width narrative beats between them. */
+.timeline-section::before,
+.timeline-section::after,
+.timeline-section .exhibition-container::after,
+.timeline-marker,
+.chronology-rail{display:none!important;content:none!important}
+
+.chronology-object-section{
+  padding-top:clamp(5.4rem,7vw,7.4rem)!important;
+  padding-bottom:clamp(5.4rem,7vw,7.4rem)!important;
+}
+
+.chronology-interlude{
+  position:relative;
+  z-index:2;
+  width:100%;
+  min-height:clamp(560px,72vh,760px);
+  display:grid;
+  place-items:center;
+  padding:clamp(6.5rem,9vw,9.5rem) var(--final-side);
+  border-bottom:1px solid rgba(255,255,255,.035);
+  background:
+    radial-gradient(circle at 50% 48%,rgba(255,255,255,.026) 0%,rgba(255,255,255,.008) 33%,rgba(23,23,26,0) 72%),
+    #17171a;
+  overflow:hidden;
+}
+.chronology-interlude::before{
+  content:"";
+  position:absolute;
+  top:clamp(4rem,7vh,5.5rem);
+  left:50%;
+  width:72px;
+  height:1px;
+  transform:translateX(-50%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.24),transparent);
+}
+.chronology-interlude-inner{
+  width:min(900px,100%);
+  margin-inline:auto;
+  text-align:center;
+  opacity:0;
+  transform:translateY(34px);
+  filter:blur(3px);
+  transition:opacity .82s cubic-bezier(.16,1,.3,1),transform .95s cubic-bezier(.16,1,.3,1),filter .82s ease;
+}
+.chronology-interlude.is-visible .chronology-interlude-inner{opacity:1;transform:none;filter:none}
+.chronology-interlude-category{
+  margin:0 auto 1.35rem;
+  color:#b6b6c1;
+  font-family:var(--museum-sans,"Source Sans 3",sans-serif);
+  font-size:clamp(.78rem,.9vw,.88rem);
+  line-height:1.3;
+  font-weight:500;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.chronology-interlude-title{
+  margin:0 auto 2rem;
+  max-width:820px;
+  color:#fff;
+  font-family:var(--museum-serif,"Cormorant Garamond",Georgia,serif);
+  font-size:clamp(2.35rem,4vw,4rem);
+  line-height:1.02;
+  font-weight:500;
+  letter-spacing:.005em;
+  text-wrap:balance;
+}
+.chronology-interlude-copy{
+  width:min(820px,100%);
+  margin-inline:auto;
+  color:#e7e7ec;
+  font-family:var(--museum-sans,"Source Sans 3",sans-serif);
+  font-size:clamp(1.04rem,1.22vw,1.18rem);
+  line-height:1.72;
+  letter-spacing:.002em;
+  text-align:center;
+}
+.chronology-interlude-copy p{margin:0 auto 1.08rem;max-width:76ch}
+.chronology-interlude-copy p:last-child{margin-bottom:0}
+.chronology-interlude-copy strong{color:#fff;font-weight:600}
+.chronology-interlude-copy em{font-family:var(--museum-serif,"Cormorant Garamond",Georgia,serif);font-size:1.08em}
+
+/* Existing text-only chronology moments use the same centered museum rhythm. */
+.genealogy-marker{
+  min-height:clamp(520px,66vh,700px)!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:clamp(6rem,8.5vw,8.5rem) var(--final-side)!important;
+  border-bottom:1px solid rgba(255,255,255,.035)!important;
+}
+.genealogy-marker .genealogy-script-inner{width:100%!important;max-width:900px!important;margin:auto!important}
+.genealogy-marker .genealogy-script-copy{
+  width:100%!important;
+  max-width:820px!important;
+  margin:auto!important;
+  text-align:center!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  padding:0!important;
+}
+.genealogy-marker .genealogy-script-copy h3{
+  font-size:clamp(2.2rem,3.6vw,3.55rem)!important;
+  line-height:1.03!important;
+  margin:0 auto 1.7rem!important;
+  text-wrap:balance;
+}
+.genealogy-marker .genealogy-script-copy p{
+  max-width:76ch!important;
+  margin:0 auto 1rem!important;
+  font-size:clamp(1.02rem,1.18vw,1.16rem)!important;
+  line-height:1.72!important;
+  text-align:center!important;
+}
+
+/* The closing is the last chronological beat, not a card or a continuation of a center rail. */
+.genealogy-closing{
+  min-height:clamp(600px,76vh,820px)!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:clamp(7rem,10vw,10rem) var(--final-side)!important;
+}
+.genealogy-closing .genealogy-script-copy{
+  text-align:center!important;
+  max-width:900px!important;
+  margin:auto!important;
+  padding:2.3rem 0 0!important;
+  border-top:1px solid rgba(255,255,255,.15)!important;
+}
+.genealogy-closing .genealogy-script-copy p{margin-left:auto!important;margin-right:auto!important;text-align:center!important}
+
+@media(max-width:850px){
+  .chronology-object-section{padding-top:4.8rem!important;padding-bottom:4.8rem!important}
+  .chronology-interlude{
+    min-height:auto;
+    padding:6.6rem var(--final-mobile-side) 7rem;
+  }
+  .chronology-interlude::before{top:4.25rem;width:58px}
+  .chronology-interlude-inner{width:100%;transform:translateY(24px)}
+  .chronology-interlude-category{font-size:.72rem;letter-spacing:.14em;margin-bottom:1rem}
+  .chronology-interlude-title{font-size:clamp(2rem,9.5vw,3rem);margin-bottom:1.55rem}
+  .chronology-interlude-copy{font-size:1rem;line-height:1.66;max-width:100%}
+  .chronology-interlude-copy p{margin-bottom:1rem}
+  .genealogy-marker{min-height:auto!important;padding:6.4rem var(--final-mobile-side)!important}
+  .genealogy-marker .genealogy-script-copy h3{font-size:clamp(2rem,9vw,2.8rem)!important}
+  .genealogy-marker .genealogy-script-copy p{font-size:1rem!important;line-height:1.66!important}
+  .genealogy-closing{min-height:auto!important;padding:7rem var(--final-mobile-side)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .chronology-interlude-inner{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+}

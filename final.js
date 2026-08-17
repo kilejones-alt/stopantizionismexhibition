@@ -48,21 +48,74 @@
     });
   }
 
-  function renderApprovedHistories() {
+  function approvedEnglishText(element) {
+    if (!element) return '';
+    return element.getAttribute('data-en') || element.textContent?.trim() || '';
+  }
+
+  function buildChronologyInterludes() {
     document.querySelectorAll('template.approved-history-template').forEach(template => {
       const section = template.closest('.exhibition-section');
-      const history = section?.querySelector('.history-panel');
-      if (!history || history.querySelector('.approved-history-render')) return;
-      const original = history.querySelector(':scope > .wave-p');
-      if (original) original.classList.add('approved-history-original');
-      const render = document.createElement('div');
-      render.className = 'approved-history-render';
-      render.setAttribute('data-script-language', 'en');
-      render.append(template.content.cloneNode(true));
-      history.append(render);
-      history.classList.add('has-approved-history');
-      section.classList.add('approved-history-section');
+      if (!section || section.dataset.chronologyInterleaved === '1') return;
+
+      section.dataset.chronologyInterleaved = '1';
+      section.classList.add('chronology-object-section');
+
+      /* The approved long-form History remains in the source HTML, but on the wall
+         it becomes its own chronological beat between objects instead of a cramped box. */
+      const history = section.querySelector('.history-panel');
+      if (history) history.classList.add('history-wall-hidden');
+
+      const interlude = document.createElement('section');
+      interlude.className = 'chronology-interlude';
+      interlude.setAttribute('data-script-language', 'en');
+
+      const inner = document.createElement('div');
+      inner.className = 'chronology-interlude-inner';
+
+      const categoryText = approvedEnglishText(section.querySelector('.info-category'));
+      const titleText = approvedEnglishText(section.querySelector('.info-title'));
+
+      if (categoryText) {
+        const category = document.createElement('div');
+        category.className = 'chronology-interlude-category';
+        category.textContent = categoryText;
+        inner.append(category);
+      }
+
+      const normalizedCategory = categoryText.toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+      const normalizedTitle = titleText.toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+      if (titleText && normalizedTitle && !normalizedCategory.endsWith(normalizedTitle)) {
+        const title = document.createElement('h2');
+        title.className = 'chronology-interlude-title';
+        title.textContent = titleText;
+        inner.append(title);
+      }
+
+      const copy = document.createElement('div');
+      copy.className = 'chronology-interlude-copy';
+      copy.append(template.content.cloneNode(true));
+      inner.append(copy);
+      interlude.append(inner);
+      section.insertAdjacentElement('afterend', interlude);
     });
+  }
+
+  function setupChronologyInterludeReveal() {
+    const interludes = [...document.querySelectorAll('.chronology-interlude')];
+    if (!interludes.length) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+      interludes.forEach(item => item.classList.add('is-visible'));
+      return;
+    }
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+    interludes.forEach(item => observer.observe(item));
   }
 
   function classifyArtworkProportions() {
@@ -140,12 +193,14 @@
 
   addEventListener('DOMContentLoaded', () => {
     reorderCatalogueFields();
-    renderApprovedHistories();
+    buildChronologyInterludes();
+    setupChronologyInterludeReveal();
     classifyArtworkProportions();
     scheduleFit();
     setTimeout(() => {
       reorderCatalogueFields();
-      renderApprovedHistories();
+      buildChronologyInterludes();
+      setupChronologyInterludeReveal();
       classifyArtworkProportions();
       scheduleFit();
     }, 80);
@@ -153,7 +208,8 @@
 
   setTimeout(() => {
     reorderCatalogueFields();
-    renderApprovedHistories();
+    buildChronologyInterludes();
+    setupChronologyInterludeReveal();
     classifyArtworkProportions();
     scheduleFit();
   }, 160);
