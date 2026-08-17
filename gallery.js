@@ -768,39 +768,32 @@ function setupHeroReplayObserver() {
   const subtitle = hero.querySelector('.hero-subtitle');
   const title = hero.querySelector('.hero-title');
   const location = hero.querySelector('.hero-location');
-  let heroInView = false;
-  let lastReplay = 0;
+  let initialPlaybackDone = false;
 
-  const replayHero = () => {
-    const now = performance.now();
-    if (now - lastReplay < 450) return;
-    lastReplay = now;
-
+  const playHeroOnce = () => {
+    if (initialPlaybackDone) return;
+    initialPlaybackDone = true;
     replayArtwork(artwork);
     animateHeroWords(subtitle);
-    window.setTimeout(() => animateHeroLetters(title), 170);
-    window.setTimeout(() => animateHeroWords(location), 430);
+    window.setTimeout(() => animateHeroLetters(title), 120);
+    window.setTimeout(() => animateHeroWords(location), 300);
   };
 
-  /* Explicit initial playback. This avoids the previous race where the hero
-     could already be visible before IntersectionObserver delivered its first
-     useful callback. */
-  window.setTimeout(replayHero, 520);
-
+  /* One entrance playback only. The former timeout + observer pair could both
+     fire on initial load, making the destination gallery appear to load twice. */
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) {
-        heroInView = false;
         artwork?.classList.remove('art-in-view');
         return;
       }
-      if (heroInView) return;
-      heroInView = true;
-      replayHero();
+      artwork?.classList.add('art-in-view');
+      playHeroOnce();
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
 
   observer.observe(hero);
+  window.setTimeout(playHeroOnce, 180);
 }
 
 

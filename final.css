@@ -182,3 +182,377 @@ html[lang="en"] .history-panel.has-approved-history>.approved-history-original{d
   .approved-history-section .art-box .museum-frame{min-height:100%!important;height:100%!important;max-height:none!important;align-items:center!important}
   .approved-history-section .art-box .museum-frame img{flex:0 0 auto}
 }
+
+/* 2026-08-16 CORRECTIVE QA PASS — geometry and transition only; no copy changes. */
+
+/* Gallery controls belong to the top of the page and never cover later exhibits. */
+body:not(.home-page) .controls-nav,
+body:not(.home-page) .site-brand-link{position:absolute!important}
+body:not(.home-page) .controls-nav.chrome-hidden{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+
+/* The chronology year is a small spine label, not a pill wide enough to cover artwork. */
+@media(min-width:851px){
+  .timeline-marker{
+    top:0!important;
+    transform:translate(-50%,-125%)!important;
+    z-index:3!important;
+  }
+  .timeline-node{
+    min-width:0!important;
+    padding:.3rem .42rem!important;
+    border-radius:3px!important;
+    background:#17171a!important;
+    border-color:rgba(255,255,255,.07)!important;
+    box-shadow:none!important;
+    font-size:.67rem!important;
+    line-height:1!important;
+    letter-spacing:.12em!important;
+    font-variant-caps:normal!important;
+  }
+  .timeline-active .timeline-node{
+    background:#17171a!important;
+    border-color:rgba(116,38,45,.48)!important;
+    box-shadow:none!important;
+  }
+}
+
+/* One catalogue system across all three galleries: same width, padding, type size and leading. */
+.info-panel>.info-block:not(.wall-archive-hidden),
+.history-panel{
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+  margin:.42rem 0 0!important;
+  padding:.9rem 1rem .95rem!important;
+  background:rgba(255,255,255,.026)!important;
+  border:1px solid rgba(255,255,255,.045)!important;
+  border-left-color:rgba(255,255,255,.075)!important;
+  border-radius:4px!important;
+}
+.timeline-art-right .info-panel>.info-block:not(.wall-archive-hidden),
+.timeline-art-right .history-panel{
+  border:1px solid rgba(255,255,255,.045)!important;
+  border-right-color:rgba(255,255,255,.075)!important;
+}
+.info-panel>.info-block:not(.wall-archive-hidden) h4,
+.history-panel h4{
+  font-size:.7rem!important;
+  line-height:1.1!important;
+  letter-spacing:.13em!important;
+  margin:0 0 .42rem!important;
+}
+.info-panel>.info-block:not(.wall-archive-hidden) .wave-p,
+.history-panel .wave-p,
+.approved-history-render,
+.approved-history-render p{
+  font-size:.96rem!important;
+  line-height:1.5!important;
+  letter-spacing:.002em!important;
+}
+.approved-history-render p{margin:0 0 .68rem!important}
+.approved-history-render p:last-child{margin-bottom:0!important}
+
+/* Neutralize the old emergency text-shrinking classes. They caused different type sizes from box to box. */
+@media(min-width:851px){
+  .info-panel,
+  .info-panel.is-tight,
+  .info-panel.is-tighter,
+  .info-panel.is-ultra-tight{gap:.48rem!important}
+  .info-panel.is-tight>.info-block:not(.wall-archive-hidden),
+  .info-panel.is-tighter>.info-block:not(.wall-archive-hidden),
+  .info-panel.is-ultra-tight>.info-block:not(.wall-archive-hidden),
+  .info-panel.is-tight .history-panel,
+  .info-panel.is-tighter .history-panel,
+  .info-panel.is-ultra-tight .history-panel{padding:.9rem 1rem .95rem!important}
+  .info-panel.is-tight .wave-p,
+  .info-panel.is-tighter .wave-p,
+  .info-panel.is-ultra-tight .wave-p,
+  .info-panel.is-tight .approved-history-render,
+  .info-panel.is-tighter .approved-history-render,
+  .info-panel.is-ultra-tight .approved-history-render,
+  .info-panel.is-tight .approved-history-render p,
+  .info-panel.is-tighter .approved-history-render p,
+  .info-panel.is-ultra-tight .approved-history-render p{
+    font-size:.96rem!important;
+    line-height:1.5!important;
+  }
+  .info-panel.is-tight .info-block h4,
+  .info-panel.is-tighter .info-block h4,
+  .info-panel.is-ultra-tight .info-block h4,
+  .info-panel.is-tight .history-panel h4,
+  .info-panel.is-tighter .history-panel h4,
+  .info-panel.is-ultra-tight .history-panel h4{font-size:.7rem!important;margin-bottom:.42rem!important}
+
+  /* Long approved History is allowed to flow. The artwork stays beside it while the
+     visitor reads, instead of the text being crushed or clipped to the image height. */
+  .approved-history-section{min-height:auto!important}
+  .approved-history-section .exhibition-container{align-items:start!important}
+  .approved-history-section .art-box{
+    position:sticky!important;
+    top:clamp(5.5rem,9vh,7rem)!important;
+    align-self:start!important;
+    min-height:0!important;
+    height:auto!important;
+  }
+  .approved-history-section .art-box .museum-frame{
+    min-height:0!important;
+    height:auto!important;
+    max-height:min(72vh,760px)!important;
+  }
+  .approved-history-section .art-box .museum-frame>.responsive-art-picture{
+    height:auto!important;
+    max-height:min(72vh,760px)!important;
+  }
+  .approved-history-section .art-box .museum-frame img{
+    width:100%!important;
+    height:auto!important;
+    max-height:min(72vh,760px)!important;
+    object-fit:contain!important;
+  }
+  .approved-history-section .history-panel{
+    max-height:none!important;
+    overflow:visible!important;
+  }
+}
+
+/* Strong, consistent hover: noticeable lift and brightening without changing text geometry. */
+@media(hover:hover) and (pointer:fine){
+  .info-panel>.info-block:not(.wall-archive-hidden).archive-stagger-block.pop-in:hover,
+  .history-panel.archive-stagger-block.pop-in:hover{
+    transform:translateY(-18px) scale(1.018)!important;
+    filter:brightness(1.16)!important;
+    background:rgba(255,255,255,.072)!important;
+    border-color:rgba(255,255,255,.22)!important;
+    box-shadow:0 28px 54px rgba(0,0,0,.34),0 0 24px rgba(255,255,255,.04)!important;
+  }
+}
+
+/* Replace the slow image-peel with one fast matte cut. The destination loads only
+   after the viewport is fully covered, so there is no half-transition between pages. */
+#catalog-turn-layer,#era-pageflip-layer{display:none!important}
+#door-cut-veil{
+  position:fixed;
+  inset:0;
+  z-index:9000;
+  pointer-events:none;
+  background:#111114;
+  opacity:0;
+  transition:opacity .22s ease;
+}
+#door-cut-veil.is-active{opacity:1}
+.home-page .era-card.door-cut-source{
+  z-index:100!important;
+  transform:translateY(-10px) scale(1.018)!important;
+  filter:brightness(1.08)!important;
+  transition:transform .18s cubic-bezier(.16,1,.3,1),filter .18s ease!important;
+}
+body.door-cutting .home-intro,
+body.door-cutting .desktop-connector,
+body.door-cutting .controls-nav,
+body.door-cutting .site-brand-link,
+body.door-cutting .era-card:not(.door-cut-source){
+  opacity:.72!important;
+  transition:opacity .16s ease!important;
+}
+
+@media(max-width:850px){
+  .info-panel>.info-block:not(.wall-archive-hidden),
+  .history-panel{margin:.45rem 0 0!important;padding:1rem 1.05rem!important}
+  .info-panel>.info-block:not(.wall-archive-hidden) .wave-p,
+  .history-panel .wave-p,
+  .approved-history-render,
+  .approved-history-render p{font-size:.96rem!important;line-height:1.56!important}
+}
+
+/* 2026-08-16 PROFESSIONAL WALL REBALANCE — visual system only; no copy changes. */
+
+/* Remove the central chronology hardware entirely. Dates remain in each record's own heading. */
+.timeline-section::before,
+.timeline-section::after,
+.timeline-section .exhibition-container::after,
+.timeline-marker,
+.chronology-rail{
+  display:none!important;
+  content:none!important;
+}
+.timeline-section .exhibition-container{
+  opacity:1!important;
+  filter:none!important;
+}
+
+/* Text-only genealogy moments are editorial passages, not objects pinned to a fake center rail. */
+.genealogy-script::before,
+.genealogy-script-copy::before{display:none!important;content:none!important}
+.genealogy-script-inner{display:block!important;max-width:1220px!important}
+.genealogy-script-copy{
+  width:100%!important;
+  max-width:880px!important;
+  margin-inline:auto!important;
+}
+.genealogy-marker .genealogy-script-copy{max-width:790px!important}
+
+/* The ending is a full-width epilogue, not another timeline card. */
+.genealogy-closing{
+  padding-top:clamp(5.5rem,8vw,8rem)!important;
+  padding-bottom:clamp(7rem,10vw,10rem)!important;
+  border-bottom:0!important;
+}
+.genealogy-closing .genealogy-script-inner{max-width:1120px!important}
+.genealogy-closing .genealogy-script-copy{
+  max-width:940px!important;
+  padding:2.1rem 0 0!important;
+  background:transparent!important;
+  border:0!important;
+  border-top:1px solid rgba(255,255,255,.13)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.genealogy-closing .genealogy-script-copy h3{
+  font-size:clamp(2.15rem,3.5vw,3.2rem)!important;
+  margin:0 0 1.45rem!important;
+}
+.genealogy-closing .genealogy-script-copy p{
+  max-width:830px!important;
+  font-size:clamp(.98rem,1.08vw,1.06rem)!important;
+  line-height:1.72!important;
+}
+.genealogy-closing .genealogy-script-copy p:last-child{
+  margin-top:1.65rem!important;
+  font-family:var(--museum-serif,"Cormorant Garamond",Georgia,serif)!important;
+  font-size:clamp(1.55rem,2.35vw,2.15rem)!important;
+  line-height:1.18!important;
+  color:#fff!important;
+}
+
+/* Museum wall rhythm: no forced 100vh voids between objects. */
+.exhibition-section{
+  min-height:auto!important;
+  padding-top:clamp(5.6rem,7.4vw,7.8rem)!important;
+  padding-bottom:clamp(5.9rem,7.8vw,8.2rem)!important;
+}
+.exhibition-container{
+  max-width:1320px!important;
+  gap:clamp(3.2rem,5vw,5.8rem)!important;
+  align-items:start!important;
+}
+.timeline-art-right .info-panel{padding-right:0!important}
+.timeline-art-left .info-panel{padding-left:0!important}
+
+/* One controlled image scale system. Portrait, standard landscape, and panoramic works
+   retain their whole composition while receiving comparable visual weight. */
+@media(min-width:851px){
+  .exhibition-section:not(.art-panorama) .art-box{
+    position:relative!important;
+    top:auto!important;
+    min-height:0!important;
+    height:auto!important;
+    align-self:start!important;
+  }
+  .exhibition-section:not(.art-panorama) .art-box .museum-frame,
+  .exhibition-section:not(.art-panorama) .art-box .museum-frame>.responsive-art-picture{
+    min-height:0!important;
+    height:auto!important;
+    max-height:none!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  .exhibition-section:not(.art-panorama) .art-box .museum-frame img{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    max-height:min(60vh,620px)!important;
+    object-fit:contain!important;
+    object-position:center!important;
+    margin:auto!important;
+  }
+  .exhibition-section.art-portrait .art-box .museum-frame img{
+    width:auto!important;
+    max-width:100%!important;
+    max-height:min(62vh,650px)!important;
+  }
+
+  /* Very wide objects become deliberate feature-width works rather than tiny strips
+     trapped inside a half-page column. */
+  .exhibition-section.art-panorama .exhibition-container{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto!important;
+    max-width:1180px!important;
+    gap:2.15rem!important;
+  }
+  .exhibition-section.art-panorama .art-box{
+    grid-column:1!important;
+    grid-row:1!important;
+    position:relative!important;
+    top:auto!important;
+    width:min(100%,1040px)!important;
+    min-height:0!important;
+    height:auto!important;
+    margin:0 auto!important;
+    justify-self:center!important;
+  }
+  .exhibition-section.art-panorama .art-box .museum-frame,
+  .exhibition-section.art-panorama .art-box .museum-frame>.responsive-art-picture{
+    width:100%!important;
+    min-height:0!important;
+    height:auto!important;
+    max-height:none!important;
+    display:block!important;
+  }
+  .exhibition-section.art-panorama .art-box .museum-frame img{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    max-height:none!important;
+    object-fit:contain!important;
+    margin:0 auto!important;
+  }
+  .exhibition-section.art-panorama .info-panel{
+    grid-column:1!important;
+    grid-row:2!important;
+    width:min(900px,100%)!important;
+    max-width:900px!important;
+    margin:0 auto!important;
+    padding:0!important;
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:.72rem!important;
+  }
+  .exhibition-section.art-panorama .info-category,
+  .exhibition-section.art-panorama .info-title,
+  .exhibition-section.art-panorama .info-meta{
+    grid-column:1/-1!important;
+  }
+  .exhibition-section.art-panorama .info-panel>.info-block:not(.wall-archive-hidden):not(.history-panel){
+    width:100%!important;
+    margin:0!important;
+  }
+  .exhibition-section.art-panorama .history-panel{
+    grid-column:1/-1!important;
+    width:100%!important;
+    margin:.08rem 0 0!important;
+  }
+
+  /* Never crush or scroll History to match an image. */
+  .history-panel,
+  .approved-history-section .history-panel{
+    max-height:none!important;
+    overflow:visible!important;
+  }
+}
+
+@media(max-width:850px){
+  .genealogy-script-copy{max-width:none!important}
+  .genealogy-closing{padding-top:4.6rem!important;padding-bottom:6.2rem!important}
+  .genealogy-closing .genealogy-script-copy{padding-top:1.6rem!important}
+  .genealogy-closing .genealogy-script-copy h3{font-size:clamp(2rem,10vw,2.65rem)!important}
+  .genealogy-closing .genealogy-script-copy p:last-child{font-size:clamp(1.45rem,8vw,1.9rem)!important}
+  .exhibition-section{padding-top:4.7rem!important;padding-bottom:5.4rem!important}
+  .exhibition-section.art-panorama .info-panel{display:block!important}
+}
+@media(min-width:851px){
+  .exhibition-section.art-panorama .art-box .museum-frame img.gallery-image{
+    max-width:none!important;
+  }
+}
