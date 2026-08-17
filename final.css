@@ -1,0 +1,184 @@
+/* STOPAZ FINAL RESPONSIVE + MOTION SYSTEM — 2026-08-16 */
+:root{--final-side:clamp(20px,3vw,44px);--final-mobile-side:20px;--final-ease:cubic-bezier(.16,1,.3,1)}
+html,body{width:100%;max-width:100%;overflow-x:clip;overscroll-behavior-x:none}
+@supports not (overflow:clip){html,body{overflow-x:hidden}}
+img,picture,svg,video{max-width:100%}
+.home-title,.hero-title{white-space:nowrap!important;max-width:100%;overflow:visible}
+.hero-title{font-size:clamp(2.9rem,4.05vw,3.85rem)!important;letter-spacing:.002em!important}
+.hero-section,.hero-container,.hero-header-text,.hero-title{min-width:0;max-width:100%}
+.hero-container>*{min-width:0;max-width:100%}
+.home-page .home-main{width:min(1180px,100%);padding-left:var(--final-side);padding-right:var(--final-side)}
+.home-page .era-grid{width:min(1020px,100%);gap:clamp(22px,2.1vw,34px)}
+.home-page .era-card{overflow:hidden}
+.home-page .era-head{background:rgba(17,17,21,.97)}
+.home-page .era-arrow{opacity:.72}
+@media (hover:hover) and (pointer:fine){
+  .home-page .era-card.pop-in:hover,.home-page .era-card.pop-in:focus-visible{
+    transform:translateY(-18px) scale(1.026)!important;
+    border-color:rgba(255,255,255,.17)!important;
+    box-shadow:0 42px 86px rgba(0,0,0,.58),0 0 32px rgba(255,255,255,.045)!important
+  }
+  .home-page .era-card.pop-in:hover .era-image,.home-page .era-card.pop-in:focus-visible .era-image{
+    filter:brightness(1.17) contrast(1.10)!important
+  }
+  .art-box.pop-in:hover,.art-box.pop-in:focus-visible{
+    transform:translateY(-18px) scale(1.026)!important;
+    border-color:rgba(255,255,255,.17)!important;
+    box-shadow:0 42px 86px rgba(0,0,0,.56),0 0 28px rgba(255,255,255,.04)!important
+  }
+  .art-box:hover .museum-frame img.gallery-image.is-loaded,.art-box:focus-visible .museum-frame img.gallery-image.is-loaded{
+    filter:brightness(1.16) contrast(1.12)!important
+  }
+  .museum-frame img.gallery-image.quality-source-limited{--hover-zoom:1.06!important}
+  .museum-frame img.gallery-image.quality-standard{--hover-zoom:1.12!important}
+  .museum-frame img.gallery-image.quality-hires{--hover-zoom:1.16!important}
+  .info-panel>.info-block.archive-stagger-block.pop-in:hover,
+  .history-panel.archive-stagger-block.pop-in:hover{
+    transform:translateY(-18px) scale(1.026)!important;
+    filter:brightness(1.14)!important;
+    background:rgba(255,255,255,.065)!important;
+    border-color:rgba(255,255,255,.24)!important;
+    box-shadow:0 28px 50px rgba(0,0,0,.32),0 0 20px rgba(255,255,255,.035)!important
+  }
+}
+@media (hover:none),(pointer:coarse){.home-page .era-card.pop-in:hover,.home-page .era-card:active{transform:none!important}.art-box.pop-in:hover,.info-block.pop-in:hover,.history-panel.pop-in:hover{transform:none!important}.art-box:hover .museum-frame img,.era-card:hover .era-image{transform:none!important}}
+.hero-section{padding-inline:var(--final-side)!important}
+.hero-container{max-width:1220px!important;grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr)!important;gap:clamp(2.5rem,4.4vw,4.8rem)!important}
+.hero-header-text{min-width:0}
+.hero-subtitle{font-size:clamp(1rem,1.25vw,1.24rem)!important;letter-spacing:.15em!important}
+.hero-location{font-size:.9rem!important;letter-spacing:.22em!important}
+.exhibition-section{padding-inline:var(--final-side)!important}
+.exhibition-container{max-width:1220px!important}
+.info-panel{min-width:0}
+.info-title{overflow-wrap:normal!important;word-break:normal!important}
+.info-panel>.info-block.archive-stagger-block,.history-panel.archive-stagger-block{transition-duration:.58s,.68s,.58s,.5s,.5s,.5s!important}
+#catalog-turn-layer{position:fixed;inset:0;z-index:6200;pointer-events:none;perspective:2000px;-webkit-perspective:2000px;background:rgba(8,8,11,0);overflow:hidden;transition:background .54s ease}
+#catalog-turn-layer.is-turning{background:rgba(8,8,11,.58)}
+.catalog-turn-destination{position:absolute;left:var(--turn-left);top:var(--turn-top);width:var(--turn-width);height:var(--turn-height);border-radius:6px;background:radial-gradient(circle at 52% 42%,#25252b 0%,#17171a 56%,#101013 100%);border:1px solid rgba(255,255,255,.06);box-shadow:0 28px 80px rgba(0,0,0,.46);opacity:.18;transform:scale(.988);transition:left .78s var(--final-ease),top .78s var(--final-ease),width .78s var(--final-ease),height .78s var(--final-ease),border-radius .78s var(--final-ease),opacity .48s ease,transform .78s var(--final-ease)}
+#catalog-turn-layer.is-turning .catalog-turn-destination{left:0;top:0;width:100vw;height:100dvh;border-radius:0;opacity:1;transform:scale(1)}
+.catalog-turn-sheet{position:absolute;left:var(--turn-left);top:var(--turn-top);width:var(--turn-width);height:var(--turn-height);border-radius:6px;overflow:hidden;transform-origin:left center;-webkit-transform-origin:left center;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 28px 76px rgba(0,0,0,.52);will-change:transform,opacity,filter}
+.catalog-turn-sheet>.door-front{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;transform:none!important}
+.catalog-turn-sheet::before{content:"";position:absolute;z-index:20;inset:-2% -8%;pointer-events:none;background:linear-gradient(90deg,transparent 0 58%,rgba(255,255,255,.18) 68%,rgba(8,8,12,.38) 78%,transparent 92%);opacity:0;transform:translateX(28%);mix-blend-mode:soft-light}
+.catalog-turn-sheet::after{content:"";position:absolute;z-index:19;top:0;right:0;width:18%;height:100%;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(0,0,0,.48));opacity:0}
+#catalog-turn-layer.is-turning .catalog-turn-sheet{animation:catalogTurn .82s cubic-bezier(.22,.76,.18,1) both}
+#catalog-turn-layer.is-turning .catalog-turn-sheet::before{animation:catalogFoldLight .82s ease both}
+#catalog-turn-layer.is-turning .catalog-turn-sheet::after{animation:catalogEdgeShade .82s ease both}
+@keyframes catalogTurn{0%{transform:translate3d(0,0,0) rotateY(0deg);clip-path:polygon(0 0,100% 0,100% 100%,0 100%);opacity:1;filter:brightness(1)}22%{transform:translate3d(4px,-2px,30px) rotateY(-8deg) rotateZ(-.08deg);clip-path:polygon(0 0,98% 0,94% 100%,0 100%);opacity:1;filter:brightness(1.03)}55%{transform:translate3d(-2px,-4px,66px) rotateY(-28deg) rotateZ(-.18deg);clip-path:polygon(0 0,84% 0,69% 100%,0 100%);opacity:1;filter:brightness(.97)}78%{transform:translate3d(-10px,-2px,42px) rotateY(-47deg) rotateZ(-.12deg);clip-path:polygon(0 0,58% 0,37% 100%,0 100%);opacity:.94;filter:brightness(.86)}100%{transform:translate3d(-34px,0,0) rotateY(-62deg);clip-path:polygon(0 0,10% 0,0 100%,0 100%);opacity:0;filter:brightness(.72)}}
+@keyframes catalogFoldLight{0%,8%{opacity:0;transform:translateX(32%)}34%{opacity:.8;transform:translateX(8%)}72%{opacity:.42;transform:translateX(-34%)}100%{opacity:0;transform:translateX(-72%)}}
+@keyframes catalogEdgeShade{0%{opacity:0}30%{opacity:.28}72%{opacity:.78}100%{opacity:.2}}
+body.catalog-turning .home-intro,body.catalog-turning .desktop-connector,body.catalog-turning .controls-nav,body.catalog-turning .site-brand-link,body.catalog-turning .era-card:not(.catalog-turn-source){opacity:.16!important;transition:opacity .34s ease!important}
+body.catalog-turning .era-card.catalog-turn-source{opacity:0!important}
+@media(max-width:850px){
+  :root{--final-mobile-side:clamp(18px,5vw,24px)}
+  .home-page .site-brand-link,.home-page .controls-nav{position:absolute!important}
+  .home-page .site-brand-link{top:max(.85rem,env(safe-area-inset-top))!important;right:var(--final-mobile-side)!important;width:7.2rem!important}
+  .home-page .controls-nav{top:max(.78rem,env(safe-area-inset-top))!important;left:var(--final-mobile-side)!important;gap:.28rem!important;max-width:calc(100vw - 10rem)!important;flex-wrap:nowrap!important}
+  [dir="rtl"] .home-page .site-brand-link{right:auto!important;left:var(--final-mobile-side)!important}
+  [dir="rtl"] .home-page .controls-nav{left:auto!important;right:var(--final-mobile-side)!important}
+  .home-page .nav-box{font-size:.58rem!important;letter-spacing:.055em!important;padding:3px 4px!important}
+  .home-page .lang-btn,.home-page .audio-btn{min-width:32px!important;min-height:34px!important;padding:0 2px!important}
+  .home-page .home-main{padding:7.2rem var(--final-mobile-side) 5rem!important}
+  .home-page .home-intro{width:100%;overflow:visible}
+  .home-page .home-title{font-size:clamp(2.55rem,12.1vw,3.5rem)!important;line-height:.92!important;letter-spacing:.018em!important}
+  .home-page .era-grid{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;gap:5rem!important;margin-top:4.5rem!important;padding-bottom:2rem!important}
+  .home-page .era-grid::before{top:-4.5rem!important;bottom:2.5rem!important;opacity:.65}
+  .home-page .era-card{width:100%!important;max-width:560px!important;margin-inline:auto!important;aspect-ratio:1/1!important;border-radius:7px!important}
+  .home-page .era-head{height:4.4rem!important;padding:.8rem .5rem!important}
+  .home-page .era-title{font-size:clamp(1.5rem,6.4vw,1.9rem)!important}
+  .home-page .mobile-node{top:-4.15rem!important}
+  .hero-section{min-height:auto!important;padding:7rem var(--final-mobile-side) 4.7rem!important;align-items:flex-start!important;width:100%!important;max-width:100%!important;overflow:hidden!important}
+  .hero-container{width:100%!important;max-width:100%!important;min-width:0!important;overflow:hidden!important}
+  .hero-container>*{min-width:0!important;max-width:100%!important}
+  .hero-container{display:grid!important;grid-template-columns:1fr!important;gap:2rem!important;padding:0!important;width:100%!important}
+  .hero-container>.art-box{grid-column:1!important;grid-row:1!important;width:100%!important}
+  .hero-header-text{grid-column:1!important;grid-row:2!important;gap:.78rem!important;transform:none!important;min-width:0}
+  .hero-title{font-size:clamp(2rem,8.9vw,3rem)!important;line-height:.98!important;width:100%!important}
+  .hero-subtitle{font-size:.82rem!important;letter-spacing:.14em!important;line-height:1.35!important}
+  .hero-location{margin-top:.2rem!important;font-size:.72rem!important;letter-spacing:.2em!important;padding-top:.7rem!important}
+  .exhibition-section{min-height:auto!important;padding:5rem var(--final-mobile-side) 5.9rem!important}
+  .exhibition-container{display:grid!important;grid-template-columns:1fr!important;gap:1.65rem!important;padding:0!important;width:100%!important}
+  .timeline-art-right .art-box,.timeline-art-left .art-box{grid-column:1!important;grid-row:1!important}
+  .timeline-art-right .info-panel,.timeline-art-left .info-panel{grid-column:1!important;grid-row:2!important;padding:0!important}
+  .art-box{width:100%!important;margin:0!important}
+  .museum-frame{min-height:0!important;max-height:none!important}
+  .museum-frame img{max-height:none!important}
+  .info-panel{gap:.72rem!important;height:auto!important;max-height:none!important;overflow:visible!important}
+  .info-category{font-size:.79rem!important;line-height:1.32!important;letter-spacing:.12em!important;margin-top:.15rem!important}
+  .info-title{font-size:clamp(1.85rem,8.5vw,2.7rem)!important;line-height:1.01!important;margin:.1rem 0 .38rem!important;padding-bottom:.55rem!important}
+  .info-meta{font-size:.9rem!important;line-height:1.45!important;gap:.22rem!important;margin-bottom:.3rem!important}
+  .info-panel>.info-block,.history-panel{padding:1rem 1.05rem!important;margin-top:.25rem!important;border-radius:4px!important}
+  .info-block h4,.history-panel h4{font-size:.7rem!important;letter-spacing:.14em!important;margin-bottom:.42rem!important}
+  .wave-p{font-size:.96rem!important;line-height:1.55!important}
+  .history-panel{margin-top:.9rem!important}
+  .chronology-rail{left:var(--final-mobile-side)!important;right:auto!important;bottom:auto!important;top:max(5.1rem,calc(env(safe-area-inset-top) + 4.1rem))!important}
+  [dir="rtl"] .chronology-rail{left:auto!important;right:var(--final-mobile-side)!important}
+  .controls-nav{top:max(.85rem,env(safe-area-inset-top))!important;right:var(--final-mobile-side)!important;gap:.32rem!important}
+  .controls-nav .nav-box{font-size:.61rem!important;letter-spacing:.08em!important;padding:4px 6px!important}
+  #catalog-turn-layer.is-turning .catalog-turn-sheet,#catalog-turn-layer.is-turning .catalog-turn-sheet::before,#catalog-turn-layer.is-turning .catalog-turn-sheet::after{animation-duration:.68s}
+  .catalog-turn-destination{transition-duration:.65s}
+}
+@media(max-width:430px){.home-page .site-brand-link{width:6.8rem!important}.home-page .controls-nav{max-width:calc(100vw - 9.2rem)!important}.home-page .home-main{padding-left:18px!important;padding-right:18px!important}.home-page .era-grid{gap:4.65rem!important}.hero-section,.exhibition-section{padding-left:18px!important;padding-right:18px!important}}
+@media(prefers-reduced-motion:reduce){#catalog-turn-layer{display:none!important}.home-title,.hero-title{transition:none!important}}
+/* Destination art is revealed beneath the turning catalogue page. */
+.catalog-turn-destination{background-color:#17171a;background-blend-mode:normal;filter:saturate(.82) brightness(.72);transition:left .78s var(--final-ease),top .78s var(--final-ease),width .78s var(--final-ease),height .78s var(--final-ease),border-radius .78s var(--final-ease),opacity .48s ease,transform .78s var(--final-ease),filter .62s ease!important}
+#catalog-turn-layer.is-turning .catalog-turn-destination{filter:saturate(.88) brightness(.82)}
+/* Compact top chrome for 375–430px phones without sacrificing readable labels. */
+@media(max-width:430px){
+  .home-page .site-brand-link{width:6.25rem!important}
+  .home-page .controls-nav{gap:.18rem!important;max-width:calc(100vw - 8.7rem)!important}
+  .home-page .nav-box{font-size:.54rem!important;letter-spacing:.04em!important;padding:2px 3px!important;gap:.04rem!important}
+  .home-page .lang-btn,.home-page .audio-btn{min-width:27px!important;min-height:34px!important;padding:0 1px!important}
+}
+@media(max-width:430px){.home-page .lang-btn{min-width:25px!important}.home-page .audio-btn{min-width:27px!important}}
+
+
+/* APPROVED GENEALOGY SCRIPT LAYER — English copy supplied verbatim by the user. */
+html:not([lang="en"]) .genealogy-script[data-script-language="en"],
+html:not([lang="en"]) .approved-history-render[data-script-language="en"]{display:none!important}
+.genealogy-script{position:relative;z-index:2;width:100%;padding:clamp(4.8rem,7vw,7rem) var(--final-side);border-bottom:1px solid rgba(255,255,255,.025)}
+.genealogy-script::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;transform:translateX(-50%);background:linear-gradient(to bottom,rgba(255,255,255,.035),rgba(255,255,255,.14) 14%,rgba(255,255,255,.14) 86%,rgba(255,255,255,.035));pointer-events:none}
+.genealogy-script-inner{width:min(1220px,100%);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2.5rem,4.4vw,4.8rem);position:relative}
+.genealogy-script-copy{position:relative;max-width:570px;padding:1.45rem 1.55rem 1.5rem;background:rgba(255,255,255,.018);border:1px solid rgba(255,255,255,.055);border-radius:5px;box-shadow:0 18px 42px rgba(0,0,0,.16)}
+.genealogy-script.script-right .genealogy-script-copy{grid-column:2}
+.genealogy-script.script-left .genealogy-script-copy{grid-column:1}
+.genealogy-script-copy::before{content:"";position:absolute;top:1.55rem;width:7px;height:7px;border-radius:50%;background:#17171a;border:1px solid rgba(255,255,255,.34);box-shadow:0 0 0 5px rgba(23,23,26,.9),0 0 15px rgba(255,255,255,.055)}
+.genealogy-script.script-right .genealogy-script-copy::before{left:calc(-1 * clamp(2.5rem,4.4vw,4.8rem) / 2 - 4px)}
+.genealogy-script.script-left .genealogy-script-copy::before{right:calc(-1 * clamp(2.5rem,4.4vw,4.8rem) / 2 - 4px)}
+.genealogy-script-copy h3{font-family:var(--museum-serif,"Cormorant Garamond",Georgia,serif);font-size:clamp(1.85rem,2.8vw,2.55rem);font-weight:500;line-height:1.05;color:#fff;letter-spacing:.01em;margin:0 0 1.2rem}
+.genealogy-marker .genealogy-script-copy h3{font-size:clamp(1.45rem,2.15vw,1.9rem)}
+.genealogy-script-copy p{font-family:var(--museum-sans,"Source Sans 3",sans-serif);font-size:clamp(.94rem,1.02vw,1.02rem);line-height:1.68;color:#e7e7ed;margin:.9rem 0 0}
+.genealogy-script-copy p:first-of-type{margin-top:0}
+.genealogy-script-copy strong{color:#fff;font-weight:600}.genealogy-script-copy em{color:#f0f0f4}
+.genealogy-intro{padding-top:clamp(4.2rem,6vw,6rem);padding-bottom:clamp(5rem,7vw,7rem)}
+.genealogy-closing{padding-top:clamp(5rem,7vw,7rem);padding-bottom:clamp(6rem,8vw,8rem)}
+.approved-history-template{display:none!important}
+.approved-history-render{display:block}
+.approved-history-render p{font-size:inherit;line-height:inherit;color:inherit;min-height:0;margin:0 0 .72rem}
+.approved-history-render p:last-child{margin-bottom:0}
+.approved-history-render strong{color:#fff;font-weight:600}.approved-history-render em{color:#f4f4f7}
+html[lang="en"] .history-panel.has-approved-history>.approved-history-original{display:none!important}
+@media (hover:hover) and (pointer:fine){
+  .genealogy-marker .genealogy-script-copy{transition:transform .62s cubic-bezier(.16,1,.3,1),background .5s ease,border-color .5s ease,box-shadow .62s cubic-bezier(.16,1,.3,1),filter .5s ease}
+  .genealogy-marker .genealogy-script-copy:hover{transform:translateY(-14px) scale(1.018);filter:brightness(1.1);background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.16);box-shadow:0 26px 48px rgba(0,0,0,.28),0 0 18px rgba(255,255,255,.025)}
+}
+@media(max-width:850px){
+  .genealogy-script{padding:4.25rem var(--final-mobile-side,20px) 4.8rem}
+  .genealogy-script::before{display:none}
+  .genealogy-script-inner{display:block;width:100%}
+  .genealogy-script-copy{max-width:none;width:100%;padding:1.25rem 1.15rem 1.3rem}
+  .genealogy-script-copy::before{display:none}
+  .genealogy-script-copy h3{font-size:clamp(1.75rem,8vw,2.35rem);line-height:1.04;margin-bottom:1rem}
+  .genealogy-marker .genealogy-script-copy h3{font-size:clamp(1.35rem,6.6vw,1.75rem)}
+  .genealogy-script-copy p{font-size:.96rem;line-height:1.6}
+  .genealogy-intro{padding-top:3.7rem;padding-bottom:4.5rem}
+  .genealogy-closing{padding-top:4.5rem;padding-bottom:5.4rem}
+  .approved-history-render p{font-size:.96rem!important;line-height:1.58!important;margin-bottom:.72rem!important}
+}
+
+/* Keep long approved History beside its artwork on desktop by extending the museum matte, not by forcing a scrollbar. */
+@media(min-width:851px){
+  .approved-history-section .history-panel{max-height:none!important;overflow:visible!important}
+  .approved-history-section .art-box{min-height:var(--approved-art-height,auto)!important}
+  .approved-history-section .art-box .museum-frame{min-height:100%!important;height:100%!important;max-height:none!important;align-items:center!important}
+  .approved-history-section .art-box .museum-frame img{flex:0 0 auto}
+}
