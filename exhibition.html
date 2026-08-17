@@ -5,11 +5,12 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>Stop Antizionism | Exhibition Gallery NYC</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&amp;family=Source+Sans+3:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600&amp;display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Source+Sans+3:opsz,wght@8..60,300;8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+
 <!-- MINIMALIST GALLERY FAVICON -->
-<link href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' fill='%2317171a'/&gt;&lt;rect x='30' y='30' width='40' height='40' fill='%23ffffff'/&gt;&lt;/svg&gt;" rel="icon">
+<link href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' fill='%2317171a'/&gt;&lt;rect x='30' y='30' width='40' height='40' fill='%23ffffff'/&gt;&lt;/svg&gt;" rel="icon"/>
 <style>
         /* BASE CANVAS & BLENDED MATTE GALLERY THEME */
         * {
@@ -1119,6 +1120,7 @@
   .controls-nav{transition:none!important}
 }
 </style>
+
 <style id="final-exhibition-system">
 :root{--museum-sans:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--museum-serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--oxblood:#74262d;--oxblood-soft:rgba(116,38,45,.72)}
 body{font-family:var(--museum-sans);font-optical-sizing:auto}
@@ -1222,6 +1224,7 @@ body{font-family:var(--museum-sans);font-optical-sizing:auto}
 
 @media(prefers-reduced-motion:reduce){.timeline-section .exhibition-container,.chronology-list,.timeline-node::after{transition:none!important}}
 </style>
+
 <style id="history-side-override">
 /* Desktop: keep History in the text column and prevent it from falling below the artwork frame. */
 @media (min-width: 851px) {
@@ -1270,119 +1273,7 @@ body{font-family:var(--museum-sans);font-optical-sizing:auto}
   .info-panel {height:auto !important;max-height:none !important;overflow:visible !important;}
 }
 </style>
-<style id="v6-gallery-layout-fixes">
-/* Keep the Antizionism hero title on one line on desktop. */
-@media (min-width: 851px) {
-  body[data-antizionism-timeline] .hero-title {
-    font-size:clamp(2.75rem,3.85vw,3.8rem)!important;
-    line-height:1!important;
-    white-space:nowrap!important;
-    letter-spacing:.002em!important;
-  }
 
-  /* Year belongs to the central chronology gutter, never on top of the object title. */
-  .timeline-marker {
-    top:0!important;
-    transform:translate(-50%,-135%)!important;
-  }
-
-  /* Compact only as much as needed to guarantee a visible History field. */
-  .info-panel {
-    gap:.56rem!important;
-  }
-  .info-panel.is-tight {
-    gap:.42rem!important;
-  }
-  .info-panel.is-tighter {
-    gap:.32rem!important;
-  }
-  .info-panel.is-tight .info-title,
-  .info-panel.is-tighter .info-title {
-    font-size:clamp(1.72rem,2.25vw,2.08rem)!important;
-    line-height:1.06!important;
-    padding-bottom:.42rem!important;
-  }
-  .info-panel.is-tight .info-meta,
-  .info-panel.is-tighter .info-meta {
-    font-size:.9rem!important;
-    gap:.14rem!important;
-  }
-  .info-panel.is-tight .info-block {
-    padding:.64rem .82rem .68rem!important;
-  }
-  .info-panel.is-tighter .info-block {
-    padding:.52rem .75rem .56rem!important;
-  }
-  .info-panel.is-tight .wave-p,
-  .info-panel.is-tighter .wave-p {
-    font-size:.91rem!important;
-    line-height:1.42!important;
-    min-height:0!important;
-  }
-  .history-panel,
-  .timeline-art-right .history-panel {
-    min-height:78px!important;
-    margin-top:.08rem!important;
-    scrollbar-width:thin;
-  }
-}
-
-/* The title word animation cannot descend into Creator/Date while settling. */
-.info-title .wave-word {
-  animation-name:infoTitleWordReveal!important;
-}
-@keyframes infoTitleWordReveal {
-  0% { opacity:0; transform:translateY(.26em) rotateX(-16deg); filter:blur(4px); }
-  64% { opacity:1; transform:translateY(-.015em) rotateX(1deg); filter:blur(.2px); }
-  100% { opacity:1; transform:none; filter:none; }
-}
-.info-title {
-  margin-bottom:.08rem!important;
-}
-
-/* Header controls exist only at the top of the gallery. */
-.controls-nav.chrome-hidden {
-  opacity:0!important;
-  transform:translateY(-14px) scale(.97)!important;
-  filter:none!important;
-  pointer-events:none!important;
-  visibility:hidden;
-  transition:opacity .26s ease,transform .34s cubic-bezier(.16,1,.3,1),visibility 0s linear .34s!important;
-}
-.controls-nav:not(.chrome-hidden) {
-  visibility:visible;
-}
-
-/* Restore the deeper, longer museum drift zoom. Low-resolution sources stay conservative. */
-.museum-frame img.gallery-image {
-  --active-zoom:1.30!important;
-  --hover-zoom:1.39!important;
-  transition:opacity .9s cubic-bezier(.16,1,.3,1),filter 1.25s ease,transform 14.5s cubic-bezier(.16,1,.3,1)!important;
-}
-.museum-frame img.gallery-image.quality-source-limited {
-  --active-zoom:1.045!important;
-  --hover-zoom:1.075!important;
-}
-.museum-frame img.gallery-image.quality-standard {
-  --active-zoom:1.27!important;
-  --hover-zoom:1.36!important;
-}
-.museum-frame img.gallery-image.quality-hires {
-  --active-zoom:1.32!important;
-  --hover-zoom:1.42!important;
-}
-@media (max-width:850px) {
-  .timeline-marker {display:none!important;}
-  .info-title {margin-bottom:0!important;}
-}
-</style>
-</link>
-<style id="v7-static-clarity">
-.info-panel::before,.info-block::before,.info-block::after,.timeline-art-right .info-panel::before,.timeline-art-right .info-panel>.info-block::before,.timeline-art-right .info-panel>.info-block::after{display:none!important;content:none!important}
-.info-category,.info-title,.info-meta,.info-panel>.info-block,.history-panel{flex-shrink:0}
-.exhibit-image-button{cursor:zoom-in!important}
-</style>
-<style id="wall-archive-hidden-style">.wall-archive-hidden{display:none!important}</style>
 </head>
 <body data-antizionism-timeline="selected-art-2026-08-15">
 <!-- LAZY GLIDING AMBIENT LIGHT OVERLAY -->
@@ -1452,31 +1343,6 @@ body{font-family:var(--museum-sans);font-optical-sizing:auto}
 <div class="info-block">
 <h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
 <p class="wave-p wave-text" data-en="Gallica / Bibliothèque nationale de France; public-domain reproduction also preserved on Wikimedia Commons." data-he="Gallica / הספרייה הלאומית של צרפת; העתק בנחלת הכלל נשמר גם ב-Wikimedia Commons." data-ru="Gallica / Национальная библиотека Франции; репродукция в общественном достоянии также хранится на Wikimedia Commons.">Gallica / Bibliothèque nationale de France; public-domain reproduction also preserved on Wikimedia Commons.</p>
-</div>
-</div>
-</div>
-</section><section class="exhibition-section placeholder-entry" data-empty-record="true">
-<div class="exhibition-container">
-<div aria-label="Reserved timeline position for Lenin, Bund, and the National Question" class="art-box placeholder-art-box" role="img">
-<span class="museum-frame"></span>
-</div>
-<div class="info-panel">
-<div class="info-category wave-text" data-en="1903 — Lenin, Bund, and the National Question" data-he="1903 — לנין, הבונד והשאלה הלאומית" data-ru="1903 — Ленин, Бунд и национальный вопрос">1903 — Lenin, Bund, and the National Question</div>
-<h3 class="info-title wave-text" data-en="Lenin, Bund, and the National Question" data-he="לנין, הבונד והשאלה הלאומית" data-ru="Ленин, Бунд и национальный вопрос">Lenin, Bund, and the National Question</h3>
-<div class="info-meta">
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="1903" data-he="1903" data-ru="1903">1903</span></div>
-</div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="" data-he="" data-ru=""></p>
 </div>
 </div>
 </div>
@@ -1654,35 +1520,6 @@ body{font-family:var(--museum-sans);font-optical-sizing:auto}
 </div>
 </div>
 </div>
-</section><section class="exhibition-section" data-history-en="The leaflet adapted Nazi antisemitic propaganda to an Arab audience. It presented German hostility to Jews and cooperation with al-Husseini as compatible with Arab political interests." data-history-he="הכרוז התאים תעמולה אנטישמית נאצית לקהל ערבי. הוא הציג את העוינות הגרמנית ליהודים ואת שיתוף הפעולה עם אל-חוסייני כתואמים אינטרסים פוליטיים ערביים." data-history-ru="Листовка адаптировала нацистскую антисемитскую пропаганду для арабской аудитории. Немецкая враждебность к евреям и сотрудничество с аль-Хусейни подавались как совместимые с арабскими политическими интересами.">
-<div class="exhibition-container">
-<button aria-label="Enlarge German Second World War propaganda leaflet addressed to Arab soldiers in Arabic and French" class="art-box interactive-target exhibit-image-button" type="button">
-<span class="museum-frame">
-<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-german-arab-leaflet-wwii-720.webp 720w, timeline-german-arab-leaflet-wwii-1132.webp 1132w" type="image/webp"/><img alt="German Second World War propaganda leaflet addressed to Arab soldiers in Arabic and French" class="gallery-image quality-hires" data-native-height="768" data-native-width="1132" decoding="async" fetchpriority="low" height="768" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-german-arab-leaflet-wwii.jpg" width="1132"/></picture>
-</span>
-<span aria-hidden="true" class="click-hint">+</span>
-</button>
-<div class="info-panel">
-<div class="info-category wave-text" data-en="1941–45 — German Propaganda to Arab Soldiers" data-he="1941–1945 — תעמולה גרמנית לחיילים ערבים" data-ru="1941–1945 — Немецкая пропаганда для арабских солдат">1941–45 — German Propaganda to Arab Soldiers</div>
-<h3 class="info-title wave-text" data-en="“Soldats Arabes!”" data-he="״חיילים ערבים!״" data-ru="«Арабские солдаты!»">“Soldats Arabes!”</h3>
-<div class="info-meta">
-<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="German psychological-warfare operations" data-he="מערך הלוחמה הפסיכולוגית הגרמני" data-ru="Немецкие органы психологической войны">German psychological-warfare operations</span></div>
-<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Second World War" data-he="מלחמת העולם השנייה" data-ru="Вторая мировая война">Second World War</span></div>
-</div>
-<div class="info-block">
-<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
-<p class="wave-p wave-text" data-en="German psychological-warfare units prepared the leaflet for Arabic-speaking soldiers in North Africa." data-he="יחידות הלוחמה הפסיכולוגית הגרמניות הכינו את הכרוז עבור חיילים דוברי ערבית בצפון אפריקה." data-ru="Немецкие подразделения психологической войны подготовили листовку для арабоязычных солдат в Северной Африке.">German psychological-warfare units prepared the leaflet for Arabic-speaking soldiers in North Africa.</p>
-</div>
-<div class="info-block">
-<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
-<p class="wave-p wave-text" data-en="Arabic and French text tells Arab soldiers that Germany is at war with Jews, calls Germany a friend of Arab peoples, and invokes the Grand Mufti of Jerusalem." data-he="טקסט בערבית ובצרפתית אומר לחיילים ערבים כי גרמניה נלחמת ביהודים, מכנה את גרמניה ידידת העמים הערביים ומזכיר את המופתי הגדול של ירושלים." data-ru="Арабский и французский текст сообщает арабским солдатам, что Германия воюет с евреями, называет Германию другом арабских народов и ссылается на великого муфтия Иерусалима.">Arabic and French text tells Arab soldiers that Germany is at war with Jews, calls Germany a friend of Arab peoples, and invokes the Grand Mufti of Jerusalem.</p>
-</div>
-<div class="info-block">
-<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
-<p class="wave-p wave-text" data-en="Wikimedia Commons; German psychological-warfare leaflet. Commons marks the work public domain under its Egyptian copyright analysis." data-he="Wikimedia Commons; כרוז לוחמה פסיכולוגית גרמני. ב-Commons היצירה מסומנת כנחלת הכלל לפי ניתוח זכויות היוצרים המצרי." data-ru="Wikimedia Commons; немецкая листовка психологической войны. Commons отмечает работу как общественное достояние согласно анализу египетского авторского права.">Wikimedia Commons; German psychological-warfare leaflet. Commons marks the work public domain under its Egyptian copyright analysis.</p>
-</div>
-</div>
-</div>
 </section><section class="exhibition-section" data-history-en="Published during the war, the periodical carried Nazi propaganda into Arabic print culture, combining anti-British politics, antisemitism, support for al-Husseini, and hostility to Zionism." data-history-he="כתב העת, שפורסם בזמן המלחמה, העביר תעמולה נאצית לתרבות הדפוס הערבית ושילב פוליטיקה אנטי-בריטית, אנטישמיות, תמיכה באל-חוסייני ועוינות לציונות." data-history-ru="Во время войны издание переносило нацистскую пропаганду в арабскую печатную культуру, сочетая антибританскую политику, антисемитизм, поддержку аль-Хусейни и враждебность к сионизму.">
 <div class="exhibition-container">
 <button aria-label="Enlarge Barid al-Sharq Arabic illustrated periodical published in Berlin during the Second World War" class="art-box interactive-target exhibit-image-button" type="button">
@@ -1709,6 +1546,35 @@ body{font-family:var(--museum-sans);font-optical-sizing:auto}
 <div class="info-block">
 <h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
 <p class="wave-p wave-text" data-en="Wikimedia Commons; source record traces holdings of the illustrated Berlin periodical. Marked public domain under German law." data-he="Wikimedia Commons; תיעוד המקור מפנה לאוספי כתב העת המאויר מברלין. מסומן כנחלת הכלל לפי הדין הגרמני." data-ru="Wikimedia Commons; запись источника указывает на фонды берлинского иллюстрированного журнала. Отмечено как общественное достояние по немецкому праву.">Wikimedia Commons; source record traces holdings of the illustrated Berlin periodical. Marked public domain under German law.</p>
+</div>
+</div>
+</div>
+</section><section class="exhibition-section" data-history-en="The leaflet adapted Nazi antisemitic propaganda to an Arab audience. It presented German hostility to Jews and cooperation with al-Husseini as compatible with Arab political interests." data-history-he="הכרוז התאים תעמולה אנטישמית נאצית לקהל ערבי. הוא הציג את העוינות הגרמנית ליהודים ואת שיתוף הפעולה עם אל-חוסייני כתואמים אינטרסים פוליטיים ערביים." data-history-ru="Листовка адаптировала нацистскую антисемитскую пропаганду для арабской аудитории. Немецкая враждебность к евреям и сотрудничество с аль-Хусейни подавались как совместимые с арабскими политическими интересами.">
+<div class="exhibition-container">
+<button aria-label="Enlarge German Second World War propaganda leaflet addressed to Arab soldiers in Arabic and French" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-german-arab-leaflet-wwii-720.webp 720w, timeline-german-arab-leaflet-wwii-1132.webp 1132w" type="image/webp"/><img alt="German Second World War propaganda leaflet addressed to Arab soldiers in Arabic and French" class="gallery-image quality-hires" data-native-height="768" data-native-width="1132" decoding="async" fetchpriority="low" height="768" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-german-arab-leaflet-wwii.jpg" width="1132"/></picture>
+</span>
+<span aria-hidden="true" class="click-hint">+</span>
+</button>
+<div class="info-panel">
+<div class="info-category wave-text" data-en="1941–45 — German Propaganda to Arab Soldiers" data-he="1941–1945 — תעמולה גרמנית לחיילים ערבים" data-ru="1941–1945 — Немецкая пропаганда для арабских солдат">1941–45 — German Propaganda to Arab Soldiers</div>
+<h3 class="info-title wave-text" data-en="“Soldats Arabes!”" data-he="״חיילים ערבים!״" data-ru="«Арабские солдаты!»">“Soldats Arabes!”</h3>
+<div class="info-meta">
+<div><strong data-en="Creator:" data-he="יוצר:" data-ru="Автор:">Creator:</strong> <span class="wave-text" data-en="German psychological-warfare operations" data-he="מערך הלוחמה הפסיכולוגית הגרמני" data-ru="Немецкие органы психологической войны">German psychological-warfare operations</span></div>
+<div><strong data-en="Date:" data-he="תאריך:" data-ru="Дата:">Date:</strong> <span class="wave-text" data-en="Second World War" data-he="מלחמת העולם השנייה" data-ru="Вторая мировая война">Second World War</span></div>
+</div>
+<div class="info-block">
+<h4 data-en="Creator Bio &amp; Context" data-he="ביוגרפיה והקשר" data-ru="Биография и контекст">Creator Bio &amp; Context</h4>
+<p class="wave-p wave-text" data-en="German psychological-warfare units prepared the leaflet for Arabic-speaking soldiers in North Africa." data-he="יחידות הלוחמה הפסיכולוגית הגרמניות הכינו את הכרוז עבור חיילים דוברי ערבית בצפון אפריקה." data-ru="Немецкие подразделения психологической войны подготовили листовку для арабоязычных солдат в Северной Африке.">German psychological-warfare units prepared the leaflet for Arabic-speaking soldiers in North Africa.</p>
+</div>
+<div class="info-block">
+<h4 data-en="What the Image is About" data-he="על מה התמונה" data-ru="О чём это изображение">What the Image is About</h4>
+<p class="wave-p wave-text" data-en="Arabic and French text tells Arab soldiers that Germany is at war with Jews, calls Germany a friend of Arab peoples, and invokes the Grand Mufti of Jerusalem." data-he="טקסט בערבית ובצרפתית אומר לחיילים ערבים כי גרמניה נלחמת ביהודים, מכנה את גרמניה ידידת העמים הערביים ומזכיר את המופתי הגדול של ירושלים." data-ru="Арабский и французский текст сообщает арабским солдатам, что Германия воюет с евреями, называет Германию другом арабских народов и ссылается на великого муфтия Иерусалима.">Arabic and French text tells Arab soldiers that Germany is at war with Jews, calls Germany a friend of Arab peoples, and invokes the Grand Mufti of Jerusalem.</p>
+</div>
+<div class="info-block">
+<h4 data-en="Archival Source" data-he="מקור ארכיוני" data-ru="Архивный источник">Archival Source</h4>
+<p class="wave-p wave-text" data-en="Wikimedia Commons; German psychological-warfare leaflet. Commons marks the work public domain under its Egyptian copyright analysis." data-he="Wikimedia Commons; כרוז לוחמה פסיכולוגית גרמני. ב-Commons היצירה מסומנת כנחלת הכלל לפי ניתוח זכויות היוצרים המצרי." data-ru="Wikimedia Commons; немецкая листовка психологической войны. Commons отмечает работу как общественное достояние согласно анализу египетского авторского права.">Wikimedia Commons; German psychological-warfare leaflet. Commons marks the work public domain under its Egyptian copyright analysis.</p>
 </div>
 </div>
 </div>
@@ -1743,9 +1609,12 @@ body{font-family:var(--museum-sans);font-optical-sizing:auto}
 </div>
 </section><section class="exhibition-section placeholder-entry" data-empty-record="true">
 <div class="exhibition-container">
-<div aria-label="Reserved timeline position for The Slánský Trial" class="art-box placeholder-art-box" role="img">
-<span class="museum-frame"></span>
-</div>
+<button aria-label="Enlarge newspaper clipping on Rudolf Margolius and the Slánský Trial, 1952" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-slansky-1952-308.webp 308w" type="image/webp"/><img alt="Newspaper clipping on Rudolf Margolius and the Slánský Trial, 1952" class="gallery-image quality-source-limited" data-native-height="483" data-native-width="308" decoding="async" fetchpriority="low" height="483" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-slansky-1952.jpg" width="308"/></picture>
+</span>
+<span aria-hidden="true" class="click-hint">+</span>
+</button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="1952 — Slánský Trial" data-he="1952 — משפט סלנסקי" data-ru="1952 — процесс Сланского">1952 — Slánský Trial</div>
 <h3 class="info-title wave-text" data-en="The Slánský Trial" data-he="משפט סלנסקי" data-ru="Процесс Сланского">The Slánský Trial</h3>
@@ -1876,9 +1745,12 @@ body{font-family:var(--museum-sans);font-optical-sizing:auto}
 </div>
 </section><section class="exhibition-section placeholder-entry" data-empty-record="true">
 <div class="exhibition-container">
-<div aria-label="Reserved timeline position for Durban Conference" class="art-box placeholder-art-box" role="img">
-<span class="museum-frame"></span>
-</div>
+<button aria-label="Enlarge anti-Israel demonstration at Durban, 2001" class="art-box interactive-target exhibit-image-button" type="button">
+<span class="museum-frame">
+<picture class="responsive-art-picture"><source sizes="(max-width: 850px) 94vw, 46vw" srcset="timeline-durban-2001-560.webp 560w, timeline-durban-2001-588.webp 588w" type="image/webp"/><img alt="Anti-Israel demonstration at Durban, 2001" class="gallery-image quality-source-limited" data-native-height="396" data-native-width="588" decoding="async" fetchpriority="low" height="396" loading="lazy" sizes="(max-width: 850px) 94vw, 46vw" src="timeline-durban-2001.jpg" width="588"/></picture>
+</span>
+<span aria-hidden="true" class="click-hint">+</span>
+</button>
 <div class="info-panel">
 <div class="info-category wave-text" data-en="2001 — Durban Conference" data-he="2001 — ועידת דרבן" data-ru="2001 — конференция в Дурбане">2001 — Durban Conference</div>
 <h3 class="info-title wave-text" data-en="Durban Conference" data-he="ועידת דרבן" data-ru="Конференция в Дурбане">Durban Conference</h3>
