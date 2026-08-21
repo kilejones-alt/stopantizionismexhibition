@@ -1,715 +1,233 @@
-/* STOPAZ FINAL RESPONSIVE + MOTION SYSTEM — 2026-08-16 */
-:root{--final-side:clamp(20px,3vw,44px);--final-mobile-side:20px;--final-ease:cubic-bezier(.16,1,.3,1)}
-html,body{width:100%;max-width:100%;overflow-x:clip;overscroll-behavior-x:none}
+/* STOPAZ — unified production presentation system */
+:root{
+  --final-side:clamp(22px,3vw,46px);
+  --final-mobile-side:clamp(18px,5vw,24px);
+  --final-ease:cubic-bezier(.16,1,.3,1);
+  --final-bg:#17171a;
+  --final-panel:rgba(255,255,255,.032);
+  --final-line:rgba(255,255,255,.075);
+  --final-line-strong:rgba(255,255,255,.17);
+  --final-copy:#f4f4f7;
+  --final-muted:#b7b7c1;
+}
+
+html,body{width:100%;max-width:100%;overflow-x:clip;overscroll-behavior-x:none;background:var(--final-bg)}
 @supports not (overflow:clip){html,body{overflow-x:hidden}}
 img,picture,svg,video{max-width:100%}
-.home-title,.hero-title{white-space:nowrap!important;max-width:100%;overflow:visible}
-.hero-title{font-size:clamp(2.9rem,4.05vw,3.85rem)!important;letter-spacing:.002em!important}
-.hero-section,.hero-container,.hero-header-text,.hero-title{min-width:0;max-width:100%}
-.hero-container>*{min-width:0;max-width:100%}
-.home-page .home-main{width:min(1180px,100%);padding-left:var(--final-side);padding-right:var(--final-side)}
-.home-page .era-grid{width:min(1020px,100%);gap:clamp(22px,2.1vw,34px)}
-.home-page .era-card{overflow:hidden}
-.home-page .era-head{background:rgba(17,17,21,.97)}
-.home-page .era-arrow{opacity:.72}
-@media (hover:hover) and (pointer:fine){
-  .home-page .era-card.pop-in:hover,.home-page .era-card.pop-in:focus-visible{
-    transform:translateY(-18px) scale(1.026)!important;
-    border-color:rgba(255,255,255,.17)!important;
-    box-shadow:0 42px 86px rgba(0,0,0,.58),0 0 32px rgba(255,255,255,.045)!important
-  }
-  .home-page .era-card.pop-in:hover .era-image,.home-page .era-card.pop-in:focus-visible .era-image{
-    filter:brightness(1.17) contrast(1.10)!important
-  }
-  .art-box.pop-in:hover,.art-box.pop-in:focus-visible{
-    transform:translateY(-18px) scale(1.026)!important;
-    border-color:rgba(255,255,255,.17)!important;
-    box-shadow:0 42px 86px rgba(0,0,0,.56),0 0 28px rgba(255,255,255,.04)!important
-  }
-  .art-box:hover .museum-frame img.gallery-image.is-loaded,.art-box:focus-visible .museum-frame img.gallery-image.is-loaded{
-    filter:brightness(1.16) contrast(1.12)!important
-  }
-  .museum-frame img.gallery-image.quality-source-limited{--hover-zoom:1.06!important}
-  .museum-frame img.gallery-image.quality-standard{--hover-zoom:1.12!important}
-  .museum-frame img.gallery-image.quality-hires{--hover-zoom:1.16!important}
-  .info-panel>.info-block.archive-stagger-block.pop-in:hover,
-  .history-panel.archive-stagger-block.pop-in:hover{
-    transform:translateY(-18px) scale(1.026)!important;
-    filter:brightness(1.14)!important;
-    background:rgba(255,255,255,.065)!important;
-    border-color:rgba(255,255,255,.24)!important;
-    box-shadow:0 28px 50px rgba(0,0,0,.32),0 0 20px rgba(255,255,255,.035)!important
-  }
-}
-@media (hover:none),(pointer:coarse){.home-page .era-card.pop-in:hover,.home-page .era-card:active{transform:none!important}.art-box.pop-in:hover,.info-block.pop-in:hover,.history-panel.pop-in:hover{transform:none!important}.art-box:hover .museum-frame img,.era-card:hover .era-image{transform:none!important}}
-.hero-section{padding-inline:var(--final-side)!important}
-.hero-container{max-width:1220px!important;grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr)!important;gap:clamp(2.5rem,4.4vw,4.8rem)!important}
-.hero-header-text{min-width:0}
-.hero-subtitle{font-size:clamp(1rem,1.25vw,1.24rem)!important;letter-spacing:.15em!important}
-.hero-location{font-size:.9rem!important;letter-spacing:.22em!important}
-.exhibition-section{padding-inline:var(--final-side)!important}
-.exhibition-container{max-width:1220px!important}
-.info-panel{min-width:0}
-.info-title{overflow-wrap:normal!important;word-break:normal!important}
-.info-panel>.info-block.archive-stagger-block,.history-panel.archive-stagger-block{transition-duration:.58s,.68s,.58s,.5s,.5s,.5s!important}
-#catalog-turn-layer{position:fixed;inset:0;z-index:6200;pointer-events:none;perspective:2000px;-webkit-perspective:2000px;background:rgba(8,8,11,0);overflow:hidden;transition:background .54s ease}
-#catalog-turn-layer.is-turning{background:rgba(8,8,11,.58)}
-.catalog-turn-destination{position:absolute;left:var(--turn-left);top:var(--turn-top);width:var(--turn-width);height:var(--turn-height);border-radius:6px;background:radial-gradient(circle at 52% 42%,#25252b 0%,#17171a 56%,#101013 100%);border:1px solid rgba(255,255,255,.06);box-shadow:0 28px 80px rgba(0,0,0,.46);opacity:.18;transform:scale(.988);transition:left .78s var(--final-ease),top .78s var(--final-ease),width .78s var(--final-ease),height .78s var(--final-ease),border-radius .78s var(--final-ease),opacity .48s ease,transform .78s var(--final-ease)}
-#catalog-turn-layer.is-turning .catalog-turn-destination{left:0;top:0;width:100vw;height:100dvh;border-radius:0;opacity:1;transform:scale(1)}
-.catalog-turn-sheet{position:absolute;left:var(--turn-left);top:var(--turn-top);width:var(--turn-width);height:var(--turn-height);border-radius:6px;overflow:hidden;transform-origin:left center;-webkit-transform-origin:left center;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 28px 76px rgba(0,0,0,.52);will-change:transform,opacity,filter}
-.catalog-turn-sheet>.door-front{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;transform:none!important}
-.catalog-turn-sheet::before{content:"";position:absolute;z-index:20;inset:-2% -8%;pointer-events:none;background:linear-gradient(90deg,transparent 0 58%,rgba(255,255,255,.18) 68%,rgba(8,8,12,.38) 78%,transparent 92%);opacity:0;transform:translateX(28%);mix-blend-mode:soft-light}
-.catalog-turn-sheet::after{content:"";position:absolute;z-index:19;top:0;right:0;width:18%;height:100%;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(0,0,0,.48));opacity:0}
-#catalog-turn-layer.is-turning .catalog-turn-sheet{animation:catalogTurn .82s cubic-bezier(.22,.76,.18,1) both}
-#catalog-turn-layer.is-turning .catalog-turn-sheet::before{animation:catalogFoldLight .82s ease both}
-#catalog-turn-layer.is-turning .catalog-turn-sheet::after{animation:catalogEdgeShade .82s ease both}
-@keyframes catalogTurn{0%{transform:translate3d(0,0,0) rotateY(0deg);clip-path:polygon(0 0,100% 0,100% 100%,0 100%);opacity:1;filter:brightness(1)}22%{transform:translate3d(4px,-2px,30px) rotateY(-8deg) rotateZ(-.08deg);clip-path:polygon(0 0,98% 0,94% 100%,0 100%);opacity:1;filter:brightness(1.03)}55%{transform:translate3d(-2px,-4px,66px) rotateY(-28deg) rotateZ(-.18deg);clip-path:polygon(0 0,84% 0,69% 100%,0 100%);opacity:1;filter:brightness(.97)}78%{transform:translate3d(-10px,-2px,42px) rotateY(-47deg) rotateZ(-.12deg);clip-path:polygon(0 0,58% 0,37% 100%,0 100%);opacity:.94;filter:brightness(.86)}100%{transform:translate3d(-34px,0,0) rotateY(-62deg);clip-path:polygon(0 0,10% 0,0 100%,0 100%);opacity:0;filter:brightness(.72)}}
-@keyframes catalogFoldLight{0%,8%{opacity:0;transform:translateX(32%)}34%{opacity:.8;transform:translateX(8%)}72%{opacity:.42;transform:translateX(-34%)}100%{opacity:0;transform:translateX(-72%)}}
-@keyframes catalogEdgeShade{0%{opacity:0}30%{opacity:.28}72%{opacity:.78}100%{opacity:.2}}
-body.catalog-turning .home-intro,body.catalog-turning .desktop-connector,body.catalog-turning .controls-nav,body.catalog-turning .site-brand-link,body.catalog-turning .era-card:not(.catalog-turn-source){opacity:.16!important;transition:opacity .34s ease!important}
-body.catalog-turning .era-card.catalog-turn-source{opacity:0!important}
-@media(max-width:850px){
-  :root{--final-mobile-side:clamp(18px,5vw,24px)}
-  .home-page .site-brand-link,.home-page .controls-nav{position:absolute!important}
-  .home-page .site-brand-link{top:max(.85rem,env(safe-area-inset-top))!important;right:var(--final-mobile-side)!important;width:7.2rem!important}
-  .home-page .controls-nav{top:max(.78rem,env(safe-area-inset-top))!important;left:var(--final-mobile-side)!important;gap:.28rem!important;max-width:calc(100vw - 10rem)!important;flex-wrap:nowrap!important}
-  [dir="rtl"] .home-page .site-brand-link{right:auto!important;left:var(--final-mobile-side)!important}
-  [dir="rtl"] .home-page .controls-nav{left:auto!important;right:var(--final-mobile-side)!important}
-  .home-page .nav-box{font-size:.58rem!important;letter-spacing:.055em!important;padding:3px 4px!important}
-  .home-page .lang-btn,.home-page .audio-btn{min-width:32px!important;min-height:34px!important;padding:0 2px!important}
-  .home-page .home-main{padding:7.2rem var(--final-mobile-side) 5rem!important}
-  .home-page .home-intro{width:100%;overflow:visible}
-  .home-page .home-title{font-size:clamp(2.55rem,12.1vw,3.5rem)!important;line-height:.92!important;letter-spacing:.018em!important}
-  .home-page .era-grid{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;gap:5rem!important;margin-top:4.5rem!important;padding-bottom:2rem!important}
-  .home-page .era-grid::before{top:-4.5rem!important;bottom:2.5rem!important;opacity:.65}
-  .home-page .era-card{width:100%!important;max-width:560px!important;margin-inline:auto!important;aspect-ratio:1/1!important;border-radius:7px!important}
-  .home-page .era-head{height:4.4rem!important;padding:.8rem .5rem!important}
-  .home-page .era-title{font-size:clamp(1.5rem,6.4vw,1.9rem)!important}
-  .home-page .mobile-node{top:-4.15rem!important}
-  .hero-section{min-height:auto!important;padding:7rem var(--final-mobile-side) 4.7rem!important;align-items:flex-start!important;width:100%!important;max-width:100%!important;overflow:hidden!important}
-  .hero-container{width:100%!important;max-width:100%!important;min-width:0!important;overflow:hidden!important}
-  .hero-container>*{min-width:0!important;max-width:100%!important}
-  .hero-container{display:grid!important;grid-template-columns:1fr!important;gap:2rem!important;padding:0!important;width:100%!important}
-  .hero-container>.art-box{grid-column:1!important;grid-row:1!important;width:100%!important}
-  .hero-header-text{grid-column:1!important;grid-row:2!important;gap:.78rem!important;transform:none!important;min-width:0}
-  .hero-title{font-size:clamp(2rem,8.9vw,3rem)!important;line-height:.98!important;width:100%!important}
-  .hero-subtitle{font-size:.82rem!important;letter-spacing:.14em!important;line-height:1.35!important}
-  .hero-location{margin-top:.2rem!important;font-size:.72rem!important;letter-spacing:.2em!important;padding-top:.7rem!important}
-  .exhibition-section{min-height:auto!important;padding:5rem var(--final-mobile-side) 5.9rem!important}
-  .exhibition-container{display:grid!important;grid-template-columns:1fr!important;gap:1.65rem!important;padding:0!important;width:100%!important}
-  .timeline-art-right .art-box,.timeline-art-left .art-box{grid-column:1!important;grid-row:1!important}
-  .timeline-art-right .info-panel,.timeline-art-left .info-panel{grid-column:1!important;grid-row:2!important;padding:0!important}
-  .art-box{width:100%!important;margin:0!important}
-  .museum-frame{min-height:0!important;max-height:none!important}
-  .museum-frame img{max-height:none!important}
-  .info-panel{gap:.72rem!important;height:auto!important;max-height:none!important;overflow:visible!important}
-  .info-category{font-size:.79rem!important;line-height:1.32!important;letter-spacing:.12em!important;margin-top:.15rem!important}
-  .info-title{font-size:clamp(1.85rem,8.5vw,2.7rem)!important;line-height:1.01!important;margin:.1rem 0 .38rem!important;padding-bottom:.55rem!important}
-  .info-meta{font-size:.9rem!important;line-height:1.45!important;gap:.22rem!important;margin-bottom:.3rem!important}
-  .info-panel>.info-block,.history-panel{padding:1rem 1.05rem!important;margin-top:.25rem!important;border-radius:4px!important}
-  .info-block h4,.history-panel h4{font-size:.7rem!important;letter-spacing:.14em!important;margin-bottom:.42rem!important}
-  .wave-p{font-size:.96rem!important;line-height:1.55!important}
-  .history-panel{margin-top:.9rem!important}
-  .chronology-rail{left:var(--final-mobile-side)!important;right:auto!important;bottom:auto!important;top:max(5.1rem,calc(env(safe-area-inset-top) + 4.1rem))!important}
-  [dir="rtl"] .chronology-rail{left:auto!important;right:var(--final-mobile-side)!important}
-  .controls-nav{top:max(.85rem,env(safe-area-inset-top))!important;right:var(--final-mobile-side)!important;gap:.32rem!important}
-  .controls-nav .nav-box{font-size:.61rem!important;letter-spacing:.08em!important;padding:4px 6px!important}
-  #catalog-turn-layer.is-turning .catalog-turn-sheet,#catalog-turn-layer.is-turning .catalog-turn-sheet::before,#catalog-turn-layer.is-turning .catalog-turn-sheet::after{animation-duration:.68s}
-  .catalog-turn-destination{transition-duration:.65s}
-}
-@media(max-width:430px){.home-page .site-brand-link{width:6.8rem!important}.home-page .controls-nav{max-width:calc(100vw - 9.2rem)!important}.home-page .home-main{padding-left:18px!important;padding-right:18px!important}.home-page .era-grid{gap:4.65rem!important}.hero-section,.exhibition-section{padding-left:18px!important;padding-right:18px!important}}
-@media(prefers-reduced-motion:reduce){#catalog-turn-layer{display:none!important}.home-title,.hero-title{transition:none!important}}
-/* Destination art is revealed beneath the turning catalogue page. */
-.catalog-turn-destination{background-color:#17171a;background-blend-mode:normal;filter:saturate(.82) brightness(.72);transition:left .78s var(--final-ease),top .78s var(--final-ease),width .78s var(--final-ease),height .78s var(--final-ease),border-radius .78s var(--final-ease),opacity .48s ease,transform .78s var(--final-ease),filter .62s ease!important}
-#catalog-turn-layer.is-turning .catalog-turn-destination{filter:saturate(.88) brightness(.82)}
-/* Compact top chrome for 375–430px phones without sacrificing readable labels. */
-@media(max-width:430px){
-  .home-page .site-brand-link{width:6.25rem!important}
-  .home-page .controls-nav{gap:.18rem!important;max-width:calc(100vw - 8.7rem)!important}
-  .home-page .nav-box{font-size:.54rem!important;letter-spacing:.04em!important;padding:2px 3px!important;gap:.04rem!important}
-  .home-page .lang-btn,.home-page .audio-btn{min-width:27px!important;min-height:34px!important;padding:0 1px!important}
-}
-@media(max-width:430px){.home-page .lang-btn{min-width:25px!important}.home-page .audio-btn{min-width:27px!important}}
+*{box-sizing:border-box}
 
-
-/* APPROVED GENEALOGY SCRIPT LAYER — English copy supplied verbatim by the user. */
-html:not([lang="en"]) .genealogy-script[data-script-language="en"],
-html:not([lang="en"]) .approved-history-render[data-script-language="en"]{display:none!important}
-.genealogy-script{position:relative;z-index:2;width:100%;padding:clamp(4.8rem,7vw,7rem) var(--final-side);border-bottom:1px solid rgba(255,255,255,.025)}
-.genealogy-script::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;transform:translateX(-50%);background:linear-gradient(to bottom,rgba(255,255,255,.035),rgba(255,255,255,.14) 14%,rgba(255,255,255,.14) 86%,rgba(255,255,255,.035));pointer-events:none}
-.genealogy-script-inner{width:min(1220px,100%);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2.5rem,4.4vw,4.8rem);position:relative}
-.genealogy-script-copy{position:relative;max-width:570px;padding:1.45rem 1.55rem 1.5rem;background:rgba(255,255,255,.018);border:1px solid rgba(255,255,255,.055);border-radius:5px;box-shadow:0 18px 42px rgba(0,0,0,.16)}
-.genealogy-script.script-right .genealogy-script-copy{grid-column:2}
-.genealogy-script.script-left .genealogy-script-copy{grid-column:1}
-.genealogy-script-copy::before{content:"";position:absolute;top:1.55rem;width:7px;height:7px;border-radius:50%;background:#17171a;border:1px solid rgba(255,255,255,.34);box-shadow:0 0 0 5px rgba(23,23,26,.9),0 0 15px rgba(255,255,255,.055)}
-.genealogy-script.script-right .genealogy-script-copy::before{left:calc(-1 * clamp(2.5rem,4.4vw,4.8rem) / 2 - 4px)}
-.genealogy-script.script-left .genealogy-script-copy::before{right:calc(-1 * clamp(2.5rem,4.4vw,4.8rem) / 2 - 4px)}
-.genealogy-script-copy h3{font-family:var(--museum-serif,"Cormorant Garamond",Georgia,serif);font-size:clamp(1.85rem,2.8vw,2.55rem);font-weight:500;line-height:1.05;color:#fff;letter-spacing:.01em;margin:0 0 1.2rem}
-.genealogy-marker .genealogy-script-copy h3{font-size:clamp(1.45rem,2.15vw,1.9rem)}
-.genealogy-script-copy p{font-family:var(--museum-sans,"Source Sans 3",sans-serif);font-size:clamp(.94rem,1.02vw,1.02rem);line-height:1.68;color:#e7e7ed;margin:.9rem 0 0}
-.genealogy-script-copy p:first-of-type{margin-top:0}
-.genealogy-script-copy strong{color:#fff;font-weight:600}.genealogy-script-copy em{color:#f0f0f4}
-.genealogy-intro{padding-top:clamp(4.2rem,6vw,6rem);padding-bottom:clamp(5rem,7vw,7rem)}
-.genealogy-closing{padding-top:clamp(5rem,7vw,7rem);padding-bottom:clamp(6rem,8vw,8rem)}
-.approved-history-template{display:none!important}
-.approved-history-render{display:block}
-.approved-history-render p{font-size:inherit;line-height:inherit;color:inherit;min-height:0;margin:0 0 .72rem}
-.approved-history-render p:last-child{margin-bottom:0}
-.approved-history-render strong{color:#fff;font-weight:600}.approved-history-render em{color:#f4f4f7}
-html[lang="en"] .history-panel.has-approved-history>.approved-history-original{display:none!important}
-@media (hover:hover) and (pointer:fine){
-  .genealogy-marker .genealogy-script-copy{transition:transform .62s cubic-bezier(.16,1,.3,1),background .5s ease,border-color .5s ease,box-shadow .62s cubic-bezier(.16,1,.3,1),filter .5s ease}
-  .genealogy-marker .genealogy-script-copy:hover{transform:translateY(-14px) scale(1.018);filter:brightness(1.1);background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.16);box-shadow:0 26px 48px rgba(0,0,0,.28),0 0 18px rgba(255,255,255,.025)}
+/* One transition only. Legacy flip/peel/aperture layers never render. */
+#era-pageflip-layer,#catalog-turn-layer,#era-aperture-layer{display:none!important}
+#page-curtain{
+  position:fixed;inset:0;z-index:9000;pointer-events:none;background:#101013;opacity:0;
+  transition:opacity .19s ease;will-change:opacity
 }
-@media(max-width:850px){
-  .genealogy-script{padding:4.25rem var(--final-mobile-side,20px) 4.8rem}
-  .genealogy-script::before{display:none}
-  .genealogy-script-inner{display:block;width:100%}
-  .genealogy-script-copy{max-width:none;width:100%;padding:1.25rem 1.15rem 1.3rem}
-  .genealogy-script-copy::before{display:none}
-  .genealogy-script-copy h3{font-size:clamp(1.75rem,8vw,2.35rem);line-height:1.04;margin-bottom:1rem}
-  .genealogy-marker .genealogy-script-copy h3{font-size:clamp(1.35rem,6.6vw,1.75rem)}
-  .genealogy-script-copy p{font-size:.96rem;line-height:1.6}
-  .genealogy-intro{padding-top:3.7rem;padding-bottom:4.5rem}
-  .genealogy-closing{padding-top:4.5rem;padding-bottom:5.4rem}
-  .approved-history-render p{font-size:.96rem!important;line-height:1.58!important;margin-bottom:.72rem!important}
-}
-
-/* Keep long approved History beside its artwork on desktop by extending the museum matte, not by forcing a scrollbar. */
-@media(min-width:851px){
-  .approved-history-section .history-panel{max-height:none!important;overflow:visible!important}
-  .approved-history-section .art-box{min-height:var(--approved-art-height,auto)!important}
-  .approved-history-section .art-box .museum-frame{min-height:100%!important;height:100%!important;max-height:none!important;align-items:center!important}
-  .approved-history-section .art-box .museum-frame img{flex:0 0 auto}
-}
-
-/* 2026-08-16 CORRECTIVE QA PASS — geometry and transition only; no copy changes. */
-
-/* Gallery controls belong to the top of the page and never cover later exhibits. */
-body:not(.home-page) .controls-nav,
-body:not(.home-page) .site-brand-link{position:absolute!important}
-body:not(.home-page) .controls-nav.chrome-hidden{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
-
-/* The chronology year is a small spine label, not a pill wide enough to cover artwork. */
-@media(min-width:851px){
-  .timeline-marker{
-    top:0!important;
-    transform:translate(-50%,-125%)!important;
-    z-index:3!important;
-  }
-  .timeline-node{
-    min-width:0!important;
-    padding:.3rem .42rem!important;
-    border-radius:3px!important;
-    background:#17171a!important;
-    border-color:rgba(255,255,255,.07)!important;
-    box-shadow:none!important;
-    font-size:.67rem!important;
-    line-height:1!important;
-    letter-spacing:.12em!important;
-    font-variant-caps:normal!important;
-  }
-  .timeline-active .timeline-node{
-    background:#17171a!important;
-    border-color:rgba(116,38,45,.48)!important;
-    box-shadow:none!important;
-  }
-}
-
-/* One catalogue system across all three galleries: same width, padding, type size and leading. */
-.info-panel>.info-block:not(.wall-archive-hidden),
-.history-panel{
-  width:100%!important;
-  max-width:100%!important;
-  box-sizing:border-box!important;
-  margin:.42rem 0 0!important;
-  padding:.9rem 1rem .95rem!important;
-  background:rgba(255,255,255,.026)!important;
-  border:1px solid rgba(255,255,255,.045)!important;
-  border-left-color:rgba(255,255,255,.075)!important;
-  border-radius:4px!important;
-}
-.timeline-art-right .info-panel>.info-block:not(.wall-archive-hidden),
-.timeline-art-right .history-panel{
-  border:1px solid rgba(255,255,255,.045)!important;
-  border-right-color:rgba(255,255,255,.075)!important;
-}
-.info-panel>.info-block:not(.wall-archive-hidden) h4,
-.history-panel h4{
-  font-size:.7rem!important;
-  line-height:1.1!important;
-  letter-spacing:.13em!important;
-  margin:0 0 .42rem!important;
-}
-.info-panel>.info-block:not(.wall-archive-hidden) .wave-p,
-.history-panel .wave-p,
-.approved-history-render,
-.approved-history-render p{
-  font-size:.96rem!important;
-  line-height:1.5!important;
-  letter-spacing:.002em!important;
-}
-.approved-history-render p{margin:0 0 .68rem!important}
-.approved-history-render p:last-child{margin-bottom:0!important}
-
-/* Neutralize the old emergency text-shrinking classes. They caused different type sizes from box to box. */
-@media(min-width:851px){
-  .info-panel,
-  .info-panel.is-tight,
-  .info-panel.is-tighter,
-  .info-panel.is-ultra-tight{gap:.48rem!important}
-  .info-panel.is-tight>.info-block:not(.wall-archive-hidden),
-  .info-panel.is-tighter>.info-block:not(.wall-archive-hidden),
-  .info-panel.is-ultra-tight>.info-block:not(.wall-archive-hidden),
-  .info-panel.is-tight .history-panel,
-  .info-panel.is-tighter .history-panel,
-  .info-panel.is-ultra-tight .history-panel{padding:.9rem 1rem .95rem!important}
-  .info-panel.is-tight .wave-p,
-  .info-panel.is-tighter .wave-p,
-  .info-panel.is-ultra-tight .wave-p,
-  .info-panel.is-tight .approved-history-render,
-  .info-panel.is-tighter .approved-history-render,
-  .info-panel.is-ultra-tight .approved-history-render,
-  .info-panel.is-tight .approved-history-render p,
-  .info-panel.is-tighter .approved-history-render p,
-  .info-panel.is-ultra-tight .approved-history-render p{
-    font-size:.96rem!important;
-    line-height:1.5!important;
-  }
-  .info-panel.is-tight .info-block h4,
-  .info-panel.is-tighter .info-block h4,
-  .info-panel.is-ultra-tight .info-block h4,
-  .info-panel.is-tight .history-panel h4,
-  .info-panel.is-tighter .history-panel h4,
-  .info-panel.is-ultra-tight .history-panel h4{font-size:.7rem!important;margin-bottom:.42rem!important}
-
-  /* Long approved History is allowed to flow. The artwork stays beside it while the
-     visitor reads, instead of the text being crushed or clipped to the image height. */
-  .approved-history-section{min-height:auto!important}
-  .approved-history-section .exhibition-container{align-items:start!important}
-  .approved-history-section .art-box{
-    position:sticky!important;
-    top:clamp(5.5rem,9vh,7rem)!important;
-    align-self:start!important;
-    min-height:0!important;
-    height:auto!important;
-  }
-  .approved-history-section .art-box .museum-frame{
-    min-height:0!important;
-    height:auto!important;
-    max-height:min(72vh,760px)!important;
-  }
-  .approved-history-section .art-box .museum-frame>.responsive-art-picture{
-    height:auto!important;
-    max-height:min(72vh,760px)!important;
-  }
-  .approved-history-section .art-box .museum-frame img{
-    width:100%!important;
-    height:auto!important;
-    max-height:min(72vh,760px)!important;
-    object-fit:contain!important;
-  }
-  .approved-history-section .history-panel{
-    max-height:none!important;
-    overflow:visible!important;
-  }
-}
-
-/* Strong, consistent hover: noticeable lift and brightening without changing text geometry. */
-@media(hover:hover) and (pointer:fine){
-  .info-panel>.info-block:not(.wall-archive-hidden).archive-stagger-block.pop-in:hover,
-  .history-panel.archive-stagger-block.pop-in:hover{
-    transform:translateY(-18px) scale(1.018)!important;
-    filter:brightness(1.16)!important;
-    background:rgba(255,255,255,.072)!important;
-    border-color:rgba(255,255,255,.22)!important;
-    box-shadow:0 28px 54px rgba(0,0,0,.34),0 0 24px rgba(255,255,255,.04)!important;
-  }
-}
-
-/* Replace the slow image-peel with one fast matte cut. The destination loads only
-   after the viewport is fully covered, so there is no half-transition between pages. */
-#catalog-turn-layer,#era-pageflip-layer{display:none!important}
-#door-cut-veil{
-  position:fixed;
-  inset:0;
-  z-index:9000;
-  pointer-events:none;
-  background:#111114;
-  opacity:0;
-  transition:opacity .22s ease;
-}
-#door-cut-veil.is-active{opacity:1}
-.home-page .era-card.door-cut-source{
-  z-index:100!important;
-  transform:translateY(-10px) scale(1.018)!important;
-  filter:brightness(1.08)!important;
-  transition:transform .18s cubic-bezier(.16,1,.3,1),filter .18s ease!important;
-}
+#page-curtain.is-active{opacity:1}
 body.door-cutting .home-intro,
-body.door-cutting .desktop-connector,
 body.door-cutting .controls-nav,
 body.door-cutting .site-brand-link,
-body.door-cutting .era-card:not(.door-cut-source){
-  opacity:.72!important;
-  transition:opacity .16s ease!important;
+body.door-cutting .desktop-connector,
+body.door-cutting .era-card:not(.door-cut-source){opacity:.62!important;transition:opacity .14s ease!important}
+.home-page .era-card.door-cut-source{
+  transform:translateY(-10px) scale(1.018)!important;filter:brightness(1.08)!important;
+  transition:transform .16s var(--final-ease),filter .16s ease!important
 }
 
-@media(max-width:850px){
-  .info-panel>.info-block:not(.wall-archive-hidden),
-  .history-panel{margin:.45rem 0 0!important;padding:1rem 1.05rem!important}
-  .info-panel>.info-block:not(.wall-archive-hidden) .wave-p,
-  .history-panel .wave-p,
-  .approved-history-render,
-  .approved-history-render p{font-size:.96rem!important;line-height:1.56!important}
+/* Homepage: three equal doors, one behavior. */
+.home-page .home-main{width:min(1180px,100%);padding-inline:var(--final-side)!important}
+.home-page .era-grid{width:min(1020px,100%);gap:clamp(22px,2.25vw,34px)!important}
+.home-page .era-card,
+.home-page .era-card.antizionism{
+  overflow:hidden!important;border:1px solid rgba(255,255,255,.075)!important;border-radius:7px!important;
+  background:#151518!important;box-shadow:0 22px 52px rgba(0,0,0,.34)!important;
+  transition:transform .62s var(--final-ease),border-color .42s ease,box-shadow .62s var(--final-ease),filter .42s ease!important
+}
+.home-page .door-rotator{transform:none!important;transition:none!important;transform-style:flat!important;height:100%!important}
+.home-page .door-front{position:relative!important;inset:auto!important;transform:none!important;backface-visibility:visible!important;height:100%!important}
+.home-page .door-back{display:none!important}
+.home-page .era-inner{height:100%!important}
+.home-page .era-head{background:rgba(17,17,21,.985)!important;border-bottom:1px solid rgba(255,255,255,.055)!important}
+.home-page .era-image-wrap{background:#141417!important;overflow:hidden!important}
+.home-page .era-image,
+.home-page .era-card:hover .era-image,
+.home-page .era-card:focus-visible .era-image{
+  object-fit:contain!important;object-position:center!important;transform:none!important;
+  transition:filter .62s ease!important
+}
+.home-page .era-arrow{opacity:.68!important;transition:transform .5s var(--final-ease),opacity .4s ease!important}
+.home-page .era-card.antizionism::before,.home-page .era-card.antizionism::after{display:none!important;content:none!important}
+
+@media(hover:hover) and (pointer:fine){
+  .home-page .era-card.pop-in:hover,.home-page .era-card.pop-in:focus-visible{
+    transform:translateY(-18px) scale(1.026)!important;border-color:rgba(255,255,255,.19)!important;
+    box-shadow:0 42px 86px rgba(0,0,0,.58),0 0 30px rgba(255,255,255,.04)!important
+  }
+  .home-page .era-card.pop-in:hover .era-image,.home-page .era-card.pop-in:focus-visible .era-image{filter:brightness(1.17) contrast(1.1)!important}
+  .home-page .era-card.pop-in:hover .era-arrow,.home-page .era-card.pop-in:focus-visible .era-arrow{opacity:1!important;transform:translateX(4px)!important}
+  [dir="rtl"] .home-page .era-card.pop-in:hover .era-arrow,[dir="rtl"] .home-page .era-card.pop-in:focus-visible .era-arrow{transform:translateX(-4px)!important}
 }
 
-/* 2026-08-16 PROFESSIONAL WALL REBALANCE — visual system only; no copy changes. */
+/* Keep identity lines clean. */
+.home-title,.hero-title{white-space:nowrap!important;max-width:100%}
+.hero-title{letter-spacing:.002em!important}
+.hero-section,.hero-container,.hero-header-text{min-width:0;max-width:100%}
+.hero-section{padding-inline:var(--final-side)!important}
+.hero-container{max-width:1220px!important;grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr)!important;gap:clamp(2.5rem,4.4vw,4.8rem)!important}
+.hero-subtitle{font-size:clamp(1rem,1.25vw,1.24rem)!important;letter-spacing:.15em!important}
+.hero-location{font-size:.9rem!important;letter-spacing:.22em!important}
 
-/* Remove the central chronology hardware entirely. Dates remain in each record's own heading. */
-.timeline-section::before,
-.timeline-section::after,
-.timeline-section .exhibition-container::after,
-.timeline-marker,
-.chronology-rail{
-  display:none!important;
-  content:none!important;
-}
-.timeline-section .exhibition-container{
-  opacity:1!important;
-  filter:none!important;
-}
+/* Gallery chrome stays at the page entrance and never overlays exhibits. */
+body:not(.home-page) .controls-nav,body:not(.home-page) .site-brand-link{position:absolute!important}
+body:not(.home-page) .controls-nav.chrome-hidden{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 
-/* Text-only genealogy moments are editorial passages, not objects pinned to a fake center rail. */
-.genealogy-script::before,
-.genealogy-script-copy::before{display:none!important;content:none!important}
-.genealogy-script-inner{display:block!important;max-width:1220px!important}
-.genealogy-script-copy{
-  width:100%!important;
-  max-width:880px!important;
-  margin-inline:auto!important;
-}
-.genealogy-marker .genealogy-script-copy{max-width:790px!important}
+/* Remove obsolete center-line timeline hardware. */
+.timeline-section::before,.timeline-section::after,.timeline-section .exhibition-container::after,
+.timeline-marker,.chronology-rail{display:none!important;content:none!important}
+.timeline-section .exhibition-container{opacity:1!important;filter:none!important}
 
-/* The ending is a full-width epilogue, not another timeline card. */
-.genealogy-closing{
-  padding-top:clamp(5.5rem,8vw,8rem)!important;
-  padding-bottom:clamp(7rem,10vw,10rem)!important;
-  border-bottom:0!important;
-}
-.genealogy-closing .genealogy-script-inner{max-width:1120px!important}
-.genealogy-closing .genealogy-script-copy{
-  max-width:940px!important;
-  padding:2.1rem 0 0!important;
-  background:transparent!important;
-  border:0!important;
-  border-top:1px solid rgba(255,255,255,.13)!important;
-  border-radius:0!important;
-  box-shadow:none!important;
-}
-.genealogy-closing .genealogy-script-copy h3{
-  font-size:clamp(2.15rem,3.5vw,3.2rem)!important;
-  margin:0 0 1.45rem!important;
-}
-.genealogy-closing .genealogy-script-copy p{
-  max-width:830px!important;
-  font-size:clamp(.98rem,1.08vw,1.06rem)!important;
-  line-height:1.72!important;
-}
-.genealogy-closing .genealogy-script-copy p:last-child{
-  margin-top:1.65rem!important;
-  font-family:var(--museum-serif,"Cormorant Garamond",Georgia,serif)!important;
-  font-size:clamp(1.55rem,2.35vw,2.15rem)!important;
-  line-height:1.18!important;
-  color:#fff!important;
-}
-
-/* Museum wall rhythm: no forced 100vh voids between objects. */
+/* Shared gallery geometry. */
 .exhibition-section{
-  min-height:auto!important;
-  padding-top:clamp(5.6rem,7.4vw,7.8rem)!important;
-  padding-bottom:clamp(5.9rem,7.8vw,8.2rem)!important;
+  min-height:auto!important;padding:clamp(4.8rem,7vw,7rem) var(--final-side)!important;
+  border-bottom:1px solid rgba(255,255,255,.035)!important
 }
 .exhibition-container{
-  max-width:1320px!important;
-  gap:clamp(3.2rem,5vw,5.8rem)!important;
-  align-items:start!important;
+  width:100%!important;max-width:1220px!important;margin-inline:auto!important;
+  display:grid!important;grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr)!important;
+  gap:clamp(2.4rem,4vw,4.4rem)!important;align-items:start!important;position:relative!important
 }
-.timeline-art-right .info-panel{padding-right:0!important}
-.timeline-art-left .info-panel{padding-left:0!important}
+.timeline-art-right .art-box{grid-column:2!important;grid-row:1!important}
+.timeline-art-right .info-panel{grid-column:1!important;grid-row:1!important;padding:0!important}
+.timeline-art-left .art-box{grid-column:1!important;grid-row:1!important}
+.timeline-art-left .info-panel{grid-column:2!important;grid-row:1!important;padding:0!important}
 
-/* One controlled image scale system. Portrait, standard landscape, and panoramic works
-   retain their whole composition while receiving comparable visual weight. */
-@media(min-width:851px){
-  .exhibition-section:not(.art-panorama) .art-box{
-    position:relative!important;
-    top:auto!important;
-    min-height:0!important;
-    height:auto!important;
-    align-self:start!important;
-  }
-  .exhibition-section:not(.art-panorama) .art-box .museum-frame,
-  .exhibition-section:not(.art-panorama) .art-box .museum-frame>.responsive-art-picture{
-    min-height:0!important;
-    height:auto!important;
-    max-height:none!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-  }
-  .exhibition-section:not(.art-panorama) .art-box .museum-frame img{
-    display:block!important;
-    width:100%!important;
-    height:auto!important;
-    max-height:min(60vh,620px)!important;
-    object-fit:contain!important;
-    object-position:center!important;
-    margin:auto!important;
-  }
-  .exhibition-section.art-portrait .art-box .museum-frame img{
-    width:auto!important;
-    max-width:100%!important;
-    max-height:min(62vh,650px)!important;
-  }
+/* Artwork: same frame language, scale by visual weight. */
+.art-box{
+  width:100%!important;margin:0!important;overflow:hidden!important;background:#141417!important;
+  border:1px solid rgba(255,255,255,.075)!important;border-radius:6px!important;
+  box-shadow:0 22px 54px rgba(0,0,0,.36)!important;align-self:start!important;
+  transition:transform .68s var(--final-ease),border-color .46s ease,box-shadow .68s var(--final-ease),filter .46s ease!important
+}
+.museum-frame{width:100%!important;min-height:0!important;max-height:none!important;background:#141417!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important}
+.museum-frame img{display:block!important;width:100%!important;height:auto!important;max-height:min(72vh,760px)!important;object-fit:contain!important;object-position:center!important}
+.art-portrait .art-box{width:min(88%,520px)!important;justify-self:center!important}
+.art-panorama .exhibition-container{grid-template-columns:1fr!important;max-width:1240px!important}
+.art-panorama .art-box{grid-column:1!important;grid-row:1!important;width:min(100%,1060px)!important;justify-self:center!important}
+.art-panorama .info-panel{grid-column:1!important;grid-row:2!important;width:min(100%,900px)!important;justify-self:center!important;margin-top:1.1rem!important;padding:0!important}
+.art-panorama .museum-frame img{max-height:520px!important}
+.gallery-image.quality-source-limited{max-width:var(--native-display-max,720px)!important;margin-inline:auto!important}
 
-  /* Very wide objects become deliberate feature-width works rather than tiny strips
-     trapped inside a half-page column. */
-  .exhibition-section.art-panorama .exhibition-container{
-    display:grid!important;
-    grid-template-columns:1fr!important;
-    grid-template-rows:auto auto!important;
-    max-width:1180px!important;
-    gap:2.15rem!important;
+@media(hover:hover) and (pointer:fine){
+  .art-box.pop-in:hover,.art-box.pop-in:focus-visible{
+    transform:translateY(-16px) scale(1.024)!important;border-color:rgba(255,255,255,.19)!important;
+    box-shadow:0 40px 78px rgba(0,0,0,.55),0 0 26px rgba(255,255,255,.035)!important;filter:brightness(1.1)!important
   }
-  .exhibition-section.art-panorama .art-box{
-    grid-column:1!important;
-    grid-row:1!important;
-    position:relative!important;
-    top:auto!important;
-    width:min(100%,1040px)!important;
-    min-height:0!important;
-    height:auto!important;
-    margin:0 auto!important;
-    justify-self:center!important;
-  }
-  .exhibition-section.art-panorama .art-box .museum-frame,
-  .exhibition-section.art-panorama .art-box .museum-frame>.responsive-art-picture{
-    width:100%!important;
-    min-height:0!important;
-    height:auto!important;
-    max-height:none!important;
-    display:block!important;
-  }
-  .exhibition-section.art-panorama .art-box .museum-frame img{
-    display:block!important;
-    width:100%!important;
-    height:auto!important;
-    max-height:none!important;
-    object-fit:contain!important;
-    margin:0 auto!important;
-  }
-  .exhibition-section.art-panorama .info-panel{
-    grid-column:1!important;
-    grid-row:2!important;
-    width:min(900px,100%)!important;
-    max-width:900px!important;
-    margin:0 auto!important;
-    padding:0!important;
-    display:grid!important;
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:.72rem!important;
-  }
-  .exhibition-section.art-panorama .info-category,
-  .exhibition-section.art-panorama .info-title,
-  .exhibition-section.art-panorama .info-meta{
-    grid-column:1/-1!important;
-  }
-  .exhibition-section.art-panorama .info-panel>.info-block:not(.wall-archive-hidden):not(.history-panel){
-    width:100%!important;
-    margin:0!important;
-  }
-  .exhibition-section.art-panorama .history-panel{
-    grid-column:1/-1!important;
-    width:100%!important;
-    margin:.08rem 0 0!important;
-  }
+  .art-box:hover .museum-frame img.gallery-image,.art-box:focus-visible .museum-frame img.gallery-image{filter:brightness(1.12) contrast(1.08)!important}
+}
 
-  /* Never crush or scroll History to match an image. */
-  .history-panel,
-  .approved-history-section .history-panel{
-    max-height:none!important;
-    overflow:visible!important;
+/* One catalogue-label system everywhere. */
+.info-panel{min-width:0!important;display:flex!important;flex-direction:column!important;gap:.55rem!important;height:auto!important;max-height:none!important;overflow:visible!important}
+.info-panel::before,.info-block::before,.info-block::after{display:none!important;content:none!important}
+.info-category{font-size:.79rem!important;line-height:1.35!important;letter-spacing:.13em!important;color:#bdbdc7!important;margin:0!important}
+.info-title{font-size:clamp(2rem,2.55vw,2.75rem)!important;line-height:1.02!important;margin:.12rem 0 .52rem!important;padding-bottom:.75rem!important;overflow-wrap:normal!important;word-break:normal!important}
+.info-meta{font-size:.93rem!important;line-height:1.45!important;margin:0 0 .25rem!important}
+.info-panel>.info-block:not(.wall-archive-hidden),.history-panel{
+  width:100%!important;max-width:100%!important;margin:.34rem 0 0!important;padding:1rem 1.08rem!important;
+  background:var(--final-panel)!important;border:1px solid rgba(255,255,255,.055)!important;border-radius:4px!important;
+  box-shadow:none!important;transition:transform .5s var(--final-ease),background .4s ease,border-color .4s ease,box-shadow .5s var(--final-ease),filter .4s ease!important
+}
+.info-panel>.info-block h4,.history-panel h4{font-size:.7rem!important;line-height:1.1!important;letter-spacing:.14em!important;margin:0 0 .45rem!important}
+.info-panel>.info-block .wave-p,.history-panel .wave-p,.approved-history-render,.approved-history-render p{font-size:.96rem!important;line-height:1.55!important;letter-spacing:0!important}
+.info-panel.is-tight .wave-p,.info-panel.is-tighter .wave-p,.info-panel.is-ultra-tight .wave-p{font-size:.96rem!important;line-height:1.55!important}
+.catalogue-empty{display:none!important}
+.wall-archive-hidden{display:none!important}
+.history-wall-hidden{display:none!important}
+
+@media(hover:hover) and (pointer:fine){
+  .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty).pop-in:hover,
+  .history-panel.pop-in:hover{
+    transform:translateY(-14px) scale(1.022)!important;background:rgba(255,255,255,.07)!important;
+    border-color:rgba(255,255,255,.22)!important;box-shadow:0 25px 48px rgba(0,0,0,.32)!important;filter:brightness(1.1)!important
   }
 }
 
-@media(max-width:850px){
-  .genealogy-script-copy{max-width:none!important}
-  .genealogy-closing{padding-top:4.6rem!important;padding-bottom:6.2rem!important}
-  .genealogy-closing .genealogy-script-copy{padding-top:1.6rem!important}
-  .genealogy-closing .genealogy-script-copy h3{font-size:clamp(2rem,10vw,2.65rem)!important}
-  .genealogy-closing .genealogy-script-copy p:last-child{font-size:clamp(1.45rem,8vw,1.9rem)!important}
-  .exhibition-section{padding-top:4.7rem!important;padding-bottom:5.4rem!important}
-  .exhibition-section.art-panorama .info-panel{display:block!important}
-}
-@media(min-width:851px){
-  .exhibition-section.art-panorama .art-box .museum-frame img.gallery-image{
-    max-width:none!important;
-  }
-}
-
-/* 2026-08-17 CHRONOLOGY INTERLEAVE — approved text becomes a visible wall beat between objects. */
-html[lang="en"] .history-wall-hidden{display:none!important}
-html:not([lang="en"]) .chronology-interlude[data-script-language="en"]{display:none!important}
-
-/* No central timeline hardware. Chronology is carried by the sequence of dated object headings
-   and the full-width narrative beats between them. */
-.timeline-section::before,
-.timeline-section::after,
-.timeline-section .exhibition-container::after,
-.timeline-marker,
-.chronology-rail{display:none!important;content:none!important}
-
-.chronology-object-section{
-  padding-top:clamp(5.4rem,7vw,7.4rem)!important;
-  padding-bottom:clamp(5.4rem,7vw,7.4rem)!important;
-}
-
+/* Approved History is part of the wall chronology, not trapped in a box. */
 .chronology-interlude{
-  position:relative;
-  z-index:2;
-  width:100%;
-  min-height:clamp(560px,72vh,760px);
-  display:grid;
-  place-items:center;
-  padding:clamp(6.5rem,9vw,9.5rem) var(--final-side);
-  border-bottom:1px solid rgba(255,255,255,.035);
-  background:
-    radial-gradient(circle at 50% 48%,rgba(255,255,255,.026) 0%,rgba(255,255,255,.008) 33%,rgba(23,23,26,0) 72%),
-    #17171a;
-  overflow:hidden;
+  width:100%;padding:clamp(4.4rem,7vw,7.2rem) var(--final-side);border-bottom:1px solid rgba(255,255,255,.035);
+  opacity:0;transform:translateY(22px);transition:opacity .72s ease,transform .82s var(--final-ease)
 }
-.chronology-interlude::before{
-  content:"";
-  position:absolute;
-  top:clamp(4rem,7vh,5.5rem);
-  left:50%;
-  width:72px;
-  height:1px;
-  transform:translateX(-50%);
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.24),transparent);
-}
-.chronology-interlude-inner{
-  width:min(900px,100%);
-  margin-inline:auto;
-  text-align:center;
-  opacity:0;
-  transform:translateY(34px);
-  filter:blur(3px);
-  transition:opacity .82s cubic-bezier(.16,1,.3,1),transform .95s cubic-bezier(.16,1,.3,1),filter .82s ease;
-}
-.chronology-interlude.is-visible .chronology-interlude-inner{opacity:1;transform:none;filter:none}
-.chronology-interlude-category{
-  margin:0 auto 1.35rem;
-  color:#b6b6c1;
-  font-family:var(--museum-sans,"Source Sans 3",sans-serif);
-  font-size:clamp(.78rem,.9vw,.88rem);
-  line-height:1.3;
-  font-weight:500;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-}
-.chronology-interlude-title{
-  margin:0 auto 2rem;
-  max-width:820px;
-  color:#fff;
-  font-family:var(--museum-serif,"Cormorant Garamond",Georgia,serif);
-  font-size:clamp(2.35rem,4vw,4rem);
-  line-height:1.02;
-  font-weight:500;
-  letter-spacing:.005em;
-  text-wrap:balance;
-}
-.chronology-interlude-copy{
-  width:min(820px,100%);
-  margin-inline:auto;
-  color:#e7e7ec;
-  font-family:var(--museum-sans,"Source Sans 3",sans-serif);
-  font-size:clamp(1.04rem,1.22vw,1.18rem);
-  line-height:1.72;
-  letter-spacing:.002em;
-  text-align:center;
-}
-.chronology-interlude-copy p{margin:0 auto 1.08rem;max-width:76ch}
-.chronology-interlude-copy p:last-child{margin-bottom:0}
-.chronology-interlude-copy strong{color:#fff;font-weight:600}
-.chronology-interlude-copy em{font-family:var(--museum-serif,"Cormorant Garamond",Georgia,serif);font-size:1.08em}
+.chronology-interlude.is-visible{opacity:1;transform:none}
+.chronology-interlude-inner{width:min(900px,100%);margin-inline:auto;text-align:center}
+.chronology-interlude-category{font-family:"Source Sans 3",sans-serif;font-size:.78rem;line-height:1.3;letter-spacing:.16em;text-transform:uppercase;color:#b8b8c1;margin-bottom:1.2rem}
+.chronology-interlude-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2.15rem,3.4vw,3.3rem);line-height:1.03;font-weight:500;margin:0 auto 1.4rem;color:#f6f6f8}
+.chronology-interlude-copy{width:min(820px,100%);margin-inline:auto;font-family:"Source Sans 3",sans-serif;font-size:clamp(1rem,1.14vw,1.08rem);line-height:1.72;color:#eeeeF2}
+.chronology-interlude-copy p{margin:0 0 1.15rem}.chronology-interlude-copy p:last-child{margin-bottom:0}
+.chronology-source-hidden{display:none!important}
 
-/* Existing text-only chronology moments use the same centered museum rhythm. */
-.genealogy-marker{
-  min-height:clamp(520px,66vh,700px)!important;
-  display:grid!important;
-  place-items:center!important;
-  padding:clamp(6rem,8.5vw,8.5rem) var(--final-side)!important;
-  border-bottom:1px solid rgba(255,255,255,.035)!important;
+/* Major libels: no extra copy, no card, no fake timeline hardware. */
+.libel-marker{
+  width:100%;padding:clamp(3.9rem,6vw,6.1rem) var(--final-side);border-bottom:1px solid rgba(255,255,255,.03);
+  opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .78s var(--final-ease)
 }
-.genealogy-marker .genealogy-script-inner{width:100%!important;max-width:900px!important;margin:auto!important}
-.genealogy-marker .genealogy-script-copy{
-  width:100%!important;
-  max-width:820px!important;
-  margin:auto!important;
-  text-align:center!important;
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none!important;
-  padding:0!important;
-}
-.genealogy-marker .genealogy-script-copy h3{
-  font-size:clamp(2.2rem,3.6vw,3.55rem)!important;
-  line-height:1.03!important;
-  margin:0 auto 1.7rem!important;
-  text-wrap:balance;
-}
-.genealogy-marker .genealogy-script-copy p{
-  max-width:76ch!important;
-  margin:0 auto 1rem!important;
-  font-size:clamp(1.02rem,1.18vw,1.16rem)!important;
-  line-height:1.72!important;
-  text-align:center!important;
-}
+.libel-marker.is-visible{opacity:1;transform:none}
+.libel-marker-inner{width:min(980px,100%);margin-inline:auto;text-align:center;position:relative;padding-block:1.35rem}
+.libel-marker-inner::before,.libel-marker-inner::after{content:"";display:block;width:min(180px,28vw);height:1px;background:rgba(255,255,255,.16);margin-inline:auto}
+.libel-marker-inner::before{margin-bottom:1.7rem}.libel-marker-inner::after{margin-top:1.7rem}
+.libel-marker h2{font-family:"Cormorant Garamond",serif;font-size:clamp(2.15rem,4vw,4.1rem);font-weight:500;line-height:.98;letter-spacing:-.015em;color:#f8f8fa;margin:0}
 
-/* The closing is the last chronological beat, not a card or a continuation of a center rail. */
-.genealogy-closing{
-  min-height:clamp(600px,76vh,820px)!important;
-  display:grid!important;
-  place-items:center!important;
-  padding:clamp(7rem,10vw,10rem) var(--final-side)!important;
-}
-.genealogy-closing .genealogy-script-copy{
-  text-align:center!important;
-  max-width:900px!important;
-  margin:auto!important;
-  padding:2.3rem 0 0!important;
-  border-top:1px solid rgba(255,255,255,.15)!important;
-}
-.genealogy-closing .genealogy-script-copy p{margin-left:auto!important;margin-right:auto!important;text-align:center!important}
+/* Existing genealogy text moments use the same editorial restraint. */
+.genealogy-script::before,.genealogy-script-copy::before{display:none!important;content:none!important}
+.genealogy-script{padding:clamp(4.5rem,7vw,7rem) var(--final-side)!important}
+.genealogy-script-inner{display:block!important;max-width:1080px!important;margin-inline:auto!important}
+.genealogy-script-copy{width:min(880px,100%)!important;margin-inline:auto!important;text-align:center!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.genealogy-marker .genealogy-script-copy{max-width:790px!important}
+.genealogy-closing{padding-top:clamp(5.5rem,8vw,8rem)!important;padding-bottom:clamp(7rem,10vw,10rem)!important;border-bottom:0!important}
+.genealogy-closing .genealogy-script-copy{max-width:940px!important;padding-top:2rem!important;border-top:1px solid rgba(255,255,255,.13)!important}
 
+html:not([lang="en"]) [data-script-language="en"]{display:none!important}
+
+/* Phone: artwork first, then labels, then chronology. */
 @media(max-width:850px){
-  .chronology-object-section{padding-top:4.8rem!important;padding-bottom:4.8rem!important}
-  .chronology-interlude{
-    min-height:auto;
-    padding:6.6rem var(--final-mobile-side) 7rem;
-  }
-  .chronology-interlude::before{top:4.25rem;width:58px}
-  .chronology-interlude-inner{width:100%;transform:translateY(24px)}
-  .chronology-interlude-category{font-size:.72rem;letter-spacing:.14em;margin-bottom:1rem}
-  .chronology-interlude-title{font-size:clamp(2rem,9.5vw,3rem);margin-bottom:1.55rem}
-  .chronology-interlude-copy{font-size:1rem;line-height:1.66;max-width:100%}
-  .chronology-interlude-copy p{margin-bottom:1rem}
-  .genealogy-marker{min-height:auto!important;padding:6.4rem var(--final-mobile-side)!important}
-  .genealogy-marker .genealogy-script-copy h3{font-size:clamp(2rem,9vw,2.8rem)!important}
-  .genealogy-marker .genealogy-script-copy p{font-size:1rem!important;line-height:1.66!important}
-  .genealogy-closing{min-height:auto!important;padding:7rem var(--final-mobile-side)!important}
+  .home-page .site-brand-link,.home-page .controls-nav{position:absolute!important}
+  .home-page .home-main{padding:7.2rem var(--final-mobile-side) 5rem!important}
+  .home-page .era-grid{display:flex!important;flex-direction:column!important;gap:4.7rem!important;margin-top:4.2rem!important;width:100%!important}
+  .home-page .era-card,.home-page .era-card.antizionism{width:100%!important;max-width:560px!important;margin-inline:auto!important;aspect-ratio:1/1!important}
+  .home-page .era-head{height:4.4rem!important;padding:.8rem .55rem!important}
+  .home-page .era-title{font-size:clamp(1.45rem,6.3vw,1.9rem)!important}
+
+  .hero-section{min-height:auto!important;padding:7rem var(--final-mobile-side) 4.6rem!important;align-items:flex-start!important;overflow:hidden!important}
+  .hero-container{display:grid!important;grid-template-columns:1fr!important;gap:2rem!important;padding:0!important;width:100%!important}
+  .hero-container>.art-box{grid-column:1!important;grid-row:1!important;width:100%!important}
+  .hero-header-text{grid-column:1!important;grid-row:2!important;transform:none!important}
+  .hero-title{font-size:clamp(2rem,8.8vw,3rem)!important;line-height:.99!important}
+  .hero-subtitle{font-size:.82rem!important;line-height:1.35!important;letter-spacing:.14em!important}
+  .hero-location{font-size:.72rem!important;letter-spacing:.18em!important}
+
+  .exhibition-section{padding:4.5rem var(--final-mobile-side) 5.2rem!important}
+  .exhibition-container,.art-panorama .exhibition-container{display:grid!important;grid-template-columns:1fr!important;gap:1.55rem!important;width:100%!important}
+  .timeline-art-right .art-box,.timeline-art-left .art-box,.art-panorama .art-box{grid-column:1!important;grid-row:1!important;width:100%!important;max-width:100%!important}
+  .timeline-art-right .info-panel,.timeline-art-left .info-panel,.art-panorama .info-panel{grid-column:1!important;grid-row:2!important;width:100%!important;padding:0!important;margin:0!important}
+  .art-portrait .art-box{width:min(88vw,430px)!important}
+  .museum-frame img,.art-panorama .museum-frame img{max-height:none!important}
+  .info-title{font-size:clamp(1.9rem,8.3vw,2.7rem)!important}
+  .info-panel>.info-block:not(.wall-archive-hidden),.history-panel{padding:1rem 1.05rem!important}
+  .info-panel>.info-block .wave-p,.history-panel .wave-p{font-size:.96rem!important;line-height:1.56!important}
+  .chronology-interlude{padding:4rem var(--final-mobile-side) 4.7rem!important}
+  .chronology-interlude-title{font-size:clamp(2rem,9vw,3rem)!important}
+  .chronology-interlude-copy{font-size:.99rem!important;line-height:1.68!important;text-align:center!important}
+  .libel-marker{padding:3.55rem var(--final-mobile-side)!important}
+  .libel-marker h2{font-size:clamp(2.2rem,11vw,3.5rem)!important}
+  .genealogy-script{padding:4.1rem var(--final-mobile-side)!important}
+}
+
+@media(max-width:430px){
+  .home-page .home-main,.hero-section,.exhibition-section,.chronology-interlude,.libel-marker,.genealogy-script{padding-left:18px!important;padding-right:18px!important}
+}
+
+@media(hover:none),(pointer:coarse){
+  .home-page .era-card:hover,.art-box:hover,.info-block:hover,.history-panel:hover{transform:none!important}
 }
 @media(prefers-reduced-motion:reduce){
-  .chronology-interlude-inner{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+  #page-curtain{transition:none!important}
+  .chronology-interlude,.libel-marker{opacity:1!important;transform:none!important;transition:none!important}
+  .home-page .era-card,.art-box,.info-block,.history-panel{transition:none!important}
 }

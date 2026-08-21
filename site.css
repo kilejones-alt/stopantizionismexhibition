@@ -533,29 +533,9 @@ body.pageflip-transitioning .era-card:not(.pageflip-source){
 @media(prefers-reduced-motion:reduce){#era-pageflip-layer{display:none!important}}
 
 .era-pageflip-destination-label{display:none!important}
-/* MOBILE HORIZONTAL DRIFT LOCK */
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: clip;
-  overscroll-behavior-x: none;
-}
 
-@supports not (overflow: clip) {
-  html,
-  body {
-    overflow-x: hidden;
-  }
-}
-
-#era-pageflip-layer {
-  overflow: hidden;
-  max-width: 100vw;
-}
-
-@media (max-width: 720px) {
-  body {
-    touch-action: pan-y pinch-zoom;
-  }
+/* 2026-08-21 — overview mobile header collision repair */
+@media(max-width:720px){
+  .overview-page .site-brand-link{top:4.35rem;right:.65rem;width:7.2rem}
+  [dir="rtl"] .overview-page .site-brand-link{right:auto;left:.65rem}
 }

@@ -1437,7 +1437,6 @@ addEventListener('pagehide', saveAudioPosition);
 addEventListener('pageshow', resetRestoredPage);
 
 addEventListener('DOMContentLoaded', () => {
-  setupEraApertureArrival();
   resetRestoredPage();
   installArchiveStaggerStyles();
   installGalleryClarityStyles();
@@ -1447,7 +1446,6 @@ addEventListener('DOMContentLoaded', () => {
   scheduleHistoryFit();
   enhanceArchiveProvenance();
   setupVerticalMuseumTimeline();
-  setupChronologyNavigator();
   setupAmbientLight();
   setupGalleryImagePolish();
   setupGalleryChrome();
