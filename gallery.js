@@ -181,8 +181,8 @@ function setupAmbientLight() {
 /* SLOW CURATORIAL STAGGER — each gallery section behaves as one composed reveal.
    As the visitor scrolls the artwork into view, the image settles first, then
    Object -> Creator rise out in sequence when those authored roles exist. */
-const ARCHIVE_STAGGER_START = 340;
-const ARCHIVE_STAGGER_STEP = 240;
+const ARCHIVE_STAGGER_START = 185;
+const ARCHIVE_STAGGER_STEP = 130;
 
 function revealArchiveSection(section) {
   if (!section || section.dataset.archiveRevealed === '1') return;
@@ -205,8 +205,8 @@ function revealArchiveSection(section) {
     panel.classList.add('visible');
   }
 
-  headerWaveTargets.forEach(element => {
-    waveText(element, textFor(element));
+  headerWaveTargets.forEach((element, index) => {
+    window.setTimeout(() => waveText(element, textFor(element)), 70 + (index * 45));
   });
 
   blocks.forEach((block, index) => {
@@ -224,7 +224,7 @@ function revealArchiveSection(section) {
     window.setTimeout(() => {
       history.classList.add('pop-in');
       triggerWaveWithin(history);
-        }, 560);
+    }, ARCHIVE_STAGGER_START + (blocks.length * ARCHIVE_STAGGER_STEP));
   }
 }
 
@@ -249,18 +249,26 @@ function replayArchiveWords(section) {
   const blocks = [...section.querySelectorAll('.info-panel > .info-block:not(.wall-archive-hidden)')];
   const history = section.querySelector('.history-panel');
 
-  /* Rebuild the word spans each time the visitor returns to this exhibit so the
-     sentence assembly is not a one-time effect. Keep the boxes themselves in
-     place; only the typography performs again. */
+  /* Rebuild the word spans and physically re-land the catalogue labels each time
+     the visitor returns to an exhibit. This keeps every timeline record alive on
+     both downward and upward scrolling rather than making later records static. */
   headerWaveTargets.forEach((element, index) => {
-    window.setTimeout(() => waveText(element, textFor(element)), index * 55);
+    window.setTimeout(() => waveText(element, textFor(element)), 65 + (index * 45));
   });
 
   blocks.forEach((block, index) => {
-    window.setTimeout(() => triggerWaveWithin(block), 180 + (index * 150));
+    block.classList.add('archive-stagger-block');
+    window.setTimeout(() => {
+      block.classList.add('pop-in');
+      triggerWaveWithin(block);
+    }, 170 + (index * 130));
   });
   if (history) {
-    window.setTimeout(() => triggerWaveWithin(history), 180 + (blocks.length * 150));
+    history.classList.add('archive-stagger-block');
+    window.setTimeout(() => {
+      history.classList.add('pop-in');
+      triggerWaveWithin(history);
+    }, 170 + (blocks.length * 130));
   }
 }
 
@@ -268,18 +276,25 @@ function setupRevealObserver() {
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       const section = entry.target;
-
       const artwork = section.querySelector('.art-box');
 
+      /* Hysteresis: do not reveal on a sliver of intersection, and do not arm a
+         replay until the section has actually left the viewport. This prevents
+         edge flicker while preserving replay in both scroll directions. */
       if (!entry.isIntersecting) {
         section.dataset.archiveInView = '0';
-        artwork?.classList.remove('art-in-view');
+        const exitedAbove = entry.boundingClientRect.bottom <= 0 || entry.boundingClientRect.top < 0;
+        section.classList.toggle('archive-exit-up', exitedAbove);
+        section.classList.toggle('archive-exit-down', !exitedAbove);
+        artwork?.classList.remove('art-in-view', 'pop-in', 'art-reenter');
+        section.querySelectorAll('.info-panel > .info-block.archive-stagger-block, .history-panel.archive-stagger-block')
+          .forEach(block => block.classList.remove('pop-in'));
         return;
       }
 
-      /* IntersectionObserver fires for entrances from either direction. Leaving
-         the section arms both the typography and artwork so scrolling up or down
-         through the same exhibit replays the complete gallery movement. */
+      if (entry.intersectionRatio < 0.12) return;
+      section.classList.remove('archive-exit-up', 'archive-exit-down');
+
       if (section.dataset.archiveInView === '1') return;
       section.dataset.archiveInView = '1';
 
@@ -291,7 +306,7 @@ function setupRevealObserver() {
         replayArchiveWords(section);
       }
     });
-  }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+  }, { threshold: [0, 0.12], rootMargin: '0px 0px -6% 0px' });
 
   document.querySelectorAll('.exhibition-section').forEach(section => observer.observe(section));
 }
@@ -1028,16 +1043,17 @@ function setupPageProseReplayObserver() {
     entries.forEach(entry => {
       const node = entry.target;
       if (entry.isIntersecting) {
+        if (entry.intersectionRatio < 0.1) return;
         node.classList.remove('exit-up', 'exit-down');
         node.classList.add('is-visible');
         return;
       }
       node.classList.remove('is-visible');
-      const exitedAbove = entry.boundingClientRect.top < 0;
+      const exitedAbove = entry.boundingClientRect.bottom <= 0 || entry.boundingClientRect.top < 0;
       node.classList.toggle('exit-up', exitedAbove);
       node.classList.toggle('exit-down', !exitedAbove);
     });
-  }, { threshold: 0.14, rootMargin: '-8% 0px -12% 0px' });
+  }, { threshold: [0, 0.1], rootMargin: '-5% 0px -8% 0px' });
 
   nodes.forEach(node => observer.observe(node));
 }

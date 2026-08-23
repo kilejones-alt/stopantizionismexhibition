@@ -152,16 +152,17 @@
     entries.forEach(entry => {
       const node = entry.target;
       if (entry.isIntersecting) {
+        if (entry.intersectionRatio < 0.1) return;
         node.classList.remove('exit-up','exit-down');
         node.classList.add('is-visible');
         return;
       }
       node.classList.remove('is-visible');
-      const exitedAbove = entry.boundingClientRect.top < 0;
+      const exitedAbove = entry.boundingClientRect.bottom <= 0 || entry.boundingClientRect.top < 0;
       node.classList.toggle('exit-up', exitedAbove);
       node.classList.toggle('exit-down', !exitedAbove);
     });
-  }, { threshold: 0.14, rootMargin: '-8% 0px -12% 0px' });
+  }, { threshold: [0, 0.1], rootMargin: '-5% 0px -8% 0px' });
   nodes.forEach(n => observer.observe(n));
 })();
 </script>

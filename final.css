@@ -1660,3 +1660,229 @@ html[dir="rtl"] .home-source-context .era-source-section{
     opacity:1!important;transform:none!important;filter:none!important;transition:none!important
   }
 }
+
+
+/* === CAPTION + FULL EXHIBIT REPLAY REFINEMENT · 2026-08-22 ===
+   Caption remains one line beneath the artwork, but reads more like a centered
+   museum label. Gallery artwork, captions and catalogue boxes all leave/re-enter
+   with the section so every exhibit—not only the first—has visible motion. */
+.art-caption-inline{
+  margin-top:.62rem!important;
+  justify-content:center!important;
+  text-align:center!important;
+  font-size:clamp(.8rem,1.12vw,.94rem)!important;
+  line-height:1.28!important;
+  transition:opacity .78s ease,transform .92s var(--final-ease),filter .78s ease!important;
+}
+.art-caption-date{font-size:.9em!important}
+
+.exhibition-section.archive-exit-up .art-caption-inline{
+  opacity:0!important;
+  transform:translateY(-18px)!important;
+  filter:blur(2px)!important;
+}
+.exhibition-section.archive-exit-down .art-caption-inline{
+  opacity:0!important;
+  transform:translateY(18px)!important;
+  filter:blur(2px)!important;
+}
+.exhibition-section.archive-exit-up .exhibit-art-column>.art-box:not(.pop-in),
+.exhibition-section.archive-exit-up>.exhibition-container>.art-box:not(.pop-in){
+  opacity:0!important;
+  transform:translateY(-28px) scale(.988)!important;
+}
+.exhibition-section.archive-exit-down .exhibit-art-column>.art-box:not(.pop-in),
+.exhibition-section.archive-exit-down>.exhibition-container>.art-box:not(.pop-in){
+  opacity:0!important;
+  transform:translateY(28px) scale(.988)!important;
+}
+.exhibition-section.archive-exit-up .info-panel>.info-block.archive-stagger-block:not(.pop-in),
+.exhibition-section.archive-exit-up .history-panel.archive-stagger-block:not(.pop-in){
+  opacity:0!important;
+  transform:translate(var(--archive-entry-x,0px),-42px) scale(.97)!important;
+  filter:blur(4px)!important;
+}
+.exhibition-section.archive-exit-down .info-panel>.info-block.archive-stagger-block:not(.pop-in),
+.exhibition-section.archive-exit-down .history-panel.archive-stagger-block:not(.pop-in){
+  opacity:0!important;
+  transform:translate(var(--archive-entry-x,0px),42px) scale(.97)!important;
+  filter:blur(4px)!important;
+}
+@media(max-width:850px){
+  .art-caption-inline{
+    margin-top:.52rem!important;
+    font-size:clamp(.74rem,2.9vw,.84rem)!important;
+    padding:0 .2rem!important;
+  }
+  .art-caption-inline.caption-long{font-size:.69rem!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .exhibition-section.archive-exit-up .art-caption-inline,
+  .exhibition-section.archive-exit-down .art-caption-inline,
+  .exhibition-section.archive-exit-up .exhibit-art-column>.art-box:not(.pop-in),
+  .exhibition-section.archive-exit-down .exhibit-art-column>.art-box:not(.pop-in),
+  .exhibition-section.archive-exit-up .info-panel>.info-block.archive-stagger-block:not(.pop-in),
+  .exhibition-section.archive-exit-down .info-panel>.info-block.archive-stagger-block:not(.pop-in),
+  .exhibition-section.archive-exit-up .history-panel.archive-stagger-block:not(.pop-in),
+  .exhibition-section.archive-exit-down .history-panel.archive-stagger-block:not(.pop-in){
+    opacity:1!important;transform:none!important;filter:none!important
+  }
+}
+
+/* === FINAL EXCELLENCE MICRO-PASS · 2026-08-22 ===
+   One restrained panel-hover language, tighter curatorial motion, stable viewport
+   hysteresis, and final artwork-label spacing. No content or exhibition geometry. */
+:root{
+  --museum-panel-lift:-8px;
+  --museum-panel-border:rgba(255,255,255,.19);
+  --museum-panel-shadow:0 18px 38px rgba(0,0,0,.30);
+  --museum-panel-speed:.44s;
+}
+
+/* Secondary panels all use the same physical response. No scaling or z-axis jump. */
+.info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty),
+.history-panel,
+.source-libel-card,
+.third-era-page .stream-card,
+.third-era-page .inside-grid article,
+.exhibit-libel-below .timeline-libel-context{
+  border-radius:5px!important;
+  transition:
+    transform var(--museum-panel-speed) var(--final-ease),
+    border-color .38s ease,
+    box-shadow var(--museum-panel-speed) var(--final-ease),
+    background .38s ease,
+    filter .38s ease!important;
+}
+@media(hover:hover) and (pointer:fine){
+  body .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty).pop-in:hover,
+  body .history-panel.pop-in:hover,
+  body .source-libel-card:hover,
+  body .third-era-page .stream-card:hover,
+  body .third-era-page .inside-grid article:hover,
+  body .exhibit-libel-below .timeline-libel-context:hover{
+    position:relative!important;
+    z-index:3!important;
+    transform:translateY(var(--museum-panel-lift))!important;
+    border-color:var(--museum-panel-border)!important;
+    box-shadow:var(--museum-panel-shadow)!important;
+    filter:brightness(1.045)!important;
+  }
+}
+
+/* Final museum-label cadence beneath every artwork frame. */
+.art-caption-inline{
+  margin-top:.72rem!important;
+  gap:.46rem!important;
+  font-size:clamp(.84rem,1.08vw,.96rem)!important;
+  line-height:1.3!important;
+}
+.art-caption-title{color:#f0f0f3!important}
+.art-caption-date{font-size:.89em!important;letter-spacing:.095em!important;color:#a9a9b2!important}
+.exhibit-art-column>.exhibit-libel-below{margin-top:clamp(1.05rem,1.5vw,1.25rem)!important}
+
+/* Timeline remains the cinematic layer, but exits are cleaner and less synthetic. */
+.exhibition-section.archive-exit-up .art-caption-inline{
+  transform:translateY(-15px)!important;filter:blur(1.5px)!important
+}
+.exhibition-section.archive-exit-down .art-caption-inline{
+  transform:translateY(15px)!important;filter:blur(1.5px)!important
+}
+.exhibition-section.archive-exit-up .exhibit-art-column>.art-box:not(.pop-in),
+.exhibition-section.archive-exit-up>.exhibition-container>.art-box:not(.pop-in){
+  transform:translateY(-24px) scale(.991)!important
+}
+.exhibition-section.archive-exit-down .exhibit-art-column>.art-box:not(.pop-in),
+.exhibition-section.archive-exit-down>.exhibition-container>.art-box:not(.pop-in){
+  transform:translateY(24px) scale(.991)!important
+}
+.exhibition-section.archive-exit-up .info-panel>.info-block.archive-stagger-block:not(.pop-in),
+.exhibition-section.archive-exit-up .history-panel.archive-stagger-block:not(.pop-in){
+  transform:translate(var(--archive-entry-x,0px),-32px) scale(.982)!important;
+  filter:blur(2px)!important
+}
+.exhibition-section.archive-exit-down .info-panel>.info-block.archive-stagger-block:not(.pop-in),
+.exhibition-section.archive-exit-down .history-panel.archive-stagger-block:not(.pop-in){
+  transform:translate(var(--archive-entry-x,0px),32px) scale(.982)!important;
+  filter:blur(2px)!important
+}
+
+/* Third Era / essay motion is intentionally quieter than the historical timeline. */
+.prospectus-reveal,
+.page-prose-reveal{
+  transform:translateY(24px)!important;
+  filter:blur(2px)!important;
+  transition:opacity .82s ease,transform .88s var(--final-ease),filter .72s ease!important;
+}
+.prospectus-reveal.exit-up,.page-prose-reveal.exit-up{transform:translateY(-24px)!important;filter:blur(2px)!important}
+.prospectus-reveal.exit-down,.page-prose-reveal.exit-down{transform:translateY(24px)!important;filter:blur(2px)!important}
+.prospectus-reveal.is-visible,.page-prose-reveal.is-visible{transform:translateY(0)!important;filter:none!important}
+
+/* Section seams: consistent breathing room where exhibition records hand off to essays. */
+.exhibition-section + .genealogy-script,
+.exhibition-section + .chronology-interlude,
+.genealogy-script + .exhibition-section,
+.chronology-interlude + .exhibition-section{
+  scroll-margin-top:clamp(3rem,6vw,5rem);
+}
+
+@media(max-width:850px){
+  .art-caption-inline{
+    margin-top:.6rem!important;
+    gap:.34rem!important;
+    font-size:clamp(.78rem,3vw,.86rem)!important;
+  }
+  .art-caption-inline.caption-long{font-size:.7rem!important}
+  .prospectus-reveal,.page-prose-reveal{transform:translateY(18px)!important;filter:blur(1.5px)!important}
+  .prospectus-reveal.exit-up,.page-prose-reveal.exit-up{transform:translateY(-18px)!important}
+  .prospectus-reveal.exit-down,.page-prose-reveal.exit-down{transform:translateY(18px)!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .prospectus-reveal,.page-prose-reveal,
+  .prospectus-reveal.exit-up,.prospectus-reveal.exit-down,
+  .page-prose-reveal.exit-up,.page-prose-reveal.exit-down{
+    opacity:1!important;transform:none!important;filter:none!important;transition:none!important
+  }
+}
+
+/* Portrait labels align to the physical frame, not the wider grid column. */
+.art-portrait .art-caption-inline{
+  width:min(88%,520px)!important;
+  align-self:center!important;
+}
+
+/* Final reduced-motion safeguard comes after the excellence motion overrides. */
+@media(prefers-reduced-motion:reduce){
+  .exhibition-section.archive-exit-up .art-caption-inline,
+  .exhibition-section.archive-exit-down .art-caption-inline,
+  .exhibition-section.archive-exit-up .exhibit-art-column>.art-box:not(.pop-in),
+  .exhibition-section.archive-exit-down .exhibit-art-column>.art-box:not(.pop-in),
+  .exhibition-section.archive-exit-up>.exhibition-container>.art-box:not(.pop-in),
+  .exhibition-section.archive-exit-down>.exhibition-container>.art-box:not(.pop-in),
+  .exhibition-section.archive-exit-up .info-panel>.info-block.archive-stagger-block:not(.pop-in),
+  .exhibition-section.archive-exit-down .info-panel>.info-block.archive-stagger-block:not(.pop-in),
+  .exhibition-section.archive-exit-up .history-panel.archive-stagger-block:not(.pop-in),
+  .exhibition-section.archive-exit-down .history-panel.archive-stagger-block:not(.pop-in){
+    opacity:1!important;transform:none!important;filter:none!important;transition:none!important
+  }
+}
+/* Portrait captions follow the frame's actual left edge while centering the label text. */
+.art-portrait .art-caption-inline{align-self:flex-start!important}
+@media(max-width:850px){
+  .art-portrait .art-caption-inline{width:min(88vw,430px)!important}
+}
+/* Specificity lock: every secondary panel resolves to the same 8px lift. */
+@media(hover:hover) and (pointer:fine){
+  body .exhibition-section .info-panel>.info-block.archive-stagger-block.pop-in:hover,
+  body .exhibition-section .history-panel.archive-stagger-block.pop-in:hover,
+  body .exhibition-section .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty).pop-in:hover,
+  body.third-era-page .stream-card:hover,
+  body.third-era-page .inside-grid article:hover{
+    transform:translateY(var(--museum-panel-lift))!important;
+    z-index:3!important;
+    border-color:var(--museum-panel-border)!important;
+    box-shadow:var(--museum-panel-shadow)!important;
+    filter:brightness(1.045)!important;
+  }
+}
