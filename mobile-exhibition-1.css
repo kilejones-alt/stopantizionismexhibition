@@ -1,0 +1,135 @@
+/* Independent view-reveal state overrides older page-specific observers. */
+.mobile-room-reveal{opacity:0!important;transform:translateY(28px)!important;filter:blur(2px)!important;transition:opacity .78s ease,transform .86s var(--final-ease),filter .68s ease!important;will-change:opacity,transform,filter}
+.mobile-room-reveal.mobile-room-visible{opacity:1!important;transform:translateY(0)!important;filter:none!important}
+.mobile-room-reveal.mobile-room-exit-up{opacity:0!important;transform:translateY(-24px)!important;filter:blur(1.5px)!important}
+.mobile-room-reveal.mobile-room-exit-down{opacity:0!important;transform:translateY(24px)!important;filter:blur(1.5px)!important}
+@media(prefers-reduced-motion:reduce){.mobile-room-reveal,.mobile-room-reveal.mobile-room-visible,.mobile-room-reveal.mobile-room-exit-up,.mobile-room-reveal.mobile-room-exit-down{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}}
+/* === MOBILE EXHIBITION ART DIRECTION · 2026-08-23 ===
+   Phone layouts behave as a sequence of museum rooms rather than stacked blog
+   blocks. Desktop gallery geometry and all source text remain unchanged. */
+@media(max-width:720px){
+  :root{--mobile-room-side:clamp(20px,5.4vw,26px);--mobile-rail:rgba(188,165,109,.42)}
+
+  /* Shared mobile depth: touch has no hover, so the panel passing through the
+     reading band receives the same restrained physical lift as desktop hover. */
+  .home-page .era-card,
+  .home-page .third-era-teaser,
+  .third-era-page .stream-card,
+  .third-era-page .inside-grid article,
+  .third-era-page .program-list,
+  .third-era-page .partnership-contact,
+  .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty),
+  .history-panel,
+  .exhibit-libel-below .timeline-libel-context{
+    transform:translateY(0);
+    transition:transform .46s var(--final-ease),border-color .4s ease,box-shadow .46s var(--final-ease),background .4s ease,filter .4s ease!important;
+  }
+  .home-page .era-card.panel-current,
+  .home-page .third-era-teaser.panel-current,
+  .third-era-page .stream-card.panel-current,
+  .third-era-page .inside-grid article.panel-current,
+  .third-era-page .program-list.panel-current,
+  .third-era-page .partnership-contact.panel-current,
+  .info-panel>.info-block.panel-current,
+  .history-panel.panel-current,
+  .exhibit-libel-below .timeline-libel-context.panel-current{
+    transform:translateY(-8px)!important;
+    border-color:rgba(255,255,255,.19)!important;
+    box-shadow:0 20px 44px rgba(0,0,0,.36),0 0 28px rgba(188,165,109,.035)!important;
+    filter:brightness(1.045)!important;
+  }
+
+  /* HOME — an exhibition threshold followed by a curatorial wall, not an article. */
+  .home-page{background:radial-gradient(circle at 22% 12%,rgba(188,165,109,.045),transparent 28%),#17171a!important}
+  .home-page .era-grid{position:relative!important;gap:5.1rem!important}
+  .home-page .era-grid::before{
+    content:"";position:absolute;left:50%;top:2rem;bottom:2rem;width:1px;z-index:-1;
+    background:linear-gradient(180deg,transparent,rgba(188,165,109,.18) 12%,rgba(255,255,255,.08) 50%,rgba(143,94,82,.18) 88%,transparent)
+  }
+  .home-page .era-card,.home-page .era-card.antizionism{
+    border-radius:4px!important;border-color:rgba(255,255,255,.09)!important;
+    box-shadow:0 24px 58px rgba(0,0,0,.44)!important;background:#121215!important
+  }
+  .home-page .era-head{height:auto!important;min-height:72px!important;padding:1.15rem 1.15rem .95rem!important;display:flex!important;align-items:flex-end!important}
+  .home-page .era-title{font-size:clamp(2.15rem,10vw,3.2rem)!important;line-height:.9!important;text-align:left!important}
+  [dir="rtl"] .home-page .era-title{text-align:right!important}
+  .home-page .era-image-wrap{border-top:1px solid rgba(255,255,255,.055)!important}
+  .home-page .era-card.panel-current{background:#151518!important}
+
+  .home-main .era-grid + .home-source-context{
+    position:relative!important;width:calc(100% - 1rem)!important;margin:4.8rem auto 4rem!important;
+    padding:4.7rem 1.15rem 4.8rem 2.05rem!important;text-align:left!important;
+    background:
+      radial-gradient(circle at 0 12%,rgba(188,165,109,.06),transparent 26%),
+      linear-gradient(180deg,rgba(255,255,255,.018),rgba(255,255,255,.003))!important;
+    border-top:1px solid rgba(188,165,109,.2)!important;border-bottom:1px solid rgba(255,255,255,.06)!important;
+    overflow:hidden
+  }
+  .home-main .era-grid + .home-source-context::before{
+    content:"";position:absolute;left:.82rem;top:4.65rem;bottom:4.4rem;width:1px;background:linear-gradient(180deg,var(--mobile-rail),rgba(255,255,255,.07),rgba(143,94,82,.3))
+  }
+  [dir="rtl"] .home-main .era-grid + .home-source-context{padding:4.7rem 2.05rem 4.8rem 1.15rem!important;text-align:right!important}
+  [dir="rtl"] .home-main .era-grid + .home-source-context::before{left:auto;right:.82rem}
+  .home-main .era-grid + .home-source-context h2{
+    font-size:clamp(3rem,14vw,4.4rem)!important;line-height:.88!important;letter-spacing:-.025em!important;
+    margin:0 0 2rem!important;max-width:8ch!important
+  }
+  .home-source-context .three-eras-intro{position:relative!important;padding:0 .1rem 1.8rem 1rem!important}
+  [dir="rtl"] .home-source-context .three-eras-intro{padding:0 1rem 1.8rem .1rem!important}
+  .home-source-context .three-eras-intro p{
+    font-family:var(--museum-serif,"Cormorant Garamond",serif)!important;font-size:clamp(1.38rem,6.3vw,1.72rem)!important;
+    line-height:1.42!important;color:#ececf0!important;margin:0!important
+  }
+  html[lang="he"] .home-source-context .three-eras-intro p{font-family:"Noto Serif Hebrew","Noto Sans Hebrew",serif!important}
+  .home-source-context .era-source-section{
+    position:relative!important;margin:1.55rem 0 0!important;padding:2rem .1rem .35rem 1rem!important;border-top:1px solid rgba(255,255,255,.075)!important
+  }
+  [dir="rtl"] .home-source-context .era-source-section{padding:2rem 1rem .35rem .1rem!important}
+  .home-source-context .era-source-section::before{
+    content:"";position:absolute;left:-1.48rem;top:2.25rem;width:.52rem;height:.52rem;border-radius:50%;
+    background:#c8b47d;box-shadow:0 0 0 5px #17171a,0 0 22px rgba(188,165,109,.18)
+  }
+  [dir="rtl"] .home-source-context .era-source-section::before{left:auto;right:-1.48rem}
+  .home-source-context .era-source-section h3{font-size:clamp(2.25rem,10vw,3.2rem)!important;line-height:.92!important;margin:0 0 .9rem!important}
+  .home-main .era-grid + .home-source-context .era-source-section p{font-size:1rem!important;line-height:1.72!important;color:#c9c9d0!important;margin:0!important}
+  .home-page .third-era-teaser{
+    margin:5rem auto 2rem!important;padding:2.4rem 1.35rem 2.7rem 1.75rem!important;border:1px solid rgba(188,165,109,.16)!important;
+    border-left:2px solid rgba(188,165,109,.42)!important;border-radius:4px!important;background:linear-gradient(145deg,rgba(188,165,109,.055),rgba(255,255,255,.012) 46%,rgba(143,94,82,.035))!important;
+    box-shadow:0 28px 64px rgba(0,0,0,.36)!important
+  }
+  [dir="rtl"] .home-page .third-era-teaser{border-left:1px solid rgba(188,165,109,.16)!important;border-right:2px solid rgba(188,165,109,.42)!important}
+  .home-page .third-era-teaser-mark{position:absolute!important;right:.65rem!important;top:.45rem!important;font-size:8.5rem!important;color:rgba(255,255,255,.035)!important}
+  [dir="rtl"] .home-page .third-era-teaser-mark{right:auto!important;left:.65rem!important}
+  .home-page .third-era-teaser h2{font-size:clamp(2.45rem,11.5vw,3.55rem)!important;max-width:9ch!important}
+
+  /* ERA ESSAYS — full curatorial wall moments between the image records. */
+  .genealogy-script{
+    position:relative!important;width:100%!important;min-height:72svh!important;padding:5.8rem 1.3rem 6rem 2.2rem!important;
+    background:radial-gradient(circle at 0 16%,rgba(188,165,109,.05),transparent 29%)!important;
+    border-top:1px solid rgba(255,255,255,.045)!important;border-bottom:1px solid rgba(255,255,255,.045)!important;overflow:hidden
+  }
+  .genealogy-script.script-left{background:radial-gradient(circle at 100% 16%,rgba(143,94,82,.05),transparent 29%)!important}
+  [dir="rtl"] .genealogy-script{padding:5.8rem 2.2rem 6rem 1.3rem!important}
+  .genealogy-script::before{
+    content:"";display:block!important;position:absolute;left:.95rem;top:5.5rem;bottom:5.5rem;width:1px;height:auto!important;
+    background:linear-gradient(180deg,rgba(188,165,109,.48),rgba(255,255,255,.08),transparent)!important
+  }
+  [dir="rtl"] .genealogy-script::before{left:auto;right:.95rem}
+  .genealogy-script-inner{width:100%!important;max-width:none!important;margin:0!important}
+  .genealogy-script-copy{position:relative!important;width:100%!important;max-width:none!important;margin:0!important;text-align:left!important;padding-left:.65rem!important}
+  [dir="rtl"] .genealogy-script-copy{text-align:right!important;padding-left:0!important;padding-right:.65rem!important}
+  .genealogy-script-copy::after{
+    content:"";position:absolute;left:-1.53rem;top:.42rem;width:.5rem;height:.5rem;border-radius:50%;background:#c8b47d;box-shadow:0 0 0 5px #17171a
+  }
+  [dir="rtl"] .genealogy-script-copy::after{left:auto;right:-1.53rem}
+  .genealogy-script-copy h3{
+    font-size:clamp(2.65rem,12.5vw,4rem)!important;line-height:.9!important;letter-spacing:-.02em!important;
+    margin:0 0 1.55rem!important;max-width:10ch!important;text-align:inherit!important
+  }
+  .genealogy-intro .genealogy-script-copy p:first-of-type{
+    font-family:var(--museum-serif,"Cormorant Garamond",serif)!important;font-size:clamp(1.28rem,5.8vw,1.55rem)!important;
+    line-height:1.45!important;color:#e8e8ec!important
+  }
+  html[lang="he"] .genealogy-intro .genealogy-script-copy p:first-of-type{font-family:"Noto Serif Hebrew","Noto Sans Hebrew",serif!important}
+  .genealogy-script-copy p{font-size:1rem!important;line-height:1.72!important;color:#c9c9d0!important;margin:0 0 1.25rem!important}
+}

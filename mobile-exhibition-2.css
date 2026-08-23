@@ -1,0 +1,133 @@
+@media(max-width:720px){
+  /* THIRD ERA — mobile becomes a sequence of exhibition rooms. */
+  body.third-era-page{
+    background:
+      radial-gradient(circle at 8% 4%,rgba(188,165,109,.07),transparent 24%),
+      radial-gradient(circle at 92% 48%,rgba(143,94,82,.045),transparent 30%),
+      #121215!important
+  }
+  .third-era-main{overflow:clip!important}
+  .third-era-hero{
+    min-height:100svh!important;align-items:flex-end!important;justify-content:flex-start!important;
+    padding:9.2rem 1.35rem 6.3rem 2.15rem!important;text-align:left!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.012),rgba(0,0,0,.09))!important
+  }
+  .third-era-hero::before{
+    background:radial-gradient(circle at 16% 42%,rgba(188,165,109,.085),transparent 34%),linear-gradient(180deg,transparent 58%,rgba(0,0,0,.3))!important
+  }
+  .third-era-hero::after{
+    content:"";position:absolute;left:.92rem;top:8.9rem;bottom:4.5rem;width:1px;
+    background:linear-gradient(180deg,rgba(188,165,109,.58),rgba(255,255,255,.1) 48%,transparent)
+  }
+  [dir="rtl"] .third-era-hero{padding:9.2rem 2.15rem 6.3rem 1.35rem!important;text-align:right!important}
+  [dir="rtl"] .third-era-hero::after{left:auto;right:.92rem}
+  .third-era-hero-inner{width:100%!important;text-align:inherit!important;padding-left:.15rem!important}
+  [dir="rtl"] .third-era-hero-inner{padding-left:0!important;padding-right:.15rem!important}
+  .third-era-hero-roman{left:63%!important;top:48%!important;font-size:108vw!important;color:rgba(255,255,255,.035)!important;opacity:1!important}
+  [dir="rtl"] .third-era-hero-roman{left:37%!important}
+  .third-era-eyebrow{font-size:.66rem!important;letter-spacing:.27em!important;margin:0 0 1.2rem!important;color:#c8c0ae!important}
+  .third-era-hero h1{
+    font-size:clamp(5rem,24vw,7.3rem)!important;line-height:.72!important;letter-spacing:-.05em!important;
+    max-width:5.5ch!important;margin:0!important;text-align:inherit!important
+  }
+  .third-era-deck{
+    font-size:clamp(1.55rem,7.6vw,2.15rem)!important;line-height:1.06!important;max-width:15ch!important;
+    margin:1.5rem 0 0!important;color:#dedde1!important;text-align:inherit!important
+  }
+  .third-era-hero-rule{width:72%!important;margin:2.2rem 0 1.8rem!important;background:linear-gradient(90deg,rgba(188,165,109,.7),transparent)!important;transform-origin:left!important}
+  [dir="rtl"] .third-era-hero-rule{margin-left:0!important;margin-right:0!important;background:linear-gradient(270deg,rgba(188,165,109,.7),transparent)!important;transform-origin:right!important}
+  .third-era-hero h2{font-size:clamp(1.55rem,7vw,1.9rem)!important;line-height:1.05!important;max-width:18ch!important;margin:0!important;text-align:inherit!important}
+  .third-era-hero-note{font-size:1rem!important;line-height:1.65!important;max-width:30rem!important;margin:1.15rem 0 0!important;color:#bfc0c8!important;text-align:inherit!important}
+  .third-era-scroll-cue{margin:2.6rem 0 0!important;padding:.7rem 0!important;border-bottom:1px solid rgba(188,165,109,.28)!important}
+
+  .third-era-page .prospectus-section,.third-era-page .streams-section{
+    position:relative!important;width:100%!important;min-height:92svh!important;margin:0!important;
+    padding:5.6rem 1.3rem 6.2rem 2.15rem!important;border-bottom:1px solid rgba(255,255,255,.045)!important;
+    background:radial-gradient(circle at 0 14%,rgba(188,165,109,.035),transparent 25%)!important;overflow:hidden
+  }
+  .third-era-page .prospectus-section:nth-of-type(even){background:radial-gradient(circle at 100% 16%,rgba(143,94,82,.04),transparent 27%)!important}
+  .third-era-page .prospectus-section::before,.third-era-page .streams-section::before{
+    content:"";position:absolute;left:.92rem;top:5.45rem;bottom:5.1rem;width:1px;
+    background:linear-gradient(180deg,var(--mobile-rail),rgba(255,255,255,.075) 62%,transparent)
+  }
+  [dir="rtl"] .third-era-page .prospectus-section,[dir="rtl"] .third-era-page .streams-section{padding:5.6rem 2.15rem 6.2rem 1.3rem!important}
+  [dir="rtl"] .third-era-page .prospectus-section::before,[dir="rtl"] .third-era-page .streams-section::before{left:auto;right:.92rem}
+  .third-era-page .prospectus-index{
+    display:grid!important;grid-template-columns:3.5rem minmax(0,1fr)!important;align-items:end!important;gap:.3rem .6rem!important;
+    margin:0 0 3.2rem!important;position:relative!important
+  }
+  [dir="rtl"] .third-era-page .prospectus-index{grid-template-columns:minmax(0,1fr) 3.5rem!important}
+  .third-era-page .prospectus-index>span:first-child{
+    font-family:var(--museum-serif,"Cormorant Garamond",serif)!important;font-size:3.5rem!important;line-height:.72!important;letter-spacing:-.03em!important;
+    color:rgba(205,185,132,.72)!important;min-width:0!important
+  }
+  html[lang="he"] .third-era-page .prospectus-index>span:first-child{font-family:"Noto Serif Hebrew",serif!important}
+  .third-era-page .prospectus-index>span:nth-child(2){font-size:.61rem!important;line-height:1.25!important;letter-spacing:.19em!important;color:#a8a8b1!important;padding-bottom:.18rem!important}
+  .third-era-page .prospectus-index::after{grid-column:2!important;width:100%!important;margin-top:.65rem!important;background:linear-gradient(90deg,rgba(188,165,109,.28),transparent)!important}
+  [dir="rtl"] .third-era-page .prospectus-index::after{grid-column:1!important;background:linear-gradient(270deg,rgba(188,165,109,.28),transparent)!important}
+
+  .third-era-page .prospectus-copy,.third-era-page .prospectus-copy-wide,.third-era-page .prospectus-split{max-width:none!important;width:100%!important}
+  .third-era-page .prospectus-copy .prospectus-lead{
+    font-size:clamp(1.68rem,7.9vw,2.05rem)!important;line-height:1.34!important;color:#ececf0!important;
+    margin:0 0 2rem!important;padding:0 0 0 1rem!important;border-left:2px solid rgba(188,165,109,.5)!important
+  }
+  [dir="rtl"] .third-era-page .prospectus-copy .prospectus-lead{padding:0 1rem 0 0!important;border-left:0!important;border-right:2px solid rgba(188,165,109,.5)!important}
+  .third-era-page .prospectus-copy p:not(.prospectus-lead),.third-era-page .prospectus-split p{
+    font-size:1rem!important;line-height:1.72!important;color:#c6c6ce!important;max-width:30rem!important;
+    margin:1.55rem 0 0 .8rem!important;padding-top:1.25rem!important;border-top:1px solid rgba(255,255,255,.065)!important
+  }
+  [dir="rtl"] .third-era-page .prospectus-copy p:not(.prospectus-lead),[dir="rtl"] .third-era-page .prospectus-split p{margin-left:0!important;margin-right:.8rem!important}
+  .third-era-page .prospectus-copy p:nth-of-type(3){margin-left:0!important}
+  [dir="rtl"] .third-era-page .prospectus-copy p:nth-of-type(3){margin-right:0!important}
+  .third-era-page .prospectus-copy h2,.third-era-page .prospectus-split h2{font-size:clamp(3.2rem,15vw,4.7rem)!important;line-height:.88!important;max-width:8ch!important;margin-bottom:1.8rem!important}
+
+  .third-era-page .streams-head{margin:0 0 3.6rem!important;width:100%!important}
+  .third-era-page .streams-head h2{font-size:clamp(4rem,19vw,5.6rem)!important;line-height:.78!important;max-width:7ch!important;margin-bottom:1.8rem!important}
+  .third-era-page .streams-head p{font-size:1rem!important;line-height:1.7!important;max-width:28rem!important;padding-left:1rem!important;border-left:1px solid rgba(188,165,109,.34)!important}
+  [dir="rtl"] .third-era-page .streams-head p{padding-left:0!important;padding-right:1rem!important;border-left:0!important;border-right:1px solid rgba(188,165,109,.34)!important}
+  .third-era-page .streams-stage{
+    display:block!important;position:relative!important;min-height:0!important;padding:1.1rem 0 1rem 2.35rem!important;margin:0!important
+  }
+  [dir="rtl"] .third-era-page .streams-stage{padding:1.1rem 2.35rem 1rem 0!important}
+  .third-era-page .streams-map{display:none!important}
+  .third-era-page .streams-stage::before{
+    content:"";position:absolute;left:.68rem;top:.35rem;bottom:1.2rem;width:1px;
+    background:linear-gradient(180deg,rgba(188,165,109,.62),rgba(205,205,211,.32) 48%,rgba(143,94,82,.55) 76%,rgba(255,255,255,.18))
+  }
+  [dir="rtl"] .third-era-page .streams-stage::before{left:auto;right:.68rem}
+  .third-era-page .stream-card{
+    position:relative!important;min-height:0!important;margin:0 0 1.45rem!important;padding:1.5rem 1.25rem 1.65rem!important;
+    border-radius:4px!important;border:1px solid rgba(255,255,255,.085)!important;border-left:2px solid rgba(188,165,109,.34)!important;
+    background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(14,14,17,.82))!important;box-shadow:0 20px 48px rgba(0,0,0,.28)!important;overflow:visible!important
+  }
+  [dir="rtl"] .third-era-page .stream-card{border-left:1px solid rgba(255,255,255,.085)!important;border-right:2px solid rgba(188,165,109,.34)!important}
+  .third-era-page .stream-two{margin-left:.75rem!important;border-left-color:rgba(205,205,211,.3)!important}
+  .third-era-page .stream-three{margin-left:.22rem!important;border-left-color:rgba(143,94,82,.55)!important}
+  [dir="rtl"] .third-era-page .stream-two{margin-left:0!important;margin-right:.75rem!important;border-right-color:rgba(205,205,211,.3)!important}
+  [dir="rtl"] .third-era-page .stream-three{margin-left:0!important;margin-right:.22rem!important;border-right-color:rgba(143,94,82,.55)!important}
+  .third-era-page .stream-card::before{
+    content:"";position:absolute;left:-2.05rem;top:1.58rem;width:.56rem;height:.56rem;border-radius:50%;background:#cdbb87;
+    box-shadow:0 0 0 5px #131316,0 0 20px rgba(188,165,109,.22)
+  }
+  [dir="rtl"] .third-era-page .stream-card::before{left:auto;right:-2.05rem}
+  .third-era-page .stream-two::before{background:#b8b8c0}.third-era-page .stream-three::before{background:#9b685b}
+  .third-era-page .stream-number{margin:0 0 2.1rem!important;font-size:.68rem!important}
+  .third-era-page .stream-card h3{font-size:clamp(2.4rem,11.5vw,3.1rem)!important;line-height:.9!important;margin-bottom:1.15rem!important}
+  .third-era-page .stream-card p{font-size:1rem!important;line-height:1.65!important;color:#c4c4cc!important}
+  .third-era-page .river-label{
+    position:relative!important;left:auto!important;bottom:auto!important;transform:none!important;align-items:flex-start!important;text-align:left!important;
+    opacity:0;margin:2.8rem 0 0!important;padding:1.7rem 1rem .2rem!important;border-top:1px solid rgba(188,165,109,.32)!important
+  }
+  [dir="rtl"] .third-era-page .river-label{align-items:flex-end!important;text-align:right!important}
+  .third-era-page .streams-section.is-visible .river-label{opacity:1!important;transform:none!important}
+  .third-era-page .river-label::before{
+    content:"";position:absolute;left:-1.95rem;top:-.32rem;width:.62rem;height:.62rem;border-radius:50%;background:#d7c68f;box-shadow:0 0 0 5px #131316
+  }
+  [dir="rtl"] .third-era-page .river-label::before{left:auto;right:-1.95rem}
+  .third-era-page .river-label strong{font-size:clamp(2.7rem,13vw,3.65rem)!important;line-height:.88!important;max-width:8ch!important}
+  .third-era-page .streams-outcome{
+    margin:3rem 0 0 1rem!important;padding:0 0 0 1rem!important;text-align:left!important;font-size:1rem!important;line-height:1.7!important;
+    border-left:1px solid rgba(255,255,255,.13)!important;color:#bfc0c8!important
+  }
+  [dir="rtl"] .third-era-page .streams-outcome{margin-left:0!important;margin-right:1rem!important;padding-left:0!important;padding-right:1rem!important;text-align:right!important;border-left:0!important;border-right:1px solid rgba(255,255,255,.13)!important}
+}

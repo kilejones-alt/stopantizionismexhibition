@@ -1,5 +1,14 @@
 'use strict';
 
+(function installMobileExhibitionStyles(){
+  if (document.querySelector('link[data-mobile-exhibition]')) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'mobile-exhibition.css';
+  link.dataset.mobileExhibition = '1';
+  document.head.appendChild(link);
+})();
+
 (() => {
   function storageGet(key) {
     try { return sessionStorage.getItem(key); } catch (_error) { return null; }
@@ -244,6 +253,50 @@
     });
   }
 
+
+  function installMobileMuseumBehavior() {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealSelectors = document.body.classList.contains('third-era-page')
+    ? '.prospectus-section, .streams-section, .partnership-section'
+    : '.home-source-context, .home-source-context .era-source-section, .third-era-teaser';
+    const revealNodes = [...document.querySelectorAll(revealSelectors)];
+    if (revealNodes.length) {
+        revealNodes.forEach(node => node.classList.add('mobile-room-reveal'));
+      if (reduced || !('IntersectionObserver' in window)) {
+        revealNodes.forEach(node => node.classList.add('mobile-room-visible'));
+      } else {
+        const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const node = entry.target;
+          if (entry.isIntersecting) {
+            node.classList.remove('mobile-room-exit-up', 'mobile-room-exit-down');
+            node.classList.add('mobile-room-visible');
+            return;
+          }
+          node.classList.remove('mobile-room-visible');
+          const exitedAbove = entry.boundingClientRect.bottom <= 0 || entry.boundingClientRect.top < 0;
+          node.classList.toggle('mobile-room-exit-up', exitedAbove);
+          node.classList.toggle('mobile-room-exit-down', !exitedAbove);
+        });
+      }, { threshold: [0, 0.01, 0.12], rootMargin: '-7% 0px 25% 0px' });
+        revealNodes.forEach(node => observer.observe(node));
+      }
+  }
+
+    if (matchMedia('(hover: none), (pointer: coarse)').matches && 'IntersectionObserver' in window) {
+      const panels = [...document.querySelectorAll(
+      document.body.classList.contains('third-era-page')
+        ? '.stream-card, .inside-grid article, .program-list, .partnership-contact'
+        : '.era-card, .third-era-teaser'
+    )];
+      const panelObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.target.classList.toggle('panel-current', entry.isIntersecting));
+    }, { threshold: 0.01, rootMargin: '-27% 0px -27% 0px' });
+      panels.forEach(panel => panelObserver.observe(panel));
+    }
+  }
+
+
   function resetPage() {
     leaving = false;
     document.body.classList.remove('door-cutting', 'page-leaving');
@@ -265,6 +318,7 @@
     revealDoors();
     setupLanguageControls();
     setupNavigation();
+    installMobileMuseumBehavior();
     if (storageGet(AUDIO_WANTED) === '1') startAudio();
     requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('page-ready')));
     setTimeout(runHomeTitleSweep, 1200);
