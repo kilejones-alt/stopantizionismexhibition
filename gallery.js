@@ -1,7 +1,19 @@
 'use strict';
 
+function storageGet(key) {
+  try { return sessionStorage.getItem(key); } catch (_error) { return null; }
+}
+
+function storageSet(key, value) {
+  try { sessionStorage.setItem(key, value); } catch (_error) { /* Storage may be unavailable in hardened contexts. */ }
+}
+
+function storageRemove(key) {
+  try { sessionStorage.removeItem(key); } catch (_error) { /* Storage may be unavailable in hardened contexts. */ }
+}
+
 const LANGUAGE_SESSION_KEY = 'stopazSessionLanguage';
-const savedLanguage = sessionStorage.getItem(LANGUAGE_SESSION_KEY);
+const savedLanguage = storageGet(LANGUAGE_SESSION_KEY);
 let currentLang = ['en','he','ru'].includes(savedLanguage) ? savedLanguage : 'en';
 let isPlaying = false;
 let audioStartPending = false;
@@ -13,13 +25,11 @@ let viewerY = 0;
 let viewerDragStart = null;
 let viewerPinchStart = null;
 const viewerPointers = new Map();
-const chronologyItemsBySection = new Map();
-let chronologyCurrentButton = null;
-let chronologyActiveSection = null;
 
 const audio = document.getElementById('bg-audio');
 const audioBtn = document.getElementById('audio-btn');
 const AUDIO_TIME = 'stopazAudioTime';
+const AUDIO_WANTED = 'stopazAudioWanted';
 
 
 function handleFallbackImage(image, fallbackList) {
@@ -75,12 +85,6 @@ function waveText(element, text) {
   element.dataset.waved = '1';
 }
 
-function triggerPanelWave(container) {
-  container.querySelectorAll('.wave-text').forEach(element => {
-    waveText(element, textFor(element));
-  });
-}
-
 function triggerWaveWithin(container) {
   if (!container) return;
   container.querySelectorAll('.wave-text').forEach(element => {
@@ -88,224 +92,22 @@ function triggerWaveWithin(container) {
   });
 }
 
-/* THE ARCHIVE — exactly four animated object labels per image.
-   Existing curatorial copy is preserved:
-   What the Image is About -> Object
-   Creator Bio & Context -> Creator
-   Archival Source -> Archive
-   History is inserted as the fourth field. */
-function setArchiveHeading(heading, en, he, ru) {
-  if (!heading) return;
-  heading.setAttribute('data-en', en);
-  heading.setAttribute('data-he', he);
-  heading.setAttribute('data-ru', ru);
-  heading.textContent = en;
-}
-
-function makeHistoricalSettingBlock(texts) {
-  const block = document.createElement('div');
-  block.className = 'info-block';
-  const heading = document.createElement('h4');
-  setArchiveHeading(heading, 'History', 'היסטוריה', 'История');
-  const paragraph = document.createElement('p');
-  paragraph.className = 'wave-p wave-text';
-  paragraph.setAttribute('data-en', texts.en);
-  paragraph.setAttribute('data-he', texts.he);
-  paragraph.setAttribute('data-ru', texts.ru);
-  paragraph.textContent = texts.en;
-  block.append(heading, paragraph);
-  return block;
-}
-
-function archiveSettingFor(section, index) {
-  const path = location.pathname;
-  const isAntizionismGallery = /(?:^|\/)exhibition\.html$/i.test(path);
-  const titleElement = section.querySelector('.info-title');
-  const title = titleElement?.getAttribute('data-en') || titleElement?.textContent?.trim() || '';
-
-  if (section.getAttribute('data-empty-record') === 'true') {
-    return { en: '', he: '', ru: '' };
-  }
-
-  const directHistory = section.getAttribute('data-history-en');
-  if (directHistory) {
-    return {
-      en: directHistory,
-      he: section.getAttribute('data-history-he') || directHistory,
-      ru: section.getAttribute('data-history-ru') || directHistory
-    };
-  }
-
-  const byTitle = {
-    'The Degradation of Alfred Dreyfus': {
-      en: 'Dreyfus, a Jewish French army officer, was publicly degraded on 5 January 1895 after being convicted of treason. The case became a national crisis shaped by forged evidence, political division, and antisemitic agitation.',
-      he: 'דרייפוס, קצין יהודי בצבא צרפת, הושפל בפומבי ב-5 בינואר 1895 לאחר שהורשע בבגידה. הפרשה הפכה למשבר לאומי שניזון מראיות מזויפות, פילוג פוליטי ותסיסה אנטישמית.',
-      ru: 'Дрейфус, еврейский офицер французской армии, был публично разжалован 5 января 1895 года после осуждения за измену. Дело превратилось в национальный кризис, связанный с поддельными доказательствами, политическим расколом и антисемитской агитацией.'
-    },
-    'Kishinev Massacre Elegy': {
-      en: 'The April 1903 pogrom in Kishinev killed and injured Jews and destroyed homes and shops. Shapiro’s 1904 score was part of the Jewish memorial response in the United States.',
-      he: 'פוגרום קישינב באפריל 1903 הרג ופצע יהודים והרס בתים וחנויות. היצירה של שפירו מ-1904 הייתה חלק מתגובת ההנצחה היהודית בארצות הברית.',
-      ru: 'Кишинёвский погром апреля 1903 года привёл к гибели и ранениям евреев и разрушению домов и магазинов. Партитура Шапиро 1904 года стала частью еврейской мемориальной реакции в США.'
-    },
-    'Zionism as a Crocodile': {
-      en: 'Published during the 1936–39 Arab Revolt, the cartoon depicts Zionism as predatory and protected by British power.',
-      he: 'הקריקטורה פורסמה במהלך המרד הערבי של 1936–1939 ומציגה את הציונות ככוח טורף המוגן בידי בריטניה.',
-      ru: 'Карикатура была опубликована во время Арабского восстания 1936–1939 годов и изображает сионизм как хищную силу под защитой Британии.'
-    },
-    'Decree Awarding Lidiya Timashuk the Order of Lenin': {
-      en: 'Soviet authorities accused a group of prominent physicians, most of them Jewish, of conspiring to murder Soviet leaders. After Stalin’s death, the case collapsed and Timashuk’s award was revoked.',
-      he: 'השלטונות הסובייטיים האשימו קבוצת רופאים בכירים, רובם יהודים, בקנוניה לרצוח מנהיגים סובייטיים. לאחר מות סטלין קרסה הפרשה והעיטור של טימאשוק בוטל.',
-      ru: 'Советские власти обвинили группу видных врачей, большинство из которых были евреями, в заговоре с целью убийства советских руководителей. После смерти Сталина дело развалилось, а награда Тимашук была отменена.'
-    },
-  };
-
-  if (byTitle[title]) return byTitle[title];
-  return {
-    en: isAntizionismGallery ? 'History will be added when the final object research is complete.' : 'History will be added when the final object research is complete.',
-    he: 'ההיסטוריה תתווסף לאחר השלמת המחקר הסופי על הפריט.',
-    ru: 'История будет добавлена после завершения окончательного исследования объекта.'
-  };
-}
-
-function installArchiveStaggerStyles() {
-  if (document.getElementById('archive-stagger-styles')) return;
-  const style = document.createElement('style');
-  style.id = 'archive-stagger-styles';
-  style.textContent = `
-    .info-panel > .info-block.archive-stagger-block,
-    .history-panel.archive-stagger-block {
-      opacity: 0;
-      transform: translate(var(--archive-entry-x, 0px), 96px) scale(.94);
-      filter: blur(5px);
-      transition:
-        opacity 1.25s cubic-bezier(.16,1,.3,1),
-        transform 1.55s cubic-bezier(.16,1,.3,1),
-        filter 1.35s cubic-bezier(.16,1,.3,1),
-        border-color 1.2s ease,
-        background 1.2s ease,
-        box-shadow 1.2s ease;
-      will-change: opacity, transform, filter;
-    }
-    .info-panel > .info-block.archive-stagger-block.pop-in,
-    .history-panel.archive-stagger-block.pop-in {
-      opacity: 1;
-      transform: translate(0, 0) scale(1);
-      filter: blur(0);
-    }
-    .info-panel > .info-block.archive-stagger-block.pop-in:hover,
-    .info-panel > .info-block.archive-stagger-block.pop-in:active,
-    .history-panel.archive-stagger-block.pop-in:hover,
-    .history-panel.archive-stagger-block.pop-in:active {
-      transform: translateY(-14px) scale(1.012);
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .info-panel > .info-block.archive-stagger-block,
-      .history-panel.archive-stagger-block {
-        opacity: 1 !important;
-        transform: none !important;
-        filter: none !important;
-        transition: none !important;
-      }
-    }
-  `;
-  document.head.appendChild(style);
-}
-
-function installGalleryClarityStyles() {
-  if (document.getElementById('gallery-clarity-styles')) return;
-  const style = document.createElement('style');
-  style.id = 'gallery-clarity-styles';
-  style.textContent = `
-    /* Keep one chronology: the central spine. Remove secondary rails/dots attached to catalogue boxes. */
-    .info-panel::before,
-    .info-block::before,
-    .info-block::after,
-    .timeline-art-right .info-panel::before,
-    .timeline-art-right .info-panel > .info-block::before,
-    .timeline-art-right .info-panel > .info-block::after { display:none!important; content:none!important; }
-
-    /* Catalogue boxes should read as labels, not mini timelines. */
-    .info-panel > .info-block,
-    .history-panel { flex-shrink:0; }
-    .info-category,.info-title,.info-meta { flex-shrink:0; }
-    .info-panel > .info-block { border-left-color:rgba(255,255,255,.045)!important; }
-    .timeline-art-right .info-panel > .info-block { border-right-color:rgba(255,255,255,.045)!important; }
-
-    .info-title { position:relative; z-index:2; margin-bottom:.3rem!important; }
-    .info-meta { position:relative; z-index:1; margin-top:.05rem; }
-    .info-title.title-long { font-size:clamp(1.62rem,2.05vw,1.96rem)!important; line-height:1.04!important; }
-    .info-title.title-very-long { font-size:clamp(1.45rem,1.82vw,1.78rem)!important; line-height:1.04!important; }
-
-    /* The entire artwork is the museum-viewer affordance; the tiny + remains secondary. */
-    .exhibit-image-button { cursor:zoom-in!important; }
-    #object-viewer-stage { cursor:grab!important; }
-    #object-viewer-stage.is-dragging { cursor:grabbing!important; }
-
-    @media(min-width:851px){
-      .info-panel.is-tight .info-block{padding:.58rem .78rem .62rem!important}
-      .info-panel.is-tighter .info-block{padding:.46rem .7rem .5rem!important}
-      .info-panel.is-tight .info-block h4,.info-panel.is-tighter .info-block h4{font-size:.7rem!important;margin-bottom:.18rem!important}
-      .info-panel.is-tight .wave-p{font-size:.88rem!important;line-height:1.36!important}
-      .info-panel.is-tighter .wave-p{font-size:.84rem!important;line-height:1.32!important}
-      .info-panel.is-tight .history-panel,.info-panel.is-tighter .history-panel{min-height:54px!important}
-      .info-panel.is-ultra-tight{gap:.22rem!important}
-      .info-panel.is-ultra-tight .info-title{font-size:clamp(1.34rem,1.7vw,1.62rem)!important;line-height:1.02!important;padding-bottom:.26rem!important;margin-bottom:.12rem!important}
-      .info-panel.is-ultra-tight .info-meta{font-size:.82rem!important;line-height:1.22!important;gap:.08rem!important}
-      .info-panel.is-ultra-tight .info-block{padding:.3rem .62rem .34rem!important;margin-top:.04rem!important}
-      .info-panel.is-ultra-tight .info-block h4{font-size:.64rem!important;margin-bottom:.12rem!important;letter-spacing:.11em!important}
-      .info-panel.is-ultra-tight .wave-p{font-size:.78rem!important;line-height:1.24!important;min-height:0!important}
-      .info-panel.is-ultra-tight .history-panel{min-height:34px!important;padding:.3rem .62rem .34rem!important}
-    }
-  `;
-  document.head.appendChild(style);
-}
-
-function classifyGalleryTitles() {
-  document.querySelectorAll('.info-title').forEach(title => {
-    const text = title.getAttribute('data-en') || title.textContent || '';
-    title.classList.toggle('title-long', text.length >= 38 && text.length < 56);
-    title.classList.toggle('title-very-long', text.length >= 56);
-  });
-}
+/* Catalogue order is role-driven, never position-driven.
+   Sections may intentionally omit Archive (1937 and 1943). */
 
 function normalizeArchivePanels() {
-  document.querySelectorAll('.exhibition-section').forEach((section, index) => {
-    const panel = section.querySelector('.info-panel');
-    if (!panel) return;
-    const blocks = [...panel.querySelectorAll(':scope > .info-block')];
-    if (!blocks.length) return;
-
-    /* Preserve text while conforming labels and order to Object / Creator / Archive; History sits below the catalogue panel. */
-    const creatorBlock = blocks[0];
-    const objectBlock = blocks[1] || blocks[0];
-    const archiveBlock = blocks[2] || blocks[blocks.length - 1];
-
-    setArchiveHeading(objectBlock.querySelector('h4'), 'Object', 'אובייקט', 'Объект');
-    setArchiveHeading(creatorBlock.querySelector('h4'), 'Creator', 'יוצר', 'Автор');
-    setArchiveHeading(archiveBlock.querySelector('h4'), 'Archive', 'ארכיון', 'Архив');
-    /* Archive remains in the DOM as the provenance source for the museum viewer,
-       but it is no longer a wall box. */
-    archiveBlock.classList.add('wall-archive-hidden');
-
-    if (!panel.querySelector('.archive-historical-setting')) {
-      const historical = makeHistoricalSettingBlock(archiveSettingFor(section, index));
-      historical.classList.add('archive-historical-setting');
-      archiveBlock.before(historical);
-    }
-
-    /* Catalogue fields stay beside the artwork; History sits in the curatorial column after Archive. */
-    const historical = panel.querySelector('.archive-historical-setting');
-    panel.appendChild(objectBlock);
-    panel.appendChild(creatorBlock);
-    panel.appendChild(archiveBlock);
-
-    if (historical) {
-      historical.classList.add('history-panel');
-      panel.appendChild(historical);
-    }
+  const roleOrder = ['object', 'creator', 'archive'];
+  document.querySelectorAll('.exhibition-section .info-panel').forEach(panel => {
+    const blocks = new Map(
+      [...panel.querySelectorAll(':scope > .info-block[data-catalogue-role]')]
+        .map(block => [block.dataset.catalogueRole, block])
+    );
+    roleOrder.forEach(role => {
+      const block = blocks.get(role);
+      if (block) panel.appendChild(block);
+    });
   });
 }
-
 
 function localizedNode(tag, values, className = '') {
   const node = document.createElement(tag);
@@ -337,138 +139,6 @@ function copyLocalizedText(source, className = '') {
   return span;
 }
 
-function enhanceArchiveProvenance() {
-  document.querySelectorAll('.exhibition-section').forEach(section => {
-    if (section.getAttribute('data-empty-record') === 'true') return;
-    const blocks = [...section.querySelectorAll('.info-panel > .info-block:not(.wall-archive-hidden)')];
-    const archiveBlock = blocks.find(block => (block.querySelector('h4')?.getAttribute('data-en') || block.querySelector('h4')?.textContent || '').trim() === 'Archive');
-    if (!archiveBlock || archiveBlock.querySelector('.archive-drawer')) return;
-
-    const heading = archiveBlock.querySelector('h4');
-    const sourceParagraph = archiveBlock.querySelector('.wave-p');
-    if (!heading || !sourceParagraph) return;
-
-    archiveBlock.classList.add('archive-provenance-block');
-    const details = document.createElement('details');
-    details.className = 'archive-drawer';
-    const summary = document.createElement('summary');
-    summary.append(localizedNode('span', { en: 'Archive', he: 'ארכיון', ru: 'Архив' }));
-    details.append(summary);
-
-    const record = document.createElement('div');
-    record.className = 'provenance-record';
-    record.append(provenanceRow(
-      { en: 'Source / rights', he: 'מקור / זכויות', ru: 'Источник / права' },
-      sourceParagraph
-    ));
-
-    const title = section.querySelector('.info-title');
-    if (title) record.append(provenanceRow(
-      { en: 'Object', he: 'אובייקט', ru: 'Объект' },
-      copyLocalizedText(title)
-    ));
-
-    const date = [...section.querySelectorAll('.info-meta .wave-text')].at(-1);
-    if (date) record.append(provenanceRow(
-      { en: 'Date', he: 'תאריך', ru: 'Дата' },
-      copyLocalizedText(date)
-    ));
-
-    const image = section.querySelector('.museum-frame img');
-    const width = image?.dataset.nativeWidth || image?.getAttribute('width') || '';
-    const height = image?.dataset.nativeHeight || image?.getAttribute('height') || '';
-    if (width && height) {
-      const dimensions = document.createElement('span');
-      dimensions.textContent = `${width} × ${height} px`;
-      record.append(provenanceRow(
-        { en: 'Digital image', he: 'תמונה דיגיטלית', ru: 'Цифровое изображение' },
-        dimensions
-      ));
-    }
-
-    details.append(record);
-    archiveBlock.append(details);
-    details.addEventListener('toggle', () => {
-      if (details.open) window.setTimeout(() => triggerWaveWithin(record), 45);
-    });
-  });
-}
-
-/* Fill the remaining reserved Antizionism position with the selected Falastin archival work. Fuentes is door-only. */
-function setMultilingualText(element, en, he = en, ru = en) {
-  if (!element) return;
-  element.setAttribute('data-en', en);
-  element.setAttribute('data-he', he);
-  element.setAttribute('data-ru', ru);
-  element.textContent = en;
-}
-
-function populateSelectedAntizionismWorks() {
-  if (!/(?:^|\/)exhibition\.html$/i.test(location.pathname)) return;
-  const reserved = [...document.querySelectorAll('.reserved-timeline-position')];
-  const items = [
-    {
-      image: 'antizionism-5.jpg',
-      alt: 'Falastin newspaper anti-Zionist crocodile cartoon, 18 June 1936',
-      category: { en: 'Genealogy — Zionism and Imperial Power', he: 'גנאלוגיה — ציונות וכוח אימפריאלי', ru: 'Генеалогия — сионизм и имперская власть' },
-      title: { en: 'Zionism as a Crocodile', he: 'הציונות כתנין', ru: 'Сионизм как крокодил' },
-      creator: { en: 'Falastin newspaper; artist attribution varies by source', he: 'העיתון פלסטין; ייחוס האמן משתנה בין המקורות', ru: 'Газета Falastin; атрибуция художника различается по источникам' },
-      date: { en: '18 June 1936', he: '18 ביוני 1936', ru: '18 июня 1936' },
-      creatorText: {
-        en: 'The Arabic-language newspaper Falastin published the cartoon in Jaffa on 18 June 1936.',
-        he: 'העיתון הערבי פלסטין פרסם את הקריקטורה ביפו ב-18 ביוני 1936.',
-        ru: 'Арабоязычная газета Falastin опубликовала карикатуру в Яффе 18 июня 1936 года.'
-      },
-      objectText: {
-        en: 'A crocodile marked as Zionism faces Palestinian Arabs while a British officer stands above it. The crocodile says it will swallow them “peacefully.”',
-        he: 'תנין המסומן כציונות ניצב מול ערבים פלסטינים בעוד קצין בריטי עומד מעליו. התנין אומר כי יבלע אותם ״בשלום״.',
-        ru: 'Крокодил с надписью «сионизм» обращён к палестинским арабам, а над ним стоит британский офицер. Крокодил говорит, что проглотит их «мирно».'
-      },
-      archiveText: {
-        en: 'National Library of Israel newspaper holdings; high-resolution reproduction also preserved on Wikimedia Commons under a CC0 public-domain dedication.',
-        he: 'אוספי העיתונות של הספרייה הלאומית של ישראל; העתק ברזולוציה גבוהה נשמר גם ב-Wikimedia Commons בהקדשת CC0 לנחלת הכלל.',
-        ru: 'Газетные фонды Национальной библиотеки Израиля; репродукция высокого разрешения также хранится на Wikimedia Commons с посвящением в общественное достояние CC0.'
-      }
-    }
-  ];
-
-  const setField = (element, field) => setMultilingualText(element, field.en, field.he, field.ru);
-
-  reserved.forEach((section, index) => {
-    const item = items[index];
-    if (!item) { section.remove(); return; }
-    const image = section.querySelector('.museum-frame img');
-    if (image) {
-      image.src = item.image;
-      image.alt = item.alt;
-      image.removeAttribute('onerror');
-    }
-    const button = section.querySelector('.art-box');
-    if (button) button.setAttribute('aria-label', `Enlarge ${item.alt}`);
-
-    setField(section.querySelector('.info-category'), item.category);
-    setField(section.querySelector('.info-title'), item.title);
-
-    const meta = section.querySelectorAll('.info-meta > div');
-    if (meta[0]) {
-      const strong = meta[0].querySelector('strong');
-      if (strong) setMultilingualText(strong, 'Creator:', 'יוצר:', 'Автор:');
-      const span = meta[0].querySelector('.wave-text');
-      if (span) setField(span, item.creator);
-    }
-    if (meta[1]) {
-      const strong = meta[1].querySelector('strong');
-      if (strong) setMultilingualText(strong, 'Date:', 'תאריך:', 'Дата:');
-      const span = meta[1].querySelector('.wave-text');
-      if (span) setField(span, item.date);
-    }
-
-    const blocks = [...section.querySelectorAll('.info-block')];
-    if (blocks[0]?.querySelector('p')) setField(blocks[0].querySelector('p'), item.creatorText);
-    if (blocks[1]?.querySelector('p')) setField(blocks[1].querySelector('p'), item.objectText);
-    if (blocks[2]?.querySelector('p')) setField(blocks[2].querySelector('p'), item.archiveText);
-  });
-}
 function setupAmbientLight() {
   const ambientLight = document.getElementById('ambient-light');
   if (!ambientLight) return;
@@ -483,23 +153,34 @@ function setupAmbientLight() {
   let targetY = innerHeight / 2;
   let currentX = targetX;
   let currentY = targetY;
-  addEventListener('mousemove', event => {
-    targetX = event.clientX;
-    targetY = event.clientY;
-  }, { passive: true });
+  let frame = 0;
+
   const animate = () => {
+    frame = 0;
     currentX += (targetX - currentX) * 0.04;
     currentY += (targetY - currentY) * 0.04;
     ambientLight.style.setProperty('--cursor-x', `${currentX}px`);
     ambientLight.style.setProperty('--cursor-y', `${currentY}px`);
-    requestAnimationFrame(animate);
+    if (Math.abs(targetX - currentX) > 0.2 || Math.abs(targetY - currentY) > 0.2) {
+      frame = requestAnimationFrame(animate);
+    }
   };
-  animate();
+  const schedule = () => {
+    if (!frame) frame = requestAnimationFrame(animate);
+  };
+
+  ambientLight.style.setProperty('--cursor-x', `${currentX}px`);
+  ambientLight.style.setProperty('--cursor-y', `${currentY}px`);
+  addEventListener('mousemove', event => {
+    targetX = event.clientX;
+    targetY = event.clientY;
+    schedule();
+  }, { passive: true });
 }
 
 /* SLOW CURATORIAL STAGGER — each gallery section behaves as one composed reveal.
    As the visitor scrolls the artwork into view, the image settles first, then
-   Object -> Creator -> Archive rise out in sequence; History follows beneath them. */
+   Object -> Creator -> Archive rise out in sequence when those authored roles exist. */
 const ARCHIVE_STAGGER_START = 340;
 const ARCHIVE_STAGGER_STEP = 240;
 
@@ -544,8 +225,7 @@ function revealArchiveSection(section) {
     window.setTimeout(() => {
       history.classList.add('pop-in');
       triggerWaveWithin(history);
-      scheduleHistoryFit();
-    }, 560);
+        }, 560);
   }
 }
 
@@ -558,69 +238,6 @@ function replayArtwork(artwork) {
   window.setTimeout(() => artwork.classList.remove('art-reenter'), 950);
 }
 
-
-function outerHeightWithMargins(node) {
-  if (!node) return 0;
-  const style = window.getComputedStyle(node);
-  return node.getBoundingClientRect().height + parseFloat(style.marginTop || 0) + parseFloat(style.marginBottom || 0);
-}
-
-function fitHistoryPanels() {
-  document.querySelectorAll('.exhibition-section').forEach(section => {
-    const panel = section.querySelector('.info-panel');
-    const history = panel?.querySelector('.history-panel');
-    const artwork = section.querySelector('.art-box');
-    if (!panel || !history || !artwork) return;
-
-    panel.classList.remove('is-tight', 'is-tighter', 'is-ultra-tight');
-    panel.style.removeProperty('--art-height');
-    history.style.removeProperty('max-height');
-    history.style.removeProperty('overflow-y');
-
-    if (window.innerWidth <= 850) return;
-
-    const artHeight = artwork.getBoundingClientRect().height;
-    if (!artHeight) return;
-    panel.style.setProperty('--art-height', `${artHeight}px`);
-
-    const measureAvailable = () => {
-      const siblings = [...panel.children].filter(child => child !== history);
-      const used = siblings.reduce((sum, child) => sum + outerHeightWithMargins(child), 0);
-      const gapValue = parseFloat(window.getComputedStyle(panel).gap || '0') || 0;
-      const totalGaps = gapValue * Math.max(0, panel.children.length - 1);
-      return Math.floor(artHeight - used - totalGaps - 12);
-    };
-
-    let available = measureAvailable();
-    if (available < 112) {
-      panel.classList.add('is-tight');
-      available = measureAvailable();
-    }
-    if (available < 92) {
-      panel.classList.add('is-tighter');
-      available = measureAvailable();
-    }
-    if (available < 62) {
-      panel.classList.add('is-ultra-tight');
-      available = measureAvailable();
-    }
-
-    /* History remains present but its physical bottom is clamped to the artwork frame. */
-    const historyTop = history.getBoundingClientRect().top;
-    const artBottom = artwork.getBoundingClientRect().bottom;
-    const exactAvailable = Math.max(18, Math.floor(artBottom - historyTop - 2));
-    history.style.maxHeight = `${Math.min(available, exactAvailable)}px`;
-    history.style.overflowY = 'auto';
-  });
-}
-
-function scheduleHistoryFit() {
-  window.requestAnimationFrame(() => {
-    fitHistoryPanels();
-    window.setTimeout(fitHistoryPanels, 120);
-    window.setTimeout(fitHistoryPanels, 420);
-  });
-}
 
 function replayArchiveWords(section) {
   if (!section || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -682,40 +299,6 @@ function setupRevealObserver() {
 }
 
 
-function installHeroMotionStyles() {
-  if (document.getElementById('hero-motion-fix-styles')) return;
-  const style = document.createElement('style');
-  style.id = 'hero-motion-fix-styles';
-  style.textContent = `
-    .hero-motion-word,
-    .hero-motion-char {
-      display: inline-block;
-      opacity: 0;
-      will-change: transform, opacity, filter;
-      transform-origin: 50% 100%;
-    }
-    .hero-motion-word {
-      animation: heroWordDrop 920ms cubic-bezier(.16,1,.3,1) forwards;
-      animation-delay: calc(var(--hero-i) * 58ms);
-    }
-    .hero-motion-char {
-      animation: heroCharDrop 760ms cubic-bezier(.16,1,.3,1) forwards;
-      animation-delay: calc(var(--hero-i) * 38ms);
-    }
-    @keyframes heroWordDrop {
-      0% { opacity: 0; transform: translateY(1.15em) rotateX(-42deg); filter: blur(7px); }
-      58% { opacity: 1; transform: translateY(-.08em) rotateX(5deg); filter: blur(.5px); }
-      100% { opacity: 1; transform: none; filter: none; }
-    }
-    @keyframes heroCharDrop {
-      0% { opacity: 0; transform: translateY(.95em) rotateX(-48deg); filter: blur(6px); }
-      62% { opacity: 1; transform: translateY(-.07em) rotateX(4deg); filter: blur(.35px); }
-      100% { opacity: 1; transform: none; filter: none; }
-    }
-  `;
-  document.head.appendChild(style);
-}
-
 function animateHeroWords(element) {
   if (!element) return;
   const text = textFor(element);
@@ -762,7 +345,6 @@ function animateHeroLetters(element) {
 function setupHeroReplayObserver() {
   const hero = document.querySelector('.hero-section');
   if (!hero) return;
-  installHeroMotionStyles();
 
   const artwork = hero.querySelector('.art-box');
   const subtitle = hero.querySelector('.hero-subtitle');
@@ -826,7 +408,7 @@ function setupVerticalMuseumTimeline() {
   const sections = [...document.querySelectorAll('main#gallery > .exhibition-section')];
   sections.forEach((section, index) => {
     const container = section.querySelector('.exhibition-container');
-    const artwork = container?.querySelector(':scope > .art-box');
+    const artwork = container?.querySelector(':scope > .art-box, :scope > .exhibit-art-column > .art-box');
     const panel = container?.querySelector(':scope > .info-panel');
     if (!container || !artwork || !panel) return;
 
@@ -850,61 +432,6 @@ function setupVerticalMuseumTimeline() {
       marker.appendChild(node);
       container.appendChild(marker);
     }
-  });
-}
-
-function updateChronologyActive(section) {
-  if (!section || chronologyActiveSection === section) return;
-  chronologyActiveSection = section;
-  chronologyItemsBySection.forEach((button, itemSection) => {
-    const active = itemSection === section;
-    button.classList.toggle('is-active', active);
-    if (active) button.setAttribute('aria-current', 'true');
-    else button.removeAttribute('aria-current');
-  });
-  if (chronologyCurrentButton) chronologyCurrentButton.textContent = section.dataset.timelineYear || '';
-}
-
-function setupChronologyNavigator() {
-  if (!isEraGalleryPage() || document.querySelector('.chronology-rail')) return;
-  const sections = [...document.querySelectorAll('.timeline-section')].filter(section => section.dataset.timelineYear);
-  if (!sections.length) return;
-
-  const nav = document.createElement('nav');
-  nav.className = 'chronology-rail';
-  nav.setAttribute('aria-label', 'Exhibition chronology');
-
-  chronologyCurrentButton = document.createElement('button');
-  chronologyCurrentButton.className = 'chronology-current';
-  chronologyCurrentButton.type = 'button';
-  chronologyCurrentButton.setAttribute('aria-label', 'Chronology');
-  chronologyCurrentButton.textContent = sections[0].dataset.timelineYear;
-  nav.append(chronologyCurrentButton);
-
-  const list = document.createElement('div');
-  list.className = 'chronology-list';
-  sections.forEach(section => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'chronology-item';
-    button.textContent = section.dataset.timelineYear;
-    button.setAttribute('aria-label', section.dataset.timelineYear);
-    button.addEventListener('click', () => {
-      nav.classList.remove('is-open');
-      section.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
-    });
-    chronologyItemsBySection.set(section, button);
-    list.append(button);
-  });
-  nav.append(list);
-  document.body.append(nav);
-
-  chronologyCurrentButton.addEventListener('click', event => {
-    event.stopPropagation();
-    nav.classList.toggle('is-open');
-  });
-  document.addEventListener('click', event => {
-    if (!nav.contains(event.target)) nav.classList.remove('is-open');
   });
 }
 
@@ -939,7 +466,6 @@ function setupTimelineActiveObserver() {
     });
 
     sections.forEach(section => section.classList.toggle('timeline-active', section === closest));
-    if (closest) updateChronologyActive(closest);
   };
 
   const requestUpdate = () => {
@@ -966,13 +492,13 @@ function updateAudioBtnText() {
 
 function saveAudioPosition() {
   if (audio && Number.isFinite(audio.currentTime)) {
-    sessionStorage.setItem(AUDIO_TIME, String(audio.currentTime));
+    storageSet(AUDIO_TIME, String(audio.currentTime));
   }
 }
 
 function seekSavedAudioPosition() {
   if (!audio) return;
-  const saved = Number.parseFloat(sessionStorage.getItem(AUDIO_TIME) || '0');
+  const saved = Number.parseFloat(storageGet(AUDIO_TIME) || '0');
   if (Number.isFinite(saved) && saved > 0 && Number.isFinite(audio.duration) && saved < audio.duration) {
     try { audio.currentTime = saved; } catch (_error) { /* Browser controls seeking readiness. */ }
   }
@@ -996,6 +522,7 @@ async function startAudio() {
     await waitForMetadata();
     seekSavedAudioPosition();
     await audio.play();
+    storageSet(AUDIO_WANTED, '1');
   } catch (_error) {
     isPlaying = false;
     updateAudioBtnText();
@@ -1008,6 +535,7 @@ async function startAudio() {
 function stopAudio() {
   if (!audio) return;
   saveAudioPosition();
+  storageSet(AUDIO_WANTED, '0');
   audio.pause();
 }
 
@@ -1020,7 +548,7 @@ function toggleAudio() {
 function setLanguage(lang, animate = true) {
   if (!['en', 'he', 'ru'].includes(lang)) lang = 'en';
   currentLang = lang;
-  sessionStorage.setItem(LANGUAGE_SESSION_KEY, lang);
+  storageSet(LANGUAGE_SESSION_KEY, lang);
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
 
@@ -1044,6 +572,9 @@ function setLanguage(lang, animate = true) {
       clearWave(element);
       element.textContent = text;
     }
+  });
+  document.querySelectorAll('[data-aria-en][data-aria-he][data-aria-ru]').forEach(element => {
+    element.setAttribute('aria-label', element.getAttribute(`data-aria-${lang}`) || element.getAttribute('data-aria-en'));
   });
 }
 
@@ -1073,9 +604,9 @@ function ensureObjectViewer() {
     const toolbar = document.createElement('div');
     toolbar.className = 'viewer-toolbar';
     toolbar.innerHTML = `
-      <button class="viewer-tool" type="button" data-viewer-action="out" aria-label="Zoom out">−</button>
-      <button class="viewer-tool" type="button" data-viewer-action="reset" aria-label="Reset view">1:1</button>
-      <button class="viewer-tool" type="button" data-viewer-action="in" aria-label="Zoom in">+</button>`;
+      <button class="viewer-tool" type="button" data-viewer-action="out" aria-label="Zoom out" data-aria-en="Zoom out" data-aria-he="הקטנת התצוגה" data-aria-ru="Уменьшить">−</button>
+      <button class="viewer-tool" type="button" data-viewer-action="reset" aria-label="Reset view" data-aria-en="Reset view" data-aria-he="איפוס התצוגה" data-aria-ru="Сбросить вид">1:1</button>
+      <button class="viewer-tool" type="button" data-viewer-action="in" aria-label="Zoom in" data-aria-en="Zoom in" data-aria-he="הגדלת התצוגה" data-aria-ru="Увеличить">+</button>`;
     lightbox.append(toolbar);
 
     const provenance = document.createElement('details');
@@ -1165,6 +696,7 @@ function setViewerScale(value) {
 }
 
 function resetObjectViewer(animate = false) {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) animate = false;
   const image = document.getElementById('lightbox-img');
   viewerScale = 1;
   viewerX = 0;
@@ -1220,6 +752,50 @@ function populateViewerProvenance(section, sourceImage) {
   panel.append(record);
 }
 
+
+function setLightboxBackgroundInert(active) {
+  const lightbox = document.getElementById('lightbox');
+  [...document.body.children].forEach(element => {
+    if (element === lightbox || element.tagName === 'SCRIPT' || element.tagName === 'STYLE') return;
+    if (active) {
+      if (!element.hasAttribute('inert')) {
+        element.setAttribute('inert', '');
+        element.dataset.lightboxInert = '1';
+      }
+    } else if (element.dataset.lightboxInert === '1') {
+      element.removeAttribute('inert');
+      delete element.dataset.lightboxInert;
+    }
+  });
+}
+
+function trapLightboxFocus(event, lightbox) {
+  if (event.key !== 'Tab') return false;
+  const selector = 'button:not([disabled]),a[href],summary,[tabindex]:not([tabindex="-1"])';
+  const focusable = [...lightbox.querySelectorAll(selector)].filter(element => {
+    const style = getComputedStyle(element);
+    return style.display !== 'none' && style.visibility !== 'hidden';
+  });
+  if (!focusable.length) {
+    event.preventDefault();
+    lightbox.focus({ preventScroll: true });
+    return true;
+  }
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus({ preventScroll: true });
+    return true;
+  }
+  if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus({ preventScroll: true });
+    return true;
+  }
+  return false;
+}
+
 function openLightbox(button) {
   const sourceImage = button.querySelector('img');
   const lightbox = document.getElementById('lightbox');
@@ -1253,8 +829,7 @@ function openLightbox(button) {
   resetObjectViewer(false);
   lightbox.classList.add('active');
   lightbox.setAttribute('aria-hidden', 'false');
-  document.querySelector('main')?.setAttribute('inert', '');
-  document.querySelector('.controls-nav')?.setAttribute('inert', '');
+  setLightboxBackgroundInert(true);
   lockBodyScroll();
   closeButton?.focus({ preventScroll: true });
 }
@@ -1265,8 +840,7 @@ function closeLightbox(restoreFocus = true) {
   if (!lightbox || !lightbox.classList.contains('active')) return;
   lightbox.classList.remove('active');
   lightbox.setAttribute('aria-hidden', 'true');
-  document.querySelector('main')?.removeAttribute('inert');
-  document.querySelector('.controls-nav')?.removeAttribute('inert');
+  setLightboxBackgroundInert(false);
   unlockBodyScroll();
   resetObjectViewer(false);
   if (lightboxImage) lightboxImage.removeAttribute('src');
@@ -1284,8 +858,7 @@ function resetRestoredPage() {
     lightbox.classList.remove('active');
     lightbox.setAttribute('aria-hidden', 'true');
   }
-  document.querySelector('main')?.removeAttribute('inert');
-  document.querySelector('.controls-nav')?.removeAttribute('inert');
+  setLightboxBackgroundInert(false);
   document.querySelectorAll('[aria-busy="true"]').forEach(element => element.removeAttribute('aria-busy'));
 }
 
@@ -1300,7 +873,7 @@ function setupGalleryImagePolish() {
       image.classList.remove('quality-source-limited','quality-standard','quality-hires');
       if (width && width < 650) {
         image.classList.add('quality-source-limited');
-        const nativeDisplay = Math.min(720, Math.max(width, Math.round(width * 1.55)));
+        const nativeDisplay = width;
         image.style.setProperty('--native-display-max', `${nativeDisplay}px`);
       } else if (width && width < 1000) {
         image.classList.add('quality-standard');
@@ -1320,16 +893,19 @@ function setupGalleryImagePolish() {
 function setupGalleryChrome() {
   const nav = document.querySelector('.controls-nav');
   if (!nav) return;
+  let frame = 0;
   const update = () => {
+    frame = 0;
     const hidden = window.scrollY > 72;
     nav.classList.toggle('chrome-hidden', hidden);
     nav.classList.remove('chrome-quiet', 'chrome-moving');
-    if (hidden) nav.setAttribute('inert', '');
-    else nav.removeAttribute('inert');
+  };
+  const schedule = () => {
+    if (!frame) frame = requestAnimationFrame(update);
   };
   update();
-  addEventListener('scroll', update, { passive: true });
-  addEventListener('resize', update, { passive: true });
+  addEventListener('scroll', schedule, { passive: true });
+  addEventListener('resize', schedule, { passive: true });
 }
 
 function setupControls() {
@@ -1362,6 +938,7 @@ function setupLightbox() {
   });
   addEventListener('keydown', event => {
     if (!lightbox?.classList.contains('active')) return;
+    if (trapLightboxFocus(event, lightbox)) return;
     if (event.key === 'Escape') {
       event.preventDefault();
       closeLightbox();
@@ -1388,11 +965,12 @@ function setupLightbox() {
 
 
 function setupEraApertureArrival() {
-  const tone = sessionStorage.getItem('stopaz-era-aperture-arrival');
-  const image = sessionStorage.getItem('stopaz-era-arrival-image');
+  const tone = storageGet('stopaz-era-aperture-arrival');
+  const image = storageGet('stopaz-era-arrival-image');
   if (!tone && !image) return;
-  sessionStorage.removeItem('stopaz-era-aperture-arrival');
-  sessionStorage.removeItem('stopaz-era-arrival-image');
+  storageRemove('stopaz-era-aperture-arrival');
+  storageRemove('stopaz-era-arrival-image');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const veil = document.createElement('div');
   veil.setAttribute('aria-hidden', 'true');
@@ -1405,7 +983,7 @@ function setupEraApertureArrival() {
     const figure = document.createElement('div');
     Object.assign(figure.style, {
       position: 'absolute', inset: '0',
-      backgroundImage: `url("${image}")`, backgroundSize: 'cover', backgroundPosition: 'center center',
+      backgroundImage: `url("${image}")`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundColor: '#111114', backgroundPosition: 'center center',
       transform: 'scale(1.035)', opacity: '1', filter: 'brightness(.78) saturate(.94)'
     });
     veil.appendChild(figure);
@@ -1438,18 +1016,14 @@ addEventListener('pageshow', resetRestoredPage);
 
 addEventListener('DOMContentLoaded', () => {
   resetRestoredPage();
-  installArchiveStaggerStyles();
-  installGalleryClarityStyles();
-  classifyGalleryTitles();
-  populateSelectedAntizionismWorks();
+  setupEraApertureArrival();
   normalizeArchivePanels();
-  scheduleHistoryFit();
-  enhanceArchiveProvenance();
   setupVerticalMuseumTimeline();
   setupAmbientLight();
   setupGalleryImagePolish();
   setupGalleryChrome();
   setupControls();
+  if (storageGet(AUDIO_WANTED) === '1') startAudio();
   setupLightbox();
   setLanguage(currentLang, false);
   setupRevealObserver();
@@ -1458,5 +1032,3 @@ addEventListener('DOMContentLoaded', () => {
   updateAudioBtnText();
 });
 
-window.addEventListener('resize', scheduleHistoryFit);
-window.addEventListener('load', scheduleHistoryFit);

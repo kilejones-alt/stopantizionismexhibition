@@ -1,10 +1,19 @@
 'use strict';
 
 (() => {
+  function storageGet(key) {
+    try { return sessionStorage.getItem(key); } catch (_error) { return null; }
+  }
+
+  function storageSet(key, value) {
+    try { sessionStorage.setItem(key, value); } catch (_error) { /* Storage may be unavailable in hardened contexts. */ }
+  }
+
   const SUPPORTED_LANGUAGES = ['en', 'he', 'ru'];
   const LANGUAGE_SESSION_KEY = 'stopazSessionLanguage';
   const AUDIO_TIME = 'stopazAudioTime';
-  const savedLanguage = sessionStorage.getItem(LANGUAGE_SESSION_KEY);
+  const AUDIO_WANTED = 'stopazAudioWanted';
+  const savedLanguage = storageGet(LANGUAGE_SESSION_KEY);
   let currentLang = SUPPORTED_LANGUAGES.includes(savedLanguage) ? savedLanguage : 'en';
   let isPlaying = false;
   let audioStartPending = false;
@@ -38,7 +47,7 @@
   function setLanguage(lang) {
     if (!SUPPORTED_LANGUAGES.includes(lang)) lang = 'en';
     currentLang = lang;
-    sessionStorage.setItem(LANGUAGE_SESSION_KEY, lang);
+    storageSet(LANGUAGE_SESSION_KEY, lang);
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
 
@@ -54,17 +63,20 @@
       if (element.id !== 'audio-btn') element.textContent = textFor(element, lang);
     });
     document.querySelectorAll('.era-arrow').forEach(arrow => { arrow.textContent = lang === 'he' ? '←' : '→'; });
+    document.querySelectorAll('[data-aria-en][data-aria-he][data-aria-ru]').forEach(element => {
+      element.setAttribute('aria-label', element.getAttribute(`data-aria-${lang}`) || element.getAttribute('data-aria-en'));
+    });
     updateAudioButton();
     prepareHomeTitle();
   }
 
   function saveAudioPosition() {
-    if (audio && Number.isFinite(audio.currentTime)) sessionStorage.setItem(AUDIO_TIME, String(audio.currentTime));
+    if (audio && Number.isFinite(audio.currentTime)) storageSet(AUDIO_TIME, String(audio.currentTime));
   }
 
   function seekAudioPosition() {
     if (!audio || !Number.isFinite(audio.duration)) return;
-    const saved = Number.parseFloat(sessionStorage.getItem(AUDIO_TIME) || '0');
+    const saved = Number.parseFloat(storageGet(AUDIO_TIME) || '0');
     if (Number.isFinite(saved) && saved > 0 && saved < audio.duration) {
       try { audio.currentTime = saved; } catch (_error) { /* browser owns readiness */ }
     }
@@ -84,6 +96,7 @@
       }
       seekAudioPosition();
       await audio.play();
+      storageSet(AUDIO_WANTED, '1');
     } catch (_error) {
       isPlaying = false;
       updateAudioButton();
@@ -99,23 +112,40 @@
     audio.addEventListener('play', () => { isPlaying = true; updateAudioButton(); });
     audio.addEventListener('pause', () => { isPlaying = false; updateAudioButton(); });
     audio.addEventListener('ended', () => { isPlaying = false; updateAudioButton(); });
-    audioBtn?.addEventListener('click', () => audio.paused ? startAudio() : audio.pause());
+    audioBtn?.addEventListener('click', () => {
+      if (audio.paused) startAudio();
+      else { storageSet(AUDIO_WANTED, '0'); audio.pause(); }
+    });
     updateAudioButton();
   }
 
   function setupAmbientLight() {
-    if (!ambient || matchMedia('(pointer: coarse)').matches) return;
+    if (!ambient || matchMedia('(pointer: coarse)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let targetX = innerWidth / 2, targetY = innerHeight / 2;
     let x = targetX, y = targetY;
-    addEventListener('pointermove', event => { targetX = event.clientX; targetY = event.clientY; }, { passive: true });
+    let frame = 0;
+
     const tick = () => {
+      frame = 0;
       x += (targetX - x) * 0.045;
       y += (targetY - y) * 0.045;
       ambient.style.setProperty('--cursor-x', `${x}px`);
       ambient.style.setProperty('--cursor-y', `${y}px`);
-      requestAnimationFrame(tick);
+      if (Math.abs(targetX - x) > 0.2 || Math.abs(targetY - y) > 0.2) {
+        frame = requestAnimationFrame(tick);
+      }
     };
-    requestAnimationFrame(tick);
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(tick);
+    };
+
+    ambient.style.setProperty('--cursor-x', `${x}px`);
+    ambient.style.setProperty('--cursor-y', `${y}px`);
+    addEventListener('pointermove', event => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      schedule();
+    }, { passive: true });
   }
 
   let titleSweepDone = false;
@@ -146,6 +176,14 @@
     setTimeout(() => title.classList.remove('title-sweep-running'), characters.length * 48 + 520);
   }
 
+  function revealDoorImages() {
+    document.querySelectorAll('.door-source-image').forEach((image, index) => {
+      const show = () => setTimeout(() => image.classList.add('is-loaded'), 70 + index * 70);
+      if (image.complete && image.naturalWidth) show();
+      else image.addEventListener('load', show, { once: true });
+    });
+  }
+
   function revealDoors() {
     document.querySelectorAll('.era-card').forEach((card, index) => {
       const show = () => setTimeout(() => card.classList.add('pop-in'), 160 + index * 115);
@@ -172,6 +210,10 @@
     card.setAttribute('aria-busy', 'true');
     card.classList.add('door-cut-source');
     document.body.classList.add('door-cutting');
+    const doorImage = card.querySelector('.era-image');
+    const arrivalImage = doorImage?.currentSrc || doorImage?.src || '';
+    if (arrivalImage) storageSet('stopaz-era-arrival-image', arrivalImage);
+    storageSet('stopaz-era-aperture-arrival', '1');
 
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setTimeout(() => location.assign(href), 70);
@@ -219,9 +261,11 @@
     setLanguage(currentLang);
     setupAudio();
     setupAmbientLight();
+    revealDoorImages();
     revealDoors();
     setupLanguageControls();
     setupNavigation();
+    if (storageGet(AUDIO_WANTED) === '1') startAudio();
     requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('page-ready')));
     setTimeout(runHomeTitleSweep, 1200);
   });

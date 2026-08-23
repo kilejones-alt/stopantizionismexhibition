@@ -539,3 +539,16 @@ body.pageflip-transitioning .era-card:not(.pageflip-source){
   .overview-page .site-brand-link{top:4.35rem;right:.65rem;width:7.2rem}
   [dir="rtl"] .overview-page .site-brand-link{right:auto;left:.65rem}
 }
+
+/* Source-only overview copy: no invented section labels; let the supplied exhibition text own the page. */
+.overview-body .overview-section{grid-template-columns:minmax(0,1fr)!important;gap:0!important;padding:clamp(3.8rem,6.5vw,6.4rem) 0!important}
+.overview-body .overview-copy{max-width:920px!important;margin-inline:auto!important;width:100%!important}
+.overview-body .overview-copy>h2{text-align:center!important;margin-bottom:2rem!important}
+.overview-body .overview-copy>p{font-size:1.04rem!important;line-height:1.9!important;max-width:850px;margin:1.2rem auto 0!important}
+.overview-body .stream-grid,.overview-body .sequence-list{margin-top:2.8rem!important}
+.overview-body .stream-item,.overview-body .sequence-item{grid-template-columns:4.25rem minmax(0,1fr)!important;padding:1.9rem 0!important}
+.overview-body .stream-item p,.overview-body .sequence-item p{max-width:none!important;margin:0!important;font-size:.98rem!important;line-height:1.78!important}
+@media(max-width:720px){
+  .overview-body .overview-copy>p{font-size:.98rem!important;line-height:1.82!important}
+  .overview-body .stream-item,.overview-body .sequence-item{grid-template-columns:2.8rem minmax(0,1fr)!important;padding:1.5rem 0!important}
+}
