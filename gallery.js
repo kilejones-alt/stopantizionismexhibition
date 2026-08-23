@@ -96,7 +96,7 @@ function triggerWaveWithin(container) {
    Sections may intentionally omit Archive (1937 and 1943). */
 
 function normalizeArchivePanels() {
-  const roleOrder = ['object', 'creator', 'archive'];
+  const roleOrder = ['object', 'creator'];
   document.querySelectorAll('.exhibition-section .info-panel').forEach(panel => {
     const blocks = new Map(
       [...panel.querySelectorAll(':scope > .info-block[data-catalogue-role]')]
@@ -180,7 +180,7 @@ function setupAmbientLight() {
 
 /* SLOW CURATORIAL STAGGER — each gallery section behaves as one composed reveal.
    As the visitor scrolls the artwork into view, the image settles first, then
-   Object -> Creator -> Archive rise out in sequence when those authored roles exist. */
+   Object -> Creator rise out in sequence when those authored roles exist. */
 const ARCHIVE_STAGGER_START = 340;
 const ARCHIVE_STAGGER_STEP = 240;
 
@@ -191,9 +191,8 @@ function revealArchiveSection(section) {
   const artwork = section.querySelector('.art-box');
   const panel = section.querySelector('.info-panel');
   const headerWaveTargets = [
-    section.querySelector('.info-category'),
-    section.querySelector('.info-title'),
-    ...section.querySelectorAll('.info-meta .wave-text'),
+    section.querySelector('.art-caption-title'),
+    section.querySelector('.art-caption-date'),
     section.querySelector('.timeline-node')
   ].filter(Boolean);
   const blocks = [...section.querySelectorAll('.info-panel > .info-block:not(.wall-archive-hidden)')];
@@ -243,9 +242,8 @@ function replayArchiveWords(section) {
   if (!section || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const headerWaveTargets = [
-    section.querySelector('.info-category'),
-    section.querySelector('.info-title'),
-    ...section.querySelectorAll('.info-meta .wave-text'),
+    section.querySelector('.art-caption-title'),
+    section.querySelector('.art-caption-date'),
     section.querySelector('.timeline-node')
   ].filter(Boolean);
   const blocks = [...section.querySelectorAll('.info-panel > .info-block:not(.wall-archive-hidden)')];
@@ -1011,6 +1009,39 @@ function setupEraApertureArrival() {
   });
 }
 
+
+
+function setupPageProseReplayObserver() {
+  const nodes = [...document.querySelectorAll(
+    '.genealogy-script, .chronology-interlude, .libel-marker, .source-antizionism-framework'
+  )];
+  if (!nodes.length) return;
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced || !('IntersectionObserver' in window)) {
+    nodes.forEach(node => node.classList.add('page-prose-reveal', 'is-visible'));
+    return;
+  }
+
+  nodes.forEach(node => node.classList.add('page-prose-reveal'));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const node = entry.target;
+      if (entry.isIntersecting) {
+        node.classList.remove('exit-up', 'exit-down');
+        node.classList.add('is-visible');
+        return;
+      }
+      node.classList.remove('is-visible');
+      const exitedAbove = entry.boundingClientRect.top < 0;
+      node.classList.toggle('exit-up', exitedAbove);
+      node.classList.toggle('exit-down', !exitedAbove);
+    });
+  }, { threshold: 0.14, rootMargin: '-8% 0px -12% 0px' });
+
+  nodes.forEach(node => observer.observe(node));
+}
+
 addEventListener('pagehide', saveAudioPosition);
 addEventListener('pageshow', resetRestoredPage);
 
@@ -1029,6 +1060,7 @@ addEventListener('DOMContentLoaded', () => {
   setupRevealObserver();
   setupTimelineActiveObserver();
   setupHeroReplayObserver();
+  setupPageProseReplayObserver();
   updateAudioBtnText();
 });
 

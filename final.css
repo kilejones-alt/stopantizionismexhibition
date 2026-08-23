@@ -286,12 +286,12 @@ html:not([lang="en"]) [data-script-language="en"]{display:none!important}
 .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty).pop-in:active,
 .history-panel.archive-stagger-block.pop-in:hover,
 .history-panel.pop-in:hover{
-  transform:none!important;
-  z-index:auto!important;
-  background:linear-gradient(180deg,rgba(255,255,255,.072),rgba(255,255,255,.035))!important;
-  border-color:rgba(255,255,255,.19)!important;
-  box-shadow:0 18px 42px rgba(0,0,0,.22)!important;
-  filter:brightness(1.035)!important;
+  transform:translateY(-9px)!important;
+  z-index:4!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.082),rgba(255,255,255,.04))!important;
+  border-color:rgba(255,255,255,.21)!important;
+  box-shadow:0 20px 42px rgba(0,0,0,.34)!important;
+  filter:brightness(1.055)!important;
 }
 .archive-provenance-block .archive-drawer{display:none!important}
 
@@ -402,12 +402,12 @@ html:not([lang="en"]) [data-script-language="en"]{display:none!important}
   .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty).archive-stagger-block.pop-in:hover,
   .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty):hover{
     position:relative!important;
-    z-index:0!important;
-    transform:none!important;
-    background:linear-gradient(180deg,rgba(255,255,255,.078),rgba(255,255,255,.035))!important;
-    border-color:rgba(255,255,255,.2)!important;
-    box-shadow:none!important;
-    filter:brightness(1.025)!important;
+    z-index:4!important;
+    transform:translateY(-9px)!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.082),rgba(255,255,255,.04))!important;
+    border-color:rgba(255,255,255,.21)!important;
+    box-shadow:0 20px 42px rgba(0,0,0,.34)!important;
+    filter:brightness(1.055)!important;
   }
 }
 @media(max-width:850px){
@@ -1176,5 +1176,487 @@ body:not(.home-page) .controls-nav.chrome-hidden:focus-within{opacity:1!importan
   .river-label strong{
     max-width:100%!important;
     overflow-wrap:anywhere;
+  }
+}
+
+/* === POST-FINAL EDITORIAL READING SYSTEM · NON-TIMELINE ONLY · 2026-08-22 ===
+   Catalogue/timeline records, dates, image columns, libels and exhibit-card typography are intentionally untouched. */
+:root{
+  --editorial-copy:#c9c9d0;
+  --editorial-lead:#e6e6ea;
+  --editorial-heading:#f5f5f7;
+  --editorial-rule:rgba(188,165,109,.34);
+  --editorial-hairline:rgba(255,255,255,.085);
+}
+
+/* Genealogy / essay interludes: catalogue-style reading measure and hierarchy. */
+.genealogy-script{
+  padding-top:clamp(4.75rem,7vw,7rem)!important;
+  padding-bottom:clamp(4.75rem,7vw,7rem)!important;
+}
+.genealogy-script-inner{
+  max-width:1040px!important;
+}
+.genealogy-script-copy,
+html:not([dir="rtl"]) .genealogy-script-copy,
+html:not([dir="rtl"]) .genealogy-marker .genealogy-script-copy{
+  width:min(920px,100%)!important;
+  max-width:920px!important;
+  margin-inline:auto!important;
+  text-align:start!important;
+}
+.genealogy-script-copy h3{
+  position:relative;
+  max-width:900px;
+  margin:0 0 1.45rem!important;
+  font-family:var(--museum-serif,"Cormorant Garamond",serif)!important;
+  font-size:clamp(2.35rem,3.55vw,3.55rem)!important;
+  font-weight:500!important;
+  line-height:1.02!important;
+  letter-spacing:-.022em!important;
+  color:var(--editorial-heading)!important;
+  text-wrap:balance;
+}
+.genealogy-script-copy h3::before{
+  content:"";
+  display:block;
+  width:3.25rem;
+  height:1px;
+  margin:0 0 1.15rem;
+  background:var(--editorial-rule);
+}
+.genealogy-intro .genealogy-script-copy h3{
+  max-width:900px;
+  font-size:clamp(2.8rem,4.55vw,4.55rem)!important;
+  line-height:.98!important;
+  margin-bottom:1.75rem!important;
+}
+.genealogy-intro .genealogy-script-copy h3::before{
+  width:4.5rem;
+}
+.genealogy-script-copy p{
+  width:auto!important;
+  max-width:76ch!important;
+  margin:0 0 1.35rem!important;
+  font-family:var(--museum-sans,"Source Sans 3",sans-serif)!important;
+  font-size:clamp(1.04rem,1.13vw,1.14rem)!important;
+  line-height:1.74!important;
+  color:var(--editorial-copy)!important;
+  text-align:start!important;
+  text-wrap:pretty;
+  orphans:3;
+  widows:3;
+}
+.genealogy-script-copy h3 + p{
+  max-width:72ch!important;
+  font-size:clamp(1.16rem,1.38vw,1.28rem)!important;
+  line-height:1.68!important;
+  color:var(--editorial-lead)!important;
+  margin-bottom:1.55rem!important;
+}
+.genealogy-script-copy p:last-child{margin-bottom:0!important}
+.genealogy-intro{
+  padding-top:clamp(4.5rem,6.5vw,6.5rem)!important;
+  padding-bottom:clamp(3.5rem,5vw,5rem)!important;
+}
+.genealogy-intro + .genealogy-marker{
+  padding-top:clamp(4rem,5.5vw,5.5rem)!important;
+  padding-bottom:clamp(4.75rem,7vw,7rem)!important;
+}
+.genealogy-marker{
+  border-top:1px solid rgba(255,255,255,.035);
+}
+
+/* Homepage long-form context: remove the card feeling and typeset it as an essay. */
+.home-main .era-grid + .home-source-context{
+  width:min(1040px,calc(100% - 2rem))!important;
+  margin:clamp(4.5rem,7vw,7rem) auto clamp(4.5rem,7vw,7rem)!important;
+  padding:clamp(3.4rem,5.5vw,5.5rem) clamp(1.25rem,3.5vw,3rem)!important;
+  background:transparent!important;
+  border-top:1px solid var(--editorial-rule)!important;
+  border-bottom:0!important;
+  text-align:start!important;
+}
+.home-main .era-grid + .home-source-context h2{
+  max-width:900px!important;
+  margin:0 0 1.8rem!important;
+  font-size:clamp(2.8rem,4.8vw,4.75rem)!important;
+  line-height:.98!important;
+  letter-spacing:-.025em!important;
+  color:var(--editorial-heading)!important;
+  text-align:start!important;
+  text-wrap:balance;
+}
+.home-source-context .three-eras-intro,
+.home-source-context .era-source-section{
+  width:min(820px,100%)!important;
+  max-width:820px!important;
+  margin-inline:0 auto!important;
+  text-align:start!important;
+}
+.home-source-context .three-eras-intro p{
+  max-width:72ch!important;
+  margin:0!important;
+  font-size:clamp(1.16rem,1.4vw,1.3rem)!important;
+  line-height:1.7!important;
+  color:var(--editorial-lead)!important;
+}
+.home-source-context .era-source-section{
+  margin-top:clamp(3rem,4vw,4rem)!important;
+  padding-top:clamp(2.35rem,3vw,3rem)!important;
+  border-top:1px solid var(--editorial-hairline)!important;
+}
+.home-source-context .era-source-section h3{
+  margin:0 0 1.15rem!important;
+  font-size:clamp(2.15rem,3vw,3.05rem)!important;
+  line-height:1!important;
+  letter-spacing:-.018em!important;
+  color:var(--editorial-heading)!important;
+  text-align:start!important;
+}
+.home-main .era-grid + .home-source-context .era-source-section p{
+  max-width:76ch!important;
+  margin:0!important;
+  font-size:clamp(1.04rem,1.12vw,1.14rem)!important;
+  line-height:1.74!important;
+  color:var(--editorial-copy)!important;
+  text-align:start!important;
+  orphans:3;
+  widows:3;
+}
+
+/* Third Era and other non-timeline prospectus prose use the same reading rhythm. */
+.third-era-teaser p{
+  max-width:68ch!important;
+  font-size:clamp(1.04rem,1.2vw,1.12rem)!important;
+  line-height:1.72!important;
+  color:var(--editorial-copy)!important;
+}
+.third-era-hero-note{
+  max-width:68ch!important;
+  line-height:1.72!important;
+  color:#c4c4cc!important;
+}
+.prospectus-copy,
+.prospectus-copy-wide{
+  max-width:940px!important;
+}
+.prospectus-copy p,
+.prospectus-split p{
+  max-width:76ch;
+  font-size:clamp(1.04rem,1.22vw,1.14rem)!important;
+  line-height:1.76!important;
+  color:var(--editorial-copy)!important;
+  margin-bottom:1.45rem!important;
+  orphans:3;
+  widows:3;
+}
+.prospectus-copy .prospectus-lead{
+  max-width:68ch!important;
+  font-size:clamp(1.7rem,2.35vw,2.35rem)!important;
+  line-height:1.38!important;
+  color:var(--editorial-lead)!important;
+  margin-bottom:2rem!important;
+}
+.prospectus-copy h2,
+.prospectus-split h2,
+.streams-head h2,
+.partnership-section h2{
+  text-wrap:balance;
+}
+.prospectus-copy h2,
+.prospectus-split h2{
+  max-width:900px;
+  margin-bottom:1.7rem!important;
+  letter-spacing:-.03em!important;
+}
+.streams-head{
+  width:min(860px,100%)!important;
+}
+.streams-head p,
+.streams-outcome{
+  max-width:72ch!important;
+  line-height:1.74!important;
+  color:var(--editorial-copy)!important;
+}
+.inside-grid p,
+.stream-card p{
+  line-height:1.7!important;
+  color:#c6c6ce!important;
+}
+.partnership-inner{
+  width:min(980px,100%)!important;
+}
+.partnership-section>div>p,
+.partnership-contact-intro{
+  max-width:72ch!important;
+  line-height:1.76!important;
+  color:var(--editorial-copy)!important;
+}
+.partnership-section blockquote{
+  max-width:820px!important;
+  line-height:1.2!important;
+  text-wrap:balance;
+}
+.third-era-transition-content p{
+  max-width:68ch!important;
+  line-height:1.72!important;
+  color:var(--editorial-copy)!important;
+}
+
+/* Direction follows the active language while preserving the same measure. */
+html[dir="rtl"] .genealogy-script-copy,
+html[dir="rtl"] .genealogy-script-copy h3,
+html[dir="rtl"] .genealogy-script-copy p,
+html[dir="rtl"] .home-source-context,
+html[dir="rtl"] .home-source-context h2,
+html[dir="rtl"] .home-source-context h3,
+html[dir="rtl"] .home-source-context p{
+  text-align:start!important;
+}
+html[dir="rtl"] .home-source-context .three-eras-intro,
+html[dir="rtl"] .home-source-context .era-source-section{
+  margin-inline:auto 0!important;
+}
+
+@media(max-width:850px){
+  .genealogy-script{
+    padding-top:3.6rem!important;
+    padding-bottom:3.8rem!important;
+  }
+  .genealogy-intro{
+    padding-top:3.6rem!important;
+    padding-bottom:2.8rem!important;
+  }
+  .genealogy-intro + .genealogy-marker{
+    padding-top:3.4rem!important;
+    padding-bottom:3.8rem!important;
+  }
+  .genealogy-script-copy h3{
+    font-size:clamp(2.15rem,9.5vw,3rem)!important;
+    margin-bottom:1.25rem!important;
+  }
+  .genealogy-intro .genealogy-script-copy h3{
+    font-size:clamp(2.55rem,11vw,3.5rem)!important;
+  }
+  .genealogy-script-copy p,
+  .genealogy-script-copy h3 + p{
+    max-width:none!important;
+  }
+  .home-main .era-grid + .home-source-context{
+    width:calc(100% - 1rem)!important;
+    margin:3.5rem auto 4rem!important;
+    padding:2.65rem 1.2rem!important;
+  }
+  .home-source-context .three-eras-intro,
+  .home-source-context .era-source-section,
+  .home-source-context .three-eras-intro p,
+  .home-main .era-grid + .home-source-context .era-source-section p{
+    max-width:none!important;
+    width:100%!important;
+  }
+  .home-source-context .era-source-section{
+    margin-top:2.7rem!important;
+    padding-top:2rem!important;
+  }
+  .prospectus-copy p,
+  .prospectus-split p,
+  .prospectus-copy .prospectus-lead,
+  .streams-head p,
+  .streams-outcome,
+  .partnership-section>div>p,
+  .third-era-transition-content p{
+    max-width:none!important;
+  }
+}
+
+
+/* === ARTWORK LABEL / CATALOGUE ALIGNMENT / HOVER PASS · 2026-08-22 ===
+   Requested museum-wall behavior: artwork title + date under frame, two catalogue
+   labels aligned from the artwork top, no Archival Source cards, and a physical
+   lift on hover. Timeline prose/content is otherwise unchanged. */
+.exhibition-section .info-category,
+.exhibition-section .info-title,
+.exhibition-section .info-meta{
+  display:none!important;
+}
+.exhibition-container>.exhibit-art-column{
+  gap:0!important;
+}
+.art-caption-inline{
+  width:100%;
+  margin:.42rem 0 0!important;
+  padding:0 .12rem!important;
+  display:flex;
+  align-items:baseline;
+  justify-content:flex-start;
+  gap:.42rem;
+  min-width:0;
+  white-space:nowrap;
+  overflow:hidden;
+  color:#d6d6dc;
+  font-family:var(--museum-sans,"Source Sans 3",sans-serif);
+  font-size:clamp(.72rem,1.05vw,.86rem);
+  line-height:1.25;
+  letter-spacing:.035em;
+}
+.art-caption-title{
+  display:inline!important;
+  flex:0 1 auto;
+  min-width:0;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font:500 1em/1.25 var(--museum-serif,"Cormorant Garamond",serif)!important;
+  letter-spacing:.01em!important;
+  color:#eeeeF2!important;
+}
+.art-caption-separator{flex:0 0 auto;color:rgba(255,255,255,.34)}
+.art-caption-date{flex:0 0 auto;color:#aaaab4;font-size:.88em;letter-spacing:.11em}
+.exhibit-art-column>.exhibit-libel-below{margin-top:clamp(.95rem,1.45vw,1.2rem)!important}
+
+/* With catalogue identity moved beneath the artwork, the first wall label begins
+   exactly at the top edge of the framed work on desktop. */
+.timeline-art-left .info-panel,
+.timeline-art-right .info-panel{
+  align-self:start!important;
+  margin-top:0!important;
+  padding-top:0!important;
+}
+.info-panel{gap:.88rem!important}
+.info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty){
+  min-height:0!important;
+  padding:1.08rem 1.22rem 1.16rem!important;
+  margin:0!important;
+  transform:translateY(0)!important;
+  transition:transform .48s var(--final-ease),background .42s ease,border-color .42s ease,box-shadow .48s var(--final-ease),filter .42s ease!important;
+}
+.info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty) h4{
+  margin:0 0 .58rem!important;
+  font-size:.74rem!important;
+}
+.info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty) .wave-p,
+.info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty) p{
+  font-size:1rem!important;
+  line-height:1.58!important;
+}
+
+/* All card-like boxes regain a restrained museum lift on pointer hover. */
+@media(hover:hover) and (pointer:fine){
+  .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty):hover,
+  .history-panel:hover,
+  .source-libel-card:hover,
+  .third-era-page .stream-card:hover,
+  .third-era-page .inside-grid article:hover{
+    position:relative!important;
+    z-index:4!important;
+    transform:translateY(-9px)!important;
+    border-color:rgba(255,255,255,.21)!important;
+    background-color:rgba(255,255,255,.055)!important;
+    box-shadow:0 20px 42px rgba(0,0,0,.34)!important;
+    filter:brightness(1.055)!important;
+  }
+  .history-panel,
+  .source-libel-card,
+  .third-era-page .stream-card,
+  .third-era-page .inside-grid article{
+    transition:transform .48s var(--final-ease),border-color .42s ease,box-shadow .48s var(--final-ease),background .42s ease,filter .42s ease!important;
+  }
+}
+
+/* Third Era sections now leave in the physical direction of scrolling and replay
+   when approached again from either direction. */
+.prospectus-reveal.exit-up{opacity:0;transform:translateY(-34px);filter:blur(4px)}
+.prospectus-reveal.exit-down{opacity:0;transform:translateY(34px);filter:blur(4px)}
+.prospectus-reveal.is-visible{opacity:1;transform:translateY(0);filter:none}
+
+@media(max-width:850px){
+  .art-caption-inline{
+    margin-top:.36rem!important;
+    padding:0 .08rem!important;
+    gap:.34rem;
+    font-size:clamp(.62rem,2.55vw,.78rem);
+  }
+  .timeline-art-left .info-panel,
+  .timeline-art-right .info-panel{margin-top:0!important}
+  .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty){padding:1rem 1.08rem 1.08rem!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .prospectus-reveal.exit-up,.prospectus-reveal.exit-down{opacity:1!important;transform:none!important;filter:none!important}
+}
+
+/* Hover specificity safeguard: gallery reveal classes previously overrode the lift. */
+@media(hover:hover) and (pointer:fine){
+  body .exhibition-section .info-panel>.info-block.archive-stagger-block.pop-in:hover,
+  body .exhibition-section .info-panel>.info-block.archive-stagger-block.pop-in:active,
+  body .exhibition-section .history-panel.archive-stagger-block.pop-in:hover,
+  body .exhibition-section .history-panel.archive-stagger-block.pop-in:active{
+    z-index:4!important;
+    transform:translateY(-9px)!important;
+    border-color:rgba(255,255,255,.21)!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.082),rgba(255,255,255,.04))!important;
+    box-shadow:0 20px 42px rgba(0,0,0,.34)!important;
+    filter:brightness(1.055)!important;
+  }
+}
+
+
+/* Mobile artwork-column safeguard: alternating desktop columns must collapse to one. */
+@media(max-width:850px){
+  .timeline-art-left .exhibition-container>.exhibit-art-column,
+  .timeline-art-right .exhibition-container>.exhibit-art-column{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:100%!important;
+    max-width:100%!important;
+  }
+  .timeline-art-left .info-panel,
+  .timeline-art-right .info-panel{
+    grid-column:1!important;
+    grid-row:2!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  .art-caption-inline{font-size:clamp(.68rem,2.7vw,.8rem)}
+}
+
+@media(hover:hover) and (pointer:fine){
+  .exhibit-libel-below .timeline-libel-context{
+    transition:transform .48s var(--final-ease),border-color .42s ease,box-shadow .48s var(--final-ease),background .42s ease,filter .42s ease!important;
+  }
+  .exhibit-libel-below .timeline-libel-context:hover{
+    position:relative!important;
+    z-index:4!important;
+    transform:translateY(-9px)!important;
+    border-color:rgba(215,199,163,.32)!important;
+    box-shadow:0 20px 42px rgba(0,0,0,.3)!important;
+    filter:brightness(1.045)!important;
+  }
+}
+
+.art-caption-inline.caption-long .art-caption-title{letter-spacing:0!important}
+@media(max-width:850px){.art-caption-inline.caption-long{font-size:.64rem!important;gap:.25rem!important}}
+
+/* === USER MOTION UPDATE · 2026-08-22 ===
+   Non-timeline prose on all three era pages replays as it enters/leaves the
+   viewport in either scroll direction. Timeline/exhibit records keep their
+   existing word-wave system. */
+.page-prose-reveal{
+  opacity:0;
+  transform:translateY(34px);
+  filter:blur(4px);
+  transition:opacity 1.05s ease,transform 1.05s var(--final-ease),filter 1.05s ease;
+  will-change:opacity,transform,filter;
+}
+.page-prose-reveal.is-visible{opacity:1;transform:translateY(0);filter:none}
+.page-prose-reveal.exit-up{opacity:0;transform:translateY(-34px);filter:blur(4px)}
+.page-prose-reveal.exit-down{opacity:0;transform:translateY(34px);filter:blur(4px)}
+
+
+@media(prefers-reduced-motion:reduce){
+  .page-prose-reveal,.page-prose-reveal.is-visible,.page-prose-reveal.exit-up,.page-prose-reveal.exit-down{
+    opacity:1!important;transform:none!important;filter:none!important;transition:none!important
   }
 }

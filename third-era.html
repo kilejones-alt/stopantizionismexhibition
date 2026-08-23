@@ -73,7 +73,6 @@
 <path class="stream-path stream-path-one" d="M180 78 C180 280, 420 320, 600 492"></path>
 <path class="stream-path stream-path-two" d="M600 78 C600 270, 600 330, 600 492"></path>
 <path class="stream-path stream-path-three" d="M1020 78 C1020 280, 780 320, 600 492"></path>
-<path class="river-path" d="M600 492 L600 612"></path>
 <circle class="stream-node" cx="600" cy="492" r="7"></circle>
 </svg>
 <article class="stream-card stream-one">
@@ -150,8 +149,19 @@
   const nodes = [...document.querySelectorAll('.prospectus-reveal')];
   if (reduced || !('IntersectionObserver' in window)) { nodes.forEach(n => n.classList.add('is-visible')); return; }
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => entry.target.classList.toggle('is-visible', entry.isIntersecting));
-  }, { threshold: 0.14, rootMargin: '-6% 0px -10% 0px' });
+    entries.forEach(entry => {
+      const node = entry.target;
+      if (entry.isIntersecting) {
+        node.classList.remove('exit-up','exit-down');
+        node.classList.add('is-visible');
+        return;
+      }
+      node.classList.remove('is-visible');
+      const exitedAbove = entry.boundingClientRect.top < 0;
+      node.classList.toggle('exit-up', exitedAbove);
+      node.classList.toggle('exit-down', !exitedAbove);
+    });
+  }, { threshold: 0.14, rootMargin: '-8% 0px -12% 0px' });
   nodes.forEach(n => observer.observe(n));
 })();
 </script>
