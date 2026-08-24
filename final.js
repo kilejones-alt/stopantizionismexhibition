@@ -49,7 +49,7 @@
   function setupMuseumScrollBehavior() {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealNodes = [...document.querySelectorAll(
-      '.home-source-context, .home-source-context .era-source-section, .third-era-teaser, .genealogy-script, .chronology-interlude, .libel-marker, .source-antizionism-framework'
+      '.home-source-context, .home-source-context .era-source-section, .third-era-teaser, .genealogy-script, .chronology-interlude, .libel-marker, .source-antizionism-framework, .genealogy-influences, .era-libels-section'
     )];
     revealNodes.forEach(node => node.classList.add('mobile-room-reveal'));
     if (revealNodes.length) {
@@ -76,7 +76,7 @@
 
     if (matchMedia('(hover: none), (pointer: coarse)').matches && 'IntersectionObserver' in window) {
       const panels = [...document.querySelectorAll(
-        '.era-card, .third-era-teaser, .info-panel > .info-block:not(.wall-archive-hidden):not(.catalogue-empty), .history-panel, .exhibit-libel-below .timeline-libel-context'
+        '.era-card, .third-era-teaser, .info-panel > .info-block:not(.wall-archive-hidden):not(.catalogue-empty), .history-panel, .influence-card, .era-libel-card'
       )];
       const panelObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => entry.target.classList.toggle('panel-current', entry.isIntersecting));

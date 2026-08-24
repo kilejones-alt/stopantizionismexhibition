@@ -1886,3 +1886,65 @@ html[dir="rtl"] .home-source-context .era-source-section{
     filter:brightness(1.045)!important;
   }
 }
+
+
+/* === THREE-PART ERA STRUCTURE · 2026-08-23 ===
+   The genealogy leads into three influences; each era closes with exactly three
+   libels. These are exhibition plates, not timeline annotations. */
+.era-structure-section{
+  width:100%;padding:clamp(4.8rem,7vw,7.2rem) var(--final-side);
+  border-top:1px solid rgba(255,255,255,.055);border-bottom:1px solid rgba(255,255,255,.035);
+  background:linear-gradient(180deg,rgba(255,255,255,.012),rgba(255,255,255,.004));
+}
+.era-structure-inner{width:min(1220px,100%);margin-inline:auto}
+.era-structure-kicker{
+  font-family:"Source Sans 3",sans-serif;font-size:.72rem;line-height:1.2;letter-spacing:.2em;text-transform:uppercase;
+  color:#b8a77a;margin:0 0 1.8rem;display:flex;align-items:center;gap:1rem
+}
+.era-structure-kicker::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(188,165,109,.28),transparent)}
+.era-structure-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.85rem,1.5vw,1.25rem)}
+.influence-card,.era-libel-card{
+  position:relative;min-width:0;padding:1.55rem 1.35rem 1.7rem;
+  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(15,15,18,.5));
+  border:1px solid rgba(255,255,255,.075);border-radius:4px;box-shadow:0 18px 42px rgba(0,0,0,.22);
+  transition:transform .46s var(--final-ease),border-color .38s ease,box-shadow .46s var(--final-ease),filter .38s ease
+}
+.era-libel-card{border-top-color:rgba(188,165,109,.23)}
+.era-structure-number{
+  display:block;font-family:"Source Sans 3",sans-serif;font-size:.68rem;letter-spacing:.18em;color:#b8a77a;margin-bottom:2.2rem
+}
+.influence-card h3,.era-libel-card h3{
+  font-family:"Cormorant Garamond",serif;font-size:clamp(1.85rem,2.5vw,2.6rem);font-weight:500;line-height:.98;
+  color:#f4f4f6;margin:0 0 1rem;text-wrap:balance
+}
+.influence-card p,.era-libel-card p{
+  font-family:"Source Sans 3",sans-serif;font-size:1rem;line-height:1.68;color:#c9c9d0;margin:0;text-wrap:pretty
+}
+@media(hover:hover) and (pointer:fine){
+  .influence-card:hover,.influence-card:focus-within,.era-libel-card:hover,.era-libel-card:focus-within{
+    transform:translateY(-8px);border-color:rgba(255,255,255,.19);box-shadow:0 22px 46px rgba(0,0,0,.34);filter:brightness(1.045)
+  }
+}
+@media(max-width:720px){
+  .era-structure-section{padding:4.5rem var(--final-mobile-side) 5rem}
+  .era-structure-kicker{margin-bottom:1.45rem}
+  .era-structure-grid{
+    display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(82vw,1fr);
+    gap:.85rem;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;
+    padding:.5rem .15rem 1.1rem;scrollbar-width:none
+  }
+  .era-structure-grid::-webkit-scrollbar{display:none}
+  .influence-card,.era-libel-card{scroll-snap-align:start;min-height:310px;padding:1.5rem 1.22rem 1.65rem}
+  .influence-card h3,.era-libel-card h3{font-size:clamp(2.15rem,10vw,2.8rem)}
+  .influence-card p,.era-libel-card p{font-size:1rem;line-height:1.66}
+  .influence-card.panel-current,.era-libel-card.panel-current{
+    transform:translateY(-8px)!important;border-color:rgba(255,255,255,.19)!important;
+    box-shadow:0 20px 44px rgba(0,0,0,.34)!important;filter:brightness(1.045)!important
+  }
+}
+html[dir="rtl"] .era-structure-kicker{direction:rtl}
+html[dir="rtl"] .era-structure-kicker::after{background:linear-gradient(270deg,rgba(188,165,109,.28),transparent)}
+html[dir="rtl"] .influence-card,html[dir="rtl"] .era-libel-card{text-align:right}
+@media(prefers-reduced-motion:reduce){
+  .influence-card,.era-libel-card,.influence-card.panel-current,.era-libel-card.panel-current{transform:none!important;filter:none!important;transition:none!important}
+}
