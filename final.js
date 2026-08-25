@@ -93,3 +93,57 @@
   });
   addEventListener('DOMContentLoaded', () => { scheduleFit(); setupMuseumScrollBehavior(); }, { once: true });
 })();
+
+/* 2026-08-24: balance short catalogue stacks against their artwork and manage embedded exhibition video. */
+(() => {
+  function markBalancedCataloguePanels(){
+    document.querySelectorAll('.exhibition-section .exhibition-container').forEach(container => {
+      const panel = container.querySelector(':scope > .info-panel');
+      if (!panel) return;
+      panel.classList.remove('catalogue-balanced');
+      if (panel.classList.contains('has-inline-video')) return;
+      const blocks = [...panel.children].filter(el =>
+        el.matches('.info-block:not(.wall-archive-hidden):not(.catalogue-empty)') &&
+        getComputedStyle(el).display !== 'none'
+      );
+      if (blocks.length > 0 && blocks.length <= 2) panel.classList.add('catalogue-balanced');
+    });
+  }
+
+  function setupEmbeddedExhibitionVideo(){
+    const videos = [...document.querySelectorAll('video.exhibition-autoplay-video')];
+    if (!videos.length) return;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    videos.forEach(video => {
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      if (reduced) {
+        video.autoplay = false;
+        video.controls = true;
+        video.pause();
+      }
+    });
+    if (reduced) return;
+    if (!('IntersectionObserver' in window)) {
+      videos.forEach(video => video.play().catch(() => {}));
+      return;
+    }
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      });
+    }, { threshold: .18, rootMargin: '20% 0px 20% 0px' });
+    videos.forEach(video => observer.observe(video));
+  }
+
+  const init = () => {
+    markBalancedCataloguePanels();
+    setupEmbeddedExhibitionVideo();
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true });
+  else init();
+  addEventListener('resize', markBalancedCataloguePanels, { passive:true });
+})();
