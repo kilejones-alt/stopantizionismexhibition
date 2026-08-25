@@ -2168,3 +2168,325 @@ html[dir="rtl"] .influence-card,html[dir="rtl"] .era-libel-card{text-align:right
   }
   .crocodile-media-panel .crocodile-text-stack>.info-block:last-child{order:3!important}
 }
+
+/* === DEPLOYMENT-STABLE MEDIA + HOVER AUDIT · 2026-08-24 ===
+   Preserve catalogue copy and its position. The Crocodile motion plate now
+   respects the replacement 16:9 footage instead of being stretched into a
+   portrait object. Card motion is normalized across all public pages. */
+@media(min-width:851px){
+  .crocodile-media-panel .catalogue-inline-video{
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    aspect-ratio:16/9!important;
+    align-self:start!important;
+    justify-self:stretch!important;
+  }
+  .crocodile-media-panel .catalogue-video{
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    object-position:center center!important;
+  }
+}
+@media(max-width:850px){
+  .crocodile-media-panel .catalogue-inline-video{
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    aspect-ratio:16/9!important;
+  }
+  .crocodile-media-panel .catalogue-video{
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    object-position:center center!important;
+  }
+}
+
+/* One physical-response language across the museum: enough movement to be
+   unmistakable, without turning the exhibition into a dashboard. */
+@media(hover:hover) and (pointer:fine){
+  body :is(
+    .era-card,
+    .art-box,
+    .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty),
+    .history-panel,
+    .influence-card,
+    .era-libel-card,
+    .source-libel-card,
+    .third-era-teaser,
+    .third-era-page .stream-card,
+    .third-era-page .inside-grid article,
+    .genealogy-video-shell,
+    .catalogue-inline-video
+  ){
+    transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .42s ease,
+               box-shadow .5s cubic-bezier(.16,1,.3,1),background-color .42s ease,
+               filter .42s ease!important;
+    transform-origin:center center;
+  }
+  body :is(
+    .era-card,
+    .art-box,
+    .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty),
+    .history-panel,
+    .influence-card,
+    .era-libel-card,
+    .source-libel-card,
+    .third-era-teaser,
+    .third-era-page .stream-card,
+    .third-era-page .inside-grid article,
+    .genealogy-video-shell,
+    .catalogue-inline-video
+  ):hover,
+  body :is(
+    .era-card,
+    .art-box,
+    .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty),
+    .history-panel,
+    .influence-card,
+    .era-libel-card,
+    .source-libel-card,
+    .third-era-teaser,
+    .third-era-page .stream-card,
+    .third-era-page .inside-grid article,
+    .genealogy-video-shell,
+    .catalogue-inline-video
+  ):focus-within{
+    position:relative!important;
+    z-index:14!important;
+    transform:translateY(-11px) scale(1.012)!important;
+    border-color:rgba(255,255,255,.22)!important;
+    box-shadow:0 24px 50px rgba(0,0,0,.38)!important;
+    filter:brightness(1.055)!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body :is(.era-card,.art-box,.info-block,.history-panel,.influence-card,.era-libel-card,.source-libel-card,.third-era-teaser,.stream-card,.genealogy-video-shell,.catalogue-inline-video){
+    transform:none!important;
+    transition:none!important;
+    filter:none!important;
+  }
+}
+
+/* Final hover specificity lock after the full visual audit. */
+:root{--museum-panel-lift:-11px;--museum-panel-shadow:0 24px 50px rgba(0,0,0,.38)}
+@media(hover:hover) and (pointer:fine){
+  body .exhibition-section .info-panel>.info-block.archive-stagger-block.pop-in:hover,
+  body .exhibition-section .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty).pop-in:hover,
+  body .exhibition-section .history-panel.archive-stagger-block.pop-in:hover,
+  body .influence-card:hover,
+  body .era-libel-card:hover,
+  body .source-libel-card:hover,
+  body .home-page .era-card:hover,
+  body.third-era-page .stream-card:hover,
+  body.third-era-page .inside-grid article:hover{
+    z-index:14!important;
+    transform:translateY(-11px) scale(1.012)!important;
+    border-color:rgba(255,255,255,.22)!important;
+    box-shadow:0 24px 50px rgba(0,0,0,.38)!important;
+    filter:brightness(1.055)!important;
+  }
+}
+
+
+/* PASS 1 · MOSQUE TRANSITION PLACEMENT · STRUCTURE ONLY */
+.mosque-transition-section .mosque-transition-inner{display:flex!important;justify-content:center!important;align-items:center!important}
+.mosque-transition-section .mosque-transition-video{grid-column:auto!important;grid-row:auto!important;justify-self:auto!important;align-self:center!important;order:initial!important;width:min(72vw,860px)!important;min-height:0!important;max-height:none!important;aspect-ratio:16/9!important}
+.mosque-transition-section .mosque-transition-video .catalogue-video{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center center!important}
+@media(max-width:850px){.mosque-transition-section .mosque-transition-video{width:100%!important;aspect-ratio:16/9!important;order:initial!important}}
+
+/* ==========================================================================\n   PASS 2 · CINEMATIC INTERACTION SYSTEM · 2026-08-25\n   Structure/copy remain untouched. This pass makes the gallery visibly assemble\n   as the visitor scrolls: object lands, text rolls in, then the object begins a\n   five-second optical push. Desktop hover creates a strong physical response.\n   ========================================================================== */
+
+/* 1. Artwork arrives as an object, then focuses only after the frame has landed. */
+.exhibition-section .art-box{
+  opacity:0!important;
+  transform:translateY(46px) scale(.968)!important;
+  transition:opacity 1.05s cubic-bezier(.16,1,.3,1),
+             transform 1.12s cubic-bezier(.16,1,.3,1),
+             border-color .55s ease,
+             box-shadow .65s cubic-bezier(.16,1,.3,1),
+             filter .5s ease!important;
+  will-change:opacity,transform;
+}
+.exhibition-section .art-box.pop-in{
+  opacity:1!important;
+  transform:translateY(0) scale(1)!important;
+}
+.exhibition-section .museum-frame img.gallery-image{
+  transform:scale(1)!important;
+  transform-origin:center center!important;
+  transition:transform 5s cubic-bezier(.2,.64,.24,1),filter 1.4s ease!important;
+  will-change:transform,filter;
+}
+/* art-in-view now means active record; cinematic-focus controls the delayed push. */
+.exhibition-section .art-box.art-in-view .museum-frame img.gallery-image{
+  transform:scale(1)!important;
+}
+.exhibition-section .art-box.cinematic-focus .museum-frame img.gallery-image{
+  transform:scale(1.065)!important;
+  filter:brightness(1.045) contrast(1.07)!important;
+}
+
+/* 2. Catalogue labels visibly roll/land after the artwork. */
+.exhibition-section .info-panel{
+  transition:opacity .9s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)!important;
+}
+.exhibition-section .info-panel>.info-block.archive-stagger-block,
+.exhibition-section .history-panel.archive-stagger-block{
+  opacity:0!important;
+  transform:translate(var(--archive-entry-x,0px),58px) rotateX(-8deg) scale(.972)!important;
+  transform-origin:50% 100%!important;
+  filter:blur(4px)!important;
+  transition:opacity .92s cubic-bezier(.16,1,.3,1),
+             transform 1.08s cubic-bezier(.16,1,.3,1),
+             filter .9s ease,
+             border-color .42s ease,
+             background .42s ease,
+             box-shadow .48s cubic-bezier(.16,1,.3,1)!important;
+  will-change:opacity,transform,filter;
+}
+.exhibition-section .info-panel>.info-block.archive-stagger-block.pop-in,
+.exhibition-section .history-panel.archive-stagger-block.pop-in{
+  opacity:1!important;
+  transform:translate(0,0) rotateX(0) scale(1)!important;
+  filter:none!important;
+}
+
+/* 3. Word landing stays conspicuous rather than collapsing into a plain fade. */
+.exhibition-section .wave-text{--wave-step:42ms}
+.exhibition-section .wave-word{
+  transform:translateY(1.02em) rotateX(-40deg);
+  filter:blur(6px);
+  animation-duration:940ms;
+}
+
+/* 4. Strong, unmistakable desktop response. Panels enlarge; artwork lifts and pushes further. */
+@media(hover:hover) and (pointer:fine){
+  body .exhibition-section .info-panel>.info-block.archive-stagger-block.pop-in:hover,
+  body .exhibition-section .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty).pop-in:hover,
+  body .exhibition-section .history-panel.archive-stagger-block.pop-in:hover{
+    position:relative!important;
+    z-index:24!important;
+    transform:translateY(-15px) scale(1.035)!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.115),rgba(255,255,255,.052))!important;
+    border-color:rgba(255,255,255,.32)!important;
+    box-shadow:0 32px 68px rgba(0,0,0,.48)!important;
+    filter:brightness(1.085)!important;
+  }
+  body .exhibition-section .art-box.pop-in:hover,
+  body .exhibition-section .art-box.pop-in:focus-visible{
+    z-index:22!important;
+    transform:translateY(-16px) scale(1.028)!important;
+    border-color:rgba(255,255,255,.24)!important;
+    box-shadow:0 42px 84px rgba(0,0,0,.58)!important;
+    filter:brightness(1.07)!important;
+  }
+  body .exhibition-section .art-box.pop-in:hover .museum-frame img.gallery-image,
+  body .exhibition-section .art-box.pop-in:focus-visible .museum-frame img.gallery-image{
+    transform:scale(1.11)!important;
+    filter:brightness(1.105) contrast(1.09)!important;
+    transition:transform .72s cubic-bezier(.16,1,.3,1),filter .55s ease!important;
+  }
+}
+
+/* 5. Text-led film moments enter in layers instead of appearing as one static slab. */
+.genealogy-video-section.page-prose-reveal .genealogy-script-copy h3,
+.genealogy-video-section.page-prose-reveal .genealogy-script-copy p{
+  opacity:0;
+  transform:translateY(30px) rotateX(-7deg);
+  transform-origin:50% 100%;
+  filter:blur(4px);
+  transition:opacity .8s ease,transform .95s cubic-bezier(.16,1,.3,1),filter .8s ease;
+}
+.genealogy-video-section.page-prose-reveal .genealogy-script-copy p:nth-of-type(1){transition-delay:.13s}
+.genealogy-video-section.page-prose-reveal .genealogy-script-copy p:nth-of-type(2){transition-delay:.26s}
+.genealogy-video-section.page-prose-reveal .genealogy-video-shell{
+  opacity:0;
+  transform:translateY(42px) scale(.972);
+  filter:brightness(.82);
+  transition:opacity .95s ease,transform 1.12s cubic-bezier(.16,1,.3,1),filter 1s ease,
+             border-color .45s ease,box-shadow .55s cubic-bezier(.16,1,.3,1)!important;
+  transition-delay:.18s;
+}
+.genealogy-video-section.page-prose-reveal.is-visible .genealogy-script-copy h3,
+.genealogy-video-section.page-prose-reveal.is-visible .genealogy-script-copy p{
+  opacity:1;
+  transform:none;
+  filter:none;
+}
+.genealogy-video-section.page-prose-reveal.is-visible .genealogy-video-shell{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  filter:none;
+}
+@media(hover:hover) and (pointer:fine){
+  .genealogy-video-section.page-prose-reveal.is-visible .genealogy-video-shell:hover{
+    transform:translateY(-13px) scale(1.026)!important;
+    border-color:rgba(255,255,255,.24)!important;
+    box-shadow:0 36px 78px rgba(0,0,0,.5)!important;
+    filter:brightness(1.07)!important;
+  }
+}
+
+/* 6. Jerusalem is a cinematic threshold: it rises out of the dark field by itself. */
+.mosque-transition-section{
+  padding-top:clamp(5.5rem,9vw,9rem)!important;
+  padding-bottom:clamp(6rem,10vw,10rem)!important;
+}
+.mosque-transition-section.page-prose-reveal{
+  opacity:1!important;
+  transform:none!important;
+  filter:none!important;
+}
+.mosque-transition-section.page-prose-reveal .mosque-transition-video{
+  opacity:0;
+  transform:translateY(48px) scale(.965)!important;
+  filter:brightness(.72) saturate(.84);
+  box-shadow:0 24px 72px rgba(0,0,0,.42);
+  transition:opacity 1.05s ease,transform 1.25s cubic-bezier(.16,1,.3,1),filter 1.2s ease,
+             box-shadow .7s ease,border-color .5s ease!important;
+}
+.mosque-transition-section.page-prose-reveal.is-visible .mosque-transition-video{
+  opacity:1;
+  transform:translateY(0) scale(1)!important;
+  filter:brightness(.96) saturate(.9);
+}
+@media(hover:hover) and (pointer:fine){
+  .mosque-transition-section.page-prose-reveal.is-visible .mosque-transition-video:hover{
+    transform:translateY(-12px) scale(1.024)!important;
+    filter:brightness(1.035) saturate(.94)!important;
+    border-color:rgba(255,255,255,.2)!important;
+    box-shadow:0 40px 90px rgba(0,0,0,.54)!important;
+  }
+}
+
+/* 7. Touch devices still get an active-state response without relying on hover. */
+@media(hover:none),(pointer:coarse){
+  .exhibition-section .info-block.panel-current,
+  .exhibition-section .history-panel.panel-current{
+    transform:translateY(-5px) scale(1.012)!important;
+    background:rgba(255,255,255,.065)!important;
+    border-color:rgba(255,255,255,.18)!important;
+    box-shadow:0 18px 38px rgba(0,0,0,.28)!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .exhibition-section .art-box,
+  .exhibition-section .museum-frame img.gallery-image,
+  .exhibition-section .info-panel>.info-block.archive-stagger-block,
+  .exhibition-section .history-panel.archive-stagger-block,
+  .genealogy-video-section.page-prose-reveal .genealogy-script-copy h3,
+  .genealogy-video-section.page-prose-reveal .genealogy-script-copy p,
+  .genealogy-video-section.page-prose-reveal .genealogy-video-shell,
+  .mosque-transition-section.page-prose-reveal .mosque-transition-video{
+    opacity:1!important;
+    transform:none!important;
+    filter:none!important;
+    transition:none!important;
+    animation:none!important;
+  }
+}

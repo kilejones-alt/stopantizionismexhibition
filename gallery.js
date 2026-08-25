@@ -181,8 +181,40 @@ function setupAmbientLight() {
 /* SLOW CURATORIAL STAGGER — each gallery section behaves as one composed reveal.
    As the visitor scrolls the artwork into view, the image settles first, then
    Object -> Creator rise out in sequence when those authored roles exist. */
-const ARCHIVE_STAGGER_START = 185;
-const ARCHIVE_STAGGER_STEP = 130;
+const ARCHIVE_STAGGER_START = 390;
+const ARCHIVE_STAGGER_STEP = 175;
+
+const artworkFocusTimers = new WeakMap();
+
+function clearArtworkFocus(artwork) {
+  if (!artwork) return;
+  const timer = artworkFocusTimers.get(artwork);
+  if (timer) window.clearTimeout(timer);
+  artworkFocusTimers.delete(artwork);
+  artwork.classList.remove('cinematic-focus');
+}
+
+function scheduleArtworkFocus(artwork, delay = 1120) {
+  if (!artwork || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  clearArtworkFocus(artwork);
+  const timer = window.setTimeout(() => {
+    artwork.classList.add('cinematic-focus');
+    artworkFocusTimers.delete(artwork);
+  }, delay);
+  artworkFocusTimers.set(artwork, timer);
+}
+
+function wavePanelHeader(panel, baseDelay = 205) {
+  if (!panel) return;
+  const targets = [
+    panel.querySelector('.info-category'),
+    panel.querySelector('.info-title'),
+    ...panel.querySelectorAll('.info-meta .wave-text')
+  ].filter(Boolean);
+  targets.forEach((element, index) => {
+    window.setTimeout(() => waveText(element, textFor(element)), baseDelay + (index * 72));
+  });
+}
 
 function revealArchiveSection(section) {
   if (!section || section.dataset.archiveRevealed === '1') return;
@@ -195,18 +227,20 @@ function revealArchiveSection(section) {
     section.querySelector('.art-caption-date'),
     section.querySelector('.timeline-node')
   ].filter(Boolean);
-  const blocks = [...section.querySelectorAll('.info-panel > .info-block:not(.wall-archive-hidden)')];
+  const blocks = [...section.querySelectorAll('.info-panel .info-block:not(.wall-archive-hidden)')];
   const history = section.querySelector('.history-panel');
 
   /* The artwork anchors the section, then catalogue labels, then History last. */
   artwork?.classList.add('pop-in');
+  scheduleArtworkFocus(artwork);
 
   if (panel && !panel.classList.contains('visible')) {
     panel.classList.add('visible');
   }
+  wavePanelHeader(panel);
 
   headerWaveTargets.forEach((element, index) => {
-    window.setTimeout(() => waveText(element, textFor(element)), 70 + (index * 45));
+    window.setTimeout(() => waveText(element, textFor(element)), 150 + (index * 58));
   });
 
   blocks.forEach((block, index) => {
@@ -230,10 +264,12 @@ function revealArchiveSection(section) {
 
 function replayArtwork(artwork) {
   if (!artwork) return;
+  clearArtworkFocus(artwork);
   artwork.classList.add('pop-in');
   artwork.classList.remove('art-reenter');
   void artwork.offsetWidth;
   artwork.classList.add('art-reenter', 'art-in-view');
+  scheduleArtworkFocus(artwork, 980);
   window.setTimeout(() => artwork.classList.remove('art-reenter'), 950);
 }
 
@@ -241,6 +277,7 @@ function replayArtwork(artwork) {
 function replayArchiveWords(section) {
   if (!section || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+  const panel = section.querySelector('.info-panel');
   const headerWaveTargets = [
     section.querySelector('.art-caption-title'),
     section.querySelector('.art-caption-date'),
@@ -249,11 +286,13 @@ function replayArchiveWords(section) {
   const blocks = [...section.querySelectorAll('.info-panel > .info-block:not(.wall-archive-hidden)')];
   const history = section.querySelector('.history-panel');
 
+  wavePanelHeader(panel, 190);
+
   /* Rebuild the word spans and physically re-land the catalogue labels each time
      the visitor returns to an exhibit. This keeps every timeline record alive on
      both downward and upward scrolling rather than making later records static. */
   headerWaveTargets.forEach((element, index) => {
-    window.setTimeout(() => waveText(element, textFor(element)), 65 + (index * 45));
+    window.setTimeout(() => waveText(element, textFor(element)), 145 + (index * 58));
   });
 
   blocks.forEach((block, index) => {
@@ -261,14 +300,14 @@ function replayArchiveWords(section) {
     window.setTimeout(() => {
       block.classList.add('pop-in');
       triggerWaveWithin(block);
-    }, 170 + (index * 130));
+    }, 375 + (index * 175));
   });
   if (history) {
     history.classList.add('archive-stagger-block');
     window.setTimeout(() => {
       history.classList.add('pop-in');
       triggerWaveWithin(history);
-    }, 170 + (blocks.length * 130));
+    }, 375 + (blocks.length * 175));
   }
 }
 
@@ -286,6 +325,7 @@ function setupRevealObserver() {
         const exitedAbove = entry.boundingClientRect.bottom <= 0 || entry.boundingClientRect.top < 0;
         section.classList.toggle('archive-exit-up', exitedAbove);
         section.classList.toggle('archive-exit-down', !exitedAbove);
+        clearArtworkFocus(artwork);
         artwork?.classList.remove('art-in-view', 'pop-in', 'art-reenter');
         section.querySelectorAll('.info-panel > .info-block.archive-stagger-block, .history-panel.archive-stagger-block')
           .forEach(block => block.classList.remove('pop-in'));
