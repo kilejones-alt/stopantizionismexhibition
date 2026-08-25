@@ -1949,23 +1949,16 @@ html[dir="rtl"] .influence-card,html[dir="rtl"] .era-libel-card{text-align:right
   .influence-card,.era-libel-card,.influence-card.panel-current,.era-libel-card.panel-current{transform:none!important;filter:none!important;transition:none!important}
 }
 
-/* === PORTFOLIO VIDEO + CATALOGUE BALANCE PASS · 2026-08-24 === */
-/* Catalogue labels visually complete the artwork row without changing any source copy. */
+/* === PORTFOLIO VIDEO + CATALOGUE PROSE PASS · 2026-08-24 === */
+/* Let catalogue text determine its own height; never inflate labels merely to match an artwork. */
 @media(min-width:851px){
-  .exhibition-section .exhibition-container{align-items:stretch!important}
-  .info-panel.catalogue-balanced{
-    align-self:stretch!important;
-    height:100%!important;
-  }
+  .exhibition-section .exhibition-container{align-items:start!important}
+  .info-panel.catalogue-balanced{height:auto!important;align-self:start!important}
   .info-panel.catalogue-balanced>.info-block:not(.wall-archive-hidden):not(.catalogue-empty){
-    flex:1 1 0!important;
-    min-height:0!important;
-    display:flex!important;
-    flex-direction:column!important;
-    align-items:flex-start!important;
-    justify-content:center!important;
+    flex:0 0 auto!important;min-height:0!important;display:block!important
   }
 }
+.curatorial-addition{margin-top:.62rem!important;color:#dedee6!important}
 
 /* More legible physical response on desktop: a clear museum-label lift, not a jump. */
 .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty){
@@ -1987,98 +1980,191 @@ html[dir="rtl"] .influence-card,html[dir="rtl"] .era-libel-card{text-align:right
 
 /* Text-only genealogy records become paired museum-media records. */
 .genealogy-video-section .genealogy-video-inner{
-  width:min(1180px,100%)!important;
-  max-width:1180px!important;
-  margin-inline:auto!important;
-  display:grid!important;
-  grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr)!important;
-  gap:clamp(2rem,4.8vw,5rem)!important;
-  align-items:center!important;
+  width:min(1180px,100%)!important;max-width:1180px!important;margin-inline:auto!important;
+  display:grid!important;grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr)!important;
+  gap:clamp(2rem,4.8vw,5rem)!important;align-items:center!important
 }
-.genealogy-video-section .genealogy-script-copy{
-  grid-column:1!important;
-  width:100%!important;
-  max-width:none!important;
-  margin:0!important;
-}
+.genealogy-video-section .genealogy-script-copy{grid-column:1!important;width:100%!important;max-width:none!important;margin:0!important}
 .genealogy-video-shell{
-  grid-column:2!important;
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:5px;
-  background:#111114;
-  box-shadow:0 24px 60px rgba(0,0,0,.35);
-  transform:translateY(0) scale(1);
-  transition:transform .65s cubic-bezier(.16,1,.3,1),border-color .55s ease,box-shadow .65s ease,filter .55s ease;
+  grid-column:2!important;position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);border-radius:5px;background:#111114;
+  box-shadow:0 24px 60px rgba(0,0,0,.35);transform:translateY(0) scale(1);
+  transition:transform .65s cubic-bezier(.16,1,.3,1),border-color .55s ease,box-shadow .65s ease,filter .55s ease
 }
-.genealogy-video,.catalogue-video{
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:cover;
-  background:#111114;
-}
+.genealogy-video,.catalogue-video{width:100%;height:100%;display:block;object-fit:cover;background:#111114}
 @media(hover:hover) and (pointer:fine){
-  .genealogy-video-shell:hover{
-    transform:translateY(-9px) scale(1.012);
-    border-color:rgba(255,255,255,.18);
-    box-shadow:0 32px 72px rgba(0,0,0,.44);
-    filter:brightness(1.045);
-  }
+  .genealogy-video-shell:hover{transform:translateY(-9px) scale(1.012);border-color:rgba(255,255,255,.18);box-shadow:0 32px 72px rgba(0,0,0,.44);filter:brightness(1.045)}
 }
 
-/* The mosque footage sits inside the Crocodile record's text side, beside its source copy. */
+/* Crocodile record: video is explicitly to the RIGHT of the two text labels, aligned with them. */
 .info-panel.has-inline-video{
   display:grid!important;
-  grid-template-columns:minmax(0,1fr) minmax(180px,.58fr)!important;
-  grid-template-rows:auto auto auto 1fr 1fr!important;
-  column-gap:1.15rem!important;
-  row-gap:1rem!important;
-  align-self:stretch!important;
+  grid-template-columns:minmax(0,1fr) minmax(155px,.48fr)!important;
+  grid-template-rows:auto auto auto auto auto!important;
+  column-gap:1.25rem!important;row-gap:.82rem!important;align-self:start!important
 }
-.info-panel.has-inline-video>.info-category,
-.info-panel.has-inline-video>.info-title{grid-column:1/-1!important}
-.info-panel.has-inline-video>.info-meta,
-.info-panel.has-inline-video>.info-block{grid-column:1!important}
+.info-panel.has-inline-video>.info-category{grid-column:1/-1!important;grid-row:1!important}
+.info-panel.has-inline-video>.info-title{grid-column:1/-1!important;grid-row:2!important}
+.info-panel.has-inline-video>.info-meta{grid-column:1/-1!important;grid-row:3!important}
+.info-panel.has-inline-video>.info-block[data-catalogue-role="creator"]{grid-column:1!important;grid-row:4!important}
+.info-panel.has-inline-video>.info-block[data-catalogue-role="object"]{grid-column:1!important;grid-row:5!important}
 .catalogue-inline-video{
-  grid-column:2!important;
-  grid-row:3 / span 3!important;
-  align-self:stretch;
-  justify-self:stretch;
-  min-height:360px;
-  max-height:590px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:5px;
-  background:#111114;
-  box-shadow:0 22px 52px rgba(0,0,0,.34);
+  grid-column:2!important;grid-row:4 / 6!important;align-self:stretch!important;justify-self:end!important;
+  width:min(100%,240px)!important;min-height:0!important;max-height:none!important;aspect-ratio:9/16;
+  overflow:hidden;border:1px solid rgba(255,255,255,.08);border-radius:5px;background:#111114;
+  box-shadow:0 22px 52px rgba(0,0,0,.34)
 }
-.catalogue-inline-video .catalogue-video{object-fit:cover}
+.catalogue-inline-video .catalogue-video{object-fit:cover;object-position:center center}
+@media(hover:hover) and (pointer:fine){
+  .catalogue-inline-video{transition:transform .6s cubic-bezier(.16,1,.3,1),border-color .5s ease,box-shadow .6s ease,filter .5s ease}
+  .catalogue-inline-video:hover{transform:translateY(-8px) scale(1.012);border-color:rgba(255,255,255,.18);box-shadow:0 30px 66px rgba(0,0,0,.42);filter:brightness(1.04)}
+}
 
 @media(max-width:850px){
-  .genealogy-video-section .genealogy-video-inner{
-    display:flex!important;
-    flex-direction:column!important;
-    gap:1.5rem!important;
-  }
+  .genealogy-video-section .genealogy-video-inner{display:flex!important;flex-direction:column!important;gap:1.5rem!important}
   .genealogy-video-shell{width:100%;aspect-ratio:16/9}
-  .info-panel.has-inline-video{
-    display:flex!important;
-    flex-direction:column!important;
-    gap:.82rem!important;
-  }
-  .catalogue-inline-video{
-    width:min(78vw,360px)!important;
-    min-height:0!important;
-    max-height:none!important;
-    aspect-ratio:9/16;
-    align-self:center!important;
-  }
+  .info-panel.has-inline-video{display:flex!important;flex-direction:column!important;gap:.82rem!important}
+  .catalogue-inline-video{width:min(70vw,300px)!important;min-height:0!important;max-height:none!important;aspect-ratio:9/16;align-self:center!important;order:5!important}
+  .curatorial-addition{margin-top:.48rem!important}
 }
 @media(prefers-reduced-motion:reduce){
-  .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty),
-  .genealogy-video-shell{transition:none!important;transform:none!important;filter:none!important}
+  .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty),.genealogy-video-shell,.catalogue-inline-video{transition:none!important;transform:none!important;filter:none!important}
+}
+
+
+
+/* === PROFESSIONAL CATALOGUE BALANCE · 2026-08-24 === */
+/* The moving image is a secondary archival object, not a loose third column. */
+.crocodile-media-panel{min-width:0}
+.crocodile-media-grid{display:grid;grid-template-columns:minmax(0,1fr) clamp(132px,12vw,172px);gap:clamp(.8rem,1.25vw,1.05rem);align-items:stretch;min-width:0}
+.crocodile-text-stack{display:flex;flex-direction:column;gap:.72rem;min-width:0}
+.crocodile-text-stack>.info-block{margin:0!important}
+.crocodile-media-panel .catalogue-inline-video{
+  width:100%!important;height:100%!important;min-height:0!important;max-height:none!important;aspect-ratio:auto!important;
+  align-self:stretch!important;overflow:hidden;border:1px solid rgba(255,255,255,.08);border-radius:5px;
+  background:#111114;box-shadow:0 18px 44px rgba(0,0,0,.3);transform:translateZ(0)
+}
+.crocodile-media-panel .catalogue-video{display:block;width:100%!important;height:100%!important;object-fit:cover;object-position:center center;filter:saturate(.82) contrast(1.06) brightness(.92)}
+@media(hover:hover) and (pointer:fine){
+  .crocodile-media-panel .catalogue-inline-video{transition:transform .62s cubic-bezier(.16,1,.3,1),border-color .48s ease,box-shadow .62s cubic-bezier(.16,1,.3,1),filter .48s ease}
+  .crocodile-media-panel .catalogue-inline-video:hover{transform:translateY(-8px) scale(1.012);border-color:rgba(255,255,255,.18);box-shadow:0 26px 54px rgba(0,0,0,.4);filter:brightness(1.04)}
+}
+/* Keep dense catalogue records compact rather than inflating their cards past the artwork. */
+.exhibition-section .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty){padding:.78rem .94rem .84rem!important}
+.exhibition-section .info-panel>.info-block .wave-p{line-height:1.5!important}
+.curatorial-addition{margin-top:.56rem!important}
+@media(max-width:850px){
+  .crocodile-media-grid{display:flex;flex-direction:column;gap:.78rem}
+  .crocodile-media-panel .catalogue-inline-video{order:2!important;width:min(72vw,270px)!important;height:auto!important;aspect-ratio:3/4!important;align-self:center!important}
+  .crocodile-media-panel .catalogue-video{height:100%!important;object-fit:cover!important}
+  .exhibition-section .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty){padding:.86rem .96rem .92rem!important}
+  .exhibition-section .info-panel>.info-block .wave-p{line-height:1.56!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .crocodile-media-panel .catalogue-inline-video,.crocodile-media-panel .catalogue-inline-video:hover{transform:none!important;filter:none!important;transition:none!important}
+}
+/* Geometry lock for the Crocodile media plate: previous catalogue grid rules must not displace the video. */
+@media(min-width:851px){
+  .crocodile-media-panel .crocodile-media-grid{width:100%!important;align-self:stretch!important;grid-template-columns:minmax(0,1fr) clamp(138px,12vw,172px)!important;grid-template-rows:auto!important}
+  .crocodile-media-panel .crocodile-text-stack{grid-column:1!important;grid-row:1!important;width:100%!important}
+  .crocodile-media-panel .catalogue-inline-video{grid-column:2!important;grid-row:1!important;width:100%!important;height:100%!important;margin:0!important;align-self:stretch!important;justify-self:stretch!important}
+}
+@media(min-width:851px){
+  .crocodile-text-stack>.info-block{width:100%!important;margin:0!important;padding:.72rem .88rem .78rem!important;background:linear-gradient(180deg,rgba(255,255,255,.052),rgba(255,255,255,.024))!important;border:1px solid rgba(255,255,255,.09)!important;border-radius:5px!important;box-shadow:none!important}
+  .crocodile-text-stack>.info-block .wave-p,.crocodile-text-stack>.info-block p{font-size:.94rem!important;line-height:1.46!important}
+  .crocodile-text-stack>.info-block .curatorial-addition{margin-top:.48rem!important}
+}
+@media(max-width:850px){
+  .crocodile-text-stack>.info-block{width:100%!important;margin:0!important;padding:.86rem .96rem .92rem!important;background:linear-gradient(180deg,rgba(255,255,255,.052),rgba(255,255,255,.024))!important;border:1px solid rgba(255,255,255,.09)!important;border-radius:5px!important}
+  .crocodile-text-stack>.info-block .wave-p,.crocodile-text-stack>.info-block p{font-size:1rem!important;line-height:1.56!important}
+}
+/* Landscape records with unusually long source-locked copy use a denser wall-label measure instead of exceeding the artwork. */
+@media(min-width:851px){
+  .catalogue-compact-landscape .info-panel{gap:.62rem!important}
+  .catalogue-compact-landscape .info-panel>.info-block:not(.wall-archive-hidden):not(.catalogue-empty){padding:.62rem .82rem .68rem!important}
+  .catalogue-compact-landscape .info-panel>.info-block .wave-p,
+  .catalogue-compact-landscape .info-panel>.info-block p{font-size:.91rem!important;line-height:1.42!important}
+  .catalogue-compact-landscape .curatorial-addition{margin-top:.42rem!important}
+}
+
+/* === CROCODILE EXHIBIT COMPOSITION REFINEMENT · 2026-08-24 ===
+   The moving image belongs to the interpretive panel; it no longer reads as a detached third column. */
+.crocodile-media-panel{min-width:0!important}
+.crocodile-media-panel .crocodile-media-grid{min-width:0!important}
+@media(min-width:851px){
+  .crocodile-media-panel .crocodile-media-grid{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) clamp(188px,15vw,222px)!important;
+    grid-template-rows:auto auto!important;
+    gap:.72rem!important;
+    align-items:stretch!important;
+    width:100%!important;
+  }
+  .crocodile-media-panel .crocodile-text-stack{display:contents!important}
+  .crocodile-media-panel .crocodile-text-stack>.info-block:first-child{
+    grid-column:1!important;
+    grid-row:1!important;
+    align-self:stretch!important;
+  }
+  .crocodile-media-panel .catalogue-inline-video{
+    grid-column:2!important;
+    grid-row:1!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:236px!important;
+    max-height:none!important;
+    margin:0!important;
+    align-self:stretch!important;
+    justify-self:stretch!important;
+    aspect-ratio:auto!important;
+    border-radius:5px!important;
+    box-shadow:0 16px 38px rgba(0,0,0,.28)!important;
+  }
+  .crocodile-media-panel .catalogue-video{
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    object-position:center 38%!important;
+  }
+  .crocodile-media-panel .crocodile-text-stack>.info-block:last-child{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    width:100%!important;
+  }
+  .crocodile-media-panel .crocodile-text-stack>.info-block{
+    margin:0!important;
+    padding:.78rem .92rem .84rem!important;
+  }
+  .crocodile-media-panel .crocodile-text-stack>.info-block .wave-p,
+  .crocodile-media-panel .crocodile-text-stack>.info-block p{
+    font-size:.95rem!important;
+    line-height:1.48!important;
+  }
+}
+@media(max-width:850px){
+  .crocodile-media-panel .crocodile-media-grid{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:.78rem!important;
+  }
+  .crocodile-media-panel .crocodile-text-stack{display:contents!important}
+  .crocodile-media-panel .crocodile-text-stack>.info-block:first-child{order:1!important}
+  .crocodile-media-panel .catalogue-inline-video{
+    order:2!important;
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:16/9!important;
+    min-height:0!important;
+    max-height:none!important;
+    align-self:stretch!important;
+    margin:0!important;
+    border-radius:5px!important;
+  }
+  .crocodile-media-panel .catalogue-video{
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    object-position:center 38%!important;
+  }
+  .crocodile-media-panel .crocodile-text-stack>.info-block:last-child{order:3!important}
 }
